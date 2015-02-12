@@ -1,0 +1,65 @@
+<#assign basePath=request.contextPath>
+<!DOCTYPE HTML>
+<html>
+<head>
+  <!-- title start-->
+   <#include "../common/title.html">
+  <!-- title end-->
+  
+  <!-- link start-->
+   <#include "../common/link.html">
+  <!-- link end-->
+  
+</head>
+
+<body>
+  <!-- header start-->
+  <#include "../common/header.html">
+  <!-- header end -->
+  
+	</div>
+        <div class="login">
+          	<div class="wrap">
+				<div class="col_1_of_login span_1_of_login">
+					<h4 class="title">用户注册</h4>
+					<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan</p>
+					<div class="button1">
+					   <a href="${basePath}/user/toRegister"><input type="submit" name="Submit" value="创建用户"></a>
+					 </div>
+					 <div class="clear"></div>
+				</div>
+				<div class="col_1_of_login span_1_of_login">
+				<div class="login-title">
+	           		<h4 class="title">用户登录</h4>
+					<div id="loginbox" class="loginbox">
+						<form action="${basePath}/user/login" method="post" name="login" id="login-form">
+						  <fieldset class="input">
+						    <p id="login-form-username">
+						      <label for="modlgn_username">用户名</label>
+						      <input id="modlgn_username" type="text" name="userName" class="inputbox" size="18" autocomplete="off" autofocus="autofocus" placeholder="用户名或邮箱地址">
+						    </p>
+						    <p id="login-form-password">
+						      <label for="modlgn_passwd">密码</label>
+						      <input id="modlgn_passwd" type="password" name="password" class="inputbox" size="18" autocomplete="off" placeholder="密码">
+						    </p>
+						    <div class="remember">
+							    <p id="login-form-remember">
+							      <label for="modlgn_remember"><a href="#">忘记密码 ? </a></label>
+							   </p>
+							    <input type="submit" name="Submit" class="button" value="登录"><div class="clear"></div>
+							 </div>
+						  </fieldset>
+						 </form>
+					</div>
+			    </div>
+				</div>
+				<div class="clear"></div>
+			</div>
+		</div>
+		
+  <!-- footer start-->
+  <#include "../common/footer.html">
+  <!-- footer end -->
+  
+  </body>
+</html>
