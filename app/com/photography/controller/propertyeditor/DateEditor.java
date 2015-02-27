@@ -6,6 +6,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.apache.log4j.Logger;
 import org.springframework.util.StringUtils;
 
 
@@ -17,6 +18,9 @@ import org.springframework.util.StringUtils;
  * @copyright 2015 天大求实电力新技术股份有限公司 版权所有
  */
 public class DateEditor extends PropertyEditorSupport {
+	
+	private final static Logger log = Logger.getLogger(DateEditor.class);
+	
 	private static final DateFormat DATEFORMAT = new SimpleDateFormat("yyyy-MM-dd");
 	private static final DateFormat TIMEFORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
@@ -54,7 +58,9 @@ public class DateEditor extends PropertyEditorSupport {
 						setValue(DATEFORMAT.parse(text));
 				}
 			} catch (ParseException ex) {
-				throw new IllegalArgumentException("Could not parse date: " + ex.getMessage(), ex);
+//				throw new IllegalArgumentException("Could not parse date: " + ex.getMessage(), ex);
+				log.error("Could not parse date: " + ex.getMessage());
+				setValue(null);
 			}
 		}
 	}

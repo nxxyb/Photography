@@ -73,7 +73,19 @@ public class UserController extends BaseController{
 	 */
 	@RequestMapping("/toRegister")
 	public String toRegister(HttpServletRequest request, Model model) {
-		return "user/register";
+		return "user/register_normal";
+	}
+	
+	/**
+	 * 跳转到register页面
+	 * @param request
+	 * @param model
+	 * @return
+	 * @author 徐雁斌
+	 */
+	@RequestMapping("/toRegisterPublisher")
+	public String toRegisterPublisher(HttpServletRequest request, Model model) {
+		return "user/register_publisher";
 	}
 	
 	/**

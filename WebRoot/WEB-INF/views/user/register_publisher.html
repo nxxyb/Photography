@@ -1,0 +1,51 @@
+<#assign basePath=request.contextPath>
+<!DOCTYPE HTML>
+<html>
+<head>
+<!-- title start-->
+   <#include "../common/title.html">
+  <!-- title end-->
+  
+  <!-- link start-->
+   <#include "../common/link.html">
+  <!-- link end-->
+  
+</head>
+
+<body>
+  <!-- header start-->
+  <#include "../common/header.html">
+  <!-- header end -->
+  
+          <div class="register_account">
+          	<div class="wrap">
+    	      <h4 class="title">创建用户</h4>
+    		  <form action="${basePath}/user/register" method="post" name="register">
+    			 <div class="col_1_of_login span_1_of_login">
+					<p>
+					1.填写注册信息。
+					</p>
+					 <div class="clear"></div>
+				</div>
+		    	  <div class="col_1_of_login span_1_of_login">
+		    	  	<div>
+		    	  	<a href="${basePath}/user/toRegister" class="grey" >普通用户</a>
+		    	  	<a href="#" class="select">活动发布者</a>
+		    	  	</div>
+		    		<div><input type="text" name="loginName" placeholder="用户名" required="required"></div>
+		    		<div><input type="password" name="password" required="required" placeholder="密码"></div>
+		    		<div><input type="password" name="password1" required="required" placeholder="重复密码"></div>
+		    		 <button class="grey" type="submit">提交</button>
+		    		<p class="terms">By clicking 'Create Account' you agree to the <a href="#">Terms &amp; Conditions</a>.</p>
+		          </div>
+		    <div class="clear"></div>
+		    </form>
+    	</div>
+    </div>
+    
+  <!-- footer start-->
+  <#include "../common/footer.html">
+  <!-- footer end -->
+  
+  </body>
+</html>

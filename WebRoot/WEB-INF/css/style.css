@@ -1032,7 +1032,7 @@ table {
 .register_account table td {
 	width: 100%;
 }
-.register_account form input[type="text"], .register_account form select {
+.register_account form input, .register_account form select {
 	font-size:0.95em;
 	color:#777;
 	padding: 8px;
@@ -1086,6 +1086,43 @@ button.grey:hover {
 	background:#4CB1CA;
 	color: #FFF;
 }
+
+a.grey{
+	display: inline-block;
+	text-decoration: none;
+	cursor: pointer;
+	background: #555;
+	font-size:0.95;
+	line-height: 16px;
+	text-transform: uppercase;
+	padding:10px 30px;
+	color: #FFF;
+	border: none;
+	float: left;
+	font-family: 'Exo 2', sans-serif;
+	outline:none;
+}
+a.grey:hover {
+	background:#4CB1CA;
+	color: #FFF;
+}
+
+a.select{
+	display: inline-block;
+	text-decoration: none;
+	cursor: pointer;
+	background: #4CB1CA;
+	font-size:0.95;
+	line-height: 16px;
+	text-transform: uppercase;
+	padding:10px 30px;
+	color: #FFF;
+	border: none;
+	float: left;
+	font-family: 'Exo 2', sans-serif;
+	outline:none;
+}
+
 .register_account form input[type="text"].code {
 	width: 15%;
 }

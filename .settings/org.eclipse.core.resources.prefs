@@ -1,5 +1,10 @@
-#Tue Feb 03 14:30:12 CST 2015
+#Fri Feb 27 16:44:22 CST 2015
 eclipse.preferences.version=1
+encoding//WebRoot/WEB-INF/views=UTF-8
+encoding//WebRoot/WEB-INF/views/common/header.html=UTF-8
+encoding//WebRoot/WEB-INF/views/user/login.html=UTF-8
+encoding//WebRoot/WEB-INF/views/user/register_normal.html=UTF-8
+encoding//WebRoot/WEB-INF/views/user/register_publisher.html=UTF-8
 encoding//resources/jdbc.properties=UTF-8
 encoding//resources/log4j.properties=UTF-8
 encoding/<project>=UTF-8

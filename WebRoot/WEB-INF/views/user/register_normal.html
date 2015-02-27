@@ -1,0 +1,53 @@
+<#assign basePath=request.contextPath>
+<!DOCTYPE HTML>
+<html>
+<head>
+<!-- title start-->
+   <#include "../common/title.html">
+  <!-- title end-->
+  
+  <!-- link start-->
+   <#include "../common/link.html">
+  <!-- link end-->
+  
+</head>
+
+<body>
+  <!-- header start-->
+  <#include "../common/header.html">
+  <!-- header end -->
+  
+          <div class="register_account">
+          	<div class="wrap">
+    	      <h4 class="title">创建用户</h4>
+    		  <form action="${basePath}/user/register" method="post" name="register">
+    			 <div class="col_1_of_login span_1_of_login">
+					<p>
+					1.填写注册信息。<br>
+					2.通过邮件确认。<br>
+					3.完善个人信息。<br>
+					</p>
+					 <div class="clear"></div>
+				</div>
+		    	  <div class="col_1_of_login span_1_of_login">
+		    	  	<div>
+		    	  	<a href="#" class="select" >普通用户</a>
+		    	  	<a href="${basePath}/user/toRegisterPublisher" class="grey">活动发布者</a>
+		    	  	</div>
+		    		<div><input type="text" name="email" placeholder="邮箱地址" required="required" ></div>
+		    		<div><input type="password" name="password" placeholder="密码" required="required" ></div>
+		    		<div><input type="password" name="password1" placeholder="重复密码" required="required" ></div>
+		    		 <button class="grey" type="submit">注册</button>
+		    		<p class="terms">点击"注册"并同意 <a href="#">《摄影帮服务协议条款》</a>.</p>
+		          </div>
+		    <div class="clear"></div>
+		    </form>
+    	</div>
+    </div>
+    
+  <!-- footer start-->
+  <#include "../common/footer.html">
+  <!-- footer end -->
+  
+  </body>
+</html>
