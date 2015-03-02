@@ -956,6 +956,18 @@ h4.title{
 	border-bottom: 1px solid #DFDDDD;
 	padding-bottom: 13px;
 }
+h3.title{
+	color: #555;
+	margin-bottom: 0.5em;
+	font-size: 1.2em;
+	line-height: 1.2;
+	font-weight: normal;
+	margin-top: 0px;
+	letter-spacing: -1px;
+	text-transform: uppercase;
+	border-bottom: 1px solid #DFDDDD;
+	padding-bottom: 13px;
+}
 input.inputbox, input.required, div.k2AccountPage input[type="text"] {
 	background: #FFF;
 	border: 1px solid #BDBCBC;
