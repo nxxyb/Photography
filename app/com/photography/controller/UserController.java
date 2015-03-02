@@ -8,9 +8,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.photography.mapping.User;
+import com.photography.service.IMailService;
 import com.photography.service.IUserService;
+import com.photography.utils.Constants;
+import com.photography.utils.CustomizedPropertyPlaceholderConfigurer;
 
 /**
  * 
@@ -28,10 +32,17 @@ public class UserController extends BaseController{
 	@Autowired
 	private IUserService userService;
 	
+	@Autowired
+	private IMailService mailService;
+	
 	public void setUserService(IUserService userService) {
 		this.userService = userService;
 	}
 	
+	public void setMailService(IMailService mailService) {
+		this.mailService = mailService;
+	}
+
 	/**
 	 * 跳转到login页面
 	 * @param request
@@ -89,22 +100,60 @@ public class UserController extends BaseController{
 	}
 	
 	/**
-	 * login操作
-	 * @param userName
-	 * @param password
+	 * 用户注册
+	 * @param user
 	 * @param request
 	 * @param model
 	 * @return
 	 * @author 徐雁斌
 	 */
 	@RequestMapping(value="/register",method=RequestMethod.POST)
-	public String register(User user,HttpServletRequest request, Model model){
+	public ModelAndView register(User user,HttpServletRequest request, Model model){
 		try{
 			userService.savePojo(user, user);
+			mailService.sendConfirmMail(user.getEmail(), user.getId());
+			ModelAndView mav=new ModelAndView();
+			mav.addObject("email", user.getEmail()); 
+	        mav.setViewName("user/register_normal_email"); 
+	        return mav;
 		}catch(Exception e){
 			log.error(e);
+			return null;
 		}
-		return "index";
+	}
+	
+	/**
+	 * 邮件确认
+	 * @param request
+	 * @param model
+	 * @return
+	 * @author 徐雁斌
+	 */
+	@RequestMapping("/emailConfirm")
+	public ModelAndView emailConfirm(String key,HttpServletRequest request) {
+		ModelAndView mav = new ModelAndView();
+		try {
+			User user = (User) userService.loadPojo(key);
+			if (user != null) {
+				if(Constants.YES.equals(user.getEnable())){
+					mav.addObject("error_message", CustomizedPropertyPlaceholderConfigurer.getContextProperty("error.user.confirmed"));
+					mav.setViewName("error/error");
+				}
+				
+				user.setEnable(Constants.YES);
+				userService.savePojo(user, user);
+				mav.addObject("email", "email");
+				mav.setViewName("user/register_normal_email");
+			}else{
+				mav.addObject("error_message", CustomizedPropertyPlaceholderConfigurer.getContextProperty("error.user.not.found"));
+				mav.setViewName("error/error");
+			}
+		} catch (Exception e) {
+			log.error(e);
+			mav.addObject("error_message", CustomizedPropertyPlaceholderConfigurer.getContextProperty("error.unknown"));
+			mav.setViewName("error/error");
+		}
+		return mav;
 	}
 	
 	
