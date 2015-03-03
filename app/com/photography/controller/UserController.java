@@ -1,13 +1,18 @@
 package com.photography.controller;
 
+import java.io.File;
+import java.io.IOException;
+
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.photography.mapping.User;
@@ -76,7 +81,7 @@ public class UserController extends BaseController{
 	}
 	
 	/**
-	 * 跳转到register页面
+	 * 跳转到register页面(爱好者用户)
 	 * @param request
 	 * @param model
 	 * @return
@@ -88,19 +93,7 @@ public class UserController extends BaseController{
 	}
 	
 	/**
-	 * 跳转到register页面
-	 * @param request
-	 * @param model
-	 * @return
-	 * @author 徐雁斌
-	 */
-	@RequestMapping("/toRegisterPublisher")
-	public String toRegisterPublisher(HttpServletRequest request, Model model) {
-		return "user/register_publisher";
-	}
-	
-	/**
-	 * 用户注册
+	 * 用户注册(爱好者用户)
 	 * @param user
 	 * @param request
 	 * @param model
@@ -109,21 +102,23 @@ public class UserController extends BaseController{
 	 */
 	@RequestMapping(value="/register",method=RequestMethod.POST)
 	public ModelAndView register(User user,HttpServletRequest request, Model model){
+		ModelAndView mav = new ModelAndView();
 		try{
+			user.setType(Constants.USER_TYPE_NORMAL);
 			userService.savePojo(user, user);
 			mailService.sendConfirmMail(user.getEmail(), user.getId());
-			ModelAndView mav=new ModelAndView();
 			mav.addObject("email", user.getEmail()); 
-	        mav.setViewName("user/register_normal_email"); 
-	        return mav;
+	        mav.setViewName("user/register_normal_email");
 		}catch(Exception e){
 			log.error(e);
-			return null;
+			mav.addObject("error_message", CustomizedPropertyPlaceholderConfigurer.getContextProperty("error.unknown"));
+			mav.setViewName("error/error");
 		}
+		return mav;
 	}
 	
 	/**
-	 * 邮件确认
+	 * 邮件确认(爱好者用户)
 	 * @param request
 	 * @param model
 	 * @return
@@ -135,15 +130,15 @@ public class UserController extends BaseController{
 		try {
 			User user = (User) userService.loadPojo(key);
 			if (user != null) {
-				if(Constants.YES.equals(user.getEnable())){
+				if(!Constants.NO.equals(user.getEnable())){
 					mav.addObject("error_message", CustomizedPropertyPlaceholderConfigurer.getContextProperty("error.user.confirmed"));
 					mav.setViewName("error/error");
+				}else{
+					user.setEnable(Constants.YES);
+					userService.savePojo(user, user);
+					mav.addObject("email", "email");
+					mav.setViewName("user/register_normal_email_confirm");
 				}
-				
-				user.setEnable(Constants.YES);
-				userService.savePojo(user, user);
-				mav.addObject("email", "email");
-				mav.setViewName("user/register_normal_email");
 			}else{
 				mav.addObject("error_message", CustomizedPropertyPlaceholderConfigurer.getContextProperty("error.user.not.found"));
 				mav.setViewName("error/error");
@@ -156,5 +151,53 @@ public class UserController extends BaseController{
 		return mav;
 	}
 	
+	/**
+	 * 跳转到register页面(活动发布用户)
+	 * @param request
+	 * @param model
+	 * @return
+	 * @author 徐雁斌
+	 */
+	@RequestMapping("/toRegisterPublisher")
+	public String toRegisterPublisher(HttpServletRequest request, Model model) {
+		return "user/register_publisher";
+	}
+	
+	/**
+	 * 用户注册(活动发布用户)
+	 * @param user
+	 * @param request
+	 * @param model
+	 * @return
+	 * @author 徐雁斌
+	 */
+	@RequestMapping(value="/registerPublisher",method=RequestMethod.POST)
+	public ModelAndView registerPublisher(User user,MultipartFile file,HttpServletRequest request, Model model){
+//		try{
+//			user.setType(Constants.USER_TYPE_PUBLISH);
+//			userService.savePojo(user, user);
+//			mailService.sendConfirmMail(user.getEmail(), user.getId());
+//			ModelAndView mav=new ModelAndView();
+//			mav.addObject("email", user.getEmail()); 
+//	        mav.setViewName("user/register_normal_email"); 
+//	        return mav;
+//		}catch(Exception e){
+//			log.error(e);
+//			return null;
+//		}
+		
+		String realPath = request.getSession().getServletContext().getRealPath("/WEB-INF/upload/register");  
+        try {
+			FileUtils.copyInputStreamToFile(file.getInputStream(), new File(realPath, file.getOriginalFilename()));
+		} catch (IOException e) {
+			log.error("UserController.registerPublisher(): IOException", e);
+		} 
+		return null;
+	}
+	
+	@RequestMapping("/test")
+	public String test(HttpServletRequest request,Model model) {
+		return "user/register_publisher";
+	}
 	
 }

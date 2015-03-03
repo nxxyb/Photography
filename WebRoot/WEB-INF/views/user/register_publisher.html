@@ -20,10 +20,14 @@
           <div class="register_account">
           	<div class="wrap">
     	      <h4 class="title">创建用户</h4>
-    		  <form action="${basePath}/user/register" method="post" name="register">
-    			 <div class="col_1_of_login span_1_of_login">
+    		  <form action="${basePath}/user/registerPublisher" method="post" enctype="multipart/form-data" name="register">
+    			  <div class="col_1_of_login span_1_of_login">
+    			 <h3 class="title">步骤</h3>
 					<p>
-					1.填写注册信息。
+					<div class="capsule">填写注册信息</div>
+					<div class="capsule">通过邮件确认</div>
+					<div class="capsule">完善个人信息</div>
+					<div class="capsule">等待审核</div>
 					</p>
 					 <div class="clear"></div>
 				</div>
@@ -32,11 +36,15 @@
 		    	  	<a href="${basePath}/user/toRegister" class="grey" >普通用户</a>
 		    	  	<a href="#" class="select">活动发布者</a>
 		    	  	</div>
-		    		<div><input type="text" name="loginName" placeholder="用户名" required="required"></div>
-		    		<div><input type="password" name="password" required="required" placeholder="密码"></div>
-		    		<div><input type="password" name="password1" required="required" placeholder="重复密码"></div>
-		    		 <button class="grey" type="submit">提交</button>
-		    		<p class="terms">By clicking 'Create Account' you agree to the <a href="#">Terms &amp; Conditions</a>.</p>
+		    		<div><input type="text" name="email" placeholder="邮箱地址" required="required" ></div>
+		    		<div><input type="password" name="password" placeholder="密码" required="required" ></div>
+		    		<div><input type="password" name="password1" placeholder="重复密码" required="required" ></div>
+		    		<div>
+		    			<input type="file" name="file" class="file" placeholder="上传文件" required="required" accept="image/*">
+		    			<a class="link" href="#">上传照片指南</a>
+		    		</div>
+		    		<button class="grey" type="submit">注册</button>
+		    		<p class="terms">点击"注册"并同意 <a href="#">《摄影帮服务协议条款》</a>.</p>
 		          </div>
 		    <div class="clear"></div>
 		    </form>

@@ -1064,8 +1064,8 @@ table {
 	-moz-box-shadow:0 0 4px #aaa;
 	-o-box-shadow:0 0 4px #aaa;
 }
-.register_account form input[type="text"].code {
-	width: 15%;
+.register_account form input[type="file"].file {
+	width: 40%;
 }
 .register_account form input[type="text"].number {
 	width: 69.8%;
@@ -1117,6 +1117,12 @@ a.grey{
 a.grey:hover {
 	background:#4CB1CA;
 	color: #FFF;
+}
+
+a.link{
+	text-decoration: underline;
+	font-size:0.95;
+	color:#555;
 }
 
 a.select{
@@ -2197,6 +2203,27 @@ ul.delivery-list li a:hover{
 	-webkit-text-shadow: 1px 1px 6px #aaa;
 	-o-text-shadow: 1px 1px 6px #aaa;
 }
+
+.page-not-found h4 {
+	font-size: 5em;
+	color: #F0F0F0;
+	text-align: center;
+	text-shadow: 1px 1px 6px #AAA;
+	-moz-text-shadow: 1px 1px 6px #aaa;
+	-webkit-text-shadow: 1px 1px 6px #aaa;
+	-o-text-shadow: 1px 1px 6px #aaa;
+}
+
+.page-not-found h5 {
+	font-size: 3em;
+	color: #F0F0F0;
+	text-align: center;
+	text-shadow: 1px 1px 6px #AAA;
+	-moz-text-shadow: 1px 1px 6px #aaa;
+	-webkit-text-shadow: 1px 1px 6px #aaa;
+	-o-text-shadow: 1px 1px 6px #aaa;
+}
+
 /*--responsive design--*/
 @media (max-width:1366px){
 	.wrap{
