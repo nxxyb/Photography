@@ -24,14 +24,17 @@ public class Constants {
 	/**
 	 * 用户类型
 	 */
+	//普通用户
+	public final static String USER_TYPE_NORMAL = "2";
+	
+	//个人活动发布者
+	public final static String USER_TYPE_PERSON_PUBLISH = "3";
+	
+	//单位活动发布者
+	public final static String USER_TYPE_COMPANY_PUBLISH = "4";
+	
 	//管理员
 	public final static String USER_TYPE_ADMIN = "1";
-	
-	//活动发布者
-	public final static String USER_TYPE_PUBLISH = "2";
-	
-	//普通用户
-	public final static String USER_TYPE_NORMAL = "3";
 	
 
 	/**

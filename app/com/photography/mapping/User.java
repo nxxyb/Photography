@@ -38,7 +38,7 @@ public class User extends BaseMapping{
 	
 	/**
 	 * 用户类型
-	 * 管理员、活动发布者、普通用户
+	 * 管理员、个人活动发布用户、单位活动发布用户、普通用户
 	 */
 	@Column(name="type")
 	private String type;
@@ -90,6 +90,36 @@ public class User extends BaseMapping{
 	 */
 	@Column(name="enable")
 	private String enable = Constants.NO;
+	
+	/**
+	 * 省
+	 */
+	@Column(name="province")
+	private String province;
+	
+	/**
+	 * 市
+	 */
+	@Column(name="city")
+	private String city;
+	
+	/**
+	 * 区
+	 */
+	@Column(name="county")
+	private String county;
+	
+	/**
+	 * 身份证号
+	 */
+	@Column(name="id_card")
+	private String idCard;
+	
+	/**
+	 * 单位名称
+	 */
+	@Column(name="company_name")
+	private String companyName;
 
 	public String getLoginName() {
 		return loginName;
@@ -177,6 +207,46 @@ public class User extends BaseMapping{
 
 	public void setEnable(String enable) {
 		this.enable = enable;
+	}
+
+	public String getProvince() {
+		return province;
+	}
+
+	public void setProvince(String province) {
+		this.province = province;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public String getCounty() {
+		return county;
+	}
+
+	public void setCounty(String county) {
+		this.county = county;
+	}
+
+	public String getIdCard() {
+		return idCard;
+	}
+
+	public void setIdCard(String idCard) {
+		this.idCard = idCard;
+	}
+
+	public String getCompanyName() {
+		return companyName;
+	}
+
+	public void setCompanyName(String companyName) {
+		this.companyName = companyName;
 	}
 
 }

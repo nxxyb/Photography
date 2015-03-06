@@ -9,6 +9,7 @@
   <!-- link start-->
    <#include "../common/link.html">
   <!-- link end-->
+  <script src="${basePath}/js/area.js"></script>
   
 </head>
 
@@ -39,9 +40,23 @@
 		    		<div><input type="text" name="email" placeholder="邮箱地址" required="required" ></div>
 		    		<div><input type="password" name="password" placeholder="密码" required="required" ></div>
 		    		<div><input type="password" name="password1" placeholder="重复密码" required="required" ></div>
+		    		
+		    		 <h6 class="title">用户信息</h6>
+		    		 <div><select id="type" name="type" onchange="change_type(this.value)" class="frm-field required">
+		    		 			<option value="3">个人</option>
+		            			<option value="4">单位</option>
+		    		 	  </select>
+		    		 </div>
+		    		 <div id="info">
+			    		 <div><input type="text" name="realName" class="input_2span" placeholder="真实姓名" required="required" >
+			    		 	  <input type="text" name="idCard" class="input_2span" placeholder="身份证号" required="required" >
+			    		 </div>
+			    		 <div><input type="text" name="mobile" placeholder="手机号码" required="required" ></div>
+		    		</div>
+		    		
 		    		<div>
 		    			<input type="file" name="file" class="file" placeholder="上传文件" required="required" accept="image/*">
-		    			<a class="link" href="#">上传照片指南</a>
+		    			<a class="link" href="#">上传验证照片指南</a>
 		    		</div>
 		    		<button class="grey" type="submit">注册</button>
 		    		<p class="terms">点击"注册"并同意 <a href="#">《摄影帮服务协议条款》</a>.</p>
@@ -50,6 +65,33 @@
 		    </form>
     	</div>
     </div>
+    
+    <script type="text/javascript">
+    	function change_type(value){
+    		 var person_info = '<div><input type="text" name="realName" class="input_2span" placeholder="真实姓名" required="required" >' + 
+			    		 		 '<input type="text" name="idCard" class="input_2span" placeholder="身份证号" required="required" ></div>' + 
+			    		         '<div><input type="text" name="mobile" placeholder="手机号码" required="required" ></div>';
+			    		         
+			var company_info = '<div><input type="text" name="companyName" class="input_2span" placeholder="单位名称" required="required" >' + 
+				    			 '<input type="text" name="realName" class="input_2span" placeholder="法人姓名" required="required" ></div>' +
+					    		 '<div><input type="text" name="idCard" class="input_2span" placeholder="法人身份证号" required="required" >' +
+					    		 '<input type="text" name="mobile" class="input_2span" placeholder="法人手机号码" required="required" ></div>'+
+					    		  '<div><select id="province" name="province" class="select_3span" class="frm-field required"></select>' + 
+				    			  '<select id="city" name="city" class="select_3span" class="frm-field required"></select>' + 
+				    			  '<select id="county" name="county" class="select_3span" class="frm-field required"></select>' + 
+				    			 '</div>';
+    		if(value == "3"){
+    			$("#info").empty();
+    			$("#info").html(person_info);
+    		}else{
+    			$("#info").empty();
+    			$("#info").html(company_info);
+    			
+    			_init_area();
+		    	
+    		}
+    	}
+    </script>
     
   <!-- footer start-->
   <#include "../common/footer.html">

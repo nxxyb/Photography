@@ -968,6 +968,18 @@ h3.title{
 	border-bottom: 1px solid #DFDDDD;
 	padding-bottom: 13px;
 }
+h6.title{
+	color: #555;
+	margin-bottom: 0.5em;
+	font-size: 1.0em;
+	line-height: 1.2;
+	font-weight: normal;
+	margin-top: 0px;
+	letter-spacing: -1px;
+	text-transform: uppercase;
+	border-bottom: 1px solid #DFDDDD;
+	padding-bottom: 13px;
+}
 input.inputbox, input.required, div.k2AccountPage input[type="text"] {
 	background: #FFF;
 	border: 1px solid #BDBCBC;
@@ -1064,12 +1076,18 @@ table {
 	-moz-box-shadow:0 0 4px #aaa;
 	-o-box-shadow:0 0 4px #aaa;
 }
-.register_account form input[type="file"].file {
-	width: 40%;
+.register_account form input.file {
+	width: 60%;
 }
-.register_account form input[type="text"].number {
-	width: 69.8%;
+
+.register_account form input.input_2span {
+	width: 43%;
 }
+
+.register_account form select.select_3span {
+	width: 30%;
+}
+
 p.terms a, p.note a {
 	text-decoration: underline;
 	color:#555;
