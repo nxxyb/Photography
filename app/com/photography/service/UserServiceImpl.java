@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.photography.dao.IHibernateDao;
 import com.photography.dao.IUserDao;
+import com.photography.dao.exp.Condition;
 import com.photography.dao.query.QueryConstants;
 import com.photography.dao.query.QueryCriterions;
 import com.photography.exception.ErrorCode;
@@ -23,6 +24,7 @@ import com.photography.utils.Constants;
  * 
  * @copyright 2015 天大求实电力新技术股份有限公司 版权所有
  */
+@SuppressWarnings("deprecation")
 @Service("userService")
 public class UserServiceImpl extends BaseServiceImpl implements IUserService {
 	
@@ -51,7 +53,6 @@ public class UserServiceImpl extends BaseServiceImpl implements IUserService {
 	/* 
 	 * @see com.photography.service.IUserService#login(java.lang.String, java.lang.String)
 	 */
-	@SuppressWarnings("deprecation")
 	public User login(String userName, String password) throws ServiceException {
 		QueryCriterions hc = new QueryCriterions();
 		hc.and("loginName", userName, QueryConstants.EQ);
@@ -80,6 +81,18 @@ public class UserServiceImpl extends BaseServiceImpl implements IUserService {
 		userDao.saveOrUpdate(user);
 		
 		return user;
+	}
+
+	/* 
+	 * @see com.photography.service.IUserService#getByEmail(java.lang.String)
+	 */
+	@Override
+	public User getByEmail(String email) {
+		List<User> users = userDao.getByQuery(User.class, Condition.eq("email", email));
+		if(users != null && !users.isEmpty()){
+			return users.get(0);
+		}
+		return null;
 	}
 	
 	

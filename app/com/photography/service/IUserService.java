@@ -21,5 +21,13 @@ public interface IUserService extends IBaseService{
 	 * @author 徐雁斌
 	 */
 	public User login(String userName,String password) throws ServiceException;
+	
+	/**
+	 * 通过邮件查询用户
+	 * @param email
+	 * @return
+	 * @author 徐雁斌
+	 */
+	public User getByEmail(String email);
 
 }

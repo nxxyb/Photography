@@ -1,7 +1,6 @@
 package com.photography.controller;
 
 import java.io.File;
-import java.io.IOException;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -73,7 +72,7 @@ public class UserController extends BaseController{
 	public String login(String userName,String password,HttpServletRequest request, Model model){
 		try{
 			User user = userService.login(userName, password);
-			request.getSession().setAttribute("user", user);
+			request.getSession().setAttribute(Constants.SESSION_USER_KEY, user);
 		}catch(Exception e){
 			log.error(e);
 		}
@@ -118,6 +117,39 @@ public class UserController extends BaseController{
 	}
 	
 	/**
+	 * 重新发送确认邮件
+	 * @param email
+	 * @param type  1-普通用户  2 发布用户
+	 * @param request
+	 * @return
+	 * @author 徐雁斌
+	 */
+	@RequestMapping(value="/reSendEmail")
+	public ModelAndView reSendEmail(String email,String type,HttpServletRequest request){
+		ModelAndView mav = new ModelAndView();
+		try{
+			User user = userService.getByEmail(email);
+			if(user != null){
+				mailService.sendConfirmMail(user.getEmail(), user.getId());
+				mav.addObject("email", email); 
+				if("1".equals(type)){
+					mav.setViewName("user/register_normal_email");
+				}else{
+					mav.setViewName("user/register_publisher_email");
+				}
+			}else{
+				mav.addObject("error_message", CustomizedPropertyPlaceholderConfigurer.getContextProperty("error.unknown"));
+				mav.setViewName("error/error");
+			}
+		}catch(Exception e){
+			log.error(e);
+			mav.addObject("error_message", CustomizedPropertyPlaceholderConfigurer.getContextProperty("error.user.not.found"));
+			mav.setViewName("error/error");
+		}
+		return mav;
+	}
+	
+	/**
 	 * 邮件确认(爱好者用户)
 	 * @param request
 	 * @param model
@@ -137,7 +169,11 @@ public class UserController extends BaseController{
 					user.setEnable(Constants.YES);
 					userService.savePojo(user, user);
 					mav.addObject("email", "email");
-					mav.setViewName("user/register_normal_email_confirm");
+					if(Constants.USER_TYPE_NORMAL.equals(user.getType())){
+						mav.setViewName("user/register_normal_email_confirm");
+					}else{
+						mav.setViewName("user/register_publisher_email_confirm");
+					}
 				}
 			}else{
 				mav.addObject("error_message", CustomizedPropertyPlaceholderConfigurer.getContextProperty("error.user.not.found"));
@@ -173,26 +209,29 @@ public class UserController extends BaseController{
 	 */
 	@RequestMapping(value="/registerPublisher",method=RequestMethod.POST)
 	public ModelAndView registerPublisher(User user,MultipartFile file,HttpServletRequest request, Model model){
-//		try{
-//			user.setType(Constants.USER_TYPE_PUBLISH);
-//			userService.savePojo(user, user);
-//			mailService.sendConfirmMail(user.getEmail(), user.getId());
-//			ModelAndView mav=new ModelAndView();
-//			mav.addObject("email", user.getEmail()); 
-//	        mav.setViewName("user/register_normal_email"); 
-//	        return mav;
-//		}catch(Exception e){
-//			log.error(e);
-//			return null;
-//		}
-		
-		String realPath = request.getSession().getServletContext().getRealPath("/WEB-INF/upload/register");  
+		ModelAndView mav=new ModelAndView();
         try {
-			FileUtils.copyInputStreamToFile(file.getInputStream(), new File(realPath, file.getOriginalFilename()));
-		} catch (IOException e) {
-			log.error("UserController.registerPublisher(): IOException", e);
+        	String filePath = request.getSession().getServletContext().getRealPath((String)
+        			CustomizedPropertyPlaceholderConfigurer.getContextProperty("user.confirm.file")) + user.getEmail();
+        	File userFile = new File(filePath);
+        	if(!userFile.exists()){
+        		userFile.mkdir();
+        	}
+        	
+			FileUtils.copyInputStreamToFile(file.getInputStream(), new File(filePath, file.getOriginalFilename()));
+			
+			user.setComfirmPic(filePath + File.separator + file.getOriginalFilename());
+			userService.savePojo(user, user);
+			mailService.sendConfirmMail(user.getEmail(), user.getId());
+			
+			mav.addObject("email", user.getEmail());
+	        mav.setViewName("user/register_publisher_email"); 
+		} catch (Exception e) {
+			log.error("UserController.registerPublisher(): Exception", e);
+			mav.addObject("error_message", CustomizedPropertyPlaceholderConfigurer.getContextProperty("error.unknown"));
+			mav.setViewName("error/error");
 		} 
-		return null;
+        return mav;
 	}
 	
 	@RequestMapping("/test")

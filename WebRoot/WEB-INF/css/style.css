@@ -33,7 +33,7 @@ body{
 	background:#fff;
 }
 .wrap{
-	width:80%;
+	width:90%;
 	margin:0 auto;
 	-moz-transition:all .2s linear;
 	-webkit-transition:all .2s linear; 
@@ -46,11 +46,13 @@ body{
 .header-top-left{
 	width:54.5%;
 	float:left;
+	margin:10px;
 }
 .box{
 	float:left;
 	width:20.5%;
 	margin-right:10.6%;
+	text-align: center;
 }
 .box1{
 	float:left;

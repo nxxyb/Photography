@@ -120,6 +120,12 @@ public class User extends BaseMapping{
 	 */
 	@Column(name="company_name")
 	private String companyName;
+	
+	/**
+	 * 验证照片地址
+	 */
+	@Column(name="comfirm_pic")
+	private String comfirmPic;
 
 	public String getLoginName() {
 		return loginName;
@@ -247,6 +253,14 @@ public class User extends BaseMapping{
 
 	public void setCompanyName(String companyName) {
 		this.companyName = companyName;
+	}
+
+	public String getComfirmPic() {
+		return comfirmPic;
+	}
+
+	public void setComfirmPic(String comfirmPic) {
+		this.comfirmPic = comfirmPic;
 	}
 
 }

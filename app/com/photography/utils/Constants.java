@@ -36,6 +36,9 @@ public class Constants {
 	//管理员
 	public final static String USER_TYPE_ADMIN = "1";
 	
+	//session
+	public final static String SESSION_USER_KEY = "user";
+	
 
 	/**
 	 * 活动类型

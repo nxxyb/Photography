@@ -19,7 +19,12 @@ CREATE TABLE `user` (
   `birth_day` date comment '生日',
   `verify` varchar(2) comment '是否审核',
   `enable` varchar(2) comment '是否激活',
+  `province` varchar(20) comment '省',
+  `city` varchar(20) comment '市',
+  `county` varchar(20) comment '区',
+  `id_card` varchar(20) comment '身份证号',
+   `company_name` varchar(20) comment '单位名称',
+   `comfirm_pic` varchar(300) comment '验证照片地址',
   `create_time` datetime comment '注册时间',
   `last_update_time` datetime comment '最后登录时间'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
