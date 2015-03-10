@@ -9,8 +9,6 @@ import org.springframework.stereotype.Service;
 import com.photography.dao.IHibernateDao;
 import com.photography.dao.IUserDao;
 import com.photography.dao.exp.Condition;
-import com.photography.dao.query.QueryConstants;
-import com.photography.dao.query.QueryCriterions;
 import com.photography.exception.ErrorCode;
 import com.photography.exception.ServiceException;
 import com.photography.mapping.BaseMapping;
@@ -53,11 +51,9 @@ public class UserServiceImpl extends BaseServiceImpl implements IUserService {
 	/* 
 	 * @see com.photography.service.IUserService#login(java.lang.String, java.lang.String)
 	 */
-	public User login(String userName, String password) throws ServiceException {
-		QueryCriterions hc = new QueryCriterions();
-		hc.and("loginName", userName, QueryConstants.EQ);
+	public User login(String email, String password) throws ServiceException {
 		User user = null;
-		List<User> userList = (List<User>) userDao.getByQuery(User.class, hc.toExpression());
+		List<User> userList = (List<User>) userDao.getByQuery(User.class, Condition.eq("email", email));
 		if(userList.size()>0) {
 			user = userList.get(0);
 		}
@@ -73,9 +69,9 @@ public class UserServiceImpl extends BaseServiceImpl implements IUserService {
 			throw new ServiceException(ErrorCode.USER_NOT_ENABLE);
 		}
 		
-		if(user.getVerify() != null && Constants.NO.equals(user.getVerify())){
-			throw new ServiceException(ErrorCode.USER_NOT_VERIFY);
-		}
+//		if(user.getVerify() != null && Constants.NO.equals(user.getVerify())){
+//			throw new ServiceException(ErrorCode.USER_NOT_VERIFY);
+//		}
 		
 		user.setLastUpdateTime(new Date());
 		userDao.saveOrUpdate(user);

@@ -1,0 +1,26 @@
+.span_1_of_person {
+	width: 15%;
+	padding: 1.5%;
+}
+
+.span_1_of_person ul li {
+	margin: 10px;
+	padding:2% 0;
+}
+
+.span_1_of_person ul li a{
+	display:block;
+	font-size: 0.85em;
+	color:#777;
+	text-transform:capitalize;
+	line-height:2em;
+	-webkit-transition: all 0.3s ease-in-out;
+	-moz-transition: all 0.3s ease-in-out;
+	-o-transition: all 0.3s ease-in-out;
+	transition: all 0.3s ease-in-out;
+}
+
+.span_2_of_person {
+	width:65%;
+	padding:1.5%;
+}

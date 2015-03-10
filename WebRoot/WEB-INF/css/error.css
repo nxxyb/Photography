@@ -1,0 +1,17 @@
+.err_tip {
+  margin-top: -8px;
+  overflow: hidden;
+  color: #ff6f3d;
+  font-size:0.85em;
+}
+
+.icon_error{
+	background-image:url("../images/ico/warning_ico.png");
+	background-repeat:no-repeat; 
+	width:14px; 
+	height:14px; 
+	margin:2px 5px 0 0; 
+	overflow:hidden; 
+	display:inline-block; 
+	vertical-align:text-top;
+}

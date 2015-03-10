@@ -8,6 +8,7 @@
   
   <!-- link start-->
    <#include "../common/link.html">
+  <script src="${basePath}/js/MD5.js" type="text/javascript"></script>
   <!-- link end-->
   
 </head>
@@ -20,7 +21,7 @@
           <div class="register_account">
           	<div class="wrap">
     	      <h4 class="title">创建用户</h4>
-    		  <form action="${basePath}/user/register" method="post" name="register">
+    		  <form action="${basePath}/user/register" method="post" name="register" onsubmit="md5()">
     			 <div class="col_1_of_login span_1_of_login">
     			 <h3 class="title">步骤</h3>
 					<p>
@@ -35,9 +36,9 @@
 		    	  	<a href="#" class="select" >普通用户</a>
 		    	  	<a href="${basePath}/user/toRegisterPublisher" class="grey">活动发布者</a>
 		    	  	</div>
-		    		<div><input type="text" name="email" placeholder="邮箱地址" required="required" ></div>
-		    		<div><input type="password" name="password" placeholder="密码" required="required" ></div>
-		    		<div><input type="password" name="password1" placeholder="重复密码" required="required" ></div>
+		    		<div><input id="email" type="email" name="email" placeholder="邮箱地址" autofocus="autofocus" maxlength="50" required="required" oninput="checkEmail()"></div>
+		    		<div><input id="password" type="password" name="password"  placeholder="密码 6-10位字母或数字" pattern=".{6,10}" title="6-10位字母或数字"  required="required" ></div>
+		    		<div><input id="password1" type="password" name="password1" pattern=".{6,10}" placeholder="重复密码" required="required" oninput="checkPasswords()"></div>
 		    		 <button class="grey" type="submit">注册</button>
 		    		<p class="terms">点击"注册"并同意 <a href="#">《摄影帮服务协议条款》</a>.</p>
 		          </div>
@@ -45,8 +46,43 @@
 		    </form>
     	</div>
     </div>
-    
-  <!-- footer start-->
+
+	<script type="text/javascript">
+		function checkPasswords() {
+			var pass1 = document.getElementById("password");
+			var pass2 = document.getElementById("password1");
+	
+			if (pass1.value != pass2.value){
+				pass2.setCustomValidity("两次输入的密码不一致");
+			}else{
+				pass2.setCustomValidity("");
+			}
+		}
+		
+		function checkEmail(){
+			var email = document.getElementById("email");
+			$.ajax({
+            type: "post",
+            dataType: "json",
+            url: "${basePath}/user/checkEmail",
+            data: {email: email.value},
+            success: function(msg){
+            	if(msg == "1"){
+                	email.setCustomValidity("该邮箱地址已经被注册，请更换其他邮箱地址！");
+                }else{
+                	email.setCustomValidity("");
+                }
+               }
+            });
+		}
+		
+		function md5(){
+			var pass =$("#password").val();	
+			$("#password").val(hex_md5(pass).toUpperCase());
+		}
+	</script>
+
+		<!-- footer start-->
   <#include "../common/footer.html">
   <!-- footer end -->
   

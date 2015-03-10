@@ -20,7 +20,7 @@ public interface IUserService extends IBaseService{
 	 * @param Password
 	 * @author 徐雁斌
 	 */
-	public User login(String userName,String password) throws ServiceException;
+	public User login(String email,String password) throws ServiceException;
 	
 	/**
 	 * 通过邮件查询用户

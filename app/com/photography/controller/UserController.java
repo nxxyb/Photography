@@ -11,9 +11,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.photography.exception.ServiceException;
 import com.photography.mapping.User;
 import com.photography.service.IMailService;
 import com.photography.service.IUserService;
@@ -69,14 +72,25 @@ public class UserController extends BaseController{
 	 * @author 徐雁斌
 	 */
 	@RequestMapping(value="/login",method=RequestMethod.POST)
-	public String login(String userName,String password,HttpServletRequest request, Model model){
+	public ModelAndView login(String email,String password,HttpServletRequest request, Model model){
+		ModelAndView mav = new ModelAndView();
 		try{
-			User user = userService.login(userName, password);
+			User user = userService.login(email, password);
 			request.getSession().setAttribute(Constants.SESSION_USER_KEY, user);
+			mav.setViewName("index");
 		}catch(Exception e){
-			log.error(e);
+			if(e instanceof ServiceException){
+				ServiceException se = (ServiceException) e;
+				String message = se.getErrorMessage();
+				mav.addObject("errorMessage", message); 
+				mav.setViewName("user/login");
+			}else{
+				log.error("login error",e);
+				mav.addObject("error_message", CustomizedPropertyPlaceholderConfigurer.getContextProperty("error.unknown"));
+				mav.setViewName("error/error");
+			}
 		}
-		return "index";
+		return mav;
 	}
 	
 	/**
@@ -234,9 +248,42 @@ public class UserController extends BaseController{
         return mav;
 	}
 	
+	/**
+	 * 检查邮件地址是否已经注册
+	 * @param email
+	 * @return
+	 * @author 徐雁斌
+	 */
+	@RequestMapping(value="/checkEmail")  
+    @ResponseBody
+    public String validataUser(@RequestParam String email){  
+		String result = Constants.YES;
+		User user = userService.getByEmail(email);
+		if(user == null){
+			result = Constants.NO;
+		}
+        return result;  
+    }
+	
+	/**
+	 * 退出登录
+	 * @param request
+	 * @return
+	 * @author 徐雁斌
+	 */
+	@RequestMapping(value="/logout")
+	public ModelAndView logout(HttpServletRequest request) {
+		ModelAndView mav=new ModelAndView();
+		request.getSession().invalidate();
+		mav.setViewName("index");
+		return mav;
+	}
+	
 	@RequestMapping("/test")
 	public String test(HttpServletRequest request,Model model) {
-		return "user/register_publisher";
+		return "user/person_info";
 	}
+	
+	
 	
 }

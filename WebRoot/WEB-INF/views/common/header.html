@@ -10,9 +10,9 @@
 			 <div class="cssmenu">
 				<ul>
 				<#if Session.user?exists>
+					<li >欢迎您 ${Session.user.email}</li>
 					<li class="active"><a href="${basePath}/user/toLogin">个人中心</a></li> |
-					<li><a href="${basePath}/user/toRegister">我的收藏</a></li>
-					<li><a href="${basePath}/user/toRegister">退出登录</a></li>
+					<li><a href="${basePath}/user/logout">退出登录</a></li>
 				<#else>
 					<li class="active"><a href="${basePath}/user/toLogin">登录</a></li> |
 					<li><a href="${basePath}/user/toRegister">注册</a></li>
