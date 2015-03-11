@@ -3,11 +3,11 @@
 <html>
 <head>
 <!-- title start-->
-   <#include "../common/title.html">
+   <#include "../../common/title.html">
   <!-- title end-->
   
   <!-- link start-->
-   <#include "../common/link.html">
+   <#include "../../common/link.html">
    <link href="${basePath}/css/person_info.css" rel="stylesheet" type="text/css" media="all" />
   <!-- link end-->
   
@@ -15,12 +15,13 @@
 
 <body>
   <!-- header start-->
-  <#include "../common/header.html">
+  <#include "../../common/header.html">
   <!-- header end -->
 
-		<div class="register_account">
+		<div >
 			<div class="wrap">
 				<div class="col_1_of_login span_1_of_person">
+					<h4 class="title"></h4>
 					<h4 class="title">个人中心</h4>
 					<ul>
 						<li><a href="#">个人信息</a></li>
@@ -30,12 +31,14 @@
 						<li><a href="#">我的留言</a></li>
 					</ul>
 					
+					<h4 class="title"></h4>
 					<h4 class="title">活动信息</h4>
 					<ul>
 						<li><a href="#">活动与教学</a></li>
 						<li><a href="#">我的活动卷</a></li>
 					</ul>
 					
+					<h4 class="title"></h4>
 					<h4 class="title">账户管理</h4>
 					<ul>
 						<li><a href="#">修改密码</a></li>
@@ -43,14 +46,26 @@
 					
 				</div>
 				<div class="col_1_of_login span_2_of_person">
-					
+					<div >
+						<img class="photoimg" alt="头像" src="${basePath}/images/person/photo.jpg">
+						<div>
+							<span>欢迎  ${(Session.user.nackName)!(Session.user.email)!""}</span>
+							<div>
+								
+							</div>
+						</div>
+					</div>
 				</div>
-			</div>
+				
+				
+				<div class="col_1_of_person span_2_of_person">
+					<#include "${html_template}">
+				</div>
 			<div class="clear"></div>
 		</div>
 
 		<!-- footer start-->
-  <#include "../common/footer.html">
+  <#include "../../common/footer.html">
   <!-- footer end -->
   
   </body>

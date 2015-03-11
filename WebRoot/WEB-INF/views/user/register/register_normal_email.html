@@ -3,18 +3,18 @@
 <html>
 <head>
 <!-- title start-->
-   <#include "../common/title.html">
+   <#include "../../common/title.html">
   <!-- title end-->
   
   <!-- link start-->
-   <#include "../common/link.html">
+   <#include "../../common/link.html">
   <!-- link end-->
   
 </head>
 
 <body>
   <!-- header start-->
-  <#include "../common/header.html">
+  <#include "../../common/header.html">
   <!-- header end -->
   
           <div class="register_account">
@@ -27,7 +27,6 @@
 					<div class="capsule1">填写注册信息</div>
 					<div class="capsule">通过邮件确认</div>
 					<div class="capsule">完善个人信息</div>
-					<div class="capsule">等待审核</div>
 					</p>
 					 <div class="clear"></div>
 				</div>
@@ -40,7 +39,7 @@
                                                                                              
 				                  如果你很长时间还没有收到摄影帮的确认信，请... <br>
 				                  确认邮件是否被你提供的邮箱系统自动拦截，或被误认为垃圾邮件放到垃圾箱了<br>
-				                  如果你确认邮箱地址正确，可以请求<a class="link" href="${basePath}/user/reSendEmail?email=${email!""}&type=2">再次发送确认信</a><br>
+				                  如果你确认邮箱地址正确，可以请求<a class="link" href="${basePath}/user/reSendEmail?email=${email!""}">再次发送确认信</a><br>
 					       如果还不能解决你的问题，可以发邮件给摄影帮管理员寻求帮助：webmasterEmailiteye.com<br>                                    
                     </p>
 		          </div>
@@ -51,7 +50,7 @@
     </div>
     
   <!-- footer start-->
-  <#include "../common/footer.html">
+  <#include "../../common/footer.html">
   <!-- footer end -->
   
   </body>

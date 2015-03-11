@@ -1,0 +1,67 @@
+<form action="${basePath}/user/register" method="post" name="person_from">
+	<h4 class="title"></h4>
+	<h4 class="title">基本信息</h4>
+	<div>
+		<label class="title">昵称：</label><input id="nackName" type="text" name="nackName" size="50" placeholder="50个汉字或字母" value="${(Session.user.nackName)!''}">
+	</div>
+	
+	<div>
+		<label class="title">性别：</label>
+		<input name="sex" id="man" type="radio" value="0" <#if Session.user.sex?? && Session.user.sex == "0">checked="checked"</#if>/> 
+		<label for="man">男</label>
+		<input name="sex" id="woman" type="radio" value="1" <#if Session.user.sex?? && Session.user.sex == "1">checked="checked"</#if>/> 
+		<label for="woman">女</label> 
+	</div>
+	
+	<div>
+		<label class="title">邮箱：</label><input id="email" type="email" name="email" placeholder="邮箱地址" value="${(Session.user.email)!''}" maxlength="50" disabled="disabled">
+	</div>
+	
+	<div>
+		<label class="title">个性签名：</label><input id="personSignature" type="text" name="personSignature" placeholder="个性签名" maxlength="50" value="${(Session.user.personSignature)!''}">
+	</div>
+	
+	<h4 class="title"></h4>
+	<h4 class="title">更多信息</h4>
+	<div>
+		<label class="title">生日：</label>
+		<input name="birthDay" id="birthDay" type="date"/> 
+	</div>
+	
+	<div>
+		<label class="title">QQ：</label><input id="qqNumber" type="text" name="qqNumber" placeholder="QQ号码" maxlength="50" value="${(Session.user.qqNumber)!''}">
+	</div>
+	
+	<h4 class="title"></h4>
+	<h4 class="title">验证信息</h4>
+	<div>
+		<label class="title">真实姓名：</label><input id="realName" type="text" name="realName" size="50" placeholder="50个汉字或字母" value="${(Session.user.realName)!''}">
+	</div>
+	
+	<div>
+		<label class="title">手机号码：</label><input type="text" name="mobile" pattern=".{11}" title="请输入11位手机号码" placeholder="手机号码" value="${(Session.user.mobile)!''}">
+	</div>
+	
+	<#if Session.user?? && Session.user.type?? && Session.user.type == '3'>
+		<div>
+			<label class="title">身份证号：</label><input type="text" name="idCard" pattern=".{18}" title="请输入18位身份证号码" placeholder="身份证号" required="required" value="${(Session.user.idCard)!''}">
+		</div>
+		<div>
+			<label class="title">验证照片：</label><img alt="验证照片" src="$(Session.user.comfirmPic)!''">
+		</div>
+	</#if>
+	
+	<#if Session.user?? && Session.user.type?? && Session.user.type == '4'>
+		<div>
+			<label class="title">单位名称：</label><input type="text" name="companyName" maxlength="50" placeholder="单位名称" required="required" value="${(Session.user.companyName)!''}">
+		</div>
+		<div>
+			<label class="title">法人身份证号：</label><input type="text" name="idCard" pattern=".{18}" title="请输入18位身份证号码" placeholder="法人身份证号" required="required" value="${(Session.user.idCard)!''}">
+		</div>
+		<div>
+			<label class="title">验证照片：</label><img alt="验证照片" src="${(Session.user.comfirmPic)!''}">
+		</div>
+	</#if>
+
+	<button class="grey" type="submit">保存</button>
+</form>			

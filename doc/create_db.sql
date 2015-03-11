@@ -23,8 +23,10 @@ CREATE TABLE `user` (
   `city` varchar(20) comment '市',
   `county` varchar(20) comment '区',
   `id_card` varchar(20) comment '身份证号',
-   `company_name` varchar(20) comment '单位名称',
-   `comfirm_pic` varchar(300) comment '验证照片地址',
+  `company_name` varchar(20) comment '单位名称',
+  `comfirm_pic` varchar(300) comment '验证照片地址',
+  `qq_number` varchar(40) comment 'QQ',
+  `person_signature` varchar(300) comment '个性签名',
   `create_time` datetime comment '注册时间',
   `last_update_time` datetime comment '最后登录时间'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

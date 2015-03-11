@@ -102,7 +102,7 @@ public class UserController extends BaseController{
 	 */
 	@RequestMapping("/toRegister")
 	public String toRegister(HttpServletRequest request, Model model) {
-		return "user/register_normal";
+		return "user/register/register_normal";
 	}
 	
 	/**
@@ -121,7 +121,7 @@ public class UserController extends BaseController{
 			userService.savePojo(user, user);
 			mailService.sendConfirmMail(user.getEmail(), user.getId());
 			mav.addObject("email", user.getEmail()); 
-	        mav.setViewName("user/register_normal_email");
+	        mav.setViewName("user/register/register_normal_email");
 		}catch(Exception e){
 			log.error(e);
 			mav.addObject("error_message", CustomizedPropertyPlaceholderConfigurer.getContextProperty("error.unknown"));
@@ -139,17 +139,17 @@ public class UserController extends BaseController{
 	 * @author 徐雁斌
 	 */
 	@RequestMapping(value="/reSendEmail")
-	public ModelAndView reSendEmail(String email,String type,HttpServletRequest request){
+	public ModelAndView reSendEmail(String email,HttpServletRequest request){
 		ModelAndView mav = new ModelAndView();
 		try{
 			User user = userService.getByEmail(email);
 			if(user != null){
 				mailService.sendConfirmMail(user.getEmail(), user.getId());
 				mav.addObject("email", email); 
-				if("1".equals(type)){
-					mav.setViewName("user/register_normal_email");
+				if(Constants.USER_TYPE_NORMAL.equals(user.getType())){
+					mav.setViewName("user/register/register_normal_email");
 				}else{
-					mav.setViewName("user/register_publisher_email");
+					mav.setViewName("user/register/register_publisher_email");
 				}
 			}else{
 				mav.addObject("error_message", CustomizedPropertyPlaceholderConfigurer.getContextProperty("error.unknown"));
@@ -184,9 +184,9 @@ public class UserController extends BaseController{
 					userService.savePojo(user, user);
 					mav.addObject("email", "email");
 					if(Constants.USER_TYPE_NORMAL.equals(user.getType())){
-						mav.setViewName("user/register_normal_email_confirm");
+						mav.setViewName("user/register/register_normal_email_confirm");
 					}else{
-						mav.setViewName("user/register_publisher_email_confirm");
+						mav.setViewName("user/register/register_publisher_email_confirm");
 					}
 				}
 			}else{
@@ -210,7 +210,7 @@ public class UserController extends BaseController{
 	 */
 	@RequestMapping("/toRegisterPublisher")
 	public String toRegisterPublisher(HttpServletRequest request, Model model) {
-		return "user/register_publisher";
+		return "user/register/register_publisher";
 	}
 	
 	/**
@@ -239,7 +239,7 @@ public class UserController extends BaseController{
 			mailService.sendConfirmMail(user.getEmail(), user.getId());
 			
 			mav.addObject("email", user.getEmail());
-	        mav.setViewName("user/register_publisher_email"); 
+	        mav.setViewName("user/register/register_publisher_email"); 
 		} catch (Exception e) {
 			log.error("UserController.registerPublisher(): Exception", e);
 			mav.addObject("error_message", CustomizedPropertyPlaceholderConfigurer.getContextProperty("error.unknown"));
@@ -280,8 +280,11 @@ public class UserController extends BaseController{
 	}
 	
 	@RequestMapping("/test")
-	public String test(HttpServletRequest request,Model model) {
-		return "user/person_info";
+	public ModelAndView test(HttpServletRequest request,Model model) {
+		ModelAndView mav=new ModelAndView();
+		mav.addObject("html_template", "info.html");
+		mav.setViewName("user/person_info/person_info");
+		return mav;
 	}
 	
 	

@@ -17,11 +17,6 @@ import com.photography.utils.Constants;
 @Entity(name="user")
 public class User extends BaseMapping{
 	
-	/**
-	8、QQ
-	9、个性签名
-	*/
-	
 	private static final long serialVersionUID = 8854336652654077157L;
 
 	/**
@@ -126,6 +121,18 @@ public class User extends BaseMapping{
 	 */
 	@Column(name="comfirm_pic")
 	private String comfirmPic;
+	
+	/**
+	 * qq
+	 */
+	@Column(name="qq_number")
+	private String qqNumber;
+	
+	/**
+	* 个性签名
+	*/
+	@Column(name="person_signature")
+	private String personSignature;
 
 	public String getLoginName() {
 		return loginName;
@@ -261,6 +268,22 @@ public class User extends BaseMapping{
 
 	public void setComfirmPic(String comfirmPic) {
 		this.comfirmPic = comfirmPic;
+	}
+
+	public String getQqNumber() {
+		return qqNumber;
+	}
+
+	public void setQqNumber(String qqNumber) {
+		this.qqNumber = qqNumber;
+	}
+
+	public String getPersonSignature() {
+		return personSignature;
+	}
+
+	public void setPersonSignature(String personSignature) {
+		this.personSignature = personSignature;
 	}
 
 }
