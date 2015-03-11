@@ -7,9 +7,9 @@
 	
 	<div>
 		<label class="title">性别：</label>
-		<input name="sex" id="man" type="radio" value="0" <#if Session.user.sex?? && Session.user.sex == "0">checked="checked"</#if>/> 
+		<input name="sex" id="man" type="radio" value="0" <#if Session.user?? && Session.user.sex?? && Session.user.sex == "0">checked="checked"</#if>/> 
 		<label for="man">男</label>
-		<input name="sex" id="woman" type="radio" value="1" <#if Session.user.sex?? && Session.user.sex == "1">checked="checked"</#if>/> 
+		<input name="sex" id="woman" type="radio" value="1" <#if Session.user?? && Session.user.sex?? && Session.user.sex == "1">checked="checked"</#if>/> 
 		<label for="woman">女</label> 
 	</div>
 	
