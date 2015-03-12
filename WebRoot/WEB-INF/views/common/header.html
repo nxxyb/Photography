@@ -11,7 +11,7 @@
 				<ul>
 				<#if Session.user?exists>
 					<li >欢迎您 ${Session.user.email}</li>
-					<li class="active"><a href="${basePath}/user/toLogin">个人中心</a></li> |
+					<li class="active"><a href="${basePath}/userinfo/toUserInfo">个人中心</a></li> |
 					<li><a href="${basePath}/user/logout">退出登录</a></li>
 				<#else>
 					<li class="active"><a href="${basePath}/user/toLogin">登录</a></li> |

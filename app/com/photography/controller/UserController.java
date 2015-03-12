@@ -24,7 +24,7 @@ import com.photography.utils.Constants;
 import com.photography.utils.CustomizedPropertyPlaceholderConfigurer;
 
 /**
- * 
+ * 用户登录、注册
  * @author 徐雁斌
  * @since 2015-2-3
  * 
@@ -226,7 +226,10 @@ public class UserController extends BaseController{
 		ModelAndView mav=new ModelAndView();
         try {
         	String filePath = request.getSession().getServletContext().getRealPath((String)
-        			CustomizedPropertyPlaceholderConfigurer.getContextProperty("user.confirm.file")) + user.getEmail();
+        			CustomizedPropertyPlaceholderConfigurer.getContextProperty("user.confirm.file"))  + File.separator + user.getEmail();
+        	
+        	//数据库存储相对路径
+        	String relativePath = CustomizedPropertyPlaceholderConfigurer.getContextProperty("user.confirm.file") + user.getEmail();
         	File userFile = new File(filePath);
         	if(!userFile.exists()){
         		userFile.mkdir();
@@ -234,7 +237,7 @@ public class UserController extends BaseController{
         	
 			FileUtils.copyInputStreamToFile(file.getInputStream(), new File(filePath, file.getOriginalFilename()));
 			
-			user.setComfirmPic(filePath + File.separator + file.getOriginalFilename());
+			user.setComfirmPic(relativePath + "/" + file.getOriginalFilename());
 			userService.savePojo(user, user);
 			mailService.sendConfirmMail(user.getEmail(), user.getId());
 			
@@ -286,6 +289,7 @@ public class UserController extends BaseController{
 		mav.setViewName("user/person_info/person_info");
 		return mav;
 	}
+	
 	
 	
 	

@@ -1,3 +1,14 @@
+.divwrap{
+	width:70%;
+	margin:0 auto;
+	font-size: 1.2em;
+	color:#777;
+	-moz-transition:all .2s linear;
+	-webkit-transition:all .2s linear; 
+	-o-transition:all .2s linear; 
+	-ms-transition:all .2s linear;
+}
+
 .col_1_of_person {
 	display: block;
 	float: left;
@@ -50,6 +61,8 @@
 	color:#777;
 	font-family: 'Exo 2', sans-serif;
 	text-align:right;
+	vertical-align: middle;
+	height:80%;
 	display:-moz-inline-box;  
 	display:inline-block;
 	width:10%;
@@ -82,8 +95,13 @@
 
 .photoimg{
 	float: left;
-	width: 80px;
-	height: 80px;
+	width: 10%;
+	height: 10%;
 	margin-right: 30px;
 	border-radius: 40px;
+}
+.breviaryimg{
+	width: 15%;
+	height: 15%;
+
 }

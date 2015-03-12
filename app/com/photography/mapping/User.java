@@ -123,6 +123,12 @@ public class User extends BaseMapping{
 	private String comfirmPic;
 	
 	/**
+	 * 头像
+	 */
+	@Column(name="head_pic")
+	private String headPic;
+	
+	/**
 	 * qq
 	 */
 	@Column(name="qq_number")
@@ -284,6 +290,14 @@ public class User extends BaseMapping{
 
 	public void setPersonSignature(String personSignature) {
 		this.personSignature = personSignature;
+	}
+
+	public String getHeadPic() {
+		return headPic;
+	}
+
+	public void setHeadPic(String headPic) {
+		this.headPic = headPic;
 	}
 
 }

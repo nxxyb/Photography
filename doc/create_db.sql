@@ -25,6 +25,7 @@ CREATE TABLE `user` (
   `id_card` varchar(20) comment '身份证号',
   `company_name` varchar(20) comment '单位名称',
   `comfirm_pic` varchar(300) comment '验证照片地址',
+  `head_pic` varchar(300) comment '头像照片地址',
   `qq_number` varchar(40) comment 'QQ',
   `person_signature` varchar(300) comment '个性签名',
   `create_time` datetime comment '注册时间',
