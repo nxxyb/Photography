@@ -1,7 +1,8 @@
-<form action="${basePath}/user/register" method="post" name="person_from">
+<form id="info_form" action="${basePath}/userinfo/updateUserInfo" method="post" name="person_from">
 	<h4 class="title"></h4>
 	<h4 class="title">基本信息</h4>
 	
+	<input type="hidden"" name="id" value="${(Session.user.id)!''}">
 	<div>
 		<label class="title">头像：</label>
 		<a class="link" href="#" onclick="openHeadPhotoDiv();return false;">修改头像</a>
@@ -38,6 +39,13 @@
 		<label class="title">QQ：</label><input id="qqNumber" type="text" name="qqNumber" placeholder="QQ号码" maxlength="50" value="${(Session.user.qqNumber)!''}">
 	</div>
 	
+	<div>
+		<label class="title">地址：</label>
+		<select id="province" name="province" class="select_3span" class="frm-field required" ></select>
+		<select id="city" name="city" class="select_3span" class="frm-field required"></select>
+		<select id="county" name="county" class="select_3span" class="frm-field required"></select>
+	</div>
+	
 	<h4 class="title"></h4>
 	<h4 class="title">验证信息</h4>
 	<div>
@@ -70,19 +78,22 @@
 		</div>
 		<div>
 			<label class="title">验证照片：</label>
-			<img class="breviaryimg" alt="验证照片" src="${basePath}/${(Session.user.comfirmPic)!'${basePath}/images/person/photo.jpg'}">
+			<img class="breviaryimg" alt="验证照片" src="${basePath}/${(Session.user.comfirmPic)!'images/person/photo.jpg'}">
 			<#if Session.user?? && Session.user.verify?? && Session.user.verify != '1'>
 			<a class="link" href="#" onclick="openComfirmPhotoDiv();return false;">修改验证照片</a>
 			</#if>
 		</div>
 	</#if>
-	
-	<div style="margin-top: 4%;">
-		<button class="grey" type="submit">保存</button>
-	</div>
 </form>
 
+<div style="margin-top: 4%;">
+		<button class="grey" onclick="photography_ajaxsubmit('info_form','保存成功');return false;" >保存</button>
+</div>
+
 <script type="text/javascript">
+_init_area();
+_init_area_value('${(Session.user.province)!""}','${(Session.user.city)!""}','${(Session.user.county)!""}');
+
 function openHeadPhotoDiv(){
 	var i = $.layer({
 		type : 1, //0-4的选择,（1代表page层）
@@ -98,7 +109,7 @@ function openHeadPhotoDiv(){
 			html : '<form id="headform" action="${basePath}/userinfo/updateHeadPhoto" enctype="multipart/form-data" method="post"><div class="divwrap">' + 
 				   '<input type="file" id="headinput" name="headFile" placeholder="选择头像" onchange="reviewImg(this);" accept="image/*">' + 
 				   '<h4 class="title"></h4><div>头像预览</div>' + 
-				   '<div><img id="headimg" style="width: 80%;height: 80%;" alt="头像" src="${basePath}/images/person/photo.jpg"></div></div></form>'
+				   '<div><img id="headimg" class="breviaryimg" alt="头像" src="${basePath}/images/person/photo.jpg"></div></div></form>'
 		},
 		yes: function(index){
 			var options = { 
@@ -106,7 +117,8 @@ function openHeadPhotoDiv(){
             dataType: "json",
             url: "${basePath}/userinfo/updateHeadPhoto",
             success: function(msg){
-            	alert(msg);
+            	if(msg != '1')
+            		alert(msg);
                }
             };
             $('#headform').ajaxSubmit(options);
@@ -123,7 +135,7 @@ function openHeadPhotoDiv(){
     }
     
 function openComfirmPhotoDiv(){
-	var i1 = $.layer({
+	var i = $.layer({
 		type : 1, //0-4的选择,（1代表page层）
 		area : [ '500px', '300px' ],
 		shade: [0.5, '#000'],  //遮罩
@@ -150,7 +162,7 @@ function openComfirmPhotoDiv(){
                }
             };
             $('#comfirmform').ajaxSubmit(options);
-            layer.close(i1);
+            layer.close(i);
 		}
 	});
 }

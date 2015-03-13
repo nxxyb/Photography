@@ -1041,7 +1041,7 @@ fieldset.input input[type="submit"]:hover, .button1 input[type="submit"]:hover{
 	float: right;
 	font-family: 'Exo 2', sans-serif;
 	outline:none;
-	font-size:1em;
+	font-size:0.95em;
 }
 .remember{
 	margin-top: 6%;

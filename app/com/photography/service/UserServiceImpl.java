@@ -22,7 +22,6 @@ import com.photography.utils.Constants;
  * 
  * @copyright 2015 天大求实电力新技术股份有限公司 版权所有
  */
-@SuppressWarnings("deprecation")
 @Service("userService")
 public class UserServiceImpl extends BaseServiceImpl implements IUserService {
 	

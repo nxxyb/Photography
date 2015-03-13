@@ -63,7 +63,6 @@ public class UserInfoController extends BaseController {
 	
 	/**
 	 * 修改头像
-	 * @param user
 	 * @param request
 	 * @param model
 	 * @return
@@ -100,7 +99,6 @@ public class UserInfoController extends BaseController {
 	
 	/**
 	 * 修改头像
-	 * @param user
 	 * @param request
 	 * @param model
 	 * @return
@@ -132,6 +130,45 @@ public class UserInfoController extends BaseController {
     		return (String) CustomizedPropertyPlaceholderConfigurer.getContextProperty("error.unknown");
     	}
     	request.getSession().setAttribute(Constants.SESSION_USER_KEY, user);
+    	return Constants.YES;
+	}
+	
+	/**
+	 * 修改用户星系
+	 * @param user
+	 * @param request
+	 * @param model
+	 * @return
+	 * @author 徐雁斌
+	 */
+	@RequestMapping(value="/updateUserInfo")
+	@ResponseBody
+	public String updateUserInfo(User user,HttpServletRequest request, Model model){
+		User userDB = (User) userService.loadPojo(user.getId());
+		if(userDB == null){
+			return (String) CustomizedPropertyPlaceholderConfigurer.getContextProperty("error.user.not.found");
+		}
+		
+		userDB.setBirthDay(user.getBirthDay());
+		userDB.setCity(user.getCity());
+		userDB.setCompanyName(user.getCompanyName());
+		userDB.setCounty(user.getCounty());
+//		userDB.setEmail(user.getEmail());
+		userDB.setIdCard(user.getIdCard());
+		userDB.setMobile(user.getMobile());
+		userDB.setNackName(user.getNackName());
+		userDB.setPersonSignature(user.getPersonSignature());
+		userDB.setProvince(user.getProvince());
+		userDB.setQqNumber(user.getQqNumber());
+		userDB.setRealName(user.getRealName());
+		userDB.setSex(user.getSex());
+    	
+    	try{
+			userService.savePojo(userDB, userDB);
+    	}catch(Exception e){
+    		return (String) CustomizedPropertyPlaceholderConfigurer.getContextProperty("error.unknown");
+    	}
+    	request.getSession().setAttribute(Constants.SESSION_USER_KEY, userDB);
     	return Constants.YES;
 	}
 

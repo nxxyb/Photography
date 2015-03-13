@@ -10,7 +10,7 @@
 			 <div class="cssmenu">
 				<ul>
 				<#if Session.user?exists>
-					<li >欢迎您 ${Session.user.email}</li>
+					<li >欢迎您  ${(Session.user.nackName)!(Session.user.email)!""}</li>
 					<li class="active"><a href="${basePath}/userinfo/toUserInfo">个人中心</a></li> |
 					<li><a href="${basePath}/user/logout">退出登录</a></li>
 				<#else>
@@ -26,11 +26,11 @@
 	    <div class="wrap">
 			<div class="header-bottom-left">
 				<div class="logo">
-					<a href="index.html"><img src="${basePath}/images/logo.png" alt=""/></a>
+					<a href="${basePath}/index"><img src="${basePath}/images/logo.png" alt=""/></a>
 				</div>
 				<div class="menu">
 				<ul class="megamenu skyblue">
-					<li class="active grid"><a href="#">首页</a></li>
+					<li class="active grid"><a href="${basePath}/index">首页</a></li>
 					<li><a class="color4" href="#">摄影活动</a></li>
 					<li><a class="color5" href="#">作品展示</a></li>
 					<li><a class="color6" href="#">社区</a></li>
@@ -46,13 +46,15 @@
 	  <div class="tag-list">
 	    
 		<ul class="icon1 sub-icon1 profile_img">
-			<li><a class="active-icon c2" href="#"> </a>
+			<li><a class="active-icon c2" href="#"></a>
 				<ul class="sub-icon1 list">
 					<li><h3>你的购物车还是空的赶紧行动吧！</h3></li>
 					<li><p><a class="link" href="#">马上去购物</a></p></li>
 				</ul>
 			</li>
+			<li>(0)</li>
 		</ul>
+		
 	  </div>
     </div>
      <div class="clear"></div>
