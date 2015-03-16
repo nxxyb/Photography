@@ -3,6 +3,7 @@
 #fwslider {
     position: relative;
     width:100%;
+    height: 200px;
 }
 
 #fwslider .slide {
@@ -16,11 +17,10 @@
 
 #fwslider .slide img {
     width:100%;
+    height: 200px;
 }
 
 #fwslider .slidePrev {
-   
-   
     position: absolute;
     top:50%;
     left:-50px;
@@ -38,8 +38,6 @@
 	cursor: pointer;
 }
 #fwslider .slideNext {
-   
-  
     position: absolute;
     top:50%;
     right:-50px;
@@ -90,14 +88,14 @@
 
 #fwslider .slide_content_wrap { /* Slider Text Content Container Style */
     max-width:1280px;
-    margin:15% auto;
+    margin:5% auto;
 }
 
 #fwslider .title {  /* Slider Title Style */
 	margin-left:4%;
 	text-transform: capitalize;
 	color: #fff;
-	font-size:2em;
+	font-size:1.5em;
 	background:rgba(91, 89, 82, 0.4);
 	padding:5px 20px;
 	float: left;
@@ -110,7 +108,7 @@
 	margin-left:4%;
     opacity: 0;
     color:#ffffff;
-    font-size:2em;
+    font-size:1.5em;
     background:rgba(91, 89, 82, 0.4);
     padding:10px;
     clear:both;

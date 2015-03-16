@@ -2,32 +2,56 @@
      <div class="header-top">
 	   <div class="wrap"> 
 			  <div class="header-top-left">
-			  	   <div class="box">
-			  	   	  <a href="#" class="dropdown">【切换城市】</a>
-   				    </div>
+			  	<div class="logo">
+					<a href="${basePath}/index"><img src="${basePath}/images/logo.png" alt=""/></a>
+				</div>
+				
+		  	   <!-- 地区选择 -->
+		  	    <#include "locate.html">
    			 </div>
-   			
-			 <div class="cssmenu">
-				<ul>
-				<#if Session.user?exists>
-					<li >欢迎您  ${(Session.user.nackName)!(Session.user.email)!""}</li>
-					<li class="active"><a href="${basePath}/userinfo/toUserInfo">个人中心</a></li> |
-					<li><a href="${basePath}/user/logout">退出登录</a></li>
-				<#else>
-					<li class="active"><a href="${basePath}/user/toLogin">登录</a></li> |
-					<li><a href="${basePath}/user/toRegister">注册</a></li>
-				</#if>
-				</ul>
+   			 
+   			 <div class="play-navbar-right">
+					<div class="line-search">
+						<form method="post" action="search" class="line-search-form">
+							<div class="line-search-input">
+								<div class="s-combobox">
+									<div class="s-combobox-input-wrap">
+										<input name="title" type="text" id="search_text" class="s-combobox-input" value="" placeholder="按活动名称搜索">
+									</div>
+									<label for="search_text" class="s-combobox-placeholder" style="display:none;"></label>
+								</div>
+								<button type="submit">搜索</button>
+							</div>
+						</form>
+					</div>
+					<div class="line-order">
+						<div class="order-wrap">
+							<a class="order-link myorder" href="index.php?app=buyer_xorder">我的订单</a>
+						</div>
+					</div>
+					
+					<div class="cssmenu">
+						<ul>
+						<#if Session.user?exists>
+							<li >欢迎您  ${(Session.user.nackName)!(Session.user.email)!""}</li>
+							<li class="active"><a href="${basePath}/userinfo/toUserInfo">个人中心</a></li>|
+							<li><a href="${basePath}/user/logout">退出登录</a></li>
+						<#else>
+							<li class="active"><a href="${basePath}/user/toLogin">登录</a></li>|
+							<li><a href="${basePath}/user/toRegister">注册</a></li>
+						</#if>
+						</ul>
+					</div>
+					
 			</div>
+   			
+			 
 			<div class="clear"></div>
  		</div>
 	</div>
 	<div class="header-bottom">
 	    <div class="wrap">
 			<div class="header-bottom-left">
-				<div class="logo">
-					<a href="${basePath}/index"><img src="${basePath}/images/logo.png" alt=""/></a>
-				</div>
 				<div class="menu">
 				<ul class="megamenu skyblue">
 					<li class="active grid"><a href="${basePath}/index">首页</a></li>
@@ -37,26 +61,7 @@
 				</ul>
 			</div>
 		</div>
-	   <div class="header-bottom-right">
-         <div class="search">	  
-				<input type="text" name="s" class="textbox"  placeholder="搜索" >
-				<input type="submit" value="Subscribe" id="submit" name="submit">
-				<div id="response"> </div>
-		 </div>
-	  <div class="tag-list">
-	    
-		<ul class="icon1 sub-icon1 profile_img">
-			<li><a class="active-icon c2" href="#"></a>
-				<ul class="sub-icon1 list">
-					<li><h3>你的购物车还是空的赶紧行动吧！</h3></li>
-					<li><p><a class="link" href="#">马上去购物</a></p></li>
-				</ul>
-			</li>
-			<li>(0)</li>
-		</ul>
-		
-	  </div>
-    </div>
+
      <div class="clear"></div>
      </div>
 	</div>
