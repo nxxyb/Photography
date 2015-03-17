@@ -26,7 +26,7 @@
 
 .cssmenu {
 	float: right;
-	color: #b0b0b0;
+	color: #fff;
 	font-size: 0.9125em;
 	margin: 14px 10px 0;
 }
@@ -47,7 +47,7 @@
 
 .header-bottom {
 	background: #fff;
-	padding: 2% 0;
+	padding: 0 0;
 }
 
 /*--menu--*/
@@ -64,7 +64,7 @@
     z-index: 10;
 }
 .locate-info em {
-    color: #3ab190;
+    color: #FF8800;
     padding-right: 2px;
 }
 .locate-info .locate-link {
@@ -161,7 +161,7 @@
     margin: 14px 0 0;
 }
 .line-search .line-search-form button {
-    background: url("../images/search.png") no-repeat scroll center center #00976b;
+    background: url("../images/search.png") no-repeat scroll center center #FF8800;
     border: 0 none;
     float: left;
     height: 40px;
@@ -205,15 +205,15 @@
     margin: 14px 0 0 8px;
 }
 .line-order .order-link {
-    border: 1px solid #00a776;
-    color: #00976b;
+    border: 1px solid #FF8800;
+    color: #FF8800;
     display: block;
     height: 38px;
     line-height: 38px;
     padding: 0 21px;
 }
 .line-order .order-link:hover {
-    background-color: #00976b;
+    background-color: #FF8800;
     color: #fff;
 }
 

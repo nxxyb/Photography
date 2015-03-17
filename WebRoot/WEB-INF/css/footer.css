@@ -215,7 +215,7 @@ ul.f-list1 li a:hover {
 }
 
 .copy p {
-	color: #87D8EB;
+	color: #fff;
 	font-size: 0.8125em;
 }
 
@@ -229,7 +229,7 @@ ul.f-list1 li a:hover {
 
 .f-list2 {
 	float: right;
-	color: #87D8EB;
+	color: #fff;
 }
 
 .f-list2 li {
@@ -238,10 +238,10 @@ ul.f-list1 li a:hover {
 }
 
 .f-list2 li a {
-	color: #87D8EB;
+	color: #fff;
 	font-size: 0.8125em;
 }
 
 .f-list2 li a:hover {
-	color: #fff;
+	color: #87D8EB;
 }

@@ -8,6 +8,8 @@
   
   <!-- link start-->
    <#include "../common/link.html">
+   <link href="${basePath}/css/project.css" rel="stylesheet" type="text/css" media="all" />
+   <script src="${basePath}/js/slides.min.jquery.js"></script>
   <!-- link end-->
   
 </head>
@@ -16,8 +18,23 @@
   <!-- header start-->
   <#include "../common/header.html">
   <!-- header end -->
+  
+<script type="text/javascript">
+$(function(){
+			$('#products').slides({
+				preload: true,
+				preloadImage: 'img/loading.gif',
+				effect: 'slide, fade',
+				crossfade: true,
+				slideSpeed: 100,
+				fadeSpeed: 500,
+				generateNextPrev: true,
+				generatePagination: false
+			});
+		});
+</script>
 
-		<div class="mens">    
+<div class="mens">    
   <div class="main">
      <div class="wrap">
      	<ul class="breadcrumb breadcrumb__t"><a class="home" href="#">首页</a> / <a href="#">活动</a> / 新建活动</ul>
@@ -27,16 +44,17 @@
 							<div id="products_example">
 								<div id="products">
 									<div class="slides_container">
-									        <a href="#"><img class="a" id="img1" src="images/s-img.jpg" alt="" rel="images/s-img.jpg" /></a>
-											<a href="#"><img class="a" id="img2" src="images/s-img1.jpg" alt="" rel="images/s-img1.jpg" /></a>
-											<a href="#"><img class="a" id="img3" src="images/s-img2.jpg" alt="" rel="images/s-img2.jpg" /></a>
-											<a href="#"><img class="a" id="img4" src="images/s-img3.jpg" alt="" rel="images/s-img3.jpg" /></a>
+									        <a href="#"><img class="a" id="img1" src="${basePath}/images/s-img.jpg" alt="" /></a>
+											<a href="#"><img class="a" id="img2" src="${basePath}/images/s-img1.jpg" alt="" /></a>
+											<a href="#"><img class="a" id="img3" src="${basePath}/images/s-img2.jpg" alt="" /></a>
+											<a href="#"><img class="a" id="img4" src="${basePath}/images/s-img3.jpg" alt="" /></a>
 									</div>
 									<ul class="pagination">
-										<li><a href="#"><img src="images/s1.jpg" width="s-img" alt="1144953 3 2x"></a></li>
-										<li><a href="#"><img src="images/s2.jpg" width="s-img1" alt="1144953 3 2x"></a></li>
-										<li><a href="#"><img src="images/s3.jpg" width="s-img2" alt="1144953 3 2x"></a></li>
-										<li><a href="#"><img src="images/s4.jpg" width="s-img3" alt="1144953 1 2x"></a></li><div class="clear"></div>
+										<li><a href="#"><input type="file" style="opacity:0;width: 101px;height: 84px;"/></a></li>
+										<li><a href="#"><img src="${basePath}/images/project/upload.jpg" width="s-img12" alt="1144953 3 2x"></a></li>
+										<li><a href="#"><img src="${basePath}/images/project/upload.jpg" width="s-img13" alt="1144953 3 2x"></a></li>
+										<li><a href="#"><img src="${basePath}/images/project/upload.jpg" width="s-img14" alt="1144953 1 2x"></a></li>
+										<div class="clear"></div>
 									</ul>
 								</div>
 							</div>
