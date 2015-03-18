@@ -20,46 +20,68 @@
   <!-- header end -->
   
 <script type="text/javascript">
+function init_slides(){
+	$('#products').slides({
+		preload: true,
+		play:10000,
+		effect: 'slide, fade',
+		crossfade: true,
+		slideSpeed: 100,
+		fadeSpeed: 500,
+		generateNextPrev: false,
+		generatePagination: false
+	});
+}
 $(function(){
-			$('#products').slides({
-				preload: true,
-				preloadImage: 'img/loading.gif',
-				effect: 'slide, fade',
-				crossfade: true,
-				slideSpeed: 100,
-				fadeSpeed: 500,
-				generateNextPrev: true,
-				generatePagination: false
-			});
-		});
+	init_slides();
+});
+
+function reviewImg(fileInput,id){
+     var objUrl = getObjectURL(fileInput.files[0]);
+     if (objUrl) {
+         $("#" + id).attr("src", objUrl);
+         $("#slides_" + id).attr("src", objUrl);
+   }
+}
+
 </script>
 
 <div class="mens">    
   <div class="main">
      <div class="wrap">
      	<ul class="breadcrumb breadcrumb__t"><a class="home" href="#">首页</a> / <a href="#">活动</a> / 新建活动</ul>
-		<div class="cont span_2_of_3">
-		  	<div class="grid images_3_of_2">
-						<div id="container">
-							<div id="products_example">
-								<div id="products">
-									<div class="slides_container">
-									        <a href="#"><img class="a" id="img1" src="${basePath}/images/s-img.jpg" alt="" /></a>
-											<a href="#"><img class="a" id="img2" src="${basePath}/images/s-img1.jpg" alt="" /></a>
-											<a href="#"><img class="a" id="img3" src="${basePath}/images/s-img2.jpg" alt="" /></a>
-											<a href="#"><img class="a" id="img4" src="${basePath}/images/s-img3.jpg" alt="" /></a>
-									</div>
-									<ul class="pagination">
-										<li><a href="#"><input type="file" style="opacity:0;width: 101px;height: 84px;"/></a></li>
-										<li><a href="#"><img src="${basePath}/images/project/upload.jpg" width="s-img12" alt="1144953 3 2x"></a></li>
-										<li><a href="#"><img src="${basePath}/images/project/upload.jpg" width="s-img13" alt="1144953 3 2x"></a></li>
-										<li><a href="#"><img src="${basePath}/images/project/upload.jpg" width="s-img14" alt="1144953 1 2x"></a></li>
-										<div class="clear"></div>
-									</ul>
-								</div>
+		<div class="cont span_all">
+				<div id="container">
+					<div id="products_example">
+						<div id="products">
+							<div class="slides_container">
+							 	<a href="#"><img id="slides_img1" class="a" src="${basePath}/images/s-img1.jpg" alt=""/></a>
+							 	<a href="#"><img id="slides_img2" class="a" src="${basePath}/images/s-img2.jpg" alt=""/></a>
+							   	<a href="#"><img id="slides_img3" class="a" src="${basePath}/images/s-img3.jpg" alt=""/></a>
+							   <!--  <a href="#"><img class="a" src="" alt=""/></a> -->
 							</div>
+							<div>
+							<ul class="pagination">
+								<li><a href="#"><img id="img1" src="${basePath}/images/s1.jpg"></a></li>
+								<li><a href="#"><img id="img2" src="${basePath}/images/s2.jpg"></a></li>
+								<li><a href="#"><img id="img3" src="${basePath}/images/s3.jpg"></a></li>
+								<!--<li><a href="#"></a></li> -->
+								<div class="clear"></div>
+							</ul>
+							</div>
+							<div class="addimg">
+							<a href="#"><img src="${basePath}/images/project/upload.jpg"><input id="img1_file"  type="file" onchange="reviewImg(this,'img1');" accept="image/*"></a>
+							<a href="#"><img src="${basePath}/images/project/upload.jpg"><input id="img2_file" type="file" onchange="reviewImg(this,'img2');" accept="image/*"></a>
+							<a href="#"><img src="${basePath}/images/project/upload.jpg"><input id="img3_file" type="file" onchange="reviewImg(this,'img3');" accept="image/*"></a>
+							<!-- <a href="#"><img src="${basePath}/images/project/upload.jpg"><input type="file"  ></a> -->
+							</div>
+							<div class="clear"></div>
 						</div>
-	            </div>
+					</div>
+				</div>
+	     </div>
+	            
+	    <div class="cont span_2_of_3">
 		         <div class="desc1 span_3_of_2">
 		         	<h3 class="m_3">Lorem ipsum dolor sit amet</h3>
 		             <p class="m_5">Rs. 888 <span class="reducedfrom">Rs. 999</span> <a href="#">click for offer</a></p>
@@ -72,6 +94,7 @@ $(function(){
 				     <p class="m_text2">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit </p>
 			     </div>
 			   <div class="clear"></div>	
+			   
 	    <div class="clients">
 	    <h3 class="m_3">10 Other Products in the same category</h3>
 		 <ul id="flexiselDemo3">
@@ -215,8 +238,8 @@ $(function(){
 							<li><a href="#"> <span class="color7"> </span><p class="red">Gray</p></a></li>
 					   </ul>
 		       </section>
-		      </div
-		      ><div class="clear"></div>
+		      </div>
+		      <div class="clear"></div>
 			</div>
 			 <div class="clear"></div>
 		   </div>
