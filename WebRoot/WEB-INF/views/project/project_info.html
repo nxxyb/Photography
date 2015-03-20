@@ -49,6 +49,7 @@ function reviewImg(fileInput,id){
 <div class="mens">    
   <div class="main">
   <form action="${basePath}/project/create" method="post" enctype="multipart/form-data">
+  	<input type="hidden" name="id" value="${(project.id)!''}">
      <div class="wrap">
      	<ul class="breadcrumb breadcrumb__t"><a class="home" href="#">首页</a> / <a href="#">活动</a> / 新建活动</ul>
 		<div class="cont span_all">
@@ -86,7 +87,7 @@ function reviewImg(fileInput,id){
 	         <div class="box-white">
 		         	<h3 class="project-title">
 		         		<label class="project-title-lable">名称：</label>
-		         		<input class="project-input" name="name" type="text">
+		         		<input class="project-input" name="name" type="text" value="${(project.name)!''}">
 		         	</h3>
 		         	
 		         	<h4 class="project-info">

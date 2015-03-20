@@ -4,7 +4,6 @@ import java.io.File;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,6 +21,7 @@ import com.photography.service.IMailService;
 import com.photography.service.IUserService;
 import com.photography.utils.Constants;
 import com.photography.utils.CustomizedPropertyPlaceholderConfigurer;
+import com.photography.utils.FileUtil;
 
 /**
  * 用户登录、注册
@@ -230,12 +230,7 @@ public class UserController extends BaseController{
         	
         	//数据库存储相对路径
         	String relativePath = CustomizedPropertyPlaceholderConfigurer.getContextProperty("user.confirm.file") + user.getEmail();
-        	File userFile = new File(filePath);
-        	if(!userFile.exists()){
-        		userFile.mkdir();
-        	}
-        	
-			FileUtils.copyInputStreamToFile(file.getInputStream(), new File(filePath, file.getOriginalFilename()));
+        	FileUtil.saveFile(filePath, file);
 			
 			user.setComfirmPic(relativePath + "/" + file.getOriginalFilename());
 			userService.savePojo(user, user);
