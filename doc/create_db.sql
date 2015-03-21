@@ -31,3 +31,29 @@ CREATE TABLE `user` (
   `create_time` datetime comment '注册时间',
   `last_update_time` datetime comment '最后登录时间'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+/**活动表 */
+DROP TABLE IF EXISTS `project`;
+CREATE TABLE `project` (
+  `id` varchar(36) NOT NULL PRIMARY KEY,
+  `name` varchar(200) comment '活动名称',
+  `type` varchar(10) comment '活动类型',
+  `start_time` datetime comment '活动开始时间',
+  `time_length` varchar(50) comment '活动时长',
+  `people_num` varchar(50) comment '活动人数',
+  `less_num` varchar(50) comment '最低人数',
+  `model_num` varchar(50) comment '模特数量',
+  `place` varchar(200) comment '活动地点',
+  `venue_place` varchar(200) comment '集合地点',
+  `province` varchar(20) comment '省',
+  `city` varchar(20) comment '市',
+  `county` varchar(20) comment '区',
+  `contact` varchar(200) comment '联系方式',
+  `des` varchar(1000) comment '活动介绍',
+  `cost` varchar(300) comment '活动费用',
+  `photos` varchar(500) comment '活动照片',
+  `model_photos` varchar(500) comment '场地、模特 照片',
+  `create_time` datetime comment '创建时间',
+  `last_update_time` datetime comment '最后修改时间'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

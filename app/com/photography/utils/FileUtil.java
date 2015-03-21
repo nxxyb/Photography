@@ -5,6 +5,9 @@ import java.net.URISyntaxException;
 import java.util.Properties;
 import java.util.UUID;
 
+import org.apache.commons.io.FileUtils;
+import org.springframework.web.multipart.MultipartFile;
+
 /**
  * 文件工具类（提供文件名、扩展名、文件编号等操作方法）
  *
@@ -280,5 +283,20 @@ public class FileUtil {
 
 			file.delete();
 		}
+	}
+	
+	/**
+	 * 保存文件
+	 * @param filePath 文件路径
+	 * @param file     文件
+	 * @throws Exception
+	 * @author 徐雁斌
+	 */
+	public static void saveFile(String filePath,MultipartFile file) throws Exception{
+    	File sourceFile = new File(filePath);
+    	if(!sourceFile.exists()){
+    		sourceFile.mkdir();
+    	}
+		FileUtils.copyInputStreamToFile(file.getInputStream(), new File(filePath, file.getOriginalFilename()));
 	}
 }

@@ -48,6 +48,8 @@ function reviewImg(fileInput,id){
 
 <div class="mens">    
   <div class="main">
+  <form action="${basePath}/project/create" method="post" enctype="multipart/form-data">
+  	<input type="hidden" name="id" value="${(project.id)!''}">
      <div class="wrap">
      	<ul class="breadcrumb breadcrumb__t"><a class="home" href="#">首页</a> / <a href="#">活动</a> / 新建活动</ul>
 		<div class="cont span_all">
@@ -70,9 +72,9 @@ function reviewImg(fileInput,id){
 							</ul>
 							</div>
 							<div class="addimg">
-							<a href="#"><img src="${basePath}/images/project/upload.jpg"><input id="img1_file"  type="file" onchange="reviewImg(this,'img1');" accept="image/*"></a>
-							<a href="#"><img src="${basePath}/images/project/upload.jpg"><input id="img2_file" type="file" onchange="reviewImg(this,'img2');" accept="image/*"></a>
-							<a href="#"><img src="${basePath}/images/project/upload.jpg"><input id="img3_file" type="file" onchange="reviewImg(this,'img3');" accept="image/*"></a>
+							<a href="#"><img src="${basePath}/images/project/upload.jpg"><input id="img1_file" name="imgFiles" type="file" onchange="reviewImg(this,'img1');" accept="image/*"></a>
+							<a href="#"><img src="${basePath}/images/project/upload.jpg"><input id="img2_file" name="imgFiles" type="file" onchange="reviewImg(this,'img2');" accept="image/*"></a>
+							<a href="#"><img src="${basePath}/images/project/upload.jpg"><input id="img3_file" name="imgFiles" type="file" onchange="reviewImg(this,'img3');" accept="image/*"></a>
 							<!-- <a href="#"><img src="${basePath}/images/project/upload.jpg"><input type="file"  ></a> -->
 							</div>
 							<div class="clear"></div>
@@ -81,39 +83,83 @@ function reviewImg(fileInput,id){
 				</div>
 	     </div>
 	            
-	    <div class="cont span_2_of_3">
-		         <div class="desc1 span_3_of_2">
-		         	<h3 class="m_3">Lorem ipsum dolor sit amet</h3>
-		             <p class="m_5">Rs. 888 <span class="reducedfrom">Rs. 999</span> <a href="#">click for offer</a></p>
-		         	 <div class="btn_form">
-						<form>
-							<input type="submit" value="buy" title="">
-						</form>
-					 </div>
-					<span class="m_link"><a href="#">login to save in wishlist</a> </span>
-				     <p class="m_text2">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit </p>
-			     </div>
-			   <div class="clear"></div>	
+	    <div class="project-cont span_2_of_3">
+	         <div class="box-white">
+		         	<h3 class="project-title">
+		         		<label class="project-title-lable">名称：</label>
+		         		<input class="project-input" name="name" type="text" value="${(project.name)!''}">
+		         	</h3>
+		         	
+		         	<h4 class="project-info">
+			         	<label class="project-title-lable">活动类型：</label>
+			         	<select class="project-input1" name="type" >
+			         		<option value="1">市内采风</option>
+			         		<option value="2">远郊采风</option>
+			         		<option value="3">说拍就拍</option>
+			         		<option value="4">一对一</option>
+			         	</select>
+		         	</h4>
+		         	
+		         	<h4 class="project-info">
+			         	<label class="project-title-lable">开始时间:</label>
+			         	<input class="project-input1" type="datetime-local" name="startTime">
+			         	<label class="project-title-lable">预计时长:</label>
+			         	<input class="project-input1" type="text" name="timeLength">
+		         	</h4>
+		         	<h4 class="project-info">
+		         		<label class="project-title-lable">最大人数:</label>
+		         		<input class="project-input1" type="number" name="peopleNum">
+		         		<label class="project-title-lable">最小人数:</label>
+		         		<input class="project-input1" type="number" name="lessNum">
+		         	</h4>
+		         	
+		         	<h4 class="project-info">
+		         		<label class="project-title-lable">地点:</label>
+		         		<input class="project-input1" type="text" name="place">
+		         		<label class="project-title-lable">集合地点:</label>
+		         		<input class="project-input1" type="text" name="venuePlace">
+		         	</h4>
+		         	
+		         	<h4 class="project-info">
+		         		<label class="project-title-lable">联系方式:</label>
+		         		<input class="project-input1" type="text" name="contact">
+		         		<label class="project-title-lable">模特数量:</label>
+		         		<input class="project-input1" type="number" name="modelNum">
+		         	</h4>
+		         	
+		         	<h4 class="project-info">
+			         	<label class="project-title-lable">费用:</label>
+			         	<input class="project-input1" type="text" name="cost">
+		         	</h4>
+		         	
+		     </div>
+		     <div class="clear"></div>
 			   
-	    <div class="clients">
-	    <h3 class="m_3">10 Other Products in the same category</h3>
-		 <ul id="flexiselDemo3">
-			<li><img src="images/s5.jpg" /><a href="#">Category</a><p>Rs 600</p></li>
-			<li><img src="images/s6.jpg" /><a href="#">Category</a><p>Rs 850</p></li>
-			<li><img src="images/s7.jpg" /><a href="#">Category</a><p>Rs 900</p></li>
-			<li><img src="images/s8.jpg" /><a href="#">Category</a><p>Rs 550</p></li>
-			<li><img src="images/s9.jpg" /><a href="#">Category</a><p>Rs 750</p></li>
-		 </ul>
-     </div>
-     <div class="toogle">
-     	<h3 class="m_3">Product Details</h3>
-     	<p class="m_text">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum.</p>
-     </div>
-     <div class="toogle">
-     	<h3 class="m_3">More Information</h3>
-     	<p class="m_text">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum.</p>
-     </div>
+	    	 <div class="box-white">
+		         	<h4 class="project-info">
+		         		<label class="project-title-lable">活动简介:</label>
+		         		<textarea class="project-input" rows="5" name="des"></textarea>
+		         	</h4>
+		         	
+		         	<h4 class="project-info">
+		         		
+		         		<label class="project-title-lable">行程安排:</label>
+		         		<textarea class="project-input" rows="5" name=""></textarea>
+		         	</h4>
+		         	
+		         	<h4 class="project-info">
+		         		<label class="project-title-lable">费用说明:</label>
+		         		<textarea class="project-input" rows="5" name=""></textarea>
+		         	</h4>
+		     </div>
+		     
+		     <div class="project-submit">
+				<input type="submit" value="发布" title="">
+			 </div>
+	 	</form>
       </div>
+      
+      
 			<div class="rsingle span_1_of_single">
 				<h5 class="m_1">Categories</h5>
 					<select class="dropdown" tabindex="8" data-settings='{"wrapperClass":"metro"}'>
@@ -157,88 +203,10 @@ function reviewImg(fileInput,id){
 							</div>
 						</div>
 		        </section>
-		       <section  class="sky-form">
-					<h4>Brand Name</h4>
-						<div class="row row1 scroll-pane">
-							<div class="col col-4">
-								<label class="checkbox"><input type="checkbox" name="checkbox" checked=""><i></i>John Jacobs</label>
-							</div>
-							<div class="col col-4">
-								<label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Tag Heuer</label>
-								<label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Lee Cooper</label>
-								<label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Mikli</label>
-								<label class="checkbox"><input type="checkbox" name="checkbox"><i></i>S Oliver</label>
-								<label class="checkbox"><input type="checkbox" name="checkbox" ><i></i>Hackett</label>
-								<label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Killer</label>
-								<label class="checkbox"><input type="checkbox" name="checkbox"><i></i>IDEE</label>
-								<label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Vogue</label>
-								<label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Gunnar</label>
-								<label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Accu Reader</label>
-								<label class="checkbox"><input type="checkbox" name="checkbox"><i></i>CAT</label>
-								<label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Excellent</label>
-								<label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Feelgood</label>
-								<label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Odysey</label>
-								<label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Animal</label>	
-							</div>
-						</div>
-		       </section>
-		       <section  class="sky-form">
-					<h4>Frame Shape</h4>
-						<div class="row row1 scroll-pane">
-							<div class="col col-4">
-								<label class="checkbox"><input type="checkbox" name="checkbox" checked=""><i></i>Pilot</label>
-							</div>
-							<div class="col col-4">
-							    <label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Rectangle</label>
-								<label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Square</label>
-								<label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Round</label>
-								<label class="checkbox"><input type="checkbox" name="checkbox" ><i></i>Others</label>
-								<label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Cat Eyes</label>
-								<label class="checkbox"><input type="checkbox" name="checkbox" ><i></i>Wrap Around</label>
-						    </div>
-						</div>
-		       </section>
-		       <section  class="sky-form">
-					<h4>Frame Size</h4>
-						<div class="row row1 scroll-pane">
-							<div class="col col-4">
-								<label class="checkbox"><input type="checkbox" name="checkbox" checked=""><i></i>Small</label>
-							</div>
-							<div class="col col-4">
-								<label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Medium</label>
-								<label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Large</label>
-								<label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Medium</label>
-								<label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Large</label>
-							</div>
-						</div>
-		       </section>
-		       <section  class="sky-form">
-					<h4>Frame Type</h4>
-						<div class="row row1 scroll-pane">
-							<div class="col col-4">
-								<label class="checkbox"><input type="checkbox" name="checkbox" checked=""><i></i>Full Rim</label>
-							</div>
-							<div class="col col-4">
-								<label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Rim Less</label>
-								<label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Half Rim</label>
-								<label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Rim Less</label>
-								<label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Half Rim</label>
-							</div>
-						</div>
-		       </section>
-		       <section  class="sky-form">
-					<h4>Colors</h4>
-						<ul class="color-list">
-							<li><a href="#"> <span class="color1"> </span><p class="red">Red</p></a></li>
-							<li><a href="#"> <span class="color2"> </span><p class="red">Green</p></a></li>
-							<li><a href="#"> <span class="color3"> </span><p class="red">Blue</p></a></li>
-							<li><a href="#"> <span class="color4"> </span><p class="red">Yellow</p></a></li>
-							<li><a href="#"> <span class="color5"> </span><p class="red">Violet</p></a></li>
-							<li><a href="#"> <span class="color6"> </span><p class="red">Orange</p></a></li>
-							<li><a href="#"> <span class="color7"> </span><p class="red">Gray</p></a></li>
-					   </ul>
-		       </section>
+		     
 		      </div>
+		      
+		      
 		      <div class="clear"></div>
 			</div>
 			 <div class="clear"></div>

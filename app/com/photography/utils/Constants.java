@@ -43,5 +43,16 @@ public class Constants {
 	/**
 	 * 活动类型
 	 */
+	//市内采风
+	public final static String PROJECT_TYPE_CITYINSIDE = "1";
+	
+	//远郊采风
+	public final static String PROJECT_TYPE_CITYOUTSIDE = "2";
+	
+	//说拍就拍
+	public final static String PROJECT_TYPE_SAIDPAT = "3";
+	
+	//一对一
+	public final static String PROJECT_TYPE_ONETOONE = "4";
 	
 }
