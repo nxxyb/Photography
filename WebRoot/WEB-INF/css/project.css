@@ -1,7 +1,7 @@
 /*--single--*/
 
 .span_all {
-	width: 80%;
+	width: 100%;
 }
 
 /*****Pagination********/
@@ -95,7 +95,7 @@
 
 #products .slides_container {
 	width: 99.3333%;
-	height: 18.5em;
+	height: 25em;
 	overflow: hidden;
 	float: left;
 	position: relative;
@@ -104,8 +104,9 @@
 }
 
 #products .slides_container img{
-	width: 100%;
-	height: 18.5em;
+	width: 80em;
+	height: 25em;
+	vertical-align: middle;
 }
 
 #products .next,#products .prev {
@@ -118,4 +119,9 @@
 	overflow: hidden;
 	display: block;
 	z-index: 101;
+}
+
+.desc1 {
+	display: block;
+	float: left;
 }

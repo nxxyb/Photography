@@ -148,9 +148,17 @@
     width: 10px;
 }
 .locate-info .icon-locate-l {
-    background: url("../images/locate_10x14.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+    /*background: url("../images/locate_10x14.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
     left: 0;
-    top: 14px;
+    top: 14px;*/
+    
+    position: relative;
+	top: 3px;
+	margin: 0 6px;
+	/*background: url("../images/locate_10x14.png") -5px -3px no-repeat;*/
+	height: 18px;
+	width: 12px;
+	display: inline-block;
 }
 
 .play-navbar-right {
@@ -173,11 +181,11 @@
     width: 294px;
 }
 .line-search-input .s-combobox {
-    -moz-border-bottom-colors: none;
-    -moz-border-left-colors: none;
-    -moz-border-right-colors: none;
-    -moz-border-top-colors: none;
-    border-color: #777 -moz-use-text-color #777 #777;
+    -moz-border-bottom-colors: #FF8800;
+    -moz-border-left-colors: #FF8800;
+    -moz-border-right-colors: #FF8800;
+    -moz-border-top-colors: #FF8800;
+    border-color: #FF8800;
     border-image: none;
     border-style: solid none solid solid;
     border-width: 1px 0 1px 1px;
