@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.photography.exception.ErrorCode;
+import com.photography.exception.ErrorMessage;
 import com.photography.mapping.User;
 import com.photography.service.IMailService;
 import com.photography.service.IUserService;
@@ -73,7 +75,7 @@ public class UserInfoController extends BaseController {
 	public String updateHeadPhoto(MultipartFile headFile,HttpServletRequest request, Model model){
 		User user = (User) request.getSession().getAttribute(Constants.SESSION_USER_KEY);
 		if(user == null){
-			return (String) CustomizedPropertyPlaceholderConfigurer.getContextProperty("error.user.invild.session");
+			return (String) ErrorMessage.get(ErrorCode.SESSION_TIMEOUT);
 		}
 		String filePath = request.getSession().getServletContext().getRealPath((String)
     			CustomizedPropertyPlaceholderConfigurer.getContextProperty("user.confirm.file"))  + File.separator + user.getEmail();
@@ -91,7 +93,7 @@ public class UserInfoController extends BaseController {
 			user.setHeadPic(relativePath + "/" + headFile.getOriginalFilename());
 			userService.savePojo(user, user);
     	}catch(Exception e){
-    		return (String) CustomizedPropertyPlaceholderConfigurer.getContextProperty("error.unknown");
+    		return (String) ErrorMessage.get(ErrorCode.UNKNOWN_ERROR);
     	}
     	request.getSession().setAttribute(Constants.SESSION_USER_KEY, user);
     	return Constants.YES;
@@ -127,7 +129,7 @@ public class UserInfoController extends BaseController {
 			user.setComfirmPic(relativePath + "/" + comfirmFile.getOriginalFilename());
 			userService.savePojo(user, user);
     	}catch(Exception e){
-    		return (String) CustomizedPropertyPlaceholderConfigurer.getContextProperty("error.unknown");
+    		return (String) ErrorMessage.get(ErrorCode.UNKNOWN_ERROR);
     	}
     	request.getSession().setAttribute(Constants.SESSION_USER_KEY, user);
     	return Constants.YES;
@@ -166,7 +168,7 @@ public class UserInfoController extends BaseController {
     	try{
 			userService.savePojo(userDB, userDB);
     	}catch(Exception e){
-    		return (String) CustomizedPropertyPlaceholderConfigurer.getContextProperty("error.unknown");
+    		return (String) ErrorMessage.get(ErrorCode.UNKNOWN_ERROR);
     	}
     	request.getSession().setAttribute(Constants.SESSION_USER_KEY, userDB);
     	return Constants.YES;

@@ -45,6 +45,9 @@ public abstract class BaseServiceImpl implements IBaseService {
 	 */
 	@Transactional(propagation=Propagation.REQUIRED)
 	public void savePojo(BaseMapping pojo, User user) throws ServiceException {
+		if("".equals(pojo.getId())){
+			pojo.setId(null);
+		}
 		getDao().saveOrUpdate(pojo);
 
 	}

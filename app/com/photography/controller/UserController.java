@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.photography.exception.ErrorCode;
+import com.photography.exception.ErrorMessage;
 import com.photography.exception.ServiceException;
 import com.photography.mapping.User;
 import com.photography.service.IMailService;
@@ -86,7 +88,7 @@ public class UserController extends BaseController{
 				mav.setViewName("user/login");
 			}else{
 				log.error("login error",e);
-				mav.addObject("error_message", CustomizedPropertyPlaceholderConfigurer.getContextProperty("error.unknown"));
+				mav.addObject("error_message", ErrorMessage.get(ErrorCode.UNKNOWN_ERROR));
 				mav.setViewName("error/error");
 			}
 		}
@@ -124,7 +126,7 @@ public class UserController extends BaseController{
 	        mav.setViewName("user/register/register_normal_email");
 		}catch(Exception e){
 			log.error(e);
-			mav.addObject("error_message", CustomizedPropertyPlaceholderConfigurer.getContextProperty("error.unknown"));
+			mav.addObject("error_message", ErrorMessage.get(ErrorCode.UNKNOWN_ERROR));
 			mav.setViewName("error/error");
 		}
 		return mav;
@@ -152,12 +154,12 @@ public class UserController extends BaseController{
 					mav.setViewName("user/register/register_publisher_email");
 				}
 			}else{
-				mav.addObject("error_message", CustomizedPropertyPlaceholderConfigurer.getContextProperty("error.unknown"));
+				mav.addObject("error_message", ErrorMessage.get(ErrorCode.USER_NOT_EXIST));
 				mav.setViewName("error/error");
 			}
 		}catch(Exception e){
 			log.error(e);
-			mav.addObject("error_message", CustomizedPropertyPlaceholderConfigurer.getContextProperty("error.user.not.found"));
+			mav.addObject("error_message", ErrorMessage.get(ErrorCode.UNKNOWN_ERROR));
 			mav.setViewName("error/error");
 		}
 		return mav;
@@ -176,26 +178,21 @@ public class UserController extends BaseController{
 		try {
 			User user = (User) userService.loadPojo(key);
 			if (user != null) {
-				if(!Constants.NO.equals(user.getEnable())){
-					mav.addObject("error_message", CustomizedPropertyPlaceholderConfigurer.getContextProperty("error.user.confirmed"));
-					mav.setViewName("error/error");
+				user.setEnable(Constants.YES);
+				userService.savePojo(user, user);
+				mav.addObject("email", "email");
+				if(Constants.USER_TYPE_NORMAL.equals(user.getType())){
+					mav.setViewName("user/register/register_normal_email_confirm");
 				}else{
-					user.setEnable(Constants.YES);
-					userService.savePojo(user, user);
-					mav.addObject("email", "email");
-					if(Constants.USER_TYPE_NORMAL.equals(user.getType())){
-						mav.setViewName("user/register/register_normal_email_confirm");
-					}else{
-						mav.setViewName("user/register/register_publisher_email_confirm");
-					}
+					mav.setViewName("user/register/register_publisher_email_confirm");
 				}
 			}else{
-				mav.addObject("error_message", CustomizedPropertyPlaceholderConfigurer.getContextProperty("error.user.not.found"));
+				mav.addObject("error_message", ErrorMessage.get(ErrorCode.USER_NOT_EXIST));
 				mav.setViewName("error/error");
 			}
 		} catch (Exception e) {
 			log.error(e);
-			mav.addObject("error_message", CustomizedPropertyPlaceholderConfigurer.getContextProperty("error.unknown"));
+			mav.addObject("error_message", ErrorMessage.get(ErrorCode.UNKNOWN_ERROR));
 			mav.setViewName("error/error");
 		}
 		return mav;
@@ -240,8 +237,16 @@ public class UserController extends BaseController{
 	        mav.setViewName("user/register/register_publisher_email"); 
 		} catch (Exception e) {
 			log.error("UserController.registerPublisher(): Exception", e);
-			mav.addObject("error_message", CustomizedPropertyPlaceholderConfigurer.getContextProperty("error.unknown"));
-			mav.setViewName("error/error");
+			if(e instanceof ServiceException){
+				ServiceException se = (ServiceException) e;
+				String message = se.getErrorMessage();
+				mav.addObject("errorMessage", message); 
+				mav.setViewName("error/error");
+			}else{
+				log.error("login error",e);
+				mav.addObject("error_message", ErrorMessage.get(ErrorCode.UNKNOWN_ERROR));
+				mav.setViewName("error/error");
+			}
 		} 
         return mav;
 	}

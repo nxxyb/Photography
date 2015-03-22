@@ -1,5 +1,6 @@
 package com.photography.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.photography.dao.IHibernateDao;
@@ -17,6 +18,7 @@ import com.photography.mapping.Project;
 @Service("projectService")
 public class ProjectServiceImpl extends BaseServiceImpl implements IProjectService {
 	
+	@Autowired
 	private IProjectDao projectDao;
 
 	public void setProjectDao(IProjectDao projectDao) {

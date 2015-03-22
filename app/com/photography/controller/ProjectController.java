@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.photography.exception.ErrorCode;
+import com.photography.exception.ErrorMessage;
 import com.photography.exception.ServiceException;
 import com.photography.mapping.Project;
 import com.photography.mapping.User;
@@ -51,9 +53,21 @@ public class ProjectController extends BaseController {
 	 * @author 徐雁斌
 	 */
 	@RequestMapping(value="/toCreate")
-	public ModelAndView toCreate(HttpServletRequest request, Model model){
+	public ModelAndView toCreate(String id,HttpServletRequest request, Model model){
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("project/project_info");
+		
+		if(id != null && !"".equals(id)){
+			Project project = (Project) projectService.loadPojo(id);
+			if(project != null){
+				mav.addObject("project", project);
+				mav.setViewName("project/project_info");
+			}else{
+				mav.addObject("error_message", ErrorMessage.get(ErrorCode.UNKNOWN_ERROR));
+				mav.setViewName("error/error");
+			}
+		}else{
+			mav.setViewName("project/project_info");
+		}
 		return mav;
 	}
 
@@ -91,16 +105,16 @@ public class ProjectController extends BaseController {
 		}catch(Exception e){
 			if(e instanceof ServiceException){
 				ServiceException se = (ServiceException) e;
-				String message = se.getErrorMessage();
-				mav.addObject("errorMessage", message); 
-				mav.setViewName("user/login");
+				mav.addObject("errorMessage", se.getErrorMessage()); 
+				mav.setViewName("error/error");
 			}else{
-				log.error("login error",e);
-				mav.addObject("error_message", CustomizedPropertyPlaceholderConfigurer.getContextProperty("error.unknown"));
+				log.error("error",e);
+				mav.addObject("error_message", ErrorMessage.get(ErrorCode.UNKNOWN_ERROR));
 				mav.setViewName("error/error");
 			}
 		}
 		return mav;
 	}
-
+	
+	
 }

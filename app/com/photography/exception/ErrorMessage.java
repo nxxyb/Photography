@@ -18,6 +18,7 @@ public class ErrorMessage {
 		/*
 		 * 公共异常错误码
 		 */
+		msg.put(ErrorCode.UNKNOWN_ERROR, "数据库异常");
 		msg.put(ErrorCode.DATABASE_ERROR, "数据库异常");
 		msg.put(ErrorCode.SESSION_TIMEOUT, "未登录或会话已超时，请重新登录");
 
@@ -29,6 +30,11 @@ public class ErrorMessage {
 		msg.put(ErrorCode.USER_PWD_NOT_MATCH, "密码错误");
 		msg.put(ErrorCode.USER_NOT_VERIFY, "用户未审核通过");
 		msg.put(ErrorCode.USER_NOT_ENABLE, "用户未激活");
+		
+		/*
+		 * 活动
+		 */
+		msg.put(ErrorCode.PROJECT_NOT_EXIST, "活动不存在");
 	}
 
 	public static String get(int errorCode){

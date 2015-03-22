@@ -46,6 +46,8 @@ function reviewImg(fileInput,id){
 
 </script>
 
+<#assign imgs =((project.photos)?split(","))>
+
 <div class="mens">    
   <div class="main">
   <form action="${basePath}/project/create" method="post" enctype="multipart/form-data">
@@ -57,18 +59,17 @@ function reviewImg(fileInput,id){
 					<div id="products_example">
 						<div id="products">
 							<div class="slides_container">
-							 	<a href="#"><img id="slides_img1" class="a" src="${basePath}/images/s-img1.jpg" alt=""/></a>
-							 	<a href="#"><img id="slides_img2" class="a" src="${basePath}/images/s-img2.jpg" alt=""/></a>
-							   	<a href="#"><img id="slides_img3" class="a" src="${basePath}/images/s-img3.jpg" alt=""/></a>
+							 	<a href="#"><img id="slides_img1" class="a" src="${basePath}/${img[0]!''}" alt=""/></a>
+							 	<a href="#"><img id="slides_img2" class="a" src="${basePath}/${img[1]!''}" alt=""/></a>
+							   	<a href="#"><img id="slides_img3" class="a" src="${basePath}/${img[2]!''}" alt=""/></a>
 							   <!--  <a href="#"><img class="a" src="" alt=""/></a> -->
 							</div>
 							<div>
 							<ul class="pagination">
-								<li><a href="#"><img id="img1" src="${basePath}/images/s1.jpg"></a></li>
-								<li><a href="#"><img id="img2" src="${basePath}/images/s2.jpg"></a></li>
-								<li><a href="#"><img id="img3" src="${basePath}/images/s3.jpg"></a></li>
+								<li><a href="#"><img id="img1" src="${basePath}/${img[0]!''}"></a></li>
+								<li><a href="#"><img id="img2" src="${basePath}/${img[1]!''}"></a></li>
+								<li><a href="#"><img id="img3" src="${basePath}/${img[2]!''}"></a></li>
 								<!--<li><a href="#"></a></li> -->
-								<div class="clear"></div>
 							</ul>
 							</div>
 							<div class="addimg">
@@ -82,8 +83,8 @@ function reviewImg(fileInput,id){
 					</div>
 				</div>
 	     </div>
-	            
-	    <div class="project-cont span_2_of_3">
+	     
+	     <div class="project-cont span_2_of_3">
 	         <div class="box-white">
 		         	<h3 class="project-title">
 		         		<label class="project-title-lable">名称：</label>
@@ -93,52 +94,50 @@ function reviewImg(fileInput,id){
 		         	<h4 class="project-info">
 			         	<label class="project-title-lable">活动类型：</label>
 			         	<select class="project-input1" name="type" >
-			         		<option value="1">市内采风</option>
-			         		<option value="2">远郊采风</option>
-			         		<option value="3">说拍就拍</option>
-			         		<option value="4">一对一</option>
+			         		<option value="1" <#if (project.type)?? && project.type == "1">selected</#if>>市内采风</option>
+			         		<option value="2" <#if (project.type)?? && project.type == "2">selected</#if>>远郊采风</option>
+			         		<option value="3" <#if (project.type)?? && project.type == "3">selected</#if>>说拍就拍</option>
+			         		<option value="4" <#if (project.type)?? && project.type == "4">selected</#if>>一对一</option>
 			         	</select>
 		         	</h4>
 		         	
 		         	<h4 class="project-info">
 			         	<label class="project-title-lable">开始时间:</label>
-			         	<input class="project-input1" type="datetime-local" name="startTime">
+			         	<input class="project-input1" type="datetime-local" name="startTime" value="${(project.startTime)!''}">
 			         	<label class="project-title-lable">预计时长:</label>
-			         	<input class="project-input1" type="text" name="timeLength">
+			         	<input class="project-input1" type="text" name="timeLength" value="${(project.timeLength)!''}">
 		         	</h4>
 		         	<h4 class="project-info">
 		         		<label class="project-title-lable">最大人数:</label>
-		         		<input class="project-input1" type="number" name="peopleNum">
+		         		<input class="project-input1" type="number" name="peopleNum" value="${(project.peopleNum)!''}">
 		         		<label class="project-title-lable">最小人数:</label>
-		         		<input class="project-input1" type="number" name="lessNum">
+		         		<input class="project-input1" type="number" name="lessNum" value="${(project.lessNum)!''}">
 		         	</h4>
 		         	
 		         	<h4 class="project-info">
 		         		<label class="project-title-lable">地点:</label>
-		         		<input class="project-input1" type="text" name="place">
+		         		<input class="project-input1" type="text" name="place" value="${(project.place)!''}">
 		         		<label class="project-title-lable">集合地点:</label>
-		         		<input class="project-input1" type="text" name="venuePlace">
+		         		<input class="project-input1" type="text" name="venuePlace" value="${(project.venuePlace)!''}">
 		         	</h4>
 		         	
 		         	<h4 class="project-info">
 		         		<label class="project-title-lable">联系方式:</label>
-		         		<input class="project-input1" type="text" name="contact">
+		         		<input class="project-input1" type="text" name="contact" value="${(project.contact)!''}">
 		         		<label class="project-title-lable">模特数量:</label>
-		         		<input class="project-input1" type="number" name="modelNum">
+		         		<input class="project-input1" type="number" name="modelNum" value="${(project.modelNum)!''}">
 		         	</h4>
 		         	
 		         	<h4 class="project-info">
 			         	<label class="project-title-lable">费用:</label>
-			         	<input class="project-input1" type="text" name="cost">
+			         	<input class="project-input1" type="text" name="cost" value="${(project.cost)!''}">
 		         	</h4>
-		         	
 		     </div>
-		     <div class="clear"></div>
-			   
-	    	 <div class="box-white">
+		     
+		      <div class="box-white">
 		         	<h4 class="project-info">
 		         		<label class="project-title-lable">活动简介:</label>
-		         		<textarea class="project-input" rows="5" name="des"></textarea>
+		         		<textarea class="project-input" rows="5" name="des">${(project.des)!''}</textarea>
 		         	</h4>
 		         	
 		         	<h4 class="project-info">
@@ -156,62 +155,64 @@ function reviewImg(fileInput,id){
 		     <div class="project-submit">
 				<input type="submit" value="发布" title="">
 			 </div>
-	 	</form>
-      </div>
-      
-      
-			<div class="rsingle span_1_of_single">
-				<h5 class="m_1">Categories</h5>
-					<select class="dropdown" tabindex="8" data-settings='{"wrapperClass":"metro"}'>
-						<option value="1">Mens</option>
-						<option value="2">Sub Category1</option>
-						<option value="3">Sub Category2</option>
-						<option value="4">Sub Category3</option>
-					</select>
-					<select class="dropdown" tabindex="8" data-settings='{"wrapperClass":"metro"}'>
-						<option value="1">Womens</option>
-						<option value="2">Sub Category1</option>
-						<option value="3">Sub Category2</option>
-						<option value="4">Sub Category3</option>
-					</select>
-					<ul class="kids">
-						<li><a href="#">Kids</a></li>
-						<li class="last"><a href="#">Glasses Shop</a></li>
-					</ul>
-                   <section  class="sky-form">
-					<h4>Price</h4>
-						<div class="row row1 scroll-pane">
-							<div class="col col-4">
-								<label class="checkbox"><input type="checkbox" name="checkbox" checked=""><i></i>Rs 500 - Rs 700</label>
-							</div>
-							<div class="col col-4">
-								<label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Rs 700 - Rs 1000</label>
-								<label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Rs 1000 - Rs 1500</label>
-								<label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Rs 1500 - Rs 2000</label>
-								<label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Rs 2000 - Rs 2500</label>
-								<label class="checkbox"><input type="checkbox" name="checkbox" ><i></i>Rs 2500 - Rs 3000</label>
-								<label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Rs 3500 - Rs 4000</label>
-								<label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Rs 4000 - Rs 4500</label>
-								<label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Rs 4500 - Rs 5000</label>
-								<label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Rs 5000 - Rs 5500</label>
-								<label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Rs 5500 - Rs 6000</label>
-								<label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Rs 6000 - Rs 6500</label>
-								<label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Rs 6500 - Rs 7000</label>
-								<label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Rs 7000 - Rs 7500</label>
-								<label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Rs 7500 - Rs 8000</label>
-								<label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Rs 8000 - Rs 8500</label>	
-							</div>
-						</div>
-		        </section>
 		     
-		      </div>
+		     
+		     
+		</div>  
+	        
+      
+		<div class="rsingle span_1_of_single">
+			<h5 class="m_1">Categories</h5>
+				<select class="dropdown" tabindex="8" data-settings='{"wrapperClass":"metro"}'>
+					<option value="1">Mens</option>
+					<option value="2">Sub Category1</option>
+					<option value="3">Sub Category2</option>
+					<option value="4">Sub Category3</option>
+				</select>
+				<select class="dropdown" tabindex="8" data-settings='{"wrapperClass":"metro"}'>
+					<option value="1">Womens</option>
+					<option value="2">Sub Category1</option>
+					<option value="3">Sub Category2</option>
+					<option value="4">Sub Category3</option>
+				</select>
+				<ul class="kids">
+					<li><a href="#">Kids</a></li>
+					<li class="last"><a href="#">Glasses Shop</a></li>
+				</ul>
+                  <section  class="sky-form">
+				<h4>Price</h4>
+					<div class="row row1 scroll-pane">
+						<div class="col col-4">
+							<label class="checkbox"><input type="checkbox" name="checkbox" checked=""><i></i>Rs 500 - Rs 700</label>
+						</div>
+						<div class="col col-4">
+							<label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Rs 700 - Rs 1000</label>
+							<label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Rs 1000 - Rs 1500</label>
+							<label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Rs 1500 - Rs 2000</label>
+							<label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Rs 2000 - Rs 2500</label>
+							<label class="checkbox"><input type="checkbox" name="checkbox" ><i></i>Rs 2500 - Rs 3000</label>
+							<label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Rs 3500 - Rs 4000</label>
+							<label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Rs 4000 - Rs 4500</label>
+							<label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Rs 4500 - Rs 5000</label>
+							<label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Rs 5000 - Rs 5500</label>
+							<label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Rs 5500 - Rs 6000</label>
+							<label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Rs 6000 - Rs 6500</label>
+							<label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Rs 6500 - Rs 7000</label>
+							<label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Rs 7000 - Rs 7500</label>
+							<label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Rs 7500 - Rs 8000</label>
+							<label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Rs 8000 - Rs 8500</label>	
+						</div>
+					</div>
+	        </section>
+	     
+	      </div>
 		      
 		      
-		      <div class="clear"></div>
-			</div>
-			 <div class="clear"></div>
-		   </div>
-		</div>
+	      <div class="clear"></div>
+		 </div>
+		 </form>          
+	</div>
+</div>
 
 		<!-- footer start-->
   <#include "../common/footer.html">
