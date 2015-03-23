@@ -12,6 +12,10 @@
 	margin: 10px;
 }
 
+.play-navbar-right {
+    float: right;
+}
+
 .logo {
 	float: left;
 	width: 30%;
@@ -38,7 +42,7 @@
 .cssmenu ul li a {
 	color: #b0b0b0;
 	display: block;
-	margin: 10px;
+	margin: 2px;
 }
 
 .cssmenu li>a:hover {
@@ -161,9 +165,6 @@
 	display: inline-block;
 }
 
-.play-navbar-right {
-    float: right;
-}
 .line-search {
     float: left;
     margin: 14px 0 0;

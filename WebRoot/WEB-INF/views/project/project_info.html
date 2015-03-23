@@ -46,7 +46,9 @@ function reviewImg(fileInput,id){
 
 </script>
 
+<#if (project.photos)??>
 <#assign imgs =((project.photos)?split(","))>
+</#if>
 
 <div class="mens">    
   <div class="main">
@@ -59,19 +61,21 @@ function reviewImg(fileInput,id){
 					<div id="products_example">
 						<div id="products">
 							<div class="slides_container">
-							 	<a href="#"><img id="slides_img1" class="a" src="${basePath}/${img[0]!''}" alt=""/></a>
-							 	<a href="#"><img id="slides_img2" class="a" src="${basePath}/${img[1]!''}" alt=""/></a>
-							   	<a href="#"><img id="slides_img3" class="a" src="${basePath}/${img[2]!''}" alt=""/></a>
+							 	<a href="#"><img id="slides_img1" class="a" src="${basePath}/${(imgs[0])!''}" alt=""/></a>
+							 	<a href="#"><img id="slides_img2" class="a" src="${basePath}/${(imgs[1])!''}" alt=""/></a>
+							   	<a href="#"><img id="slides_img3" class="a" src="${basePath}/${(imgs[2])!''}" alt=""/></a>
 							   <!--  <a href="#"><img class="a" src="" alt=""/></a> -->
 							</div>
+							<div class="clear"></div>
 							<div>
 							<ul class="pagination">
-								<li><a href="#"><img id="img1" src="${basePath}/${img[0]!''}"></a></li>
-								<li><a href="#"><img id="img2" src="${basePath}/${img[1]!''}"></a></li>
-								<li><a href="#"><img id="img3" src="${basePath}/${img[2]!''}"></a></li>
+								<li><a href="#"><img id="img1" src="${basePath}/${(imgs[0])!''}"></a></li>
+								<li><a href="#"><img id="img2" src="${basePath}/${(imgs[1])!''}"></a></li>
+								<li><a href="#"><img id="img3" src="${basePath}/${(imgs[2])!''}"></a></li>
 								<!--<li><a href="#"></a></li> -->
 							</ul>
 							</div>
+							<div class="clear"></div>
 							<div class="addimg">
 							<a href="#"><img src="${basePath}/images/project/upload.jpg"><input id="img1_file" name="imgFiles" type="file" onchange="reviewImg(this,'img1');" accept="image/*"></a>
 							<a href="#"><img src="${basePath}/images/project/upload.jpg"><input id="img2_file" name="imgFiles" type="file" onchange="reviewImg(this,'img2');" accept="image/*"></a>
