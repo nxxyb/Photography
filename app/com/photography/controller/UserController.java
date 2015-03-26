@@ -24,6 +24,7 @@ import com.photography.service.IUserService;
 import com.photography.utils.Constants;
 import com.photography.utils.CustomizedPropertyPlaceholderConfigurer;
 import com.photography.utils.FileUtil;
+import com.photography.utils.MD5Util;
 
 /**
  * 用户登录、注册
@@ -77,7 +78,7 @@ public class UserController extends BaseController{
 	public ModelAndView login(String email,String password,HttpServletRequest request, Model model){
 		ModelAndView mav = new ModelAndView();
 		try{
-			User user = userService.login(email, password);
+			User user = userService.login(email, MD5Util.md5(password));
 			request.getSession().setAttribute(Constants.SESSION_USER_KEY, user);
 			mav.setViewName("index");
 		}catch(Exception e){
@@ -286,7 +287,7 @@ public class UserController extends BaseController{
 	public ModelAndView test(HttpServletRequest request,Model model) {
 		ModelAndView mav=new ModelAndView();
 		mav.addObject("html_template", "info.html");
-		mav.setViewName("user/person_info/person_info");
+		mav.setViewName("user/register/register_normal_email_confirm");
 		return mav;
 	}
 	

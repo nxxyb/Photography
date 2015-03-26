@@ -18,39 +18,76 @@
   <#include "../../common/header.html">
   <!-- header end -->
   
-          <div class="register_account">
-          	<div class="wrap">
-    	      <h4 class="title">创建用户</h4>
-    		  <form action="${basePath}/user/register" method="post" name="register" onsubmit="md5()">
-    			 <div class="col_1_of_login span_1_of_login">
-    			 <h3 class="title">步骤</h3>
-					<p>
-					<div class="capsule">填写注册信息</div>
-					<div class="capsule">通过邮件确认</div>
-					<div class="capsule">完善个人信息</div>
-					</p>
-					 <div class="clear"></div>
+ <div class="container" style="margin-top: 5%;margin-bottom: 15%;">
+		<div class="row clearfix">
+			<div class="col-md-12 column">
+				<div class="row clearfix">
+					<div class="col-md-3 column">
+					</div>
+					<div class="col-md-5 column">
+						<div class="panel panel-warning">
+							<div class="panel-heading">
+								<h3 class="panel-title lead">
+									注册
+								</h3>
+							</div>
+							<div class="panel-body">
+								<form class="form-horizontal" role="form" action="${basePath}/user/register" method="post">
+									<div class="form-group">
+										 <label for="inputEmail" class="col-sm-3 control-label">邮箱：</label>
+										<div class="col-sm-9">
+											<input id="inputEmail" type="email" class="form-control"  name="email" size="50" autocomplete="on" autofocus="autofocus" placeholder="邮箱地址" required="required" oninput="checkEmail()"/>
+										</div>
+									</div>
+									<div class="form-group">
+										 <label for="inputPassword" class="col-sm-3 control-label">密码：</label>
+										<div class="col-sm-9">
+											<input id="inputPassword" type="password" class="form-control" name="password" size="10" autocomplete="off"  placeholder="密码 6-10位字母或数字" pattern=".{6,10}" required="required"/>
+										</div>
+									</div>
+									<div class="form-group">
+										 <label for="inputPassword1" class="col-sm-3 control-label">确认密码：</label>
+										<div class="col-sm-9">
+											<input id="inputPassword1" type="password" class="form-control" name="password1" size="10" autocomplete="off" pattern=".{6,10}" placeholder="重复密码" required="required" oninput="checkPasswords()"/>
+										</div>
+									</div>
+									<div class="form-group">
+										<div class="col-sm-offset-2 col-sm-10">
+											 <button type="submit" class="btn btn-default">注册</button>
+											 <a class="btn" href="${basePath}/user/toLogin">登录</a>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-2 column">
+						<div class="panel panel-warning">
+							<div class="panel-heading">
+								<h3 class="panel-title lead">
+									第三方帐号登录
+								</h3>
+							</div>
+							<div class="panel-body">
+							
+								<p class="text-center"><a class="btn btn-success"><span class="weixin"></span>微信登录</a></p>
+		                        <p class="text-center"><a class="btn btn-danger"><span class="weibo"></span>微博登录</a></p>
+		                        <p class="text-center"><a class="btn btn-info"><span class="qq"></span>QQ 登录</a></p>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-2 column">
+						
+					</div>
 				</div>
-		    	  <div class="col_1_of_login span_1_of_login">
-		    	  	<div>
-		    	  	<a href="#" class="select" >普通用户</a>
-		    	  	<a href="${basePath}/user/toRegisterPublisher" class="grey">活动发布者</a>
-		    	  	</div>
-		    		<div><input id="email" type="email" name="email" placeholder="邮箱地址" autofocus="autofocus" maxlength="50" required="required" oninput="checkEmail()"></div>
-		    		<div><input id="password" type="password" name="password"  placeholder="密码 6-10位字母或数字" pattern=".{6,10}" title="6-10位字母或数字"  required="required" ></div>
-		    		<div><input id="password1" type="password" name="password1" pattern=".{6,10}" placeholder="重复密码" required="required" oninput="checkPasswords()"></div>
-		    		 <button class="grey" type="submit">注册</button>
-		    		<p class="terms">点击"注册"并同意 <a href="#">《摄影帮服务协议条款》</a>.</p>
-		          </div>
-		    <div class="clear"></div>
-		    </form>
-    	</div>
-    </div>
+			</div>
+		</div>
+	</div>
 
 	<script type="text/javascript">
 		function checkPasswords() {
-			var pass1 = document.getElementById("password");
-			var pass2 = document.getElementById("password1");
+			var pass1 = document.getElementById("inputPassword");
+			var pass2 = document.getElementById("inputPassword1");
 	
 			if (pass1.value != pass2.value){
 				pass2.setCustomValidity("两次输入的密码不一致");
@@ -60,7 +97,7 @@
 		}
 		
 		function checkEmail(){
-			var email = document.getElementById("email");
+			var email = document.getElementById("inputEmail");
 			$.ajax({
             type: "post",
             dataType: "json",
@@ -75,12 +112,8 @@
                }
             });
 		}
-		
-		function md5(){
-			var pass =$("#password").val();	
-			$("#password").val(hex_md5(pass).toUpperCase());
-		}
 	</script>
+	
 
 		<!-- footer start-->
   <#include "../../common/footer.html">

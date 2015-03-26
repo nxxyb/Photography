@@ -27,12 +27,12 @@
 						<div class="col-md-6 column">
 							<div class="panel panel-warning">
 								<div class="panel-heading">
-									<h3 class="panel-title">
+									<h3 class="panel-title lead">
 										登录
 									</h3>
 								</div>
 								<div class="panel-body">
-									<form class="form-horizontal" role="form" action="${basePath}/user/login" method="post" onsubmit="md5()">
+									<form class="form-horizontal" role="form" action="${basePath}/user/login" method="post">
 										<div class="form-group">
 											 <label for="inputEmail3" class="col-sm-2 control-label">邮箱：</label>
 											<div class="col-sm-10">
@@ -49,28 +49,20 @@
 											<div class="col-sm-offset-2 col-sm-10">
 												 <button type="submit" class="btn btn-default">登录</button>
 												 <a class="btn" href="#">忘记密码？</a>
-												 <a class="btn" href="#">注册</a>
+												 <a class="btn" href="${basePath}/user/toRegister">注册</a>
 											</div>
 										</div>
 									</form>
 								</div>
-								
-								
 							</div>
 						</div>
 						<div class="col-md-3 column">
+							
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-
-		<script type="text/javascript">
-		function md5(){
-			var pass =$("#password").val();	
-			$("#password").val(hex_md5(pass).toUpperCase());
-		}
-		</script>
 		
   <!-- footer start-->
   <#include "../common/footer.html">

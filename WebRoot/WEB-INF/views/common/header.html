@@ -8,7 +8,7 @@
 			</div>
 			<ul class="nav navbar-nav navbar-collapse navbar-right">
 				<#if Session.user?exists>
-					<li>欢迎您 ${(Session.user.nackName)!(Session.user.email)!""}</li>
+					<li><a>欢迎您 ${(Session.user.nackName)!(Session.user.email)!""}</a></li>
 					<li><a href="${basePath}/userinfo/toUserInfo">个人中心</a></li>
 					<li><a href="${basePath}/user/logout">退出登录</a></li>
 				<#else>

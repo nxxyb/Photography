@@ -17,37 +17,43 @@
   <#include "../../common/header.html">
   <!-- header end -->
   
-          <div class="register_account">
-          	<div class="wrap">
-    	      <h4 class="title">创建用户</h4>
-    		  <form action="${basePath}/user/register" method="post" name="register">
-    			 <div class="col_1_of_login span_1_of_login">
-    			 <h3 class="title">步骤</h3>
-					<p>
-					<div class="capsule1">填写注册信息</div>
-					<div class="capsule">通过邮件确认</div>
-					<div class="capsule">完善个人信息</div>
-					</p>
-					 <div class="clear"></div>
+<div class="container" style="margin-top: 5%;margin-bottom: 15%;">
+	<div class="row clearfix">
+		<div class="col-md-12 column">
+			<div class="row clearfix">
+				<div class="col-md-3 column">
 				</div>
-		    	  <div class="col_1_of_login span_1_of_login">
-		    	  <h3 class="title">邮件确认</h3>
-		    	  	<div>
-		    		<p>
-		    	                  确认信已经成功发送到你的邮箱${email!""}了<br>
-                                                             查看收件箱...点击确认信中的链接地址，就可以完成注册了！<br><br>
-                                                                                             
-				                  如果你很长时间还没有收到摄影帮的确认信，请... <br>
-				                  确认邮件是否被你提供的邮箱系统自动拦截，或被误认为垃圾邮件放到垃圾箱了<br>
-				                  如果你确认邮箱地址正确，可以请求<a class="link" href="${basePath}/user/reSendEmail?email=${email!""}">再次发送确认信</a><br>
-					       如果还不能解决你的问题，可以发邮件给摄影帮管理员寻求帮助：webmasterEmailiteye.com<br>                                    
-                    </p>
-		          </div>
-		          </div>
-		    <div class="clear"></div>
-		    </form>
-    	</div>
-    </div>
+				<div class="col-md-6 column">
+					<div class="panel panel-warning">
+						<div class="panel-heading">
+							<h3 class="panel-title lead">
+								邮件验证
+							</h3>
+						</div>
+						<div class="panel-body">
+							<div class="col-sm-offset-1 col-sm-10">
+								<h4>您的账号已注册成功<span class="dj"></span></h4>
+								<hr>
+								<h4><small>我们向您的注册邮箱${email!""}发送了一封验证邮件。</small></h4>
+								<h4><small>为正常使用网站的全部功能，请点击邮件内链接完成邮箱验证。</small></h4>
+								<h4><small>如果没有收到确认信，请<a class="link" href="${basePath}/user/reSendEmail?email=${email!""}"> 重新发送验证邮件</a></small></h4>
+							
+								<hr>
+								<h4>没有收到验证邮件？</h4>
+								<h4><small>1. 到广告邮件、垃圾邮件目录里找找看。</small></h4>
+								<h4><small>2. 填错了？修改邮箱。</small></h4>
+								
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-3 column">
+					
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
     
   <!-- footer start-->
   <#include "../../common/footer.html">
