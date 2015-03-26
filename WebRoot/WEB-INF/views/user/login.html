@@ -18,54 +18,53 @@
   <#include "../common/header.html">
   <!-- header end -->
 
-        <div class="register_account">
-          	<div class="wrap">
-				<div class="col_1_of_login span_1_of_login">
-					<h4 class="title">用户注册</h4>
-					<p style="text-indent:2em">
-						摄影帮的宗旨是利用成熟的O2O商业模式净化摄影技术交流环境，提高摄影技术交流质量，建造公平、友爱、和谐的摄影技术交流生态圈。
-					</p>
-					<p style="text-indent:2em">
-						摄影帮可以在全国可发布摄影交流活动信息的报纸杂志、网站、论坛、QQ群、微信群等超过1个亿，每周发布的摄影交流活动超过3000万个，每次参加摄影交流活动人数在70万左右。
-					</p>
-					<div class="button1">
-					   <a href="${basePath}/user/toRegister"><input type="submit" name="Submit" value="创建用户"></a>
-					 </div>
-					 <div class="clear"></div>
+		<div class="container" style="margin-top: 5%;margin-bottom: 15%;">
+			<div class="row clearfix">
+				<div class="col-md-12 column">
+					<div class="row clearfix">
+						<div class="col-md-3 column">
+						</div>
+						<div class="col-md-6 column">
+							<div class="panel panel-warning">
+								<div class="panel-heading">
+									<h3 class="panel-title">
+										登录
+									</h3>
+								</div>
+								<div class="panel-body">
+									<form class="form-horizontal" role="form" action="${basePath}/user/login" method="post" onsubmit="md5()">
+										<div class="form-group">
+											 <label for="inputEmail3" class="col-sm-2 control-label">邮箱：</label>
+											<div class="col-sm-10">
+												<input type="email" class="form-control"  name="email" size="50" autocomplete="on" autofocus="autofocus" placeholder="邮箱地址" required="required"/>
+											</div>
+										</div>
+										<div class="form-group">
+											 <label for="inputPassword3" class="col-sm-2 control-label">密码：</label>
+											<div class="col-sm-10">
+												<input type="password" class="form-control" name="password" size="10" autocomplete="off" placeholder="密码" required="required"/>
+											</div>
+										</div>
+										<div class="form-group">
+											<div class="col-sm-offset-2 col-sm-10">
+												 <button type="submit" class="btn btn-default">登录</button>
+												 <a class="btn" href="#">忘记密码？</a>
+												 <a class="btn" href="#">注册</a>
+											</div>
+										</div>
+									</form>
+								</div>
+								
+								
+							</div>
+						</div>
+						<div class="col-md-3 column">
+						</div>
+					</div>
 				</div>
-				<div class="col_1_of_login span_1_of_login">
-	           		<h4 class="title">用户登录</h4>
-						<form action="${basePath}/user/login" method="post" name="login" id="login-form" onsubmit="md5()">
-						  
-						  <!-- 错误提示 -->
-						  <#if errorMessage??>
-							  <div class="err_tip">
-								  <em class="icon_error"></em>
-								  <span>${errorMessage!""}</span>
-							  </div>
-						  </#if>
-						  
-						  <fieldset class="input">
-						    <div>
-						      <input id="email" type="email" name="email" size="50" autocomplete="on" autofocus="autofocus" placeholder="邮箱地址" required="required">
-						    </div>
-						    <div>
-						      <input id="password" type="password" name="password" size="10" autocomplete="off" placeholder="密码" required="required">
-						    </div>
-						    <div class="remember">
-							    <button class="grey" type="submit">登录</button>
-							     <p id="login-form-remember" style="float:right;">
-							      <label for="modlgn_remember"><a href="#">忘记密码 ?</a></label>
-							   </p>
-							    <div class="clear"></div>
-							 </div>
-						  </fieldset>
-						 </form>
-				</div>
-				<div class="clear"></div>
 			</div>
 		</div>
-		
+
 		<script type="text/javascript">
 		function md5(){
 			var pass =$("#password").val();	

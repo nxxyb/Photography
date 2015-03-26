@@ -1,68 +1,19 @@
-<div class="locate-info">
-	<div class="info-wrap">
-		<a href="javascript:void(0);" class="locate-link"><i class="icon-l icon-locate-l"></i><em>全部</em>[切换]</a>
-	</div>
 
-<div class="popup-area-wrap">
-	<div class="arealist bg_w">
-		<ul>
-			<li>
-				<span>热门</span>
-			</li>
-			<li><a href="?area=beijing">北京</a></li>
-			<li><a href="?area=tianjin">天津</a></li>
-			<li><a href="?area=chengdu">成都</a></li>
-			<li><a href="?area=shanghai">上海</a></li>
-			<li><a href="?area=haerbin">哈尔滨</a></li>
-			<li><a href="?area=guangzhou">广州</a></li>
-			<li><a href="?area=sanya">三亚</a></li>
-		</ul>
-	</div>
-	<div class="arealist">
-		<ul>
-			<li><a href="?area=anhui">安徽</a></li>
-			<li><a href="?area=chongqing">重庆</a></li>
-			<li><a href="?area=fujian">福建</a></li>
-			<li><a href="?area=gansu">甘肃</a></li>
-			<li><a href="?area=guangdong">广东</a></li>
-			<li><a href="?area=guangxi">广西</a></li>
-			<li><a href="?area=guizhou">贵州</a></li>
-			<li><a href="?area=hainan">海南</a></li>
-			<li><a href="?area=hebei">河北</a></li>
-			<li><a href="?area=henan">河南</a></li>
-			<li><a href="?area=heilongjiang">黑龙江</a></li>
-			<li><a href="?area=hubei">湖北</a></li>
-			<li><a href="?area=hunan">湖南</a></li>
-			<li><a href="?area=jilin">吉林</a></li>
-			<li><a href="?area=jiangsu">江苏</a></li>
-			<li><a href="?area=jiangxi">江西</a></li>
-			<li><a href="?area=liangning">辽宁</a></li>
-			<li><a href="?area=neimenggu">内蒙古</a></li>
-			<li><a href="?area=ningxia">宁夏</a></li>
-			<li><a href="?area=qinghai">青海</a></li>
-			<li><a href="?area=shandong">山东</a></li>
-			<li><a href="?area=shanxi">山西</a></li>
-			<li><a href="?area=shan_xi">陕西</a></li>
-			<li><a href="?area=sichuan">四川</a></li>
-			<li><a href="?area=xizang">西藏</a></li>
-			<li><a href="?area=xinjiang">新疆</a></li>
-			<li><a href="?area=yunnan">云南</a></li>
-			<li><a href="?area=zhejiang">浙江</a></li>
-			<li><a href="?area=guowai">国外</a></li>
-		</ul>
-	</div>
-</div>
-</div>
+<a href="javascript:void(0);" id="locate" data-toggle="popover" data-placement="bottom" 
+	data-html="true" data-trigger="click focus" data-container="body" class="text-warning"
+data-content='<ul class="list-group">
+				<li><a href="?area=beijing">北京</a></li>
+				<li><a href="?area=shanghai">上海</a></li>
+				<li><a href="?area=guangzhou">广州</a></li>
+				<li><a href="?area=guangzhou">深圳</a></li>
+				<li><a href="?area=tianjin">天津</a></li>
+				<li><a href="?area=chengdu">成都</a></li>
+			</ul>'><span>全部▼[选择]</span></a>
 
 <script type="text/javascript">
 	//地区下拉开始
-	$(".locate-info").hover(function() {
-		$(".locate-link").addClass("locate-link-hover");
-		$(".popup-area-wrap").show();
-	}, function() {
-		$(".locate-link").removeClass("locate-link-hover");
-		$(".popup-area-wrap").hide();
+	$(function () {
+		$("#locate").popover();
 	});
-	//地区下拉结束
 </script>
 
