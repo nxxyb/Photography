@@ -121,6 +121,7 @@ public class UserController extends BaseController{
 		ModelAndView mav = new ModelAndView();
 		try{
 			user.setType(Constants.USER_TYPE_NORMAL);
+			user.setPassword(MD5Util.md5(user.getPassword()));
 			userService.savePojo(user, user);
 			mailService.sendConfirmMail(user.getEmail(), user.getId());
 			mav.addObject("email", user.getEmail()); 
@@ -181,7 +182,7 @@ public class UserController extends BaseController{
 			if (user != null) {
 				user.setEnable(Constants.YES);
 				userService.savePojo(user, user);
-				mav.addObject("email", "email");
+				mav.addObject("user", user);
 				if(Constants.USER_TYPE_NORMAL.equals(user.getType())){
 					mav.setViewName("user/register/register_normal_email_confirm");
 				}else{
@@ -199,58 +200,58 @@ public class UserController extends BaseController{
 		return mav;
 	}
 	
-	/**
-	 * 跳转到register页面(活动发布用户)
-	 * @param request
-	 * @param model
-	 * @return
-	 * @author 徐雁斌
-	 */
-	@RequestMapping("/toRegisterPublisher")
-	public String toRegisterPublisher(HttpServletRequest request, Model model) {
-		return "user/register/register_publisher";
-	}
-	
-	/**
-	 * 用户注册(活动发布用户)
-	 * @param user
-	 * @param request
-	 * @param model
-	 * @return
-	 * @author 徐雁斌
-	 */
-	@RequestMapping(value="/registerPublisher",method=RequestMethod.POST)
-	public ModelAndView registerPublisher(User user,MultipartFile file,HttpServletRequest request, Model model){
-		ModelAndView mav=new ModelAndView();
-        try {
-        	String filePath = request.getSession().getServletContext().getRealPath((String)
-        			CustomizedPropertyPlaceholderConfigurer.getContextProperty("user.confirm.file"))  + File.separator + user.getEmail();
-        	
-        	//数据库存储相对路径
-        	String relativePath = CustomizedPropertyPlaceholderConfigurer.getContextProperty("user.confirm.file") + user.getEmail();
-        	FileUtil.saveFile(filePath, file);
-			
-			user.setComfirmPic(relativePath + "/" + file.getOriginalFilename());
-			userService.savePojo(user, user);
-			mailService.sendConfirmMail(user.getEmail(), user.getId());
-			
-			mav.addObject("email", user.getEmail());
-	        mav.setViewName("user/register/register_publisher_email"); 
-		} catch (Exception e) {
-			log.error("UserController.registerPublisher(): Exception", e);
-			if(e instanceof ServiceException){
-				ServiceException se = (ServiceException) e;
-				String message = se.getErrorMessage();
-				mav.addObject("errorMessage", message); 
-				mav.setViewName("error/error");
-			}else{
-				log.error("login error",e);
-				mav.addObject("error_message", ErrorMessage.get(ErrorCode.UNKNOWN_ERROR));
-				mav.setViewName("error/error");
-			}
-		} 
-        return mav;
-	}
+//	/**
+//	 * 跳转到register页面(活动发布用户)
+//	 * @param request
+//	 * @param model
+//	 * @return
+//	 * @author 徐雁斌
+//	 */
+//	@RequestMapping("/toRegisterPublisher")
+//	public String toRegisterPublisher(HttpServletRequest request, Model model) {
+//		return "user/register/register_publisher";
+//	}
+//	
+//	/**
+//	 * 用户注册(活动发布用户)
+//	 * @param user
+//	 * @param request
+//	 * @param model
+//	 * @return
+//	 * @author 徐雁斌
+//	 */
+//	@RequestMapping(value="/registerPublisher",method=RequestMethod.POST)
+//	public ModelAndView registerPublisher(User user,MultipartFile file,HttpServletRequest request, Model model){
+//		ModelAndView mav=new ModelAndView();
+//        try {
+//        	String filePath = request.getSession().getServletContext().getRealPath((String)
+//        			CustomizedPropertyPlaceholderConfigurer.getContextProperty("user.confirm.file"))  + File.separator + user.getEmail();
+//        	
+//        	//数据库存储相对路径
+//        	String relativePath = CustomizedPropertyPlaceholderConfigurer.getContextProperty("user.confirm.file") + user.getEmail();
+//        	FileUtil.saveFile(filePath, file);
+//			
+//			user.setComfirmPic(relativePath + "/" + file.getOriginalFilename());
+//			userService.savePojo(user, user);
+//			mailService.sendConfirmMail(user.getEmail(), user.getId());
+//			
+//			mav.addObject("email", user.getEmail());
+//	        mav.setViewName("user/register/register_publisher_email"); 
+//		} catch (Exception e) {
+//			log.error("UserController.registerPublisher(): Exception", e);
+//			if(e instanceof ServiceException){
+//				ServiceException se = (ServiceException) e;
+//				String message = se.getErrorMessage();
+//				mav.addObject("errorMessage", message); 
+//				mav.setViewName("error/error");
+//			}else{
+//				log.error("login error",e);
+//				mav.addObject("error_message", ErrorMessage.get(ErrorCode.UNKNOWN_ERROR));
+//				mav.setViewName("error/error");
+//			}
+//		} 
+//        return mav;
+//	}
 	
 	/**
 	 * 检查邮件地址是否已经注册

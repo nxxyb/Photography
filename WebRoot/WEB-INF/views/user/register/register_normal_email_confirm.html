@@ -27,17 +27,20 @@
 					<div class="panel panel-warning">
 						<div class="panel-heading">
 							<h3 class="panel-title lead">
-								邮件验证
+								<strong>邮件验证</strong>
 							</h3>
 						</div>
 						<div class="panel-body">
 							<div class="col-sm-offset-1 col-sm-10">
 								<h4>邮件验证成功<span class="dj"></span></h4>
-								<h4><small>您的账号信息是</small></h4>
+								<h4><small>您的账号是:${(user.email)!""}</small></h4>
 								<hr>
-								用户名：nxxyb
-								注册邮箱：nxxyb@163.com
-								修改头像修改个人信息返回首页
+								<h4><small>
+									<ul class="list-inline">
+										<li><a href="${basePath}/user/toLogin">登录</a></li>
+										<li><a href="${basePath}/index">返回首页</a></li>
+									</ul>
+								</small></h4>
 								
 							</div>
 						</div>

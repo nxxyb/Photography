@@ -29,7 +29,7 @@ public abstract class BaseServiceImpl implements IBaseService {
 	 * @see com.photography.service.IBaseService#loadPojo(java.lang.String)
 	 */
 	public BaseMapping loadPojo(String id) {
-		return (BaseMapping) getDao().loadById(getPojoClass(), id);
+		return (BaseMapping) getDao().getById(getPojoClass(), id);
 	}
 
 	/* 

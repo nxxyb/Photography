@@ -28,33 +28,42 @@
 						<div class="panel panel-warning">
 							<div class="panel-heading">
 								<h3 class="panel-title lead">
-									注册
+									<strong>注册</strong>
 								</h3>
 							</div>
 							<div class="panel-body">
 								<form class="form-horizontal" role="form" action="${basePath}/user/register" method="post">
 									<div class="form-group">
-										 <label for="inputEmail" class="col-sm-3 control-label">邮箱：</label>
-										<div class="col-sm-9">
-											<input id="inputEmail" type="email" class="form-control"  name="email" size="50" autocomplete="on" autofocus="autofocus" placeholder="邮箱地址" required="required" oninput="checkEmail()"/>
+										<div class="col-sm-11">
+											<div class="input-group">
+												<span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-envelope"></span></span>
+												<input id="inputEmail" type="email" class="form-control"  name="email" size="50" autocomplete="on" autofocus="autofocus" placeholder="邮箱地址" required="required" onchange="checkEmail()"/>
+											</div>
 										</div>
 									</div>
+									
 									<div class="form-group">
-										 <label for="inputPassword" class="col-sm-3 control-label">密码：</label>
-										<div class="col-sm-9">
-											<input id="inputPassword" type="password" class="form-control" name="password" size="10" autocomplete="off"  placeholder="密码 6-10位字母或数字" pattern=".{6,10}" required="required"/>
+										<div class="col-sm-11">
+											<div class="input-group">
+												<span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-lock"></span></span>
+												<input id="inputPassword" type="password" class="form-control" name="password" size="10" autocomplete="off"  placeholder="密码 为6-10位字母或数字" pattern=".{6,10}" required="required"/>
+											</div>
 										</div>
 									</div>
+									
 									<div class="form-group">
-										 <label for="inputPassword1" class="col-sm-3 control-label">确认密码：</label>
-										<div class="col-sm-9">
-											<input id="inputPassword1" type="password" class="form-control" name="password1" size="10" autocomplete="off" pattern=".{6,10}" placeholder="重复密码" required="required" oninput="checkPasswords()"/>
+										<div class="col-sm-11">
+											<div class="input-group">
+												<span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-lock"></span></span>
+												<input id="inputPassword1" type="password" class="form-control" name="password1" size="10" autocomplete="off" pattern=".{6,10}" placeholder="确认密码" required="required" onchange="checkPasswords()"/>
+											</div>
 										</div>
 									</div>
+									
 									<div class="form-group">
-										<div class="col-sm-offset-2 col-sm-10">
+										<div class="col-sm-11">
 											 <button type="submit" class="btn btn-default">注册</button>
-											 <a class="btn" href="${basePath}/user/toLogin">登录</a>
+											 <a class="btn pull-right" href="${basePath}/user/toLogin">登录</a>
 										</div>
 									</div>
 								</form>
@@ -65,7 +74,7 @@
 						<div class="panel panel-warning">
 							<div class="panel-heading">
 								<h3 class="panel-title lead">
-									第三方帐号登录
+									<strong>第三方帐号登录</strong>
 								</h3>
 							</div>
 							<div class="panel-body">
