@@ -173,5 +173,18 @@ public class UserInfoController extends BaseController {
     	request.getSession().setAttribute(Constants.SESSION_USER_KEY, userDB);
     	return Constants.YES;
 	}
+	
+	/**
+	 * 测试
+	 * @param request
+	 * @return
+	 * @author 徐雁斌
+	 */
+	@RequestMapping(value="/test")
+	public ModelAndView test(HttpServletRequest request) {
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("user/person_info/person_info");
+		return mv;
+	}
 
 }

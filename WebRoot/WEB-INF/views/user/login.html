@@ -34,21 +34,22 @@
 									<form class="form-horizontal" role="form" action="${basePath}/user/login" method="post">
 										
 										<div class="form-group">
-											<div class="col-sm-11">
+											<div class="col-sm-11 control-group">
 												<div class="input-group">
-												 	<span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-envelope"></span></span>
-													<input type="email" class="form-control"  name="email" size="50" autocomplete="on" autofocus="autofocus" placeholder="邮箱地址" required="required"/>
-													<p class="help-block"></p>
+											 		<span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-envelope"></span></span>
+													<input type="email" class="form-control"  name="email" maxlength="20" autocomplete="on" autofocus="autofocus" placeholder="邮箱地址" required="required" data-validation-email-message="不是有效的邮箱地址"/>
 												</div>
+												<p class="help-block alert-danger"></p>
 											</div>
 										</div>
 										
 										<div class="form-group">
-											<div class="col-sm-11">
+											<div class="col-sm-11 control-group">
 												<div class="input-group">
-													<span class="input-group-addon " id="basic-addon1"><span class="glyphicon glyphicon-lock"></span></span>
-													<input type="password" class="form-control" name="password" size="10" autocomplete="off" placeholder="密码" required="required"/>
+													<span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-lock"></span></span>
+													<input type="password" class="form-control" name="password" maxlength="10" autocomplete="off" placeholder="密码" required="required"/>
 												</div>
+												<p class="help-block alert-danger"></p>
 											</div>
 										</div>
 										

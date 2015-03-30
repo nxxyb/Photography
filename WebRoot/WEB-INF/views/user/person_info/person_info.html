@@ -8,8 +8,7 @@
   
   <!-- link start-->
    <#include "../../common/link.html">
-   <link href="${basePath}/css/person_info.css" rel="stylesheet" type="text/css" media="all" />
-    <script src="${basePath}/js/area.js" type="text/javascript"></script>
+
   <!-- link end-->
   
 </head>
@@ -18,52 +17,29 @@
   <!-- header start-->
   <#include "../../common/header.html">
   <!-- header end -->
-
-		<div >
-			<div class="wrap">
-				<div class="col_1_of_login span_1_of_person">
-					<h4 class="title"></h4>
-					<h4 class="title">个人中心</h4>
-					<ul>
-						<li><a href="#">个人信息</a></li>
-						<li><a href="#">我的好友</a></li>
-						<li><a href="#">系统信息</a></li>
-						<li><a href="#">评论回复</a></li>
-						<li><a href="#">我的留言</a></li>
-					</ul>
-					
-					<h4 class="title"></h4>
-					<h4 class="title">活动信息</h4>
-					<ul>
-						<li><a href="#">活动与教学</a></li>
-						<li><a href="#">我的活动卷</a></li>
-					</ul>
-					
-					<h4 class="title"></h4>
-					<h4 class="title">账户管理</h4>
-					<ul>
-						<li><a href="#">修改密码</a></li>
-					</ul>
-					
-				</div>
-				<div class="col_1_of_login span_2_of_person">
-					<div >
-						<img class="photoimg" alt="头像" src="${basePath}/${(Session.user.headPic)!'images/person/photo.jpg'}">
-						<div>
-							<span>欢迎您  ${(Session.user.nackName)!(Session.user.email)!""}</span>
-							<div>
-								
-							</div>
-						</div>
-					</div>
-				</div>
+  
+ <div class="container" style="margin-top: 5%;margin-bottom: 20%;">
+	<div class="row clearfix">
+		<div class="col-sm-3 col-md-3 column">
+			<ul class="nav nav-tabs nav-stacked">
+				<li class="active">
+					<a href="#">首页</a>
+				</li>
+				<li>
+					<a href="#">资料</a>
+				</li>
+				<li>
+					<a href="#">消息</a>
+				</li>
 				
-				
-				<div class="col_1_of_person span_2_of_person">
-					<#include "${html_template}">
-				</div>
-			<div class="clear"></div>
+			</ul>
 		</div>
+		<div class="col-sm-9 col-md-9 column">
+		</div>
+	</div>
+</div>
+
+
 
 		<!-- footer start-->
   <#include "../../common/footer.html">

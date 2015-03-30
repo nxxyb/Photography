@@ -34,11 +34,12 @@
 							<div class="panel-body">
 								<form class="form-horizontal" role="form" action="${basePath}/user/register" method="post">
 									<div class="form-group">
-										<div class="col-sm-11">
+										<div class="col-sm-11 control-group">
 											<div class="input-group">
 												<span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-envelope"></span></span>
-												<input id="inputEmail" type="email" class="form-control"  name="email" size="50" autocomplete="on" autofocus="autofocus" placeholder="邮箱地址" required="required" onchange="checkEmail()"/>
+												<input id="inputEmail" type="email" class="form-control"  name="email" maxlength="20" autocomplete="on" autofocus="autofocus" placeholder="邮箱地址" required="required" onchange="checkEmail()"/>
 											</div>
+											<p class="help-block alert-danger"></p>
 										</div>
 									</div>
 									
