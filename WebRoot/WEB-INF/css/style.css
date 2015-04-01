@@ -25,3 +25,7 @@
 	height: 25px;
 	background: url("../images/indexTool.png") no-repeat -160px -460px;
 }
+
+hr{
+	border-top: 1px solid #AAAAAA;
+}

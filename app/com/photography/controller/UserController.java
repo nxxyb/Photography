@@ -259,15 +259,15 @@ public class UserController extends BaseController{
 	 * @return
 	 * @author 徐雁斌
 	 */
-	@RequestMapping(value="/checkEmail")  
+	@RequestMapping(value="/checkEmail",method=RequestMethod.POST)  
     @ResponseBody
     public String validataUser(@RequestParam String email){  
-		String result = Constants.YES;
+		String result = "{\"valid\":false}";
 		User user = userService.getByEmail(email);
 		if(user == null){
-			result = Constants.NO;
+			result = "{\"valid\":true}";
 		}
-        return result;  
+        return result;
     }
 	
 	/**

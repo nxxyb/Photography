@@ -22,32 +22,22 @@
 		<div class="row clearfix">
 			<div class="col-md-12 column">
 				<div class="row clearfix">
-					<div class="col-md-3 column">
+					<div class="col-md-2 column">
 					</div>
 					<div class="col-md-5 column">
-						<div class="panel panel-warning">
+						<div class="panel panel-warning well well-small">
 							<div class="panel-heading">
 								<h3 class="panel-title lead">
 									<strong>注册</strong>
 								</h3>
 							</div>
 							<div class="panel-body">
-								<form class="form-horizontal" role="form" action="${basePath}/user/register" method="post">
+								<form class="form-horizontal" id="registerForm" role="form" action="${basePath}/user/register" method="post">
 									<div class="form-group">
-										<div class="col-sm-11 control-group">
+										<div class="col-sm-11">
 											<div class="input-group">
 												<span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-envelope"></span></span>
-												<input id="inputEmail" type="email" class="form-control"  name="email" maxlength="20" autocomplete="on" autofocus="autofocus" placeholder="邮箱地址" required="required" onchange="checkEmail()"/>
-											</div>
-											<p class="help-block alert-danger"></p>
-										</div>
-									</div>
-									
-									<div class="form-group">
-										<div class="col-sm-11">
-											<div class="input-group">
-												<span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-lock"></span></span>
-												<input id="inputPassword" type="password" class="form-control" name="password" size="10" autocomplete="off"  placeholder="密码 为6-10位字母或数字" pattern=".{6,10}" required="required"/>
+												<input id="inputEmail" type="email" class="form-control"  name="email" maxlength="50" autocomplete="on" autofocus="autofocus" placeholder="邮箱地址" r/>
 											</div>
 										</div>
 									</div>
@@ -56,7 +46,16 @@
 										<div class="col-sm-11">
 											<div class="input-group">
 												<span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-lock"></span></span>
-												<input id="inputPassword1" type="password" class="form-control" name="password1" size="10" autocomplete="off" pattern=".{6,10}" placeholder="确认密码" required="required" onchange="checkPasswords()"/>
+												<input type="password" class="form-control" name="password" autocomplete="off"  placeholder="密码 为6-10位字母或数字" />
+											</div>
+										</div>
+									</div>
+									
+									<div class="form-group">
+										<div class="col-sm-11">
+											<div class="input-group">
+												<span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-lock"></span></span>
+												<input type="password" class="form-control" name="password1" autocomplete="off" placeholder="确认密码" />
 											</div>
 										</div>
 									</div>
@@ -71,8 +70,8 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-md-2 column">
-						<div class="panel panel-warning">
+					<div class="col-md-3 column">
+						<div class="panel panel-warning well well-small">
 							<div class="panel-heading">
 								<h3 class="panel-title lead">
 									<strong>第三方帐号登录</strong>
@@ -95,16 +94,54 @@
 	</div>
 
 	<script type="text/javascript">
-		function checkPasswords() {
-			var pass1 = document.getElementById("inputPassword");
-			var pass2 = document.getElementById("inputPassword1");
 	
-			if (pass1.value != pass2.value){
-				pass2.setCustomValidity("两次输入的密码不一致");
-			}else{
-				pass2.setCustomValidity("");
-			}
-		}
+		 $('#registerForm').bootstrapValidator({
+		 	message: 'This value is not valid',
+	        feedbackIcons: {
+	            valid: 'glyphicon glyphicon-ok',
+	            invalid: 'glyphicon glyphicon-remove',
+	            validating: 'glyphicon glyphicon-refresh'
+        	},
+        	 fields: {
+        	 	email: {
+	                validators: {
+	                    notEmpty: {
+	                        message: '邮箱未填写'
+	                    },
+	                	 emailAddress: {
+                        	message: '不是有效的邮箱地址'
+                    	},
+	                    remote: {
+	                        url: '${basePath}/user/checkEmail',
+	                        message: '该邮箱地址已经被注册，请更换其他邮箱地址'
+	                    }
+	                }
+	            },
+	            password: {
+	                validators: {
+	                    notEmpty: {
+	                        message: '密码未填写'
+	                    },
+	                    stringLength: {
+	                        min: 6,
+	                        max: 10,
+	                        message: '密码 为6-10位字母或数字组合'
+                    	}
+	                }
+	            },
+	            password1: {
+	                validators: {
+	                	 notEmpty: {
+	                        message: '确认密码未填写'
+	                     },
+	                     identical: {
+                        	field: 'password',
+                        	message: '两次输入的密码不一致'
+                    	 }
+	                }
+	            }
+		 	}
+		 });
 		
 		function checkEmail(){
 			var email = document.getElementById("inputEmail");

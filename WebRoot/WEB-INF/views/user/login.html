@@ -24,32 +24,30 @@
 						<div class="col-md-3 column">
 						</div>
 						<div class="col-md-6 column">
-							<div class="panel panel-warning">
+							<div class="panel panel-warning well well-small">
 								<div class="panel-heading">
 									<h3 class="panel-title lead">
 										<strong>登录</strong>
 									</h3>
 								</div>
 								<div class="panel-body">
-									<form class="form-horizontal" role="form" action="${basePath}/user/login" method="post">
+									<form class="form-horizontal" id="loginForm" role="form" action="${basePath}/user/login" method="post">
 										
 										<div class="form-group">
-											<div class="col-sm-11 control-group">
+											<div class="col-sm-11">
 												<div class="input-group">
 											 		<span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-envelope"></span></span>
-													<input type="email" class="form-control"  name="email" maxlength="20" autocomplete="on" autofocus="autofocus" placeholder="邮箱地址" required="required" data-validation-email-message="不是有效的邮箱地址"/>
+													<input type="email" class="form-control"  name="email" autofocus="autofocus" maxlength="50" placeholder="邮箱地址"/>
 												</div>
-												<p class="help-block alert-danger"></p>
 											</div>
 										</div>
 										
 										<div class="form-group">
-											<div class="col-sm-11 control-group">
+											<div class="col-sm-11">
 												<div class="input-group">
 													<span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-lock"></span></span>
-													<input type="password" class="form-control" name="password" maxlength="10" autocomplete="off" placeholder="密码" required="required"/>
+													<input type="password" class="form-control" name="password" autocomplete="off" placeholder="密码" required="required"/>
 												</div>
-												<p class="help-block alert-danger"></p>
 											</div>
 										</div>
 										
@@ -72,9 +70,33 @@
 			</div>
 		</div>
 	<script type="text/javascript">
-		$(function () { 
-			$("input,select,textarea").not("[type=submit]").jqBootstrapValidation(); 
-		});
+		 $('#loginForm').bootstrapValidator({
+		 	message: 'This value is not valid',
+	        feedbackIcons: {
+	            valid: 'glyphicon glyphicon-ok',
+	            invalid: 'glyphicon glyphicon-remove',
+	            validating: 'glyphicon glyphicon-refresh'
+        	},
+        	 fields: {
+        	 	email: {
+	                validators: {
+	                    notEmpty: {
+	                        message: '邮箱未填写'
+	                    },
+	                	 emailAddress: {
+                        	message: '不是有效的邮箱地址'
+                    	}
+	                }
+	            },
+	            password: {
+	                validators: {
+	                    notEmpty: {
+	                        message: '密码未填写'
+	                    }
+	                }
+	            }
+		 	}
+		 });
 	</script>
 		
   <!-- footer start-->
