@@ -1,15 +1,19 @@
-<form id="info_form" action="${basePath}/userinfo/updateUserInfo" method="post" name="person_from">
-	<h4 class="title"></h4>
+<form class="form-horizontal" action="${basePath}/userinfo/updateUserInfo" method="post" name="person_from">
 	<h4 class="title">基本信息</h4>
 	
 	<input type="hidden"" name="id" value="${(Session.user.id)!''}">
-	<div>
-		<label class="title">头像：</label>
+	
+	<div class="control-group">
+		<label class="control-label">头像：</label>
+		<img  alt="100x100" src="" style="width: 100px; height: 100px;">
 		<a class="link" href="#" onclick="openHeadPhotoDiv();return false;">修改头像</a>
 	</div>
 	
-	<div>
-		<label class="title">昵称：</label><input id="nackName" type="text" name="nackName" size="50" placeholder="50个汉字或字母" value="${(Session.user.nackName)!''}">
+	<div class="control-group">
+		<label class="control-label">昵称：</label>
+		<div class="controls">
+			<input id="nackName" type="text" name="nackName" size="50" placeholder="50个汉字或字母" value="${(Session.user.nackName)!''}">
+		</div>
 	</div>
 	
 	<div>
@@ -85,6 +89,7 @@
 		</div>
 	</#if>
 </form>
+
 
 <div style="margin-top: 4%;">
 		<button class="grey" onclick="photography_ajaxsubmit('info_form','保存成功');return false;" >保存</button>

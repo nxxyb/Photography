@@ -24,7 +24,7 @@
 						<div class="col-md-3 column">
 						</div>
 						<div class="col-md-6 column">
-							<div class="panel panel-warning well well-small">
+							<div class="panel panel-warning ">
 								<div class="panel-heading">
 									<h3 class="panel-title lead">
 										<strong>登录</strong>
@@ -32,6 +32,13 @@
 								</div>
 								<div class="panel-body">
 									<form class="form-horizontal" id="loginForm" role="form" action="${basePath}/user/login" method="post">
+										
+										<#if errorMessage??>
+											<div class="alert alert-warning">
+											  <button type="button" class="close" data-dismiss="alert">&times;</button>
+											  <strong>登录错误</strong> ${errorMessage}
+											</div>
+										</#if>
 										
 										<div class="form-group">
 											<div class="col-sm-11">
