@@ -23,10 +23,10 @@
 		<div class="col-sm-3 col-md-3 column">
 				<ul class="nav nav-pills nav-stacked well">
 					<li class="active">
-						<a href="${basePath}/userinfo/toUserInfo" data-toggle="tab"><strong>基本信息</strong></a>
+						<a href="#info" data-toggle="tab"><strong>基本信息</strong></a>
 					</li>
 					<li>
-						<a href="${basePath}/userinfo/toAuthInfo" data-toggle="tab"><strong>认证信息</strong></a>
+						<a href="#auth" data-toggle="tab"><strong>认证信息</strong></a>
 					</li>
 					<li>
 						<a href="#" data-toggle="tab"><strong>活动信息</strong></a>
@@ -42,7 +42,10 @@
 		</div>
 		
 		<div class="col-sm-9 col-md-9 column">
-			<#include "./${html_template}">
+			<div class="tab-content">
+				<div class="tab-pane active" id="info"><#include "./info.html"></div>
+				<div class="tab-pane" id="auth"><#include "./auth.html"></div>
+			</div>
 		</div>
 	</div>
 </div>
