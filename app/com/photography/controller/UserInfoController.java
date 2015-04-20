@@ -64,6 +64,20 @@ public class UserInfoController extends BaseController {
 	}
 	
 	/**
+	 * 用户中心页面
+	 * @param request
+	 * @return
+	 * @author 徐雁斌
+	 */
+	@RequestMapping(value="/toAuthInfo")
+	public ModelAndView toAuthInfo(HttpServletRequest request) {
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("html_template", "auth.html");
+		mv.setViewName("user/person_info/person_info");
+		return mv;
+	}
+	
+	/**
 	 * 修改头像
 	 * @param request
 	 * @param model

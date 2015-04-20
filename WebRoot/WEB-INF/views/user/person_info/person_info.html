@@ -23,10 +23,10 @@
 		<div class="col-sm-3 col-md-3 column">
 				<ul class="nav nav-pills nav-stacked well">
 					<li class="active">
-						<a href="#" data-toggle="tab"><strong>基本信息</strong></a>
+						<a href="${basePath}/userinfo/toUserInfo" data-toggle="tab"><strong>基本信息</strong></a>
 					</li>
 					<li>
-						<a href="#" data-toggle="tab"><strong>认证信息</strong></a>
+						<a href="${basePath}/userinfo/toAuthInfo" data-toggle="tab"><strong>认证信息</strong></a>
 					</li>
 					<li>
 						<a href="#" data-toggle="tab"><strong>活动信息</strong></a>
@@ -41,21 +41,11 @@
 				</ul>
 		</div>
 		
-		
-		
 		<div class="col-sm-9 col-md-9 column">
-			<div class="container" >
-			<div class="panel panel-default">
-				<div class="panel-body">
-					<#include "./${html_template}">
-				</div>
-			</div>
-			</div>
+			<#include "./${html_template}">
 		</div>
 	</div>
 </div>
-
-
 
 		<!-- footer start-->
   <#include "../../common/footer.html">
