@@ -1,7 +1,5 @@
 package com.photography.controller;
 
-import java.io.File;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
@@ -12,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.photography.exception.ErrorCode;
@@ -22,8 +19,6 @@ import com.photography.mapping.User;
 import com.photography.service.IMailService;
 import com.photography.service.IUserService;
 import com.photography.utils.Constants;
-import com.photography.utils.CustomizedPropertyPlaceholderConfigurer;
-import com.photography.utils.FileUtil;
 import com.photography.utils.MD5Util;
 
 /**
@@ -259,13 +254,13 @@ public class UserController extends BaseController{
 	 * @return
 	 * @author 徐雁斌
 	 */
-	@RequestMapping(value="/checkEmail",method=RequestMethod.POST)  
+	@RequestMapping(value="/checkEmail" ,produces="application/json;charset=UTF-8")  
     @ResponseBody
     public String validataUser(@RequestParam String email){  
-		String result = "{\"valid\":false}";
+		String result = "{\"valid\":您好}";
 		User user = userService.getByEmail(email);
 		if(user == null){
-			result = "{\"valid\":true}";
+			result = "{\"valid\":您好}";
 		}
         return result;
     }
