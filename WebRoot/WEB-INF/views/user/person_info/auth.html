@@ -4,8 +4,8 @@
 	</div>
 	
 	<div class="panel-body">
+	<form class="form-horizontal" action="${basePath}/userinfo/updateAuthInfo" method="post" id="auth_from">
 		<div class="col-sm-7 col-md-7">
-		<form class="form-horizontal" action="${basePath}/userinfo/updateUserInfo" method="post" name="person_from">
 			<input type="hidden"" name="id" value="${(Session.user.id)!''}">
 			
 			<div class="form-group">
@@ -25,7 +25,7 @@
 			<div class="form-group">
 				<label class="control-label col-sm-3 col-md-3">身份证号：</label>
 				<div class="col-sm-9 col-md-9">
-					<input class="form-control" type="text" name="idCard" pattern=".{18}" title="请输入18位身份证号码" placeholder="身份证号" required="required" value="${(Session.user.idCard)!''}">
+					<input class="form-control" type="text" name="idCard" pattern=".{18}" title="请输入18位身份证号码" placeholder="身份证号" value="${(Session.user.idCard)!''}">
 				</div>
 			</div>
 			
@@ -39,7 +39,6 @@
 					</button>
 				</div>
 			</div>
-		</form>
 		</div>
 		
 		<div class="col-sm-5 col-md-5">
@@ -47,8 +46,9 @@
 	</div>
 	
 	<div class="panel-footer">
-		<button type="button" class="btn btn-primary">保存</button>
+		<button type="submit" class="btn btn-primary">提交认证</button>
 	</div>
+	</form>
 </div>
 
 

@@ -53,21 +53,9 @@ public class ProjectController extends BaseController {
 	 * @author 徐雁斌
 	 */
 	@RequestMapping(value="/toCreate")
-	public ModelAndView toCreate(String id,HttpServletRequest request, Model model){
+	public ModelAndView toCreate(HttpServletRequest request, Model model){
 		ModelAndView mav = new ModelAndView();
-		
-		if(id != null && !"".equals(id)){
-			Project project = (Project) projectService.loadPojo(id);
-			if(project != null){
-				mav.addObject("project", project);
-				mav.setViewName("project/project_info");
-			}else{
-				mav.addObject("error_message", ErrorMessage.get(ErrorCode.UNKNOWN_ERROR));
-				mav.setViewName("error/error");
-			}
-		}else{
-			mav.setViewName("project/project_info");
-		}
+		mav.setViewName("project/project_create");
 		return mav;
 	}
 

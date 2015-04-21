@@ -24,7 +24,7 @@ public class ErrorCode {
 	public static final int USER_PWD_NOT_MATCH = 10101;
 	public static final int USER_NOT_VERIFY = 10102;
 	public static final int USER_NOT_ENABLE = 10103;
-//	public static final int USER_ALREADY_ENABLED = 10104;
+	public static final int USER_OLD_PWD_NOT_MATCH = 10104;
 	
 	/*
 	 * 活动

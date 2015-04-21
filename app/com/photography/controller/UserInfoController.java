@@ -21,6 +21,7 @@ import com.photography.service.IMailService;
 import com.photography.service.IUserService;
 import com.photography.utils.Constants;
 import com.photography.utils.CustomizedPropertyPlaceholderConfigurer;
+import com.photography.utils.MD5Util;
 
 /**
  * 用户中心
@@ -58,7 +59,6 @@ public class UserInfoController extends BaseController {
 	@RequestMapping(value="/toUserInfo")
 	public ModelAndView toUserInfo(HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView();
-		mv.addObject("html_template", "info.html");
 		mv.setViewName("user/person_info/person_info");
 		return mv;
 	}
@@ -111,7 +111,7 @@ public class UserInfoController extends BaseController {
 	public String updateComfirmPhoto(MultipartFile comfirmFile,HttpServletRequest request, Model model){
 		User user = (User) request.getSession().getAttribute(Constants.SESSION_USER_KEY);
 		if(user == null){
-			return (String) CustomizedPropertyPlaceholderConfigurer.getContextProperty("error.user.invild.session");
+			return ErrorMessage.get(ErrorCode.SESSION_TIMEOUT);
 		}
 		String filePath = request.getSession().getServletContext().getRealPath((String)
     			CustomizedPropertyPlaceholderConfigurer.getContextProperty("user.confirm.file"))  + File.separator + user.getEmail();
@@ -136,7 +136,7 @@ public class UserInfoController extends BaseController {
 	}
 	
 	/**
-	 * 修改用户信息
+	 * 修改用户基本信息
 	 * @param user
 	 * @param request
 	 * @param model
@@ -144,34 +144,136 @@ public class UserInfoController extends BaseController {
 	 * @author 徐雁斌
 	 */
 	@RequestMapping(value="/updateUserInfo")
-	@ResponseBody
-	public String updateUserInfo(User user,HttpServletRequest request, Model model){
+	public ModelAndView updateUserInfo(User user,HttpServletRequest request, Model model){
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("user/person_info/person_info");
+		
+		if(user ==null || user.getId() == null){
+			mv.addObject("errorMessage", ErrorMessage.get(ErrorCode.SESSION_TIMEOUT));
+			return mv;
+		}
+		
 		User userDB = (User) userService.loadPojo(user.getId());
+		
 		if(userDB == null){
-			return (String) CustomizedPropertyPlaceholderConfigurer.getContextProperty("error.user.not.found");
+			mv.addObject("errorMessage", ErrorMessage.get(ErrorCode.SESSION_TIMEOUT));
+			return mv;
 		}
 		
 		userDB.setBirthDay(user.getBirthDay());
-		userDB.setCity(user.getCity());
-		userDB.setCompanyName(user.getCompanyName());
-		userDB.setCounty(user.getCounty());
+//		userDB.setCity(user.getCity());
+//		userDB.setCompanyName(user.getCompanyName());
+//		userDB.setCounty(user.getCounty());
 //		userDB.setEmail(user.getEmail());
-		userDB.setIdCard(user.getIdCard());
+//		userDB.setIdCard(user.getIdCard());
 		userDB.setMobile(user.getMobile());
 		userDB.setNackName(user.getNackName());
 		userDB.setPersonSignature(user.getPersonSignature());
-		userDB.setProvince(user.getProvince());
+//		userDB.setProvince(user.getProvince());
 		userDB.setQqNumber(user.getQqNumber());
-		userDB.setRealName(user.getRealName());
+//		userDB.setRealName(user.getRealName());
 		userDB.setSex(user.getSex());
     	
     	try{
 			userService.savePojo(userDB, userDB);
+			mv.addObject("href", "info");
+			mv.addObject("success", Constants.YES);
     	}catch(Exception e){
-    		return (String) ErrorMessage.get(ErrorCode.UNKNOWN_ERROR);
+    		mv.addObject("errorMessage", ErrorMessage.get(ErrorCode.UNKNOWN_ERROR));
     	}
     	request.getSession().setAttribute(Constants.SESSION_USER_KEY, userDB);
-    	return Constants.YES;
+    	return mv;
+	}
+	
+	/**
+	 * 修改用户认证信息
+	 * @param user
+	 * @param request
+	 * @param model
+	 * @return
+	 * @author 徐雁斌
+	 */
+	@RequestMapping(value="/updateAuthInfo")
+	public ModelAndView updateAuthInfo(User user,HttpServletRequest request, Model model){
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("user/person_info/person_info");
+		
+		if(user ==null || user.getId() == null){
+			mv.addObject("errorMessage", ErrorMessage.get(ErrorCode.SESSION_TIMEOUT));
+			return mv;
+		}
+		
+		User userDB = (User) userService.loadPojo(user.getId());
+		if(userDB == null){
+			mv.addObject("errorMessage", ErrorMessage.get(ErrorCode.SESSION_TIMEOUT));
+			return mv;
+		}
+			
+//		userDB.setBirthDay(user.getBirthDay());
+//		userDB.setCity(user.getCity());
+//		userDB.setCompanyName(user.getCompanyName());
+//		userDB.setCounty(user.getCounty());
+//		userDB.setEmail(user.getEmail());
+		userDB.setIdCard(user.getIdCard());
+		userDB.setMobile(user.getMobile());
+//		userDB.setNackName(user.getNackName());
+//		userDB.setPersonSignature(user.getPersonSignature());
+//		userDB.setProvince(user.getProvince());
+//		userDB.setQqNumber(user.getQqNumber());
+		userDB.setRealName(user.getRealName());
+    	
+    	try{
+			userService.savePojo(userDB, userDB);
+			mv.addObject("href", "auth");
+			mv.addObject("success", Constants.YES);
+    	}catch(Exception e){
+    		mv.addObject("errorMessage", ErrorMessage.get(ErrorCode.UNKNOWN_ERROR));
+    	}
+    	request.getSession().setAttribute(Constants.SESSION_USER_KEY, userDB);
+    	return mv;
+	}
+	
+	/**
+	 * 修改用户基本信息
+	 * @param user
+	 * @param request
+	 * @param model
+	 * @return
+	 * @author 徐雁斌
+	 */
+	@RequestMapping(value="/updateUserPasswordInfo")
+	public ModelAndView updateUserPasswordInfo(String id,String oldPassword, String password,HttpServletRequest request, Model model){
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("user/person_info/person_info");
+		
+		if(id == null){
+			mv.addObject("errorMessage", ErrorMessage.get(ErrorCode.SESSION_TIMEOUT));
+			return mv;
+		}
+		
+		User userDB = (User) userService.loadPojo(id);
+		
+		if(userDB == null){
+			mv.addObject("errorMessage", ErrorMessage.get(ErrorCode.SESSION_TIMEOUT));
+			return mv;
+		}
+		
+		if(!userDB.getPassword().equals(MD5Util.md5(oldPassword))){
+			mv.addObject("errorMessage", ErrorMessage.get(ErrorCode.USER_PWD_NOT_MATCH));
+			return mv;
+		}
+		
+		userDB.setPassword(password);
+    	
+    	try{
+			userService.savePojo(userDB, userDB);
+			mv.addObject("href", "modifyps");
+			mv.addObject("success", Constants.YES);
+    	}catch(Exception e){
+    		mv.addObject("errorMessage", ErrorMessage.get(ErrorCode.UNKNOWN_ERROR));
+    	}
+    	request.getSession().setAttribute(Constants.SESSION_USER_KEY, userDB);
+    	return mv;
 	}
 	
 	/**

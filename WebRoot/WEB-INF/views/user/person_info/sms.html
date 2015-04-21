@@ -1,9 +1,9 @@
 <div class="panel panel-default">
 	<div class="panel-heading">
-		<strong>基本信息</strong>
+		<strong>修改密码</strong>
 	</div>
 	
-	<form class="form-horizontal" action="${basePath}/userinfo/updateUserInfo" method="post" id="info_from">
+	<form class="form-horizontal" action="${basePath}/userinfo/updateUserInfo" method="post" name="person_from">
 	<div class="panel-body">
 		<div class="col-sm-7 col-md-7">
 			<input type="hidden"" name="id" value="${(Session.user.id)!''}">
@@ -41,7 +41,7 @@
 			<div class="form-group">
 				<label class="control-label col-sm-3 col-md-3">手机号码：</label>
 				<div class="col-sm-9 col-md-9">
-					<input class="form-control" type="text" name="mobile" placeholder="手机号码" value="${(Session.user.mobile)!''}">
+					<input class="form-control" type="text" name="mobile" pattern=".{11}" title="请输入11位手机号码" placeholder="手机号码" value="${(Session.user.mobile)!''}">
 				</div>
 			</div>
 			
@@ -69,7 +69,7 @@
 			<div class="form-group">
 				<label class="control-label col-sm-3 col-md-3">QQ：</label>
 				<div class="col-sm-9 col-md-9">
-					<input class="form-control" type="text" name="qqNumber" placeholder="QQ号码" maxlength="20" value="${(Session.user.qqNumber)!''}">
+					<input class="form-control" type="text" name="qqNumber" placeholder="QQ号码" maxlength="50" value="${(Session.user.qqNumber)!''}">
 				</div>
 			</div>
 		</div>
@@ -104,7 +104,7 @@
 					<script type="text/javascript">
 						$("#headFile").fileinput({
 						    uploadUrl: "${basePath}/userinfo/updateHeadPhoto", // server upload action
-    						uploadAsync: true,
+    						uploadAsync: false,
     						 minFileCount: 1,
     						 maxFileCount: 1
 						});
@@ -122,7 +122,7 @@
 	//_init_area();
 	//_init_area_value('${(Session.user.province)!""}','${(Session.user.city)!""}', '${(Session.user.county)!""}');
 	
-	$('#info_from').bootstrapValidator({
+	$('#loginForm').bootstrapValidator({
 		 	message: 'This value is not valid',
 	        feedbackIcons: {
 	            valid: 'glyphicon glyphicon-ok',
@@ -130,32 +130,21 @@
 	            validating: 'glyphicon glyphicon-refresh'
         	},
         	 fields: {
-        	 	nackName: {
+        	 	email: {
 	                validators: {
-	                    stringLength: {
-	                        max: 20,
-	                        message: '超过最大长度限制！'
-                    	}
-	                }
-	            },
-	            mobile: {
-	                validators: {
-	                     stringLength: {
-	                        max: 11,
-	                        min: 11,
-	                        message: '请输入正确手机号码！'
-                    	}
-	                }
-	            },
-	            email: {
-	                validators: {
+	                    notEmpty: {
+	                        message: '邮箱未填写'
+	                    },
 	                	 emailAddress: {
                         	message: '不是有效的邮箱地址'
-                    	},
-                    	 stringLength: {
-	                        max: 20,
-	                        message: '超出最大长度限制！'
                     	}
+	                }
+	            },
+	            password: {
+	                validators: {
+	                    notEmpty: {
+	                        message: '密码未填写'
+	                    }
 	                }
 	            }
 		 	}
