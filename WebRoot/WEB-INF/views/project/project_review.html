@@ -20,24 +20,30 @@
   
 <div class="main-content">
 	<div class="container">
-	<form class="form-horizontal" id="project_create_form" action="${basePath}/project/create" enctype="multipart/form-data" method="post">
-		<div class="panel panel-default">
-			<div class="panel-heading">
-				<strong>轮播图片</strong>
-			</div>
+		<div class="carousel slide" id="carousel-project">
+			<ol class="carousel-indicators">
+			 <#list project.photos?split(",") as photo>  
+			 	<li <#if photo_index ==0> class="active"</#if> data-slide-to="${photo_index}" data-target="#carousel-project"></li>
+			 </#list>
+			</ol>
 			
-			<div class="panel-body">
-				<input id="photoPics" name="photoPics" type="file" accept="image/*" class="file-loading" multiple=true>
-				<script type="text/javascript">
-						$("#photoPics").fileinput({
-						    uploadUrl: "#", // server upload action
-    						showUpload: false,
-    						overwriteInitial: false,
-    						minFileCount: 1,
-    						maxFileCount: 5
-						});
-					</script>
+			<div class="carousel-inner">
+				<#list project.photos?split(",") as photo>  
+					<#if photo_index ==0>
+						<div class="item active">
+					<#else>
+						<div class="item">
+					</#if>
+						<img alt="" src="${basePath}/${photo}" />
+					</div>
+				</#list>
 			</div>
+			<a class="left carousel-control" href="#carousel-project" data-slide="prev">
+				<span class="glyphicon glyphicon-chevron-left"></span>
+			</a>
+			<a class="right carousel-control" href="#carousel-project" data-slide="next">
+				<span class="glyphicon glyphicon-chevron-right"></span>
+			</a>
 		</div>
 		
 		
@@ -258,8 +264,6 @@
 			 <button type="submit" class="btn btn-primary">保存</button>
 		</div>
 		
-		
-		</form>
 	</div>
 </div>
   <!-- footer start-->

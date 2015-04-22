@@ -69,27 +69,32 @@ public class ProjectController extends BaseController {
 	 * @author 徐雁斌
 	 */
 	@RequestMapping(value="/create")
-	public ModelAndView create(Project project,@RequestParam MultipartFile[] imgFiles,HttpServletRequest request, Model model){
+	public ModelAndView create(Project project,@RequestParam MultipartFile[] photoPics,@RequestParam MultipartFile[] modelPics,HttpServletRequest request, Model model){
 		ModelAndView mav = new ModelAndView();
+		mav.setViewName("project/project_info");
 		try{
 			User user = (User) request.getSession().getAttribute(Constants.SESSION_USER_KEY);
-			projectService.savePojo(project, user);
+			if(user == null){
+				mav.addObject("errorMessage", ErrorMessage.get(ErrorCode.SESSION_TIMEOUT));
+				return mav;
+			}
 			
 			//绝对路径
 			String filePath = request.getSession().getServletContext().getRealPath((String)
         			CustomizedPropertyPlaceholderConfigurer.getContextProperty(PROJECT_FILE))  + File.separator + user.getEmail();       	
         	//相对路径
         	String relativePath = CustomizedPropertyPlaceholderConfigurer.getContextProperty(PROJECT_FILE) + user.getEmail();
-        	StringBuffer fileStrs = new StringBuffer();
-        	for(MultipartFile file : imgFiles){
-        		FileUtil.saveFile(filePath, file);
-        		fileStrs.append(relativePath + "/" + file.getOriginalFilename());
-        		fileStrs.append(",");
-        	}
-        	project.setPhotos(fileStrs.toString());
+        	
+        	String photoPicStrs = saveAndReturnFile(filePath, relativePath,photoPics);
+        	project.setPhotos(photoPicStrs);
+        	
+        	String modelPicStrs = saveAndReturnFile(filePath, relativePath,modelPics);
+        	project.setModelPhotos(modelPicStrs);
+        	
+        	project.setCreateUser(user);
+        	
         	projectService.savePojo(project, user);
 			
-			mav.setViewName("project/project_info");
 		}catch(Exception e){
 			if(e instanceof ServiceException){
 				ServiceException se = (ServiceException) e;
@@ -102,6 +107,36 @@ public class ProjectController extends BaseController {
 			}
 		}
 		return mav;
+	}
+
+	/**
+	 * @param filePath     文件保存路径
+	 * @param relativePath 文件相对路径
+	 * @param files        文件对象
+	 * @return
+	 * @throws Exception
+	 * @author 徐雁斌
+	 */
+	private String saveAndReturnFile(String filePath, String relativePath,MultipartFile[] files) throws Exception {
+		StringBuffer fileStrs = new StringBuffer();
+		for(int i=0;i<files.length;i++){
+			MultipartFile file =  files[i];
+			FileUtil.saveFile(filePath, file);
+			fileStrs.append(relativePath + "/" + file.getOriginalFilename());
+			if(i != files.length-1){
+				fileStrs.append(",");
+			}
+		}
+		return fileStrs.toString();
+	}
+	
+	@RequestMapping(value="/test")
+	public ModelAndView test(HttpServletRequest request) {
+		ModelAndView mv = new ModelAndView();
+		Project project = (Project) projectService.loadPojo("297ea9d44ce036b0014ce04534390002");
+		mv.addObject("project", project);
+		mv.setViewName("project/project_review");
+		return mv;
 	}
 	
 	

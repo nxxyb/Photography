@@ -51,9 +51,12 @@ CREATE TABLE `project` (
   `county` varchar(20) comment '区',
   `contact` varchar(200) comment '联系方式',
   `des` varchar(1000) comment '活动介绍',
+  `fee_des` varchar(1000) comment '费用介绍',
+  `xc_des` varchar(1000) comment '行程介绍',
   `cost` varchar(300) comment '活动费用',
   `photos` varchar(500) comment '活动照片',
   `model_photos` varchar(500) comment '场地、模特 照片',
+  `create_user` varchar(36) comment '创建用户',
   `create_time` datetime comment '创建时间',
   `last_update_time` datetime comment '最后修改时间'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
