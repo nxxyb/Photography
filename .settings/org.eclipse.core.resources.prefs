@@ -1,10 +1,19 @@
-#Fri Feb 27 16:44:22 CST 2015
+#Tue Apr 21 17:56:41 CST 2015
 eclipse.preferences.version=1
 encoding//WebRoot/WEB-INF/views=UTF-8
 encoding//WebRoot/WEB-INF/views/common/header.html=UTF-8
+encoding//WebRoot/WEB-INF/views/common/locate.html=UTF-8
+encoding//WebRoot/WEB-INF/views/project/project_create.html=UTF-8
 encoding//WebRoot/WEB-INF/views/user/login.html=UTF-8
+encoding//WebRoot/WEB-INF/views/user/person_info/auth.html=UTF-8
+encoding//WebRoot/WEB-INF/views/user/person_info/info.html=UTF-8
+encoding//WebRoot/WEB-INF/views/user/person_info/person_info.html=UTF-8
+encoding//WebRoot/WEB-INF/views/user/register/register_normal.html=UTF-8
+encoding//WebRoot/WEB-INF/views/user/register/register_normal_email.html=UTF-8
+encoding//WebRoot/WEB-INF/views/user/register/register_normal_email_confirm.html=UTF-8
 encoding//WebRoot/WEB-INF/views/user/register_normal.html=UTF-8
 encoding//WebRoot/WEB-INF/views/user/register_publisher.html=UTF-8
 encoding//resources/jdbc.properties=UTF-8
 encoding//resources/log4j.properties=UTF-8
+encoding//resources/system.properties=UTF-8
 encoding/<project>=UTF-8

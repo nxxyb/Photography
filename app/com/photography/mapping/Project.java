@@ -2,8 +2,14 @@ package com.photography.mapping;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
+import org.hibernate.annotations.LazyToOne;
+import org.hibernate.annotations.LazyToOneOption;
 
 /**
  * 活动
@@ -96,13 +102,25 @@ public class Project extends BaseMapping{
 	private String des;
 	
 	/**
+	 * 行程介绍
+	 */
+	@Column(name="xc_des")
+	private String xcDes;
+	
+	/**
+	 * 费用介绍
+	 */
+	@Column(name="fee_des")
+	private String feeDes;
+	
+	/**
 	 * 活动费用
 	 */
 	@Column(name="cost")
 	private String cost;
 	
 	/**
-	 * 最低开班人数
+	 * 最低开办人数
 	 */
 	@Column(name="less_num")
 	private String lessNum;
@@ -118,6 +136,14 @@ public class Project extends BaseMapping{
 	 */
 	@Column(name="model_photos")
 	private String modelPhotos;
+	
+	/**
+	 * 创建用户
+	 */
+	@ManyToOne
+	@JoinColumn(name="create_user")
+	@LazyToOne(LazyToOneOption.PROXY)
+	private User createUser;
 
 	public String getName() {
 		return name;
@@ -253,6 +279,30 @@ public class Project extends BaseMapping{
 
 	public void setCounty(String county) {
 		this.county = county;
+	}
+
+	public String getXcDes() {
+		return xcDes;
+	}
+
+	public void setXcDes(String xcDes) {
+		this.xcDes = xcDes;
+	}
+
+	public String getFeeDes() {
+		return feeDes;
+	}
+
+	public void setFeeDes(String feeDes) {
+		this.feeDes = feeDes;
+	}
+
+	public User getCreateUser() {
+		return createUser;
+	}
+
+	public void setCreateUser(User createUser) {
+		this.createUser = createUser;
 	}
 	
 	

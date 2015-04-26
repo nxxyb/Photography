@@ -37,8 +37,6 @@
 	</bean>
 	
 	<bean id="mailService" class="com.photography.service.MailServiceImpl">
-		<property name="javaMailSender" ref="javaMailSender"/>
-		<property name="simpleMailMessage" ref="simpleMailMessage"/>
 	</bean>
 
 </beans>

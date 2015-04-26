@@ -1,0 +1,275 @@
+<#assign basePath=request.contextPath>
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <!-- title start-->
+   <#include "../common/title.html">
+  <!-- title end-->
+  
+  <!-- link start-->
+   <#include "../common/link.html">
+  <!-- link end-->
+  
+</head>
+
+<body>
+    
+  <!-- header start-->
+  <#include "../common/header.html">
+  <!-- header end -->
+  
+<div class="main-content">
+	<div class="container">
+		<div class="carousel slide" id="carousel-project">
+			<ol class="carousel-indicators">
+			 <#list project.photos?split(",") as photo>  
+			 	<li <#if photo_index ==0> class="active"</#if> data-slide-to="${photo_index}" data-target="#carousel-project"></li>
+			 </#list>
+			</ol>
+			
+			<div class="carousel-inner">
+				<#list project.photos?split(",") as photo>  
+					<#if photo_index ==0>
+						<div class="item active">
+					<#else>
+						<div class="item">
+					</#if>
+						<img alt="" src="${basePath}/${photo}" />
+					</div>
+				</#list>
+			</div>
+			<a class="left carousel-control" href="#carousel-project" data-slide="prev">
+				<span class="glyphicon glyphicon-chevron-left"></span>
+			</a>
+			<a class="right carousel-control" href="#carousel-project" data-slide="next">
+				<span class="glyphicon glyphicon-chevron-right"></span>
+			</a>
+		</div>
+		
+		
+	<!-- START THE NAVBAR -->
+    <div class="navbar-wrapper">
+      <div class="navwrapper">
+        <div class="navbar navbar-inverse navbar-static-top">
+            <div class="navbar-collapse collapse">
+              <ul class="nav navbar-nav">
+                <li class="menuItem active"><a href="#section-1">基本信息</a></li>
+                <li class="menuItem"><a href="#section-2">行程安排</a></li>
+                <li class="menuItem"><a href="#section-3">人数费用</a></li>
+                <li class="menuItem"><a href="#section-4">实拍图片</a></li>  
+              </ul>
+            </div>
+        </div> 
+      </div><!-- End Navbar -->
+      
+    </div> <!-- END NAVBAR -->
+    
+		<script type="text/javascript">
+			  jQuery(function($) {
+                $(document).ready( function() {
+			 $('.navbar-wrapper').stickUp({
+                                parts: {
+                                  0:'section-1',
+                                  1:'section-2',
+                                  2:'section-3',
+                                  3:'section-4'
+                                },
+                                itemClass: 'menuItem',
+                                itemHover: 'active'
+                              });
+                            });
+              });
+		</script>
+		
+		<div id="section-1" class="panel panel-default">
+			<div class="panel-heading">基本信息</div>
+			<div class="panel-body">
+				<div class="form-group">
+					<label class="control-label col-sm-2 col-md-2"><span class="glyphicon glyphicon-home" style="color: #FF5511;"></span> 名称：</label>
+					<div class="col-sm-6 col-md-6">
+						<input class="form-control" type="text" name="name" maxlength="10"  placeholder="10个汉字" value="${(project.name)!''}">
+					</div>
+					<div class="col-sm-4 col-md-4">
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="control-label col-sm-2 col-md-2"><span class="glyphicon glyphicon-tags" style="color: #FF5511;"></span> 类型：</label>
+					<div class="col-sm-6 col-md-6">
+						<select class="form-control" name="type">
+							<option value="1">市内采风</option>
+							<option value="2">远郊采风</option>
+							<option value="3">说拍就拍</option>
+							<option value="4">一对一</option>
+						</select>
+					</div>
+					<div class="col-sm-4 col-md-4">
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="control-label col-sm-2 col-md-2"><span class="glyphicon glyphicon-tags" style="color: #FF5511;"></span> 联系方式：</label>
+					<div class="col-sm-6 col-md-6">
+						<input class="form-control" type="text" name="contact" maxlength="50"  placeholder="联系人及联系方式">
+					</div>
+					<div class="col-sm-4 col-md-4">
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="control-label col-sm-2 col-md-2"><span class="glyphicon glyphicon-th-large" style="color: #FF5511;"></span> 简介：</label>
+					<div class="col-sm-6 col-md-6">
+						<textarea class="form-control" name="des" rows="8"></textarea>
+					</div>
+					<div class="col-sm-4 col-md-4">
+					</div>
+				</div>
+				
+			</div>
+			<div class="panel-footer"></div>
+		</div>
+		
+		<div id="section-2" class="panel panel-default">
+			<div class="panel-heading">行程安排</div>
+			<div class="panel-body">
+				<div class="form-group">
+					<label class="control-label col-sm-2 col-md-2"><span class="glyphicon glyphicon-home" style="color: #FF5511;"></span> 活动开始时间：</label>
+					<div class="col-sm-6 col-md-6">
+						<input class="form-control" type="datetime-local" name="startTime">
+					</div>
+					<div class="col-sm-4 col-md-4">
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="control-label col-sm-2 col-md-2"><span class="glyphicon glyphicon-tags" style="color: #FF5511;"></span> 活动时长(小时)：</label>
+					<div class="col-sm-6 col-md-6">
+						<input class="form-control" type="number" name="timeLength">
+					</div>
+					<div class="col-sm-4 col-md-4">
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="control-label col-sm-2 col-md-2"><span class="glyphicon glyphicon-th-large" style="color: #FF5511;"></span> 活动地点：</label>
+					<div id="hddd" class="col-sm-6 col-md-6" data-toggle="distpicker">
+						<select class="form-control" name="province" data-province="选择省"></select>
+						<select class="form-control" name="city" data-city="选择市"></select>
+						<select class="form-control" name="county" data-district="选择区"></select>
+						<script type="text/javascript">
+							$('#hddd').distpicker();
+						</script>
+						
+						<input class="form-control" type="text" name="place" maxlength="50"  placeholder="具体地址">
+					</div>
+					<div class="col-sm-4 col-md-4">
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="control-label col-sm-2 col-md-2"><span class="glyphicon glyphicon-th-large" style="color: #FF5511;"></span> 集合地点：</label>
+					<div class="col-sm-6 col-md-6">					
+						<input class="form-control" type="text" name="venuePlace" maxlength="50"  placeholder="集合地点">
+					</div>
+					<div class="col-sm-4 col-md-4">
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="control-label col-sm-2 col-md-2"><span class="glyphicon glyphicon-th-large" style="color: #FF5511;"></span> 行程介绍：</label>
+					<div class="col-sm-6 col-md-6">
+						<textarea class="form-control" name="xcDes" rows="8"></textarea>
+					</div>
+					<div class="col-sm-4 col-md-4">
+					</div>
+				</div>
+				
+			</div>
+			<div class="panel-footer">
+			</div>
+		</div>
+		
+		<div id="section-3" class="panel panel-default">
+			 <div class="panel-heading">人数费用</div>
+			<div class="panel-body">
+				<div class="form-group">
+					<label class="control-label col-sm-2 col-md-2"><span class="glyphicon glyphicon-tags" style="color: #FF5511;"></span> 活动人数：</label>
+					<div class="col-sm-6 col-md-6">
+						<input class="form-control" type="number" name="peopleNum">
+					</div>
+					<div class="col-sm-4 col-md-4">
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="control-label col-sm-2 col-md-2"><span class="glyphicon glyphicon-tags" style="color: #FF5511;"></span> 最低开办人数：</label>
+					<div class="col-sm-6 col-md-6">
+						<input class="form-control" type="number" name="lessNum">
+					</div>
+					<div class="col-sm-4 col-md-4">
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="control-label col-sm-2 col-md-2"><span class="glyphicon glyphicon-tags" style="color: #FF5511;"></span> 模特人数：</label>
+					<div class="col-sm-6 col-md-6">
+						<input class="form-control" type="number" name="modelNum">
+					</div>
+					<div class="col-sm-4 col-md-4">
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="control-label col-sm-2 col-md-2"><span class="glyphicon glyphicon-tags" style="color: #FF5511;"></span> 活动费用：</label>
+					<div class="col-sm-6 col-md-6">
+						<input class="form-control" type="number" name="cost">
+					</div>
+					<div class="col-sm-4 col-md-4">
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="control-label col-sm-2 col-md-2"><span class="glyphicon glyphicon-th-large" style="color: #FF5511;"></span> 费用说明：</label>
+					<div class="col-sm-6 col-md-6">
+						<textarea class="form-control" name="feeDes" rows="8"></textarea>
+					</div>
+					<div class="col-sm-4 col-md-4">
+					</div>
+				</div>
+				
+			</div>
+			<div class="panel-footer">
+			</div>
+		</div>
+		
+		<div id="section-4" class="panel panel-default">
+			<div class="panel-heading">实拍图片</div>
+			<div class="panel-body">
+				<input id="modelPics" name="modelPics" type="file" accept="image/*" class="file-loading" multiple=true>
+				<script type="text/javascript">
+						$("#modelPics").fileinput({
+						    uploadUrl: "#", // server upload action
+    						showUpload: false,
+    						overwriteInitial: false,
+    						minFileCount: 1,
+    						maxFileCount: 5
+						});
+				</script>
+			</div>
+			<div class="panel-footer">
+			</div>
+		</div>
+		
+		<div class="panel">
+			 <button type="submit" class="btn btn-primary">保存</button>
+		</div>
+		
+	</div>
+</div>
+  <!-- footer start-->
+  <#include "../common/footer.html">
+  <!-- footer end -->
+  
+  </body>
+</html>
+   
