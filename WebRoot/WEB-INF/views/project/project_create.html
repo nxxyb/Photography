@@ -18,9 +18,11 @@
   <#include "../common/header.html">
   <!-- header end -->
   
+  <#include "../error/error_modal.html">
+  
 <div class="main-content">
+<form class="form-horizontal" id="project_create_form" action="${basePath}/project/create" enctype="multipart/form-data" method="post">
 	<div class="container">
-	<form class="form-horizontal" id="project_create_form" action="${basePath}/userinfo/updateHeadPhoto" enctype="multipart/form-data" method="post">
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				<strong>创建活动</strong>
@@ -39,23 +41,51 @@
 					</script>
 			</div>
 		</div>
+	</div>
+
 		
-		<div class="panel panel-default">
-			<ul id="projectTab" class="nav nav-tabs bg-info" data-spy="affix" data-offset-top="200">
-				<li class="active"><a href="#section-1">基本信息</a></li>
-                <li><a href="#section-2">时间地点</a></li>
-                <li><a href="#section-3">费用说明</a></li>
-                <li><a href="#section-4">实拍图片</a></li>
-                <li><a href="#section-5">出行装备</a></li>
-            </ul>
-		</div>
+	<!-- START THE NAVBAR -->
+    <div class="navbar-wrapper">
+    <div class="container">
+      <div class="navwrapper">
+        <div class="navbar navbar-inverse navbar-static-top">
+            <div class="navbar-collapse collapse">
+              <ul class="nav navbar-nav">
+                <li class="menuItem active"><a href="#section-1">基本信息</a></li>
+                <li class="menuItem"><a href="#section-2">行程安排</a></li>
+                <li class="menuItem"><a href="#section-3">人数费用</a></li>
+                <li class="menuItem"><a href="#section-4">实拍图片</a></li>  
+              </ul>
+            </div>
+        </div> 
+      </div>
+      </div>
+    </div> 
+    <!-- END NAVBAR -->
+    
+		<script type="text/javascript">
+			  jQuery(function($) {
+                $(document).ready( function() {
+			 $('.navbar-wrapper').stickUp({
+                                parts: {
+                                  0:'section-1',
+                                  1:'section-2',
+                                  2:'section-3',
+                                  3:'section-4'
+                                },
+                                itemClass: 'menuItem',
+                                itemHover: 'active'
+                              });
+                            });
+              });
+		</script>
 		
+		<div class="container">
 		<div id="section-1" class="panel panel-default">
-			<div class="panel-heading">
-			</div>
+			<div class="panel-heading">基本信息</div>
 			<div class="panel-body">
 				<div class="form-group">
-					<label class="control-label col-sm-2 col-md-2">名称：</label>
+					<label class="control-label col-sm-2 col-md-2"><span class="glyphicon glyphicon-home" style="color: #FF5511;"></span> 名称：</label>
 					<div class="col-sm-6 col-md-6">
 						<input class="form-control" type="text" name="name" maxlength="10"  placeholder="10个汉字" value="${(project.name)!''}">
 					</div>
@@ -64,64 +94,91 @@
 				</div>
 				
 				<div class="form-group">
-					<label class="control-label col-sm-2 col-md-2">类型：</label>
+					<label class="control-label col-sm-2 col-md-2"><span class="glyphicon glyphicon-tasks" style="color: #FF5511;"></span> 类型：</label>
 					<div class="col-sm-6 col-md-6">
-						<select name="type" class="form-control">
-					         <option value="1">市内采风</option>
-					         <option value="2">远郊采风</option>
-					         <option value="3">说拍就拍</option>
-					         <option value="4">一对一</option>
-					     </select>
+						<select class="form-control" name="type">
+							<option value="1" <#if project?? && project.type?? && project.type == '1'>checked="checked"</#if>>市内采风</option>
+							<option value="2" <#if project?? && project.type?? && project.type == '2'>checked="checked"</#if>>远郊采风</option>
+							<option value="3" <#if project?? && project.type?? && project.type == '3'>checked="checked"</#if>>说拍就拍</option>
+							<option value="4" <#if project?? && project.type?? && project.type == '4'>checked="checked"</#if>>一对一</option>
+						</select>
 					</div>
 					<div class="col-sm-4 col-md-4">
 					</div>
 				</div>
 				
 				<div class="form-group">
-					<label class="control-label col-sm-2 col-md-2">简介：</label>
+					<label class="control-label col-sm-2 col-md-2"><span class="glyphicon glyphicon-phone" style="color: #FF5511;"></span> 联系方式：</label>
 					<div class="col-sm-6 col-md-6">
-						<textarea class="form-control" name="des" rows="8"></textarea>
+						<input class="form-control" type="text" name="contact" maxlength="50"  placeholder="联系人及联系方式" value="${(project.contact)!''}">
+					</div>
+					<div class="col-sm-4 col-md-4">
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="control-label col-sm-2 col-md-2"><span class="glyphicon glyphicon-th-large" style="color: #FF5511;"></span> 简介：</label>
+					<div class="col-sm-6 col-md-6">
+						<textarea class="form-control" name="des" rows="8">${(project.des)!''}</textarea>
 					</div>
 					<div class="col-sm-4 col-md-4">
 					</div>
 				</div>
 				
 			</div>
-			<div class="panel-footer">
-			</div>
+			<div class="panel-footer"></div>
 		</div>
 		
 		<div id="section-2" class="panel panel-default">
-			 <div class="panel-heading">
-			</div>
+			<div class="panel-heading">行程安排</div>
 			<div class="panel-body">
 				<div class="form-group">
-					<label class="control-label col-sm-2 col-md-2">名称：</label>
+					<label class="control-label col-sm-2 col-md-2"><span class="glyphicon glyphicon-time" style="color: #FF5511;"></span> 活动开始时间：</label>
 					<div class="col-sm-6 col-md-6">
-						<input class="form-control" type="text" name="name" maxlength="10"  placeholder="10个汉字" value="${(project.name)!''}">
+						<input class="form-control" type="datetime-local" name="startTime" >
 					</div>
 					<div class="col-sm-4 col-md-4">
 					</div>
 				</div>
 				
 				<div class="form-group">
-					<label class="control-label col-sm-2 col-md-2">类型：</label>
+					<label class="control-label col-sm-2 col-md-2"><span class="glyphicon glyphicon-bookmark" style="color: #FF5511;"></span> 活动时长(小时)：</label>
 					<div class="col-sm-6 col-md-6">
-						<select name="type" class="form-control">
-					         <option value="1">市内采风</option>
-					         <option value="2">远郊采风</option>
-					         <option value="3">说拍就拍</option>
-					         <option value="4">一对一</option>
-					     </select>
+						<input class="form-control" type="number" name="timeLength" value="${(project.timeLength)!''}">
 					</div>
 					<div class="col-sm-4 col-md-4">
 					</div>
 				</div>
 				
 				<div class="form-group">
-					<label class="control-label col-sm-2 col-md-2">简介：</label>
+					<label class="control-label col-sm-2 col-md-2"><span class="glyphicon glyphicon-map-marker" style="color: #FF5511;"></span> 活动地点：</label>
+					<div id="hddd" class="col-sm-6 col-md-6" data-toggle="distpicker">
+						<select class="form-control" name="province" data-province="选择省"></select>
+						<select class="form-control" name="city" data-city="选择市"></select>
+						<select class="form-control" name="county" data-district="选择区"></select>
+						<script type="text/javascript">
+							$('#hddd').distpicker();
+						</script>
+						
+						<input class="form-control" type="text" name="place" maxlength="50"  placeholder="具体地址" value="${(project.place)!''}">
+					</div>
+					<div class="col-sm-4 col-md-4">
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="control-label col-sm-2 col-md-2"><span class="glyphicon glyphicon-flag" style="color: #FF5511;"></span> 集合地点：</label>
+					<div class="col-sm-6 col-md-6">					
+						<input class="form-control" type="text" name="venuePlace" maxlength="50"  placeholder="集合地点" value="${(project.venuePlace)!''}">
+					</div>
+					<div class="col-sm-4 col-md-4">
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="control-label col-sm-2 col-md-2"><span class="glyphicon glyphicon-road" style="color: #FF5511;"></span> 行程介绍：</label>
 					<div class="col-sm-6 col-md-6">
-						<textarea class="form-control" name="des" rows="8"></textarea>
+						<textarea class="form-control" name="xcDes" rows="8">${(project.xcDes)!''}</textarea>
 					</div>
 					<div class="col-sm-4 col-md-4">
 					</div>
@@ -133,24 +190,81 @@
 		</div>
 		
 		<div id="section-3" class="panel panel-default">
-			 <h2 >第3部分</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam eu sem tempor, varius quam at, luctus dui. Mauris magna metus, dapibus nec turpis vel, semper malesuada ante. Vestibulum id metus ac nisl bibendum scelerisque non non purus. Suspendisse varius nibh non aliquet sagittis. In tincidunt orci sit amet elementum vestibulum. Vivamus fermentum in arcu in aliquam. Quisque aliquam porta odio in fringilla. Vivamus nisl leo, blandit at bibendum eu, tristique eget risus. Integer aliquet quam ut elit suscipit, id interdum neque porttitor. Integer faucibus ligula.</p>
-            <p>Vestibulum quis quam ut magna consequat faucibus. Pellentesque eget nisi a mi suscipit tincidunt. Ut tempus dictum risus. Pellentesque viverra sagittis quam at mattis. Suspendisse potenti. Aliquam sit amet gravida nibh, facilisis gravida odio. Phasellus auctor velit at lacus blandit, commodo iaculis justo viverra. Etiam vitae est arcu. Mauris vel congue dolor. Aliquam eget mi mi. Fusce quam tortor, commodo ac dui quis, bibendum viverra erat. Maecenas mattis lectus enim, quis tincidunt dui molestie euismod. Curabitur et diam tristique, accumsan nunc eu, hendrerit tellus.</p>
+			 <div class="panel-heading">人数费用</div>
+			<div class="panel-body">
+				<div class="form-group">
+					<label class="control-label col-sm-2 col-md-2"><span class="glyphicon glyphicon-user" style="color: #FF5511;"></span> 活动人数：</label>
+					<div class="col-sm-6 col-md-6">
+						<input class="form-control" type="number" name="peopleNum" value="${(project.peopleNum)!''}">
+					</div>
+					<div class="col-sm-4 col-md-4">
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="control-label col-sm-2 col-md-2"><span class="glyphicon glyphicon-adjust" style="color: #FF5511;"></span> 最低开办人数：</label>
+					<div class="col-sm-6 col-md-6">
+						<input class="form-control" type="number" name="lessNum" value="${(project.lessNum)!''}">
+					</div>
+					<div class="col-sm-4 col-md-4">
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="control-label col-sm-2 col-md-2"><span class="glyphicon glyphicon-eye-open" style="color: #FF5511;"></span> 模特人数：</label>
+					<div class="col-sm-6 col-md-6">
+						<input class="form-control" type="number" name="modelNum" value="${(project.modelNum)!''}">
+					</div>
+					<div class="col-sm-4 col-md-4">
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="control-label col-sm-2 col-md-2"><span class="glyphicon glyphicon-yen" style="color: #FF5511;"></span> 活动费用：</label>
+					<div class="col-sm-6 col-md-6">
+						<input class="form-control" type="number" name="cost" value="${(project.cost)!''}">
+					</div>
+					<div class="col-sm-4 col-md-4">
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="control-label col-sm-2 col-md-2"><span class="glyphicon glyphicon-comment" style="color: #FF5511;"></span> 费用说明：</label>
+					<div class="col-sm-6 col-md-6">
+						<textarea class="form-control" name="feeDes" rows="8">${(project.feeDes)!''}</textarea>
+					</div>
+					<div class="col-sm-4 col-md-4">
+					</div>
+				</div>
+				
+			</div>
+			<div class="panel-footer">
+			</div>
 		</div>
 		
 		<div id="section-4" class="panel panel-default">
-			 <h2 >第4部分</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam eu sem tempor, varius quam at, luctus dui. Mauris magna metus, dapibus nec turpis vel, semper malesuada ante. Vestibulum id metus ac nisl bibendum scelerisque non non purus. Suspendisse varius nibh non aliquet sagittis. In tincidunt orci sit amet elementum vestibulum. Vivamus fermentum in arcu in aliquam. Quisque aliquam porta odio in fringilla. Vivamus nisl leo, blandit at bibendum eu, tristique eget risus. Integer aliquet quam ut elit suscipit, id interdum neque porttitor. Integer faucibus ligula.</p>
-            <p>Vestibulum quis quam ut magna consequat faucibus. Pellentesque eget nisi a mi suscipit tincidunt. Ut tempus dictum risus. Pellentesque viverra sagittis quam at mattis. Suspendisse potenti. Aliquam sit amet gravida nibh, facilisis gravida odio. Phasellus auctor velit at lacus blandit, commodo iaculis justo viverra. Etiam vitae est arcu. Mauris vel congue dolor. Aliquam eget mi mi. Fusce quam tortor, commodo ac dui quis, bibendum viverra erat. Maecenas mattis lectus enim, quis tincidunt dui molestie euismod. Curabitur et diam tristique, accumsan nunc eu, hendrerit tellus.</p>
+			<div class="panel-heading">实拍图片</div>
+			<div class="panel-body">
+				<input id="modelPics" name="modelPics" type="file" accept="image/*" class="file-loading" multiple=true>
+				<script type="text/javascript">
+						$("#modelPics").fileinput({
+						    uploadUrl: "#", // server upload action
+    						showUpload: false,
+    						overwriteInitial: false,
+    						minFileCount: 1,
+    						maxFileCount: 5
+						});
+				</script>
+			</div>
+			<div class="panel-footer">
+			</div>
 		</div>
 		
-		<div id="section-5" class="panel panel-default">
-			 <h2 >第4部分</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam eu sem tempor, varius quam at, luctus dui. Mauris magna metus, dapibus nec turpis vel, semper malesuada ante. Vestibulum id metus ac nisl bibendum scelerisque non non purus. Suspendisse varius nibh non aliquet sagittis. In tincidunt orci sit amet elementum vestibulum. Vivamus fermentum in arcu in aliquam. Quisque aliquam porta odio in fringilla. Vivamus nisl leo, blandit at bibendum eu, tristique eget risus. Integer aliquet quam ut elit suscipit, id interdum neque porttitor. Integer faucibus ligula.</p>
-            <p>Vestibulum quis quam ut magna consequat faucibus. Pellentesque eget nisi a mi suscipit tincidunt. Ut tempus dictum risus. Pellentesque viverra sagittis quam at mattis. Suspendisse potenti. Aliquam sit amet gravida nibh, facilisis gravida odio. Phasellus auctor velit at lacus blandit, commodo iaculis justo viverra. Etiam vitae est arcu. Mauris vel congue dolor. Aliquam eget mi mi. Fusce quam tortor, commodo ac dui quis, bibendum viverra erat. Maecenas mattis lectus enim, quis tincidunt dui molestie euismod. Curabitur et diam tristique, accumsan nunc eu, hendrerit tellus.</p>
+		<div class="panel">
+			 <button type="submit" class="btn btn-primary">保存</button>
 		</div>
+	</form>
 		
-		</form>
 	</div>
 </div>
   <!-- footer start-->
@@ -159,4 +273,3 @@
   
   </body>
 </html>
-   

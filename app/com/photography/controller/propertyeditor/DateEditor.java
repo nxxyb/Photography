@@ -22,7 +22,7 @@ public class DateEditor extends PropertyEditorSupport {
 	private final static Logger log = Logger.getLogger(DateEditor.class);
 	
 	private static final DateFormat DATEFORMAT = new SimpleDateFormat("yyyy-MM-dd");
-	private static final DateFormat TIMEFORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	private static final DateFormat TIMEFORMAT = new SimpleDateFormat("yyyy-MM-ddTHH:mm");
 
 	private DateFormat dateFormat;
 	private boolean allowEmpty = true;

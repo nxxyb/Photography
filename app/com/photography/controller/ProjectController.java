@@ -71,10 +71,11 @@ public class ProjectController extends BaseController {
 	@RequestMapping(value="/create")
 	public ModelAndView create(Project project,@RequestParam MultipartFile[] photoPics,@RequestParam MultipartFile[] modelPics,HttpServletRequest request, Model model){
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("project/project_info");
+		mav.setViewName("project/project_create");
 		try{
 			User user = (User) request.getSession().getAttribute(Constants.SESSION_USER_KEY);
 			if(user == null){
+				mav.addObject("project", project);
 				mav.addObject("errorMessage", ErrorMessage.get(ErrorCode.SESSION_TIMEOUT));
 				return mav;
 			}
@@ -94,6 +95,7 @@ public class ProjectController extends BaseController {
         	project.setCreateUser(user);
         	
         	projectService.savePojo(project, user);
+        	mav.addObject("project", project);
 			
 		}catch(Exception e){
 			if(e instanceof ServiceException){
