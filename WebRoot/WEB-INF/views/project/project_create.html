@@ -32,8 +32,8 @@
 				<input id="projectPic" name="photoPics" type="file" accept="image/*" class="file-loading" multiple >
 				<script type="text/javascript">
 						$("#projectPic").fileinput({
-						    uploadUrl: "${basePath}/project/savePhotos", // server upload action
-    						showUpload: true,
+						    uploadUrl: "${basePath}/project/create", // server upload action
+    						showUpload: false,
     						overwriteInitial: false,
     						minFileCount: 1,
     						maxFileCount: 5
@@ -245,10 +245,10 @@
 		<div id="section-4" class="panel panel-default">
 			<div class="panel-heading">实拍图片</div>
 			<div class="panel-body">
-				<input id="modelPics" name="modelPics" type="file" accept="image/*" class="file-loading" multiple=true>
+				<input id="modelPics" name="modelPics" type="file" accept="image/*" class="file-loading" multiple>
 				<script type="text/javascript">
 						$("#modelPics").fileinput({
-						    uploadUrl: "#", // server upload action
+						    uploadUrl: "${basePath}/project/create", // server upload action
     						showUpload: false,
     						overwriteInitial: false,
     						minFileCount: 1,
