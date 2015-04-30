@@ -29,11 +29,11 @@
 			</div>
 			
 			<div class="panel-body">
-				<input id="projectPic" name="projectPic" type="file" accept="image/*" class="file-loading" multiple=true>
+				<input id="projectPic" name="photoPics" type="file" accept="image/*" class="file-loading" multiple >
 				<script type="text/javascript">
 						$("#projectPic").fileinput({
-						    uploadUrl: "#", // server upload action
-    						showUpload: false,
+						    uploadUrl: "${basePath}/project/savePhotos", // server upload action
+    						showUpload: true,
     						overwriteInitial: false,
     						minFileCount: 1,
     						maxFileCount: 5

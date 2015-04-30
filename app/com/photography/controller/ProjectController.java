@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -69,7 +70,7 @@ public class ProjectController extends BaseController {
 	 * @author 徐雁斌
 	 */
 	@RequestMapping(value="/create")
-	public ModelAndView create(Project project,@RequestParam MultipartFile[] photoPics,@RequestParam MultipartFile[] modelPics,HttpServletRequest request, Model model){
+	public ModelAndView create(Project project,HttpServletRequest request, Model model){
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("project/project_create");
 		try{
@@ -80,17 +81,17 @@ public class ProjectController extends BaseController {
 				return mav;
 			}
 			
-			//绝对路径
-			String filePath = request.getSession().getServletContext().getRealPath((String)
-        			CustomizedPropertyPlaceholderConfigurer.getContextProperty(PROJECT_FILE))  + File.separator + user.getEmail();       	
-        	//相对路径
-        	String relativePath = CustomizedPropertyPlaceholderConfigurer.getContextProperty(PROJECT_FILE) + user.getEmail();
-        	
-        	String photoPicStrs = saveAndReturnFile(filePath, relativePath,photoPics);
-        	project.setPhotos(photoPicStrs);
-        	
-        	String modelPicStrs = saveAndReturnFile(filePath, relativePath,modelPics);
-        	project.setModelPhotos(modelPicStrs);
+//			//绝对路径
+//			String filePath = request.getSession().getServletContext().getRealPath((String)
+//        			CustomizedPropertyPlaceholderConfigurer.getContextProperty(PROJECT_FILE))  + File.separator + user.getEmail();       	
+//        	//相对路径
+//        	String relativePath = CustomizedPropertyPlaceholderConfigurer.getContextProperty(PROJECT_FILE) + user.getEmail();
+//        	
+//        	String photoPicStrs = saveAndReturnFile(filePath, relativePath,photoPics);
+//        	project.setPhotos(photoPicStrs);
+//        	
+//        	String modelPicStrs = saveAndReturnFile(filePath, relativePath,modelPics);
+//        	project.setModelPhotos(modelPicStrs);
         	
         	project.setCreateUser(user);
         	
@@ -109,6 +110,37 @@ public class ProjectController extends BaseController {
 			}
 		}
 		return mav;
+	}
+	
+	/**
+	 * 新建活动
+	 * @param project
+	 * @param imgFiles
+	 * @param request
+	 * @param model
+	 * @return
+	 * @author 徐雁斌
+	 */
+	@RequestMapping(value="/savePhotos")
+	@ResponseBody
+	public String savePhotos(@RequestParam MultipartFile[] photoPics,HttpServletRequest request, Model model){
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("project/project_create");
+		try{
+			User user = (User) request.getSession().getAttribute(Constants.SESSION_USER_KEY);
+			
+			//绝对路径
+			String filePath = request.getSession().getServletContext().getRealPath((String)
+        			CustomizedPropertyPlaceholderConfigurer.getContextProperty(PROJECT_FILE))  + File.separator + user.getEmail();       	
+        	//相对路径
+        	String relativePath = CustomizedPropertyPlaceholderConfigurer.getContextProperty(PROJECT_FILE) + user.getEmail();
+        	
+        	String photoPicStrs = saveAndReturnFile(filePath, relativePath,photoPics);
+			
+		}catch(Exception e){
+			log.error("error",e);
+		}
+		return Constants.YES;
 	}
 
 	/**
@@ -135,7 +167,7 @@ public class ProjectController extends BaseController {
 	@RequestMapping(value="/test")
 	public ModelAndView test(HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView();
-		Project project = (Project) projectService.loadPojo("297ea9d44ce036b0014ce04534390002");
+		Project project = (Project) projectService.loadPojo("297ea9d44c445351014c448a5c690000");
 		mv.addObject("project", project);
 		mv.setViewName("project/project_review");
 		return mv;
