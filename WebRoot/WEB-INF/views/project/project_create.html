@@ -23,6 +23,8 @@
 <div class="main-content">
 <form class="form-horizontal" id="project_create_form" action="${basePath}/project/create" enctype="multipart/form-data" method="post">
 	<div class="container">
+		<input type="hidden"" name="id" value="${(project.id)!''}">
+		
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				<strong>创建活动</strong>

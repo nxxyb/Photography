@@ -10,7 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -124,6 +123,9 @@ public class ProjectController extends BaseController {
 		StringBuffer fileStrs = new StringBuffer();
 		for(int i=0;i<files.length;i++){
 			MultipartFile file =  files[i];
+			if(file.isEmpty()){
+				continue;
+			}
 			FileUtil.saveFile(filePath, file);
 			fileStrs.append(relativePath + "/" + file.getOriginalFilename());
 			if(i != files.length-1){
@@ -136,7 +138,7 @@ public class ProjectController extends BaseController {
 	@RequestMapping(value="/test")
 	public ModelAndView test(HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView();
-		Project project = (Project) projectService.loadPojo("297ea9d44c445351014c448a5c690000");
+		Project project = (Project) projectService.loadPojo("40288f814d124d52014d12602dbf0001");
 		mv.addObject("project", project);
 		mv.setViewName("project/project_review");
 		return mv;
