@@ -38,6 +38,13 @@
     						showUpload: false,
     						overwriteInitial: false,
     						minFileCount: 1,
+    						<#if project?? && project.photos??>
+    							initialPreview: [
+    							<#list project.photos?split(",") as photo>
+    								"<img src='${basePath}/${photo}' class='file-preview-image'>",
+    							</#list>
+    							],
+    						</#if>
     						maxFileCount: 5
 						});
 					</script>
@@ -99,10 +106,10 @@
 					<label class="control-label col-sm-2 col-md-2"><span class="glyphicon glyphicon-tasks" style="color: #FF5511;"></span> 类型：</label>
 					<div class="col-sm-6 col-md-6">
 						<select class="form-control" name="type">
-							<option value="1" <#if project?? && project.type?? && project.type == '1'>checked="checked"</#if>>市内采风</option>
-							<option value="2" <#if project?? && project.type?? && project.type == '2'>checked="checked"</#if>>远郊采风</option>
-							<option value="3" <#if project?? && project.type?? && project.type == '3'>checked="checked"</#if>>说拍就拍</option>
-							<option value="4" <#if project?? && project.type?? && project.type == '4'>checked="checked"</#if>>一对一</option>
+							<option value="1" <#if project?? && project.type?? && project.type == '1'>selected="selected"</#if>>市内采风</option>
+							<option value="2" <#if project?? && project.type?? && project.type == '2'>selected="selected"</#if>>远郊采风</option>
+							<option value="3" <#if project?? && project.type?? && project.type == '3'>selected="selected"</#if>>说拍就拍</option>
+							<option value="4" <#if project?? && project.type?? && project.type == '4'>selected="selected"</#if>>一对一</option>
 						</select>
 					</div>
 					<div class="col-sm-4 col-md-4">
@@ -137,7 +144,10 @@
 				<div class="form-group">
 					<label class="control-label col-sm-2 col-md-2"><span class="glyphicon glyphicon-time" style="color: #FF5511;"></span> 活动开始时间：</label>
 					<div class="col-sm-6 col-md-6">
-						<input class="form-control" type="datetime-local" name="startTime" >
+						<input id="startTime" class="form-control" type="text" name="startTime" value="${(project.startTime?string("yyyy-MM-dd HH:mm"))!''}">
+						<script type="text/javascript">
+							$('#startTime').datetimepicker({lang:'zh',format:'Y-m-d H:i',step:30});
+						</script>
 					</div>
 					<div class="col-sm-4 col-md-4">
 					</div>

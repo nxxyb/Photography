@@ -140,7 +140,7 @@ public class ProjectController extends BaseController {
 		ModelAndView mv = new ModelAndView();
 		Project project = (Project) projectService.loadPojo("40288f814d124d52014d12602dbf0001");
 		mv.addObject("project", project);
-		mv.setViewName("project/project_review");
+		mv.setViewName("project/project_create");
 		return mv;
 	}
 	
