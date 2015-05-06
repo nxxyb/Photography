@@ -20,24 +20,18 @@ import com.photography.mapping.User;
 public interface IBaseService {
 	
 	/**
-	 * 获取相关业务的pojo定义
-	 * @return
-	 */
-	public Class<? extends BaseMapping> getPojoClass();
-	
-	/**
 	 * 通过主键获取固化业务pojo
 	 * @param id 固化pojo主键
 	 * @return 业务pojo
 	 */
-	public BaseMapping loadPojo(String id);
+	public BaseMapping loadPojo(Class clazz, String id);
 	
 	/**
 	 * 通过表达式获取pojo列表
 	 * @param expression 表达式
 	 * @return pojo列表
 	 */
-	public List<BaseMapping> loadPojoByExpression(Expression expression,Sort sort);
+	public List<BaseMapping> loadPojoByExpression(Class clazz, Expression expression,Sort sort);
 	
 	/**
 	 * 保存当前的pojo,需要先判断是否新建，新建的逻辑需要单独处理
@@ -63,7 +57,7 @@ public interface IBaseService {
 	 * @param user 用户
 	 * @return
 	 */
-	public List<BaseMapping> getPojoList(Pager pager, Expression expression, Sort sort,User user);
+	public List<BaseMapping> getPojoList(Class clazz, Pager pager, Expression expression, Sort sort,User user);
 	
 	/**
 	 * 合计列表，支持分页以及查询

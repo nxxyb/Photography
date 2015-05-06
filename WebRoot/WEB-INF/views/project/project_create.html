@@ -264,6 +264,13 @@
     						showUpload: false,
     						overwriteInitial: false,
     						minFileCount: 1,
+    						<#if project?? && project.modelPhotos??>
+    							initialPreview: [
+    							<#list project.modelPhotos?split(",") as photo>
+    								"<img src='${basePath}/${photo}' class='file-preview-image'>",
+    							</#list>
+    							],
+    						</#if>
     						maxFileCount: 5
 						});
 				</script>

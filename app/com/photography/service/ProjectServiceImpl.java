@@ -1,12 +1,6 @@
 package com.photography.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.photography.dao.IHibernateDao;
-import com.photography.dao.IProjectDao;
-import com.photography.mapping.BaseMapping;
-import com.photography.mapping.Project;
 
 /**
  * 
@@ -17,28 +11,5 @@ import com.photography.mapping.Project;
  */
 @Service("projectService")
 public class ProjectServiceImpl extends BaseServiceImpl implements IProjectService {
-	
-	@Autowired
-	private IProjectDao projectDao;
-
-	public void setProjectDao(IProjectDao projectDao) {
-		this.projectDao = projectDao;
-	}
-
-	/* 
-	 * @see com.photography.service.IBaseService#getPojoClass()
-	 */
-	@Override
-	public Class<? extends BaseMapping> getPojoClass() {
-		return Project.class;
-	}
-
-	/* 
-	 * @see com.photography.service.BaseServiceImpl#getDao()
-	 */
-	@Override
-	public IHibernateDao getDao() {
-		return projectDao;
-	}
 
 }

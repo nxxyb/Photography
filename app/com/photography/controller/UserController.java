@@ -173,7 +173,7 @@ public class UserController extends BaseController{
 	public ModelAndView emailConfirm(String key,HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
 		try {
-			User user = (User) userService.loadPojo(key);
+			User user = (User) userService.loadPojo(User.class,key);
 			if (user != null) {
 				user.setEnable(Constants.YES);
 				userService.savePojo(user, user);

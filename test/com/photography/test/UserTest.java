@@ -34,7 +34,7 @@ public class UserTest extends BaseTest {
 	
 	@Test
 	public void get(){
-		User user = (User) userService.loadPojo("ce5a35d5-b004-11e4-93b0-0002040816af");
+		User user = (User) userService.loadPojo(User.class,"ce5a35d5-b004-11e4-93b0-0002040816af");
 		System.out.println(user.getLoginName());
 	}
 	

@@ -153,7 +153,7 @@ public class UserInfoController extends BaseController {
 			return mv;
 		}
 		
-		User userDB = (User) userService.loadPojo(user.getId());
+		User userDB = (User) userService.loadPojo(User.class,user.getId());
 		
 		if(userDB == null){
 			mv.addObject("errorMessage", ErrorMessage.get(ErrorCode.SESSION_TIMEOUT));
@@ -203,7 +203,7 @@ public class UserInfoController extends BaseController {
 			return mv;
 		}
 		
-		User userDB = (User) userService.loadPojo(user.getId());
+		User userDB = (User) userService.loadPojo(User.class,user.getId());
 		if(userDB == null){
 			mv.addObject("errorMessage", ErrorMessage.get(ErrorCode.SESSION_TIMEOUT));
 			return mv;
@@ -251,7 +251,7 @@ public class UserInfoController extends BaseController {
 			return mv;
 		}
 		
-		User userDB = (User) userService.loadPojo(id);
+		User userDB = (User) userService.loadPojo(User.class,id);
 		
 		if(userDB == null){
 			mv.addObject("errorMessage", ErrorMessage.get(ErrorCode.SESSION_TIMEOUT));

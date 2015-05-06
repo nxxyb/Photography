@@ -2,6 +2,7 @@ package com.photography.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,22 +23,28 @@ import com.photography.mapping.User;
  * @copyright 2015 天大求实电力新技术股份有限公司 版权所有
  */
 @Service
-public abstract class BaseServiceImpl implements IBaseService {
+public class BaseServiceImpl implements IBaseService {
 	
-	public abstract IHibernateDao getDao();
+	@Autowired
+	protected IHibernateDao hibernateDao;
+	
+	public void setHibernateDao(IHibernateDao hibernateDao) {
+		this.hibernateDao = hibernateDao;
+	}
+
 	/* 
 	 * @see com.photography.service.IBaseService#loadPojo(java.lang.String)
 	 */
-	public BaseMapping loadPojo(String id) {
-		return (BaseMapping) getDao().getById(getPojoClass(), id);
+	public BaseMapping loadPojo(Class clazz, String id) {
+		return (BaseMapping) hibernateDao.getById(clazz, id);
 	}
 
 	/* 
 	 * @see com.photography.service.IBaseService#loadPojoByExpression(com.photography.dao.exp.Expression, com.photography.dao.query.Sort)
 	 */
 	@SuppressWarnings("unchecked")
-	public List<BaseMapping> loadPojoByExpression(Expression expression, Sort sort) {
-		return (List<BaseMapping>) getDao().getByQuery(getPojoClass(), expression,sort);
+	public List<BaseMapping> loadPojoByExpression(Class clazz, Expression expression, Sort sort) {
+		return (List<BaseMapping>) hibernateDao.getByQuery(clazz, expression,sort);
 	}
 
 	/* 
@@ -48,7 +55,8 @@ public abstract class BaseServiceImpl implements IBaseService {
 		if("".equals(pojo.getId())){
 			pojo.setId(null);
 		}
-		getDao().saveOrUpdate(pojo);
+//		hibernateDao.saveOrUpdate(pojo);
+		hibernateDao.merge(pojo);
 
 	}
 
@@ -56,14 +64,14 @@ public abstract class BaseServiceImpl implements IBaseService {
 	 * @see com.photography.service.IBaseService#deletePojo(com.photography.mapping.BaseMapping, com.photography.mapping.User)
 	 */
 	public void deletePojo(BaseMapping pojo, User user) throws ServiceException {
-		getDao().delete(pojo);
+		hibernateDao.delete(pojo);
 	}
 
 	/* 
 	 * @see com.photography.service.IBaseService#getPojoList(com.photography.dao.query.Pager, com.photography.dao.exp.Expression, com.photography.dao.query.Sort, com.photography.mapping.User)
 	 */
-	public List<BaseMapping> getPojoList(Pager pager, Expression expression, Sort sort, User user) {
-		return getDao().getPojoList(getPojoClass(), pager, expression, sort, user);
+	public List<BaseMapping> getPojoList(Class clazz, Pager pager, Expression expression, Sort sort, User user) {
+		return hibernateDao.getPojoList(clazz, pager, expression, sort, user);
 	}
 	
 	/* 

@@ -22,6 +22,7 @@ import com.photography.service.IProjectService;
 import com.photography.utils.Constants;
 import com.photography.utils.CustomizedPropertyPlaceholderConfigurer;
 import com.photography.utils.FileUtil;
+import com.photography.utils.StringUtil;
 
 /**
  * 活动
@@ -80,6 +81,11 @@ public class ProjectController extends BaseController {
 				return mav;
 			}
 			
+			Project projectDb = null;
+			if(project.getId() != null && !"".equals(project.getId())){
+				projectDb = (Project) projectService.loadPojo(Project.class,project.getId());
+			}
+			
 			//绝对路径
 			String filePath = request.getSession().getServletContext().getRealPath((String)
         			CustomizedPropertyPlaceholderConfigurer.getContextProperty(PROJECT_FILE))  + File.separator + user.getEmail();       	
@@ -87,9 +93,15 @@ public class ProjectController extends BaseController {
         	String relativePath = CustomizedPropertyPlaceholderConfigurer.getContextProperty(PROJECT_FILE) + user.getEmail();
         	
         	String photoPicStrs = saveAndReturnFile(filePath, relativePath,photoPics);
+        	if(projectDb != null && !StringUtil.isEmpty(projectDb.getPhotos())){
+        		photoPicStrs = projectDb.getPhotos() + Constants.SEPARATOR + photoPicStrs;
+        	}
         	project.setPhotos(photoPicStrs);
         	
         	String modelPicStrs = saveAndReturnFile(filePath, relativePath,modelPics);
+        	if(projectDb != null && !StringUtil.isEmpty(projectDb.getModelPhotos())){
+        		modelPicStrs = projectDb.getModelPhotos() + Constants.SEPARATOR + modelPicStrs;
+        	}
         	project.setModelPhotos(modelPicStrs);
         	
         	project.setCreateUser(user);
@@ -129,8 +141,11 @@ public class ProjectController extends BaseController {
 			FileUtil.saveFile(filePath, file);
 			fileStrs.append(relativePath + "/" + file.getOriginalFilename());
 			if(i != files.length-1){
-				fileStrs.append(",");
+				fileStrs.append(Constants.SEPARATOR);
 			}
+		}
+		if(StringUtil.isEmpty(fileStrs.toString())){
+			return null;
 		}
 		return fileStrs.toString();
 	}
@@ -138,7 +153,7 @@ public class ProjectController extends BaseController {
 	@RequestMapping(value="/test")
 	public ModelAndView test(HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView();
-		Project project = (Project) projectService.loadPojo("40288f814d124d52014d12602dbf0001");
+		Project project = (Project) projectService.loadPojo(Project.class,"40288f814d124d52014d12602dbf0001");
 		mv.addObject("project", project);
 		mv.setViewName("project/project_create");
 		return mv;
