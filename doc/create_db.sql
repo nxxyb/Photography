@@ -60,3 +60,23 @@ CREATE TABLE `project` (
   `create_time` datetime comment '创建时间',
   `last_update_time` datetime comment '最后修改时间'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/**文件组 */
+DROP TABLE IF EXISTS `file_group`;
+CREATE TABLE `file_group` (
+  `id` varchar(36) NOT NULL PRIMARY KEY,
+  `create_time` datetime comment '注册时间',
+  `last_update_time` datetime comment '最后登录时间'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/**文件表 */
+DROP TABLE IF EXISTS `file_info`;
+CREATE TABLE `file_info` (
+  `id` varchar(36) NOT NULL PRIMARY KEY,
+  `real_name` varchar(200) comment '真实文件名',
+  `real_path` varchar(500) comment '存储文件全路径',
+  `ext` varchar(20) comment '活动开始时间',
+  `file_group` varchar(36) comment '活动时长',
+  `create_time` datetime comment '创建时间',
+  `last_update_time` datetime comment '最后修改时间'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

@@ -38,10 +38,10 @@
     						showUpload: false,
     						overwriteInitial: false,
     						minFileCount: 1,
-    						<#if project?? && project.photos??>
+    						<#if project?? && project.photos?? && project.photos.fileInfos??>
     							initialPreview: [
-    							<#list project.photos?split(",") as photo>
-    								"<img src='${basePath}/${photo}' class='file-preview-image'>",
+    							<#list project.photos.fileInfos as photo>
+    								"<img src='${basePath}/${photo.realPath}' class='file-preview-image'>",
     							</#list>
     							],
     						</#if>
@@ -165,11 +165,17 @@
 				<div class="form-group">
 					<label class="control-label col-sm-2 col-md-2"><span class="glyphicon glyphicon-map-marker" style="color: #FF5511;"></span> 活动地点：</label>
 					<div id="hddd" class="col-sm-6 col-md-6" data-toggle="distpicker">
-						<select class="form-control" name="province" data-province="选择省"></select>
-						<select class="form-control" name="city" data-city="选择市"></select>
-						<select class="form-control" name="county" data-district="选择区"></select>
+						<select class="form-control" name="province"></select>
+						<select class="form-control" name="city"></select>
+						<select class="form-control" name="county"></select>
 						<script type="text/javascript">
-							$('#hddd').distpicker();
+							$('#hddd').distpicker({
+							<#if project?? && project.province??>
+							  province: '${project.province}',
+							  city: '${project.city}',
+							  district: '${project.county}'
+							 </#if>
+							});
 						</script>
 						
 						<input class="form-control" type="text" name="place" maxlength="50"  placeholder="具体地址" value="${(project.place)!''}">
@@ -264,10 +270,10 @@
     						showUpload: false,
     						overwriteInitial: false,
     						minFileCount: 1,
-    						<#if project?? && project.modelPhotos??>
+    						<#if project?? && project.modelPhotos?? && project.modelPhotos.fileInfos??>
     							initialPreview: [
-    							<#list project.modelPhotos?split(",") as photo>
-    								"<img src='${basePath}/${photo}' class='file-preview-image'>",
+    							<#list project.modelPhotos.fileInfos as photo>
+    								"<img src='${basePath}/${photo.realPath}' class='file-preview-image'>",
     							</#list>
     							],
     						</#if>

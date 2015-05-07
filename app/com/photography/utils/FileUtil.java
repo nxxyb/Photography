@@ -299,4 +299,20 @@ public class FileUtil {
     	}
 		FileUtils.copyInputStreamToFile(file.getInputStream(), new File(filePath, file.getOriginalFilename()));
 	}
+	
+	/**
+	 * 保存文件
+	 * @param filePath 文件路径
+	 * @param file     文件
+	 * @param fileName 文件名称
+	 * @throws Exception
+	 * @author 徐雁斌
+	 */
+	public static void saveFileByName(String filePath,MultipartFile file,String fileName) throws Exception{
+    	File sourceFile = new File(filePath);
+    	if(!sourceFile.exists()){
+    		sourceFile.mkdir();
+    	}
+		FileUtils.copyInputStreamToFile(file.getInputStream(), new File(filePath, fileName));
+	}
 }

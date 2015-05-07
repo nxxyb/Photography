@@ -1,6 +1,7 @@
 package com.photography.controller;
 
 import java.io.File;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -16,13 +17,14 @@ import org.springframework.web.servlet.ModelAndView;
 import com.photography.exception.ErrorCode;
 import com.photography.exception.ErrorMessage;
 import com.photography.exception.ServiceException;
+import com.photography.mapping.FileGroup;
+import com.photography.mapping.FileInfo;
 import com.photography.mapping.Project;
 import com.photography.mapping.User;
 import com.photography.service.IProjectService;
 import com.photography.utils.Constants;
 import com.photography.utils.CustomizedPropertyPlaceholderConfigurer;
 import com.photography.utils.FileUtil;
-import com.photography.utils.StringUtil;
 
 /**
  * 活动
@@ -86,23 +88,19 @@ public class ProjectController extends BaseController {
 				projectDb = (Project) projectService.loadPojo(Project.class,project.getId());
 			}
 			
-			//绝对路径
-			String filePath = request.getSession().getServletContext().getRealPath((String)
-        			CustomizedPropertyPlaceholderConfigurer.getContextProperty(PROJECT_FILE))  + File.separator + user.getEmail();       	
-        	//相对路径
-        	String relativePath = CustomizedPropertyPlaceholderConfigurer.getContextProperty(PROJECT_FILE) + user.getEmail();
-        	
-        	String photoPicStrs = saveAndReturnFile(filePath, relativePath,photoPics);
-        	if(projectDb != null && !StringUtil.isEmpty(projectDb.getPhotos())){
-        		photoPicStrs = projectDb.getPhotos() + Constants.SEPARATOR + photoPicStrs;
+        	FileGroup photoGroup = null;
+        	if(projectDb != null){
+        		photoGroup = projectDb.getPhotos();
         	}
-        	project.setPhotos(photoPicStrs);
+        	photoGroup = saveAndReturnFile(photoPics, request, user, photoGroup);
+        	project.setPhotos(photoGroup);
         	
-        	String modelPicStrs = saveAndReturnFile(filePath, relativePath,modelPics);
-        	if(projectDb != null && !StringUtil.isEmpty(projectDb.getModelPhotos())){
-        		modelPicStrs = projectDb.getModelPhotos() + Constants.SEPARATOR + modelPicStrs;
+        	FileGroup modelPhotoGroup = null;
+        	if(projectDb != null){
+        		modelPhotoGroup = projectDb.getModelPhotos();
         	}
-        	project.setModelPhotos(modelPicStrs);
+        	modelPhotoGroup = saveAndReturnFile(modelPics, request, user, modelPhotoGroup);
+        	project.setModelPhotos(modelPhotoGroup);
         	
         	project.setCreateUser(user);
         	
@@ -131,29 +129,46 @@ public class ProjectController extends BaseController {
 	 * @throws Exception
 	 * @author 徐雁斌
 	 */
-	private String saveAndReturnFile(String filePath, String relativePath,MultipartFile[] files) throws Exception {
-		StringBuffer fileStrs = new StringBuffer();
+	private FileGroup saveAndReturnFile(MultipartFile[] files,HttpServletRequest request,User user,FileGroup fileGroup) throws Exception {
+		
+		if(fileGroup == null){
+			fileGroup = new FileGroup();
+		}
+		//绝对路径
+		String filePath = request.getSession().getServletContext().getRealPath((String)
+    			CustomizedPropertyPlaceholderConfigurer.getContextProperty(PROJECT_FILE))  + File.separator + user.getEmail();       	
+    	//相对路径
+    	String relativePath = CustomizedPropertyPlaceholderConfigurer.getContextProperty(PROJECT_FILE) + user.getEmail();
+  
+    	
 		for(int i=0;i<files.length;i++){
 			MultipartFile file =  files[i];
 			if(file.isEmpty()){
 				continue;
 			}
-			FileUtil.saveFile(filePath, file);
-			fileStrs.append(relativePath + "/" + file.getOriginalFilename());
-			if(i != files.length-1){
-				fileStrs.append(Constants.SEPARATOR);
-			}
+			
+			FileInfo fileInfo = new FileInfo();
+			fileInfo.setExt(FileUtil.getFileExtension(file.getOriginalFilename()));
+			fileInfo.setRealName(file.getOriginalFilename());
+			String fileName = UUID.randomUUID() + "." + fileInfo.getExt();
+			fileInfo.setRealPath(relativePath + "/" + fileName);
+			fileInfo.setFileGroup(fileGroup);
+			
+			fileGroup.getFileInfos().add(fileInfo);
+			
+			
+			FileUtil.saveFileByName(filePath, file, fileName);
 		}
-		if(StringUtil.isEmpty(fileStrs.toString())){
-			return null;
-		}
-		return fileStrs.toString();
+		
+		projectService.savePojo(fileGroup, user);
+		
+		return fileGroup;
 	}
 	
 	@RequestMapping(value="/test")
 	public ModelAndView test(HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView();
-		Project project = (Project) projectService.loadPojo(Project.class,"40288f814d124d52014d12602dbf0001");
+		Project project = (Project) projectService.loadPojo(Project.class,"297ea9d44d2d112d014d2d87e5220014");
 		mv.addObject("project", project);
 		mv.setViewName("project/project_create");
 		return mv;

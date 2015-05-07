@@ -5,6 +5,7 @@ import java.util.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
@@ -128,14 +129,16 @@ public class Project extends BaseMapping{
 	/**
 	 * 活动照片
 	 */
-	@Column(name="photos")
-	private String photos;
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinColumn(name="photos")
+	private FileGroup photos;
 	
 	/**
 	 * 场地、模特 照片
 	 */
-	@Column(name="model_photos")
-	private String modelPhotos;
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinColumn(name="model_photos")
+	private FileGroup modelPhotos;
 	
 	/**
 	 * 创建用户
@@ -241,19 +244,19 @@ public class Project extends BaseMapping{
 		this.lessNum = lessNum;
 	}
 
-	public String getPhotos() {
+	public FileGroup getPhotos() {
 		return photos;
 	}
 
-	public void setPhotos(String photos) {
+	public void setPhotos(FileGroup photos) {
 		this.photos = photos;
 	}
 
-	public String getModelPhotos() {
+	public FileGroup getModelPhotos() {
 		return modelPhotos;
 	}
 
-	public void setModelPhotos(String modelPhotos) {
+	public void setModelPhotos(FileGroup modelPhotos) {
 		this.modelPhotos = modelPhotos;
 	}
 
