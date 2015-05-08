@@ -22,21 +22,25 @@
 	<div class="container">
 		<div class="carousel slide" id="carousel-project">
 			<ol class="carousel-indicators">
-			 <#list project.photos?split(",") as photo>  
+			<#if project?? && project.photos?? && project.photos.fileInfos??>
+			 <#list project.photos.fileInfos as photo>  
 			 	<li <#if photo_index ==0> class="active"</#if> data-slide-to="${photo_index}" data-target="#carousel-project"></li>
 			 </#list>
+			</#if>
 			</ol>
 			
 			<div class="carousel-inner">
-				<#list project.photos?split(",") as photo>  
+			<#if project?? && project.photos?? && project.photos.fileInfos??>
+				<#list project.photos.fileInfos as photo>
 					<#if photo_index ==0>
 						<div class="item active">
 					<#else>
 						<div class="item">
 					</#if>
-						<img alt="" src="${basePath}/${photo}" />
+						<img alt="" src="${basePath}/${photo.realPath}" />
 					</div>
 				</#list>
+			</#if>
 			</div>
 			<a class="left carousel-control" href="#carousel-project" data-slide="prev">
 				<span class="glyphicon glyphicon-chevron-left"></span>
@@ -46,7 +50,7 @@
 			</a>
 		</div>
 		</div>
-	</div>	
+	</div>
 		
 	<!-- START THE NAVBAR -->
     <div class="navbar-wrapper">
@@ -85,17 +89,14 @@
 		</script>
 		
 		<div class="container">
+		<div class="col-sm-9 col-md-9">
 		<div id="section-1" class="panel panel-default">
-			<div class="panel-heading">基本信息</div>
+			<div class="panel-heading" >
+				<h2><strong>${(project.name)!''}</strong></h2>
+				<small>2人已出游 需提前4天预定</small>
+			</div>
 			<div class="panel-body">
-				<div class="form-group">
-					<label class="control-label col-sm-2 col-md-2"><span class="glyphicon glyphicon-home" style="color: #FF5511;"></span> 名称：</label>
-					<div class="col-sm-6 col-md-6">
-						<input class="form-control" type="text" name="name" maxlength="10"  placeholder="10个汉字" value="${(project.name)!''}">
-					</div>
-					<div class="col-sm-4 col-md-4">
-					</div>
-				</div>
+				<h1>${(project.name)!''}</h1>
 				
 				<div class="form-group">
 					<label class="control-label col-sm-2 col-md-2"><span class="glyphicon glyphicon-tags" style="color: #FF5511;"></span> 类型：</label>
@@ -264,11 +265,20 @@
 			</div>
 		</div>
 		
-		<div class="panel">
-			 <button type="submit" class="btn btn-primary">保存</button>
-		</div>
-		
 	</div>
+	
+	<div class="col-sm-3 col-md-3">
+		<div id="section-5" class="panel panel-default">
+			<div class="panel-heading"><h2 style="color: #FF5511;"><strong><span class="glyphicon glyphicon-yen"></span> ${(project.cost)!''}</strong></h2></div>
+			<div class="panel-body">
+				 <button type="submit" class="btn btn-primary">立刻预定</button>
+			</div>
+			<div class="panel-footer">
+			</div>
+		</div>
+	</div>
+	</div>
+	
 </div>
   <!-- footer start-->
   <#include "../common/footer.html">

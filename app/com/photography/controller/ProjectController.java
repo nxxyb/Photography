@@ -168,9 +168,9 @@ public class ProjectController extends BaseController {
 	@RequestMapping(value="/test")
 	public ModelAndView test(HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView();
-		Project project = (Project) projectService.loadPojo(Project.class,"297ea9d44d2d112d014d2d87e5220014");
+		Project project = (Project) projectService.loadPojo(Project.class,"297ea9d44d31093d014d311c03cb000d");
 		mv.addObject("project", project);
-		mv.setViewName("project/project_create");
+		mv.setViewName("project/project_review");
 		return mv;
 	}
 	
