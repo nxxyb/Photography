@@ -93,19 +93,19 @@
 		<div id="section-1" class="panel panel-default">
 			<div class="panel-heading" >
 				<h2><strong>${(project.name)!''}</strong></h2>
-				<small>2人已出游 需提前4天预定</small>
+				<small><span class="glyphicon glyphicon-user"></span> ${(project.joinedNumber)!''}人已出游 </small>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<small><span class="glyphicon glyphicon-eye-open"></span> 已浏览${(project.viewedNumber)!''}次 </small>
 			</div>
 			<div class="panel-body">
-				<h1>${(project.name)!''}</h1>
-				
-				<div class="form-group">
-					<label class="control-label col-sm-2 col-md-2"><span class="glyphicon glyphicon-tags" style="color: #FF5511;"></span> 类型：</label>
+				<div class="input-group">
+					<label class="control-label col-sm-2 col-md-2" style="color: #FF5511;"><span class="glyphicon glyphicon-tasks"></span> 类型：</label>
 					<div class="col-sm-6 col-md-6">
-						<select class="form-control" name="type">
-							<option value="1">市内采风</option>
-							<option value="2">远郊采风</option>
-							<option value="3">说拍就拍</option>
-							<option value="4">一对一</option>
+						<label class="form-control col-sm-6 col-md-6">
+							<#if project?? && project.type?? && project.type == '1'>市内采风</#if>
+							<#if project?? && project.type?? && project.type == '2'>远郊采风</#if>
+							<#if project?? && project.type?? && project.type == '3'>说拍就拍</#if>
+							<#if project?? && project.type?? && project.type == '4'>一对一</#if>
 						</select>
 					</div>
 					<div class="col-sm-4 col-md-4">

@@ -12,6 +12,8 @@ import javax.persistence.ManyToOne;
 import org.hibernate.annotations.LazyToOne;
 import org.hibernate.annotations.LazyToOneOption;
 
+import com.photography.utils.Constants;
+
 /**
  * 活动
  * @author 徐雁斌
@@ -147,6 +149,18 @@ public class Project extends BaseMapping{
 	@JoinColumn(name="create_user")
 	@LazyToOne(LazyToOneOption.PROXY)
 	private User createUser;
+	
+	//已参加人数
+	@Column(name="joined_number")
+	private String joinedNumber;
+	
+	//浏览次数
+	@Column(name="viewed_number")
+	private String viewedNumber;
+	
+	//项目状态 1-未开始 2-已开始 3-结束
+	@Column(name="status")
+	private String status = Constants.PROJECT_STATUS_WKS;
 
 	public String getName() {
 		return name;
@@ -306,6 +320,30 @@ public class Project extends BaseMapping{
 
 	public void setCreateUser(User createUser) {
 		this.createUser = createUser;
+	}
+
+	public String getJoinedNumber() {
+		return joinedNumber;
+	}
+
+	public void setJoinedNumber(String joinedNumber) {
+		this.joinedNumber = joinedNumber;
+	}
+
+	public String getViewedNumber() {
+		return viewedNumber;
+	}
+
+	public void setViewedNumber(String viewedNumber) {
+		this.viewedNumber = viewedNumber;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 	
 	

@@ -57,4 +57,16 @@ public class Constants {
 	//一对一
 	public final static String PROJECT_TYPE_ONETOONE = "4";
 	
+	/**
+	 * 活动状态
+	 */
+	//未开始
+	public final static String PROJECT_STATUS_WKS = "1";
+	
+	//已开始
+	public final static String PROJECT_STATUS_YKS = "2";
+	
+	//已结束
+	public final static String PROJECT_STATUS_YJS = "3";
+	
 }
