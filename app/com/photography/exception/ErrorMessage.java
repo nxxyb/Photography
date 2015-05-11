@@ -35,7 +35,7 @@ public class ErrorMessage {
 		/*
 		 * 活动
 		 */
-		msg.put(ErrorCode.PROJECT_NOT_EXIST, "活动不存在");
+		msg.put(ErrorCode.PROJECT_NOT_EXIST, "该活动不存在或已经被删除！");
 	}
 
 	public static String get(int errorCode){

@@ -165,11 +165,35 @@ public class ProjectController extends BaseController {
 		return fileGroup;
 	}
 	
+	/**
+	 * 进入新建页面
+	 * @param request
+	 * @param model
+	 * @return
+	 * @author 徐雁斌
+	 */
+	@RequestMapping(value="/toReview")
+	public ModelAndView toReview(String id,HttpServletRequest request, Model model){
+		ModelAndView mav = new ModelAndView();
+		Project project = (Project) projectService.loadPojo(Project.class,id);
+		if(project == null){
+			mav.addObject("errorMessage", ErrorMessage.get(ErrorCode.PROJECT_NOT_EXIST));
+		}
+		try {
+			mav.addObject("rela_projects", projectService.getRelaProject(id));
+		} catch (ServiceException e) {
+			log.error("ProjectController.toReview(): ServiceException", e);
+		}
+		mav.setViewName("project/project_review");
+		return mav;
+	}
+	
 	@RequestMapping(value="/test")
 	public ModelAndView test(HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView();
 		Project project = (Project) projectService.loadPojo(Project.class,"297ea9d44d31093d014d311c03cb000d");
 		mv.addObject("project", project);
+		mv.addObject("rela_projects",projectService.loadPojoByExpression(Project.class, null, null));
 		mv.setViewName("project/project_review");
 		return mv;
 	}

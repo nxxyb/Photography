@@ -1,31 +1,35 @@
-.weixin{
+body,button,input,select,textarea,h1,h2,h3,h4,h5,h6 {
+	font-family: "Helvetica Neue", Helvetica, Microsoft Yahei, Hiragino Sans GB, WenQuanYi Micro Hei, sans-serif;
+}
+
+.weixin {
 	float: left;
 	width: 50px;
 	height: 27px;
 	background: url("../images/indexTool.png") no-repeat -35px -290px;
 }
 
-.weibo{
+.weibo {
 	float: left;
 	width: 50px;
 	height: 27px;
 	background: url("../images/indexTool.png") no-repeat -90px -290px;
 }
 
-.qq{
+.qq {
 	float: left;
 	width: 50px;
 	height: 27px;
 	background: url("../images/indexTool.png") no-repeat -140px -290px;
 }
 
-.dj{
+.dj {
 	float: left;
 	width: 22px;
 	height: 25px;
 	background: url("../images/indexTool.png") no-repeat -160px -460px;
 }
 
-hr{
+hr {
 	border-top: 1px solid #AAAAAA;
 }

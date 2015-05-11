@@ -18,9 +18,11 @@
   <#include "../common/header.html">
   <!-- header end -->
   
+  <#include "../error/error_modal.html">
+  
 <div class="main-content">
 	<div class="container">
-		<div class="carousel slide" id="carousel-project">
+		<div class="carousel slide" id="carousel-project" data-ride="carousel" data-interval="3000">
 			<ol class="carousel-indicators">
 			<#if project?? && project.photos?? && project.photos.fileInfos??>
 			 <#list project.photos.fileInfos as photo>  
@@ -37,7 +39,7 @@
 					<#else>
 						<div class="item">
 					</#if>
-						<img alt="" src="${basePath}/${photo.realPath}" />
+						<img alt="" src="${basePath}/${photo.realPath}" style="width: 1140px; height:100%;"/>
 					</div>
 				</#list>
 			</#if>
@@ -90,45 +92,42 @@
 		
 		<div class="container">
 		<div class="col-sm-9 col-md-9">
+		<form class="form-horizontal">
 		<div id="section-1" class="panel panel-default">
 			<div class="panel-heading" >
-				<h2><strong>${(project.name)!''}</strong></h2>
+				<h2 class="lead">${(project.name)!''}</h2>
 				<small><span class="glyphicon glyphicon-user"></span> ${(project.joinedNumber)!''}人已出游 </small>
 				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 				<small><span class="glyphicon glyphicon-eye-open"></span> 已浏览${(project.viewedNumber)!''}次 </small>
 			</div>
 			<div class="panel-body">
-				<div class="input-group">
-					<label class="control-label col-sm-2 col-md-2" style="color: #FF5511;"><span class="glyphicon glyphicon-tasks"></span> 类型：</label>
-					<div class="col-sm-6 col-md-6">
-						<label class="form-control col-sm-6 col-md-6">
+				<div class="form-group">
+					<div class="control-label col-sm-2 col-md-2" style="color: #FF5511;"><span class="glyphicon glyphicon-tasks"></span> 类型：</div>
+					<div class="col-sm-10 col-md-10">
+						<p class="form-control-static">
 							<#if project?? && project.type?? && project.type == '1'>市内采风</#if>
 							<#if project?? && project.type?? && project.type == '2'>远郊采风</#if>
 							<#if project?? && project.type?? && project.type == '3'>说拍就拍</#if>
 							<#if project?? && project.type?? && project.type == '4'>一对一</#if>
-						</select>
-					</div>
-					<div class="col-sm-4 col-md-4">
+						</p>
 					</div>
 				</div>
 				
 				<div class="form-group">
-					<label class="control-label col-sm-2 col-md-2"><span class="glyphicon glyphicon-tags" style="color: #FF5511;"></span> 联系方式：</label>
-					<div class="col-sm-6 col-md-6">
-						<input class="form-control" type="text" name="contact" maxlength="50"  placeholder="联系人及联系方式">
-					</div>
-					<div class="col-sm-4 col-md-4">
+					<div class="control-label col-sm-2 col-md-2" style="color: #FF5511;"><span class="glyphicon glyphicon-tags"></span> 联系方式：</div>
+					<div class="col-sm-10 col-md-10">
+						<p class="form-control-static">${(project.contact)!''}</p>
 					</div>
 				</div>
 				
+				<p>
 				<div class="form-group">
-					<label class="control-label col-sm-2 col-md-2"><span class="glyphicon glyphicon-th-large" style="color: #FF5511;"></span> 简介：</label>
-					<div class="col-sm-6 col-md-6">
-						<textarea class="form-control" name="des" rows="8"></textarea>
-					</div>
-					<div class="col-sm-4 col-md-4">
+					<div class="control-label col-sm-2 col-md-2" style="color: #FF5511;"><span class="glyphicon glyphicon-th-large"></span> 简介：</div>
+					<div class="col-sm-10 col-md-10">
+						<p class="form-control-static">${(project.des)!''}</p>
 					</div>
 				</div>
+				</p>
 				
 			</div>
 			<div class="panel-footer"></div>
@@ -138,54 +137,40 @@
 			<div class="panel-heading">行程安排</div>
 			<div class="panel-body">
 				<div class="form-group">
-					<label class="control-label col-sm-2 col-md-2"><span class="glyphicon glyphicon-home" style="color: #FF5511;"></span> 活动开始时间：</label>
-					<div class="col-sm-6 col-md-6">
-						<input class="form-control" type="datetime-local" name="startTime">
-					</div>
-					<div class="col-sm-4 col-md-4">
+					<div class="control-label col-sm-2 col-md-2" style="color: #FF5511;"><span class="glyphicon glyphicon-home"></span> 活动时间：</div>
+					<div class="col-sm-10 col-md-10">
+						<p class="form-control-static">${(project.startTime)!''}</p>
 					</div>
 				</div>
 				
 				<div class="form-group">
-					<label class="control-label col-sm-2 col-md-2"><span class="glyphicon glyphicon-tags" style="color: #FF5511;"></span> 活动时长(小时)：</label>
-					<div class="col-sm-6 col-md-6">
-						<input class="form-control" type="number" name="timeLength">
+					<div class="control-label col-sm-2 col-md-2" style="color: #FF5511;"><span class="glyphicon glyphicon-tags"></span> 活动时长：</div>
+					<div class="col-sm-10 col-md-10">
+						<p class="form-control-static">${(project.timeLength)!''} 小时</p>
 					</div>
-					<div class="col-sm-4 col-md-4">
+
+				</div>
+				
+				<div class="form-group">
+					<div class="control-label col-sm-2 col-md-2" style="color: #FF5511;"><span class="glyphicon glyphicon-th-large"></span> 活动地点：</div>
+					<div class="col-sm-10 col-md-10">
+						<p class="form-control-static">${(project.province)!''},${(project.city)!''},${(project.county)!''}
+													   <br>${(project.place)!''}
+						</p>
 					</div>
 				</div>
 				
 				<div class="form-group">
-					<label class="control-label col-sm-2 col-md-2"><span class="glyphicon glyphicon-th-large" style="color: #FF5511;"></span> 活动地点：</label>
-					<div id="hddd" class="col-sm-6 col-md-6" data-toggle="distpicker">
-						<select class="form-control" name="province" data-province="选择省"></select>
-						<select class="form-control" name="city" data-city="选择市"></select>
-						<select class="form-control" name="county" data-district="选择区"></select>
-						<script type="text/javascript">
-							$('#hddd').distpicker();
-						</script>
-						
-						<input class="form-control" type="text" name="place" maxlength="50"  placeholder="具体地址">
-					</div>
-					<div class="col-sm-4 col-md-4">
+					<div class="control-label col-sm-2 col-md-2" style="color: #FF5511;"><span class="glyphicon glyphicon-th-large"></span> 集合地点：</div>
+					<div class="col-sm-10 col-md-10">	
+						<p class="form-control-static">${(project.venuePlace)!''}</p>
 					</div>
 				</div>
 				
 				<div class="form-group">
-					<label class="control-label col-sm-2 col-md-2"><span class="glyphicon glyphicon-th-large" style="color: #FF5511;"></span> 集合地点：</label>
-					<div class="col-sm-6 col-md-6">					
-						<input class="form-control" type="text" name="venuePlace" maxlength="50"  placeholder="集合地点">
-					</div>
-					<div class="col-sm-4 col-md-4">
-					</div>
-				</div>
-				
-				<div class="form-group">
-					<label class="control-label col-sm-2 col-md-2"><span class="glyphicon glyphicon-th-large" style="color: #FF5511;"></span> 行程介绍：</label>
-					<div class="col-sm-6 col-md-6">
-						<textarea class="form-control" name="xcDes" rows="8"></textarea>
-					</div>
-					<div class="col-sm-4 col-md-4">
+					<div class="control-label col-sm-2 col-md-2" style="color: #FF5511;"><span class="glyphicon glyphicon-th-large"></span> 行程介绍：</div>
+					<div class="col-sm-10 col-md-10">
+						<p class="form-control-static">${(project.xcDes)!''}</p>
 					</div>
 				</div>
 				
@@ -198,47 +183,37 @@
 			 <div class="panel-heading">人数费用</div>
 			<div class="panel-body">
 				<div class="form-group">
-					<label class="control-label col-sm-2 col-md-2"><span class="glyphicon glyphicon-tags" style="color: #FF5511;"></span> 活动人数：</label>
-					<div class="col-sm-6 col-md-6">
-						<input class="form-control" type="number" name="peopleNum">
-					</div>
-					<div class="col-sm-4 col-md-4">
+					<div class="control-label col-sm-2 col-md-2" style="color: #FF5511;"><span class="glyphicon glyphicon-tags"></span> 活动人数：</div>
+					<div class="col-sm-10 col-md-10">
+						<p class="form-control-static">${(project.peopleNum)!''}</p>
 					</div>
 				</div>
 				
 				<div class="form-group">
-					<label class="control-label col-sm-2 col-md-2"><span class="glyphicon glyphicon-tags" style="color: #FF5511;"></span> 最低开办人数：</label>
-					<div class="col-sm-6 col-md-6">
-						<input class="form-control" type="number" name="lessNum">
-					</div>
-					<div class="col-sm-4 col-md-4">
+					<div class="control-label col-sm-2 col-md-2" style="color: #FF5511;"><span class="glyphicon glyphicon-tags"></span> 最低人数：</div>
+					<div class="col-sm-10 col-md-10">
+						<p class="form-control-static">${(project.lessNum)!''}</p>
 					</div>
 				</div>
 				
 				<div class="form-group">
-					<label class="control-label col-sm-2 col-md-2"><span class="glyphicon glyphicon-tags" style="color: #FF5511;"></span> 模特人数：</label>
-					<div class="col-sm-6 col-md-6">
-						<input class="form-control" type="number" name="modelNum">
-					</div>
-					<div class="col-sm-4 col-md-4">
+					<div class="control-label col-sm-2 col-md-2" style="color: #FF5511;"><span class="glyphicon glyphicon-tags"></span> 模特人数：</div>
+					<div class="col-sm-10 col-md-10">
+						<p class="form-control-static">${(project.modelNum)!''}</p>
 					</div>
 				</div>
 				
 				<div class="form-group">
-					<label class="control-label col-sm-2 col-md-2"><span class="glyphicon glyphicon-tags" style="color: #FF5511;"></span> 活动费用：</label>
-					<div class="col-sm-6 col-md-6">
-						<input class="form-control" type="number" name="cost">
-					</div>
-					<div class="col-sm-4 col-md-4">
+					<div class="control-label col-sm-2 col-md-2" style="color: #FF5511;"><span class="glyphicon glyphicon-tags"></span> 活动费用：</div>
+					<div class="col-sm-10 col-md-10">
+						<p class="form-control-static">${(project.cost)!''}</p>
 					</div>
 				</div>
 				
 				<div class="form-group">
-					<label class="control-label col-sm-2 col-md-2"><span class="glyphicon glyphicon-th-large" style="color: #FF5511;"></span> 费用说明：</label>
-					<div class="col-sm-6 col-md-6">
-						<textarea class="form-control" name="feeDes" rows="8"></textarea>
-					</div>
-					<div class="col-sm-4 col-md-4">
+					<div class="control-label col-sm-2 col-md-2" style="color: #FF5511;"><span class="glyphicon glyphicon-th-large"></span> 费用说明：</div>
+					<div class="col-sm-10 col-md-10">
+						<p class="form-control-static">${(project.feeDes)!''}</p>
 					</div>
 				</div>
 				
@@ -250,25 +225,31 @@
 		<div id="section-4" class="panel panel-default">
 			<div class="panel-heading">实拍图片</div>
 			<div class="panel-body">
-				<input id="modelPics" name="modelPics" type="file" accept="image/*" class="file-loading" multiple=true>
-				<script type="text/javascript">
-						$("#modelPics").fileinput({
-						    uploadUrl: "#", // server upload action
-    						showUpload: false,
-    						overwriteInitial: false,
-    						minFileCount: 1,
-    						maxFileCount: 5
-						});
-				</script>
+				<#if project?? && project.modelPhotos?? && project.modelPhotos.fileInfos??>
+			 		<#list project.modelPhotos.fileInfos as modelphoto>
+					 	<#if modelphoto_index % 4 == 0>
+					 		<div class="row">
+					 	</#if>
+				 		<div class="col-sm-3 col-md-3">
+							<div class="thumbnail">
+								<img alt="300x250" src="${basePath}/${modelphoto.realPath}" />
+							</div>
+						</div>
+						<#if (modelphoto_index+1) % 4 == 0 || !modelphoto_has_next>
+					 		</div>
+					 	</#if>
+					</#list>
+				</#if>
+						
 			</div>
 			<div class="panel-footer">
 			</div>
 		</div>
-		
+		</form>
 	</div>
 	
 	<div class="col-sm-3 col-md-3">
-		<div id="section-5" class="panel panel-default">
+		<div class="panel panel-default">
 			<div class="panel-heading"><h2 style="color: #FF5511;"><strong><span class="glyphicon glyphicon-yen"></span> ${(project.cost)!''}</strong></h2></div>
 			<div class="panel-body">
 				 <button type="submit" class="btn btn-primary">立刻预定</button>
@@ -276,6 +257,30 @@
 			<div class="panel-footer">
 			</div>
 		</div>
+		
+		<div class="panel panel-default">
+			<div class="panel-heading"><strong>其他人也预定了</strong></div>
+			<div class="panel-body">
+			<#if rela_projects?? && (rela_projects?size gt 0)>
+				<#list rela_projects as rela_project>
+					 <div class="media">
+					  <div class="media-left media-middle">
+					      <img class="media-object" 
+					      	<#if rela_project?? && rela_project.photos?? && rela_project.photos.fileInfos??>src="${basePath}/${rela_project.photos.fileInfos[0].realPath}"<#else>src="http://placehold.it/64x64"</#if> 
+					       alt="" style="width: 64px; height: 64px;">
+					  </div>
+					  <div class="media-body">
+					    <h4 class="media-heading"><a href="#">${(rela_project.name)!''}</a></h4>
+					    <strong style="color: #FF5511;"><span class="glyphicon glyphicon-yen"></span> ${(rela_project.cost)!''}</strong>
+					  </div>
+					</div>
+				</#list>
+			</#if>
+			</div>
+			<div class="panel-footer">
+			</div>
+		</div>
+		
 	</div>
 	</div>
 	
