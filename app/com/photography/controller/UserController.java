@@ -257,10 +257,10 @@ public class UserController extends BaseController{
 	@RequestMapping(value="/checkEmail" ,produces="application/json;charset=UTF-8")  
     @ResponseBody
     public String validataUser(@RequestParam String email){  
-		String result = "{\"valid\":您好}";
+		String result = "{\"valid\":true}";
 		User user = userService.getByEmail(email);
-		if(user == null){
-			result = "{\"valid\":您好}";
+		if(user != null){
+			result = Constants.NO;
 		}
         return result;
     }

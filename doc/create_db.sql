@@ -56,7 +56,7 @@ CREATE TABLE `project` (
   `cost` varchar(300) comment '活动费用',
   `photos` varchar(500) comment '活动照片',
   `model_photos` varchar(500) comment '场地、模特 照片',
-  `photos` varchar(500) comment '活动照片',
+  `create_user` varchar(36) comment '创建用户',
   `joined_number` varchar(10) comment '已参加人数',
   `viewed_number` varchar(10) comment '浏览次数',
   `status` varchar(10) comment '活动状态 1-未开始 2-已开始 3-结束',

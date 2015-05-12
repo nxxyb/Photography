@@ -142,23 +142,6 @@
 	            }
 		 	}
 		 });
-		
-		function checkEmail(){
-			var email = document.getElementById("inputEmail");
-			$.ajax({
-            type: "post",
-            dataType: "json",
-            url: "${basePath}/user/checkEmail",
-            data: {email: email.value},
-            success: function(msg){
-            	if(msg == "1"){
-                	email.setCustomValidity("该邮箱地址已经被注册，请更换其他邮箱地址！");
-                }else{
-                	email.setCustomValidity("");
-                }
-               }
-            });
-		}
 	</script>
 	
 
