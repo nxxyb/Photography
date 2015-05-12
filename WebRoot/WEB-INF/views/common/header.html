@@ -1,24 +1,24 @@
-
-<nav class="navbar navbar-inverse" role="navigation">
+<div class="navbar navbar-inverse" role="navigation">
 	<div class="container">
-		<div class="collapse navbar-collapse">
-			<div class="navbar-text navbar-left">
-				<!-- 地区选择 -->
-				<#include "locate.html">
-			</div>
-			<ul class="nav navbar-nav navbar-collapse navbar-right">
+		 <button class="navbar-toggle" data-toggle="collapse" data-target=".navHeaderCollapse">
+             <span class="icon-bar"></span>
+             <span class="icon-bar"></span>
+             <span class="icon-bar"></span>
+         </button>
+                
+		<div class="navbar-collapse collapse navHeaderCollapse">
+			<ul class="nav navbar-nav navbar-right" >
 				<#if Session.user?exists>
-					<li><a>欢迎您 ${(Session.user.nackName)!(Session.user.email)!""}</a></li>
-					<li><a href="${basePath}/userinfo/toUserInfo">个人中心</a></li>
-					<li><a href="${basePath}/user/logout">退出登录</a></li>
+					<li><a href="${basePath}/userinfo/toUserInfo"><small>欢迎您 ${(Session.user.nackName)!(Session.user.email)!""}</small></a></li>
+					<li><a href="${basePath}/user/logout"><small>退出登录</small></a></li>
 				<#else>
-					<li><a href="${basePath}/user/toLogin">登录</a></li>
-					<li><a href="${basePath}/user/toRegister">注册</a></li>
+					<li><a href="${basePath}/user/toLogin"><small>登录</small></a></li>
+					<li><a href="${basePath}/user/toRegister"><small>注册</small></a></li>
 				</#if>
 			</ul>
 		</div>
 	</div>
-</nav>
+</div>
 
 <div class="main-header">
 <div class="container">
@@ -45,7 +45,7 @@
 										</span>
 									</div>
 								</div>
-								<button type="button" class="btn btn-warning">我的订单<span class="badge">4</span></button>
+								<button type="button" class="btn btn-warning">我的订单 <span class="badge">4</span></button>
 							</form>
 						</li>
 					</ul>

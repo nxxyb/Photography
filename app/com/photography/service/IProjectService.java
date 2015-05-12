@@ -21,4 +21,12 @@ public interface IProjectService extends IBaseService {
 	 * @author 徐雁斌
 	 */
 	public List<Project> getRelaProject(String id) throws ServiceException;
+	
+	/**
+	 * 获取首页活动
+	 * @return
+	 * @throws ServiceException
+	 * @author 徐雁斌
+	 */
+	public List<Project> getIndexProject(String type) throws ServiceException;
 }

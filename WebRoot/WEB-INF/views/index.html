@@ -24,97 +24,36 @@
   
 <div class="main-content">
 	<div class="container">
-		<div class="row clearfix">
-			<div class="col-md-12 column">
-				<div class="row">
-					<div class="col-md-4">
-						<div class="thumbnail">
-							<img alt="300x200" src="${basePath}/upload/project/example/project1.jpg" />
-							<div class="caption">
-								<h3>标题一</h3>
-								<p>是的，这部分就是内容啦！</p>
-								<p>
-									<a class="btn btn-primary" href="#">浏览</a>
-									<a class="btn" href="#">更多 »</a>
-								</p>
+	<#if projectMap??>
+         <#list projectMap?keys as key> 
+			<div class="panel panel-primary">
+			  <div class="panel-heading"><h2 class="panel-title">${key}</h2></div>
+				<div class="panel-body">
+					<div class="row">
+					<#assign projects=projectMap[key] >
+					<#if projects??>
+					 <#list projects as project>
+						<div class="col-sm-3 col-md-3">
+							<div class="thumbnail no-underline">
+								<a href="${basePath}/project/toReview?id=${project.id}">
+									<img alt="300x200" <#if project?? && project.photos?? && project.photos.fileInfos??>src="${basePath}/${project.photos.fileInfos[0].realPath}"</#if> />
+								</a>
+								<div class="caption">
+									<h4><a href="${basePath}/project/toReview?id=${project.id}">${(project.name)!''}</a></h4>
+									<p><small><span class="glyphicon glyphicon-time text-success"></span> ${(project.startTime?string("yyyy-MM-dd"))!''} <p class="pull-right">目的地 ${(project.province)!''}</p></small></p>
+									<h4 class="orange-color"><span class="glyphicon glyphicon-yen"></span><strong>${(project.cost)!''}</strong></h4>
+								</div>
 							</div>
 						</div>
-					</div>
-					<div class="col-md-4">
-						<div class="thumbnail">
-							<img alt="300x200" src="${basePath}/upload/project/example/project2.jpg" />
-							<div class="caption">
-								<h3>标题二</h3>
-								<p>对的，这部分就是内容啦！</p>
-								<p>
-									<a class="btn btn-primary" href="#">浏览</a>
-									<a class="btn" href="#">更多 »</a>
-								</p>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-4">
-						<div class="thumbnail">
-							<img alt="300x200" src="${basePath}/upload/project/example/project3.jpg" />
-							<div class="caption">
-								<h3>标题三</h3>
-								<p>没错，这部分就是内容啦！</p>
-								<p>
-									<a class="btn btn-primary" href="#">浏览</a>
-									<a class="btn" href="#">更多 »</a>
-								</p>
-							</div>
-						</div>
+						</#list>
+						</#if>
 					</div>
 				</div>
 			</div>
-		</div>
+			
+	</#list>
+	</#if>
 		
-		<div class="row clearfix">
-			<div class="col-md-12 column">
-				<div class="row">
-					<div class="col-md-4">
-						<div class="thumbnail">
-							<img alt="300x200" src="${basePath}/upload/project/example/project1.jpg" />
-							<div class="caption">
-								<h3>标题一</h3>
-								<p>是的，这部分就是内容啦！</p>
-								<p>
-									<a class="btn btn-primary" href="#">浏览</a>
-									<a class="btn" href="#">更多 »</a>
-								</p>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-4">
-						<div class="thumbnail">
-							<img alt="300x200" src="${basePath}/upload/project/example/project2.jpg" />
-							<div class="caption">
-								<h3>标题二</h3>
-								<p>对的，这部分就是内容啦！</p>
-								<p>
-									<a class="btn btn-primary" href="#">浏览</a>
-									<a class="btn" href="#">更多 »</a>
-								</p>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-4">
-						<div class="thumbnail">
-							<img alt="300x200" src="${basePath}/upload/project/example/project3.jpg" />
-							<div class="caption">
-								<h3>标题三</h3>
-								<p>没错，这部分就是内容啦！</p>
-								<p>
-									<a class="btn btn-primary" href="#">浏览</a>
-									<a class="btn" href="#">更多 »</a>
-								</p>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
 		
 	</div>
 </div>

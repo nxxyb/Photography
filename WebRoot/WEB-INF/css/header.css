@@ -1,3 +1,7 @@
+.navbar {
+	min-height: 40px;
+}
+
 .main-header {
 	margin: 2% 0;
 }

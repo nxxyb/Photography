@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.photography.dao.exp.Condition;
+import com.photography.dao.query.Pager;
 import com.photography.dao.query.Sort;
 import com.photography.exception.ErrorCode;
 import com.photography.exception.ServiceException;
@@ -29,7 +31,17 @@ public class ProjectServiceImpl extends BaseServiceImpl implements IProjectServi
 			throw new ServiceException(ErrorCode.PROJECT_NOT_EXIST);
 		}
 		
+		Pager pager= new Pager();
+		pager.setPageSize(10);
 		List<Project> projects = hibernateDao.getByQuery(Project.class, null, new Sort());
+		return projects;
+	}
+	
+	@Override
+	public List<Project> getIndexProject(String type) throws ServiceException {
+		Pager pager= new Pager();
+		pager.setPageSize(4);
+		List<Project> projects = hibernateDao.getByQuery(Project.class, pager,Condition.eq("type", type), new Sort());
 		return projects;
 	}
 

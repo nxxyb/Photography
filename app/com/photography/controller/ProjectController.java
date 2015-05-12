@@ -179,12 +179,26 @@ public class ProjectController extends BaseController {
 		if(project == null){
 			mav.addObject("errorMessage", ErrorMessage.get(ErrorCode.PROJECT_NOT_EXIST));
 		}
+		mav.addObject("project", project);
 		try {
 			mav.addObject("rela_projects", projectService.getRelaProject(id));
 		} catch (ServiceException e) {
 			log.error("ProjectController.toReview(): ServiceException", e);
 		}
 		mav.setViewName("project/project_review");
+		
+		//更新浏览次数
+		String viewNumber = project.getViewedNumber();
+		if(viewNumber == null || "".equals(viewNumber)){
+			viewNumber = "0";
+		}
+		project.setViewedNumber(Integer.toString(Integer.parseInt(viewNumber) + 1));
+		try {
+			projectService.savePojo(project, null);
+		} catch (ServiceException e) {
+			log.error("ProjectController.toReview(): ServiceException", e);
+		}
+		
 		return mav;
 	}
 	
