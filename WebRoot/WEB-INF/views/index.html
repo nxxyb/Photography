@@ -36,7 +36,7 @@
 						<div class="col-sm-3 col-md-3">
 							<div class="thumbnail no-underline">
 								<a href="${basePath}/project/toReview?id=${project.id}">
-									<img alt="300x200" <#if project?? && project.photos?? && project.photos.fileInfos??>src="${basePath}/${project.photos.fileInfos[0].realPath}"</#if> />
+									<img alt="300x200" <#if project?? && project.photos?? && project.photos.fileInfos??>src="${basePath}/${project.photos.fileInfos[0].realPath}"</#if> style="width: 100%; height: 160px;"/>
 								</a>
 								<div class="caption">
 									<h4><a href="${basePath}/project/toReview?id=${project.id}">${(project.name)!''}</a></h4>

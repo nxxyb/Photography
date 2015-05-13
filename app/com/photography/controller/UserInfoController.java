@@ -234,7 +234,7 @@ public class UserInfoController extends BaseController {
 	}
 	
 	/**
-	 * 修改用户基本信息
+	 * 修改密码
 	 * @param user
 	 * @param request
 	 * @param model
