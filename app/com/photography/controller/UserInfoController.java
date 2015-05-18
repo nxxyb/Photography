@@ -22,6 +22,7 @@ import com.photography.service.IUserService;
 import com.photography.utils.Constants;
 import com.photography.utils.CustomizedPropertyPlaceholderConfigurer;
 import com.photography.utils.MD5Util;
+import com.photography.utils.MessageConstants;
 
 /**
  * 用户中心
@@ -177,7 +178,7 @@ public class UserInfoController extends BaseController {
     	try{
 			userService.savePojo(userDB, userDB);
 			mv.addObject("href", "info");
-			mv.addObject("success", Constants.YES);
+			mv.addObject("successMessage", MessageConstants.SAVE_SUCCESS);
     	}catch(Exception e){
     		mv.addObject("errorMessage", ErrorMessage.get(ErrorCode.UNKNOWN_ERROR));
     	}
@@ -225,7 +226,7 @@ public class UserInfoController extends BaseController {
     	try{
 			userService.savePojo(userDB, userDB);
 			mv.addObject("href", "auth");
-			mv.addObject("success", Constants.YES);
+			mv.addObject("successMessage", MessageConstants.SAVE_SUCCESS);
     	}catch(Exception e){
     		mv.addObject("errorMessage", ErrorMessage.get(ErrorCode.UNKNOWN_ERROR));
     	}
@@ -268,7 +269,7 @@ public class UserInfoController extends BaseController {
     	try{
 			userService.savePojo(userDB, userDB);
 			mv.addObject("href", "modifyps");
-			mv.addObject("success", Constants.YES);
+			mv.addObject("successMessage", MessageConstants.SAVE_SUCCESS);
     	}catch(Exception e){
     		mv.addObject("errorMessage", ErrorMessage.get(ErrorCode.UNKNOWN_ERROR));
     	}

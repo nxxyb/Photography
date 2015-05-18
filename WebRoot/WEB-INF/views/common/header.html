@@ -9,7 +9,7 @@
 		<div class="navbar-collapse collapse navHeaderCollapse">
 			<ul class="nav navbar-nav navbar-right" >
 				<#if Session.user?exists>
-					<li><a href="${basePath}/userinfo/toUserInfo"><small>欢迎您 ${(Session.user.nackName)!(Session.user.email)!""}</small></a></li>
+					<li><a href="${basePath}/userinfo/toUserInfo"><small>欢迎您<#if Session.user?? && Session.user.nackName?? && Session.user.nackName !=''>${Session.user.nackName}<#else>${Session.user.email} </#if></small></a></li>
 					<li><a href="${basePath}/user/logout"><small>退出登录</small></a></li>
 				<#else>
 					<li><a href="${basePath}/user/toLogin"><small>登录</small></a></li>

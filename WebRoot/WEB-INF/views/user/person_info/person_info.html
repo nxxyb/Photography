@@ -45,22 +45,6 @@
 		</div>
 		
 		<div class="col-sm-9 col-md-9 column">
-			<#if errorMessage??>
-				<div class="alert alert-danger alert-dismissable">
-				  <button type="button" class="close" data-dismiss="alert">&times;</button>
-				  <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-				  ${errorMessage}
-				</div>
-			</#if>
-			
-			<#if success??>
-				<div class="alert alert-success alert-dismissable">
-				  <button type="button" class="close" data-dismiss="alert">&times;</button>
-				   <span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span>
-				  	保存成功
-				</div>
-			</#if>
-			
 			<div class="tab-content">
 				<div class="tab-pane active" id="info"><#include "./info.html"></div>
 				<div class="tab-pane" id="auth"><#include "./auth.html"></div>
