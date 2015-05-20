@@ -19,6 +19,7 @@
   <!-- header end -->
   
   <#include "../error/error_modal.html">
+  <#include "../error/success_modal.html">
   
 <div class="main-content">
 	<div class="container">
@@ -252,7 +253,10 @@
 		<div class="panel panel-default">
 			<div class="panel-heading"><h2 style="color: #FF5511;"><strong><span class="glyphicon glyphicon-yen"></span> ${(project.cost)!''}</strong></h2></div>
 			<div class="panel-body">
-				 <button type="submit" class="btn btn-primary">立刻预定</button>
+				 <form class="form-horizontal" id="project_order_form" action="${basePath}/project/orderProject" method="post">
+					 <input type="hidden" name="id" value="${(project.id)!''}">
+					 <button type="submit" class="btn btn-primary <#if isCanYd?? && isCanYd=='1'><#else>disabled</#if>">立刻预定</button>
+				 </form>
 			</div>
 			<div class="panel-footer">
 			</div>
@@ -270,7 +274,7 @@
 					       alt="" style="width: 64px; height: 64px;">
 					  </div>
 					  <div class="media-body">
-					    <h4 class="media-heading"><a href="#">${(rela_project.name)!''}</a></h4>
+					    <h5 class="media-heading"><a href="${basePath}/project/toReview?id=${rela_project.id}">${(rela_project.name)!''}</a></h5>
 					    <strong style="color: #FF5511;"><span class="glyphicon glyphicon-yen"></span> ${(rela_project.cost)!''}</strong>
 					  </div>
 					</div>

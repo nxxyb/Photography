@@ -21,10 +21,12 @@ import com.photography.mapping.FileGroup;
 import com.photography.mapping.FileInfo;
 import com.photography.mapping.Project;
 import com.photography.mapping.User;
+import com.photography.service.IProjectOrderService;
 import com.photography.service.IProjectService;
 import com.photography.utils.Constants;
 import com.photography.utils.CustomizedPropertyPlaceholderConfigurer;
 import com.photography.utils.FileUtil;
+import com.photography.utils.MessageConstants;
 
 /**
  * 活动
@@ -44,10 +46,17 @@ public class ProjectController extends BaseController {
 	@Autowired
 	private IProjectService projectService;
 	
+	@Autowired
+	private IProjectOrderService projectOrderService;
+	
 	public void setProjectService(IProjectService projectService) {
 		this.projectService = projectService;
 	}
 	
+	public void setProjectOrderService(IProjectOrderService projectOrderService) {
+		this.projectOrderService = projectOrderService;
+	}
+
 	/**
 	 * 进入新建页面
 	 * @param request
@@ -175,17 +184,40 @@ public class ProjectController extends BaseController {
 	@RequestMapping(value="/toReview")
 	public ModelAndView toReview(String id,HttpServletRequest request, Model model){
 		ModelAndView mav = new ModelAndView();
+		return reviewProject(id, request, mav);
+	}
+
+	/**
+	 * @param id
+	 * @param request
+	 * @param mav
+	 * @return
+	 * @author 徐雁斌
+	 */
+	private ModelAndView reviewProject(String id, HttpServletRequest request, ModelAndView mav) {
+		
+		mav.setViewName("project/project_review");
+		
+		//查找浏览的活动
 		Project project = (Project) projectService.loadPojo(Project.class,id);
 		if(project == null){
 			mav.addObject("errorMessage", ErrorMessage.get(ErrorCode.PROJECT_NOT_EXIST));
 		}
 		mav.addObject("project", project);
+		
+		//根据用户确定是否显示预定按钮
+		User user = (User) request.getSession().getAttribute(Constants.SESSION_USER_KEY);
+		if(user == null){
+			mav.addObject("errorMessage", ErrorMessage.get(ErrorCode.SESSION_TIMEOUT));
+			return mav;
+		}
+		mav.addObject("isCanYd",projectOrderService.isCanYd(user.getId(), id));
+		
 		try {
 			mav.addObject("rela_projects", projectService.getRelaProject(id));
 		} catch (ServiceException e) {
 			log.error("ProjectController.toReview(): ServiceException", e);
 		}
-		mav.setViewName("project/project_review");
 		
 		//更新浏览次数
 		String viewNumber = project.getViewedNumber();
@@ -200,6 +232,34 @@ public class ProjectController extends BaseController {
 		}
 		
 		return mav;
+	}
+	
+	/**
+	 * 预定活动
+	 * @param id
+	 * @param request
+	 * @param model
+	 * @return
+	 * @author 徐雁斌
+	 */
+	@RequestMapping(value="/orderProject")
+	public ModelAndView orderProject(String id,HttpServletRequest request, Model model){
+		ModelAndView mav = new ModelAndView();
+		//根据用户确定是否显示预定按钮
+		User user = (User) request.getSession().getAttribute(Constants.SESSION_USER_KEY);
+		if(user == null){
+			return reviewProject(id, request, mav);
+		}
+		
+		try {
+			projectOrderService.saveOrderProject(user.getId(), id);
+			mav.addObject("successMessage", MessageConstants.ORDER_SUCCESS);
+		} catch (ServiceException e) {
+			log.error("ProjectController.orderProject(): ServiceException", e);
+			mav.addObject("errorMessage", ErrorMessage.get(e.getErrorCode()));
+		}
+		
+		return reviewProject(id, request, mav);
 	}
 	
 	@RequestMapping(value="/test")

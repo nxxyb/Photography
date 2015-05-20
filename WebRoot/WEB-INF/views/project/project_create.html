@@ -19,11 +19,12 @@
   <!-- header end -->
   
   <#include "../error/error_modal.html">
+  <#include "../error/success_modal.html">
   
 <div class="main-content">
 <form class="form-horizontal" id="project_create_form" action="${basePath}/project/create" enctype="multipart/form-data" method="post">
 	<div class="container">
-		<input type="hidden"" name="id" value="${(project.id)!''}">
+		<input type="hidden" name="id" value="${(project.id)!''}">
 		
 		<div class="panel panel-default">
 			<div class="panel-heading">

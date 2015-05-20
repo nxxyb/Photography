@@ -24,14 +24,14 @@ public interface IBaseService {
 	 * @param id 固化pojo主键
 	 * @return 业务pojo
 	 */
-	public BaseMapping loadPojo(Class clazz, String id);
+	public <T> T loadPojo(Class<T> clazz, String id);
 	
 	/**
 	 * 通过表达式获取pojo列表
 	 * @param expression 表达式
 	 * @return pojo列表
 	 */
-	public List<BaseMapping> loadPojoByExpression(Class clazz, Expression expression,Sort sort);
+	public <T> List<T> loadPojoByExpression(Class<T> clazz, Expression expression,Sort sort);
 	
 	/**
 	 * 保存当前的pojo,需要先判断是否新建，新建的逻辑需要单独处理
@@ -57,7 +57,7 @@ public interface IBaseService {
 	 * @param user 用户
 	 * @return
 	 */
-	public List<BaseMapping> getPojoList(Class clazz, Pager pager, Expression expression, Sort sort,User user);
+	public <T> List<T> getPojoList(Class<T> clazz, Pager pager, Expression expression, Sort sort, User user);
 	
 	/**
 	 * 合计列表，支持分页以及查询

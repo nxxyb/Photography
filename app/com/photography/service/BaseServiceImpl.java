@@ -70,8 +70,8 @@ public class BaseServiceImpl implements IBaseService {
 	/* 
 	 * @see com.photography.service.IBaseService#getPojoList(com.photography.dao.query.Pager, com.photography.dao.exp.Expression, com.photography.dao.query.Sort, com.photography.mapping.User)
 	 */
-	public List<BaseMapping> getPojoList(Class clazz, Pager pager, Expression expression, Sort sort, User user) {
-		return hibernateDao.getPojoList(clazz, pager, expression, sort, user);
+	public <T> List<T> getPojoList(Class<T> clazz, Pager pager, Expression expression, Sort sort, User user) {
+		return hibernateDao.getByQuery(clazz, pager, expression, sort);
 	}
 	
 	/* 

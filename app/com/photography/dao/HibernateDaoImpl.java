@@ -508,42 +508,4 @@ public class HibernateDaoImpl implements IHibernateDao {
 	public List<?> find(String hql, List<?> params) {
 		return find(hql, params, false, 0, 0);
 	}
-	
-	/**
-	 * 对分页查询的支持，根据条件查询业务的列表，并通过参数控制是否使用默认的数据权限
-	 * @param entityType
-	 * @param pager
-	 * @param expression
-	 * @param sort
-	 * @param user
-	 * @return 查询结果
-	 */
-	public List<BaseMapping> getPojoList(Class<?> entityType,Pager pager, Expression expression, Sort sort,User user){
-		Criteria criteria = getHibernateTemplate().createCriteria(entityType);
-		Map<String, String> aliasMap = new HashMap<String, String>();
-		if(expression!=null) {
-			adaptPropertyValueType(expression,entityType);
-			aliasMap = creatAlias(criteria,expression);
-			ExpressionHelper.init(this);
-			Criterion criterion = ExpressionHelper.parseExpression(entityType,expression);
-			if (criterion != null) {
-				criteria.add(criterion);
-			}
-		}
-		
-		if(pager!=null) {
-			queryCount(pager, criteria);
-			criteria.setProjection(null);
-			setPagerNumber(pager, criteria);
-		}
-		
-		sort = copySort(sort);
-		sort = addDefaultIdSort(entityType, sort);
-		if (sort != null && !sort.isEmpty()) {
-			creatAlias(criteria, sort, aliasMap);
-			createOrder(criteria, sort);
-		}
-		criteria.setResultTransformer(CriteriaSpecification.ROOT_ENTITY);
-		return criteria.list();
-	}
 }

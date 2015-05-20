@@ -75,7 +75,7 @@ public class UserController extends BaseController{
 		try{
 			User user = userService.login(email, MD5Util.md5(password));
 			request.getSession().setAttribute(Constants.SESSION_USER_KEY, user);
-			mav.setViewName("index");
+			mav.setViewName("redirect:/index");
 		}catch(Exception e){
 			if(e instanceof ServiceException){
 				ServiceException se = (ServiceException) e;
@@ -84,8 +84,8 @@ public class UserController extends BaseController{
 				mav.setViewName("user/login");
 			}else{
 				log.error("login error",e);
-				mav.addObject("error_message", ErrorMessage.get(ErrorCode.UNKNOWN_ERROR));
-				mav.setViewName("error/error");
+				mav.addObject("errorMessage", ErrorMessage.get(ErrorCode.UNKNOWN_ERROR));
+				mav.setViewName("user/login");
 			}
 		}
 		return mav;

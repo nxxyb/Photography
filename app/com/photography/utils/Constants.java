@@ -73,4 +73,16 @@ public class Constants {
 	//已结束
 	public final static String PROJECT_STATUS_YJS = "3";
 	
+	/**
+	 * 订单状态
+	 */
+	//未支付
+	public final static String USER_ORDER_STATUS_WZF = "1";
+	
+	//已取消
+	public final static String USER_ORDER_STATUS_YQX = "2";
+	
+	//已支付
+	public final static String USER_ORDER_STATUS_YZF = "3";
+	
 }

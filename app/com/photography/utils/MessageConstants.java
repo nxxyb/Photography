@@ -11,4 +11,6 @@ public class MessageConstants {
 
 	public static final String SAVE_SUCCESS = "保存成功";
 	
+	public static final String ORDER_SUCCESS = "预定成功";
+	
 }

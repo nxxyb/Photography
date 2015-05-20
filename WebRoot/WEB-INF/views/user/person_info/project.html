@@ -2,24 +2,89 @@
 	<div class="panel-heading">
 		<h5><strong>
 		<ul class="nav nav-pills">
-		  <li role="presentation" class="active" data-toggle="tab"><a href="#">发布活动</a></li>
-		  <li role="presentation" data-toggle="tab"><a href="#">正在进行的活动</a></li>
-		  <li role="presentation" data-toggle="tab"><a href="#">参加的活动</a></li>
+		  <li class="active"><a href="#tab1" data-toggle="tab">发布活动</a></li>
+		  <li><a href="#tab2" data-toggle="tab">正在进行的活动</a></li>
+		  <li><a href="#tab3" data-toggle="tab">参加的活动</a></li>
 		</ul>
 		</strong></h5>
 	</div>
 	
-	<table class="table">
-	 <tr>
-	 	<td>
-			<a href="${basePath}/project/toCreate" target="_blank" class="btn btn-success btn-lg">
-				<p class="text-center" style="font-size: 25px">
-				<span class="glyphicon glyphicon-plus"></span>
-				<br>添加活动
-				</p>
-			</a>
-	 	</td>
-	 </tr>
-	</table>
+	<div class="tab-content">
+		<div class="tab-pane active" id="tab1">
+			<table class="table">
+			 <tr>
+			 	<td>
+					<a href="${basePath}/project/toCreate" target="_blank" class="btn btn-success btn-lg">
+						<p class="text-center" style="font-size: 20px">
+						<span class="glyphicon glyphicon-plus"></span>
+						<br>添加活动
+						</p>
+					</a>
+			 	</td>
+			 </tr>
+			</table>
+			<table class="table table-hover table-condensed">
+				<thead>
+					<tr>
+						<th>订单编号</th>
+						<th>活动信息</th>
+						<th>活动金额</th>
+						<th>状态</th>
+						<th>操作</th>
+					</tr>
+				</thead>
+				<tbody>
+				<#if projectOrders??>
+				 <#list projectOrders as projectOrder>  
+					 <tr>
+					 	<td>${projectOrder.id}</td>
+					 	<td>
+					 		<div class="media">
+							  <div class="media-left media-middle">
+							      <img class="media-object" 
+							      	<#if projectOrder?? && projectOrder.project?? && projectOrder.project.photos?? && projectOrder.project.photos.fileInfos??>src="${basePath}/${projectOrder.project.photos.fileInfos[0].realPath}"<#else>src="http://placehold.it/64x64"</#if> 
+							       alt="" style="width: 64px; height: 64px;">
+							  </div>
+							  <div class="media-body">
+							    <h5 class="media-heading"><a href="${basePath}/project/toReview?id=${projectOrder.project.id}">${(projectOrder.project.name)!''}</a></h5>
+							  </div>
+							</div>
+					 	</td>
+					 	<td>
+					 		<#if projectOrder?? && projectOrder.project??>
+					 		<strong style="color: #FF5511;"><span class="glyphicon glyphicon-yen"></span> ${(projectOrder.project.cost)!''}</strong>
+					 		</#if>
+					 	</td>
+					 	<td>${(projectOrder.status)!''}</td>
+					 	<td>删除</td>
+					 </tr>
+				 </#list>
+				</#if>
+				</tbody>
+			</table>
+			
+		</div>
+		
+		<div class="tab-pane" id="tab2">
+			<table class="table">
+			 <tr>
+			 	<td>
+					正在进行的活动
+			 	</td>
+			 </tr>
+			</table>
+		</div>
+		
+		<div class="tab-pane" id="tab3">
+			<table class="table">
+			 <tr>
+			 	<td>
+					参加的活动
+			 	</td>
+			 </tr>
+			</table>
+		</div>
+	
+	</div>
 	
 </div>

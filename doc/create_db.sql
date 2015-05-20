@@ -83,3 +83,14 @@ CREATE TABLE `file_info` (
   `create_time` datetime comment '创建时间',
   `last_update_time` datetime comment '最后修改时间'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/**订单表 */
+DROP TABLE IF EXISTS `project_order`;
+CREATE TABLE `project_order` (
+  `id` varchar(36) NOT NULL PRIMARY KEY,
+  `user` varchar(36) comment '用户',
+  `project` varchar(36) comment '活动',
+  `status` varchar(10) comment '状态 1-未支付 2-已取消  3-已支付',
+  `create_time` datetime comment '创建时间',
+  `last_update_time` datetime comment '最后修改时间'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

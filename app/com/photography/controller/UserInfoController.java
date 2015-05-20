@@ -1,6 +1,7 @@
 package com.photography.controller;
 
 import java.io.File;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -14,10 +15,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.photography.dao.exp.Condition;
+import com.photography.dao.exp.Expression;
+import com.photography.dao.query.Pager;
 import com.photography.exception.ErrorCode;
 import com.photography.exception.ErrorMessage;
+import com.photography.mapping.ProjectOrder;
 import com.photography.mapping.User;
 import com.photography.service.IMailService;
+import com.photography.service.IProjectOrderService;
+import com.photography.service.IProjectService;
 import com.photography.service.IUserService;
 import com.photography.utils.Constants;
 import com.photography.utils.CustomizedPropertyPlaceholderConfigurer;
@@ -42,6 +49,13 @@ public class UserInfoController extends BaseController {
 	
 	@Autowired
 	private IMailService mailService;
+	
+	@Autowired
+	private IProjectOrderService projectOrderService;
+	
+	public void setProjectOrderService(IProjectOrderService projectOrderService) {
+		this.projectOrderService = projectOrderService;
+	}
 
 	public void setUserService(IUserService userService) {
 		this.userService = userService;
@@ -60,6 +74,14 @@ public class UserInfoController extends BaseController {
 	@RequestMapping(value="/toUserInfo")
 	public ModelAndView toUserInfo(HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView();
+		
+		//取得订单信息
+		Pager pager= new Pager();
+		pager.setPageSize(5);
+		Expression exp = null;
+		List<ProjectOrder> projectOrders = projectOrderService.getPojoList(ProjectOrder.class, pager, exp, null, null);
+		mv.addObject("projectOrders", projectOrders);
+		
 		mv.setViewName("user/person_info/person_info");
 		return mv;
 	}
