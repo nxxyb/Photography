@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.photography.dao.exp.Condition;
 import com.photography.dao.exp.Expression;
 import com.photography.dao.query.Pager;
 import com.photography.exception.ErrorCode;
@@ -24,7 +23,6 @@ import com.photography.mapping.ProjectOrder;
 import com.photography.mapping.User;
 import com.photography.service.IMailService;
 import com.photography.service.IProjectOrderService;
-import com.photography.service.IProjectService;
 import com.photography.service.IUserService;
 import com.photography.utils.Constants;
 import com.photography.utils.CustomizedPropertyPlaceholderConfigurer;
@@ -74,15 +72,30 @@ public class UserInfoController extends BaseController {
 	@RequestMapping(value="/toUserInfo")
 	public ModelAndView toUserInfo(HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView();
-		
-		//取得订单信息
-		Pager pager= new Pager();
-		pager.setPageSize(5);
-		Expression exp = null;
-		List<ProjectOrder> projectOrders = projectOrderService.getPojoList(ProjectOrder.class, pager, exp, null, null);
-		mv.addObject("projectOrders", projectOrders);
-		
 		mv.setViewName("user/person_info/person_info");
+		return mv;
+	}
+	
+	/**
+	 * 切换tab，异步加载内容
+	 * @param request
+	 * @return
+	 * @author 徐雁斌
+	 */
+	@RequestMapping(value="/changeTab")
+	public ModelAndView changeTab(String tabName,HttpServletRequest request) {
+		ModelAndView mv = new ModelAndView();
+		
+		if(tabName != null && "project".equals(tabName)){
+			//取得订单信息
+			Pager pager= new Pager();
+			pager.setPageSize(5);
+			Expression exp = null;
+			List<ProjectOrder> projectOrders = projectOrderService.getPojoList(ProjectOrder.class, pager, exp, null, null);
+			mv.addObject("projectOrders", projectOrders);
+		}
+		
+		mv.setViewName("user/person_info/" + tabName);
 		return mv;
 	}
 	
@@ -308,7 +321,7 @@ public class UserInfoController extends BaseController {
 	@RequestMapping(value="/test")
 	public ModelAndView test(HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView();
-		mv.setViewName("user/person_info/person_info");
+		mv.setViewName("user/person_info/info");
 		return mv;
 	}
 

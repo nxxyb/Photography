@@ -26,19 +26,22 @@
 		<div class="col-sm-3 col-md-3 column">
 				<ul id="infoTab" class="nav nav-pills nav-stacked well">
 					<li class="active">
-						<a href="#info" data-toggle="tab"><strong>基本信息</strong></a>
+						<a href="#info" url="${basePath}/userinfo/changeTab?tabName=info" data-toggle="tab"><strong>基本信息</strong></a>
 					</li>
 					<li>
-						<a href="#auth" data-toggle="tab"><strong>认证信息</strong></a>
+						<a href="#auth" url="${basePath}/userinfo/changeTab?tabName=auth" data-toggle="tab"><strong>认证信息</strong></a>
 					</li>
 					<li>
-						<a href="#project" data-toggle="tab"><strong>活动信息</strong></a>
+						<a href="#project_fb" url="${basePath}/userinfo/changeTab?tabName=project" data-toggle="tab"><strong>发布活动</strong></a>
 					</li>
 					<li>
-						<a href="#sms" data-toggle="tab"><strong>站内短信</strong></a>
+						<a href="#project_order" url="${basePath}/userinfo/changeTab?tabName=project" data-toggle="tab"><strong>活动订单</strong></a>
 					</li>
 					<li>
-						<a href="#modifyps" data-toggle="tab"><strong>修改密码</strong></a>
+						<a href="#sms" url="${basePath}/userinfo/changeTab?tabName=auth" data-toggle="sms"><strong>站内短信</strong></a>
+					</li>
+					<li>
+						<a href="#modifyps" url="${basePath}/userinfo/changeTab?tabName=auth" data-toggle="modifyps"><strong>修改密码</strong></a>
 					</li>
 					
 				</ul>
@@ -46,11 +49,12 @@
 		
 		<div class="col-sm-9 col-md-9 column">
 			<div class="tab-content">
-				<div class="tab-pane active" id="info"><#include "./info.html"></div>
-				<div class="tab-pane" id="auth"><#include "./auth.html"></div>
-				<div class="tab-pane" id="project"><#include "./project.html"></div>
-				<div class="tab-pane" id="sms"><#include "./sms.html"></div>
-				<div class="tab-pane" id="modifyps"><#include "./modifyps.html"></div>
+				<div class="tab-pane active" id="info"></div>
+				<div class="tab-pane" id="auth"></div>
+				<div class="tab-pane" id="project_fb"></div>
+				<div class="tab-pane" id="project_order"></div>
+				<div class="tab-pane" id="sms"></div>
+				<div class="tab-pane" id="modifyps"></div>
 			</div>
 		</div>
 	</div>
@@ -60,14 +64,29 @@
 	$(document).ready(function() {
 		 var href = '${href!''}';
 		 if(href==''){
+		 	var tabId = $('#infoTab a:first').attr("href");
+		    var url = $('#infoTab a:first').attr("url");
+		    $(tabId).load(url);
 		 	$('#infoTab a:first').tab('show');
 		 }else{
+		 	var tabId = $('a[href=#' + href + ']').attr("href");
+		    var url = $('a[href=#' + href + ']').attr("url");
+		    $(tabId).load(url);
 		 	$('a[href=#' + href + ']').tab('show');
 		 }
+		 
+		 $('#infoTab a').click(function (e) {
+		    e.preventDefault();//取消事件的默认动作
+		    //$(this).tab('show');
+		    var tabId = $(this).attr("href");
+		    var url = $(this).attr("url");
+		    $(tabId).load(url);
+		    $(this).tab('show');
+		});
 	});
 </script>
 
-<!-- footer start-->
+<!-- footer start-->;
   <#include "../../common/footer.html">
 <!-- footer end -->
   

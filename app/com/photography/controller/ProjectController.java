@@ -67,7 +67,7 @@ public class ProjectController extends BaseController {
 	@RequestMapping(value="/toCreate")
 	public ModelAndView toCreate(HttpServletRequest request, Model model){
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("project/project_create");
+		mav.setViewName("project/project_create_modal");
 		return mav;
 	}
 
