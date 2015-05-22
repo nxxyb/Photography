@@ -15,14 +15,19 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.photography.dao.exp.Condition;
 import com.photography.dao.exp.Expression;
 import com.photography.dao.query.Pager;
+import com.photography.dao.query.QueryConstants;
+import com.photography.dao.query.Sort;
 import com.photography.exception.ErrorCode;
 import com.photography.exception.ErrorMessage;
+import com.photography.mapping.Project;
 import com.photography.mapping.ProjectOrder;
 import com.photography.mapping.User;
 import com.photography.service.IMailService;
 import com.photography.service.IProjectOrderService;
+import com.photography.service.IProjectService;
 import com.photography.service.IUserService;
 import com.photography.utils.Constants;
 import com.photography.utils.CustomizedPropertyPlaceholderConfigurer;
@@ -51,6 +56,9 @@ public class UserInfoController extends BaseController {
 	@Autowired
 	private IProjectOrderService projectOrderService;
 	
+	@Autowired
+	private IProjectService projectService;
+	
 	public void setProjectOrderService(IProjectOrderService projectOrderService) {
 		this.projectOrderService = projectOrderService;
 	}
@@ -63,6 +71,10 @@ public class UserInfoController extends BaseController {
 		this.mailService = mailService;
 	}
 	
+	public void setProjectService(IProjectService projectService) {
+		this.projectService = projectService;
+	}
+
 	/**
 	 * 用户中心页面
 	 * @param request
@@ -86,13 +98,25 @@ public class UserInfoController extends BaseController {
 	public ModelAndView changeTab(String tabName,HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView();
 		
-		if(tabName != null && "project".equals(tabName)){
+		User user = (User) request.getSession().getAttribute(Constants.SESSION_USER_KEY);
+		if(user == null){
+			mv.addObject("errorMessage", ErrorMessage.get(ErrorCode.SESSION_TIMEOUT));
+		}
+		
+		if("project_order".equals(tabName)){
 			//取得订单信息
 			Pager pager= new Pager();
 			pager.setPageSize(5);
-			Expression exp = null;
-			List<ProjectOrder> projectOrders = projectOrderService.getPojoList(ProjectOrder.class, pager, exp, null, null);
+			Expression exp = Condition.eq("user.id", user.getId());
+			List<ProjectOrder> projectOrders = projectOrderService.getPojoList(ProjectOrder.class, pager, exp, new Sort("createTime",QueryConstants.DESC), user);
 			mv.addObject("projectOrders", projectOrders);
+		}else if("project_fb".equals(tabName)){
+			//取得订单信息
+			Pager pager= new Pager();
+			pager.setPageSize(5);
+			Expression exp = Condition.eq("createUser.id", user.getId());
+			List<Project> projects = projectService.getPojoList(Project.class, pager, exp, new Sort("createTime",QueryConstants.DESC), user);
+			mv.addObject("projects", projects);
 		}
 		
 		mv.setViewName("user/person_info/" + tabName);

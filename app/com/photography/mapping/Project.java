@@ -34,6 +34,7 @@ public class Project extends BaseMapping{
 	
 	/**
 	 * 活动类型
+	 * 1-市内采风 2-远郊采风 3-说拍就拍 4-一对一
 	 */
 	@Column(name="type")
 	private String type;
@@ -158,7 +159,7 @@ public class Project extends BaseMapping{
 	@Column(name="viewed_number")
 	private String viewedNumber;
 	
-	//项目状态 1-未开始 2-已开始 3-结束
+	//项目状态 1-未开始 2-已开始 3-已结束
 	@Column(name="status")
 	private String status = Constants.PROJECT_STATUS_WKS;
 

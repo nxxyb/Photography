@@ -1,153 +1,59 @@
 <#assign basePath=request.contextPath>
 <div class="panel panel-default">
 	<div class="panel-heading">
-		<strong>修改密码</strong>
+		<strong>发布活动</strong>
 	</div>
 	
-	<form class="form-horizontal" action="${basePath}/userinfo/updateUserInfo" method="post" name="person_from">
 	<div class="panel-body">
-		<div class="col-sm-7 col-md-7">
-			<input type="hidden"" name="id" value="${(Session.user.id)!''}">
-			
-			<div class="form-group">
-				<label class="control-label col-sm-3 col-md-3">头像：</label>
-				<img  alt="120x100" class="img-thumbnail form-control col-sm-4 col-md-4" <#if Session.user?? && Session.user.headPic??>src="${basePath}/${Session.user.headPic}"<#else>src="http://placehold.it/120x100"</#if> style="width: 120px; height: 100px;">				
-				<div class="col-sm-5 col-md-5">
-					<button type="button" class="btn btn-primary" aria-label="Left Align" data-toggle="modal" data-target="#infoModal">
-					  <span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
-					</button>
-				</div>
+			<div id='masonny-div'>
+			 <div class="item">内容1</div>
+			 <div class="item">内容2</div>
+			 <div class="item">内容3</div>
+			 <div class="item">内容4</div>
+			 <div class="item">内容5</div>
+			 <div class="item">内容6</div>
+			 <div class="item">内容7</div>
+			 <div class="item">内容8</div>
+			 <div class="item">内容9</div>
+			 <div class="item">内容10</div>
+			 
+			 <div class="item">内容1</div>
+			 <div class="item">内容2</div>
+			 <div class="item">内容3</div>
+			 <div class="item">内容4</div>
+			 <div class="item">内容5</div>
+			 <div class="item">内容6</div>
+			 <div class="item">内容7</div>
+			 <div class="item">内容8</div>
+			 <div class="item">内容9</div>
+			 <div class="item">内容10</div>
+			 
+			 <div class="item">内容1</div>
+			 <div class="item">内容2</div>
+			 <div class="item">内容3</div>
+			 <div class="item">内容4</div>
+			 <div class="item">内容5</div>
+			 <div class="item">内容6</div>
+			 <div class="item">内容7</div>
+			 <div class="item">内容8</div>
+			 <div class="item">内容9</div>
+			 <div class="item">内容10</div>
+			 
+			 <div class="item">内容1</div>
+			 <div class="item">内容2</div>
+			 <div class="item">内容3</div>
+			 <div class="item">内容4</div>
+			 <div class="item">内容5</div>
+			 <div class="item">内容6</div>
+			 <div class="item">内容7</div>
+			 <div class="item">内容8</div>
+			 <div class="item">内容9</div>
+			 <div class="item">内容10</div>
 			</div>
 			
-			<div class="form-group">
-				<label class="control-label col-sm-3 col-md-3">昵称：</label>
-				<div class="col-sm-9 col-md-9">
-					<input class="form-control" type="text" name="nackName" size="20" placeholder="50个汉字或字母" value="${(Session.user.nackName)!''}">
-				</div>
+			 <div id="next">
+			    <a href="${basePath}/project/test1">next</a>
 			</div>
 			
-			<div class="form-group">
-				<label class="control-label col-sm-3 col-md-3">性别：</label>
-				<div class="col-sm-9 col-md-9">
-					<label class="checkbox-inline">
-				      <input type="radio" name="sex" value="0" <#if Session.user?? && Session.user.sex?? && Session.user.sex == "0">checked="checked"</#if>> 男
-				   	</label>
-				   	
-				   	<label class="checkbox-inline">
-				      <input type="radio" name="sex" value="1" <#if Session.user?? && Session.user.sex?? && Session.user.sex == "1">checked="checked"</#if>> 女
-				   	</label>
-				</div>
-			</div>
-			
-			<div class="form-group">
-				<label class="control-label col-sm-3 col-md-3">手机号码：</label>
-				<div class="col-sm-9 col-md-9">
-					<input class="form-control" type="text" name="mobile" pattern=".{11}" title="请输入11位手机号码" placeholder="手机号码" value="${(Session.user.mobile)!''}">
-				</div>
-			</div>
-			
-			<div class="form-group">
-				<label class="control-label col-sm-3 col-md-3">邮箱：</label>
-				<div class="col-sm-9 col-md-9">
-					<input class="form-control" type="email" name="email" placeholder="邮箱地址" value="${(Session.user.email)!''}" maxlength="50" disabled="disabled">
-				</div>
-			</div>
-			
-			<div class="form-group">
-				<label class="control-label col-sm-3 col-md-3">个性签名：</label>
-				<div class="col-sm-9 col-md-9">
-					<input class="form-control" type="text" name="personSignature" placeholder="个性签名" maxlength="50" value="${(Session.user.personSignature)!''}">
-				</div>
-			</div>
-			
-			<div class="form-group">
-				<label class="control-label col-sm-3 col-md-3">生日：</label>
-				<div class="col-sm-9 col-md-9">
-					<input class="form-control" name="birthDay" id="birthDay" type="date" value="${(Session.user.birthDay?string('yyyy-MM-dd'))!''}"/>
-				</div> 
-			</div>
-			
-			<div class="form-group">
-				<label class="control-label col-sm-3 col-md-3">QQ：</label>
-				<div class="col-sm-9 col-md-9">
-					<input class="form-control" type="text" name="qqNumber" placeholder="QQ号码" maxlength="50" value="${(Session.user.qqNumber)!''}">
-				</div>
-			</div>
-		</div>
-		
-		<div class="col-sm-5 col-md-5">
 		</div>
 	</div>
-	
-	<div class="panel-footer">
-		<button type="submit" class="btn btn-primary">保存</button>
-	</div>
-	</form>
-</div>
-
-
-<div class="modal fade" id="infoModal" tabindex="-1" role="dialog" aria-labelledby="infoModalLabel" aria-hidden="true">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				<h4 class="modal-title" id="infoModalLabel">修改头像 </h4>
-			</div>
-			<div class="modal-body">
-				<form class="form-horizontal" id="headform" action="${basePath}/userinfo/updateHeadPhoto" enctype="multipart/form-data" method="post">
-					<div class="form-group">
-						<div class="col-sm-2 col-md-2"></div>
-						<div class="col-sm-8 col-md-8">
-							<input id="headFile" name="headFile" type="file" accept="image/*" class="file-loading">
-						</div>
-						<div class="col-sm-2 col-md-2"></div>
-					</div>
-					<script type="text/javascript">
-						$("#headFile").fileinput({
-						    uploadUrl: "${basePath}/userinfo/updateHeadPhoto", // server upload action
-    						uploadAsync: false,
-    						 minFileCount: 1,
-    						 maxFileCount: 1
-						});
-					</script>
-				</form>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-			</div>
-		</div>
-	</div>
-</div>
-
-	<script type="text/javascript">
-	//_init_area();
-	//_init_area_value('${(Session.user.province)!""}','${(Session.user.city)!""}', '${(Session.user.county)!""}');
-	
-	$('#loginForm').bootstrapValidator({
-		 	message: 'This value is not valid',
-	        feedbackIcons: {
-	            valid: 'glyphicon glyphicon-ok',
-	            invalid: 'glyphicon glyphicon-remove',
-	            validating: 'glyphicon glyphicon-refresh'
-        	},
-        	 fields: {
-        	 	email: {
-	                validators: {
-	                    notEmpty: {
-	                        message: '邮箱未填写'
-	                    },
-	                	 emailAddress: {
-                        	message: '不是有效的邮箱地址'
-                    	}
-	                }
-	            },
-	            password: {
-	                validators: {
-	                    notEmpty: {
-	                        message: '密码未填写'
-	                    }
-	                }
-	            }
-		 	}
-		 });
-</script>

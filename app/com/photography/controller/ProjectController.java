@@ -9,8 +9,10 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -65,9 +67,13 @@ public class ProjectController extends BaseController {
 	 * @author 徐雁斌
 	 */
 	@RequestMapping(value="/toCreate")
-	public ModelAndView toCreate(HttpServletRequest request, Model model){
+	public ModelAndView toCreate(String id,HttpServletRequest request, Model model){
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("project/project_create_modal");
+		mav.setViewName("project/project_create");
+		
+		if(!StringUtils.isEmpty(id)){
+			mav.addObject("project", projectService.loadPojo(Project.class,id));
+		}
 		return mav;
 	}
 
@@ -270,6 +276,12 @@ public class ProjectController extends BaseController {
 		mv.addObject("rela_projects",projectService.loadPojoByExpression(Project.class, null, null));
 		mv.setViewName("project/project_review");
 		return mv;
+	}
+	
+	@RequestMapping(value="/test1")
+	@ResponseBody
+	public String test1(HttpServletRequest request){
+		return "1111";
 	}
 	
 	
