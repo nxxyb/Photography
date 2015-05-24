@@ -1,0 +1,50 @@
+<#assign basePath=request.contextPath>
+					
+	<#if projects??>
+	 <#list projects as project>
+	 <div class="panel panel-default well item">
+				<div class="panel-body">
+ 				<div class="col-sm-10 col-md-10 column">
+			 <div class="media">
+		        <h5><a href="${basePath}/project/toReview?id=${(project.id)!''}" target="_blank">${project.name}</a> <small class="pull-right">活动状态：
+		        <#if project?? && project.status?? && project.status=='1' > 未开始
+		        <#elseif project?? && project.status?? && project.status=='2' > 已开始
+		        <#elseif project?? && project.status?? && project.status=='3' > 已结束
+		        <#else> 
+		        </#if>
+		        </small></h5>
+			      <div class="media-left">
+			      	<a href="${basePath}/project/toReview?id=${(project.id)!''}" target="_blank">
+				      	<img class="media-object" <#if project?? && project.photos?? && project.photos.fileInfos??>src="${basePath}/${project.photos.fileInfos[0].realPath}"<#else>src="http://placehold.it/250x150"</#if> 
+								       alt="" style="width: 250px; height: 150px;">
+					</a>
+				  </div>
+				  <div class="media-body">
+					  <h5 class="media-heading"><small>活动类型： 
+					  	<#if project?? && project.type?? && project.type=='1' > 市内采风
+				        <#elseif project?? && project.type?? && project.type=='2' > 远郊采风
+				        <#elseif project?? && project.type?? && project.type=='3' > 说拍就拍
+				         <#elseif project?? && project.type?? && project.type=='4' > 一对一
+				        <#else> 
+				        </#if>
+				        </small>
+				      </h5>
+					  <h5><small class="orange-color">价格：<span class="glyphicon glyphicon-yen"></span> ${(project.cost)!''}</small></h5>
+					  <h5><small>活动地点：${(project.province)!''},${(project.city)!''},${(project.county)!''},${(project.place)!''}</small></h5>
+					  <h5><small>开始时间：${(project.startTime)!''}</small></h5>
+					  <h5><small><span class="glyphicon glyphicon-user"></span> ${(project.joinedNumber)!'0'}人已参加 | </small>
+						  <small><span class="glyphicon glyphicon-eye-open"></span> 已浏览${(project.viewedNumber)!'0'}次 </small>
+					  </h5>
+				  </div>
+			  </div>
+			 </div>
+			  
+			 <div class="col-sm-2 col-md-2 column">
+			  	<a href="${basePath}/project/toReview?id=${(project.id)!''}" target="_blank" class="btn btn-block btn-success" role="button">查看详情</a>
+			  	<a href="${basePath}/project/toCreate?id=${(project.id)!''}" target="_blank" class="btn btn-block btn-info <#if project?? && project.status?? && project.status!='1'>disabled</#if>" role="button">修改信息</a>
+			 </div>
+		  
+		  </div>
+	  </div>
+	 </#list>
+	</#if>

@@ -1,59 +1,65 @@
 <#assign basePath=request.contextPath>
+<!DOCTYPE HTML>
+<html>
+<head>
+<!-- title start-->
+   <#include "../../common/title.html">
+  <!-- title end-->
+  
+  <!-- link start-->
+   <#include "../../common/link.html">
+
+  <!-- link end-->
+  
+</head>
+
+<body>
+  <!-- header start-->
+  <#include "../../common/header.html">
+  <!-- header end -->
+  
+  <#include "../../error/error_modal.html">
+  <#include "../../error/success_modal.html">
+  
 <div class="panel panel-default">
 	<div class="panel-heading">
 		<strong>发布活动</strong>
 	</div>
 	
 	<div class="panel-body">
-			<div id='masonny-div'>
-			 <div class="item">内容1</div>
-			 <div class="item">内容2</div>
-			 <div class="item">内容3</div>
-			 <div class="item">内容4</div>
-			 <div class="item">内容5</div>
-			 <div class="item">内容6</div>
-			 <div class="item">内容7</div>
-			 <div class="item">内容8</div>
-			 <div class="item">内容9</div>
-			 <div class="item">内容10</div>
-			 
-			 <div class="item">内容1</div>
-			 <div class="item">内容2</div>
-			 <div class="item">内容3</div>
-			 <div class="item">内容4</div>
-			 <div class="item">内容5</div>
-			 <div class="item">内容6</div>
-			 <div class="item">内容7</div>
-			 <div class="item">内容8</div>
-			 <div class="item">内容9</div>
-			 <div class="item">内容10</div>
-			 
-			 <div class="item">内容1</div>
-			 <div class="item">内容2</div>
-			 <div class="item">内容3</div>
-			 <div class="item">内容4</div>
-			 <div class="item">内容5</div>
-			 <div class="item">内容6</div>
-			 <div class="item">内容7</div>
-			 <div class="item">内容8</div>
-			 <div class="item">内容9</div>
-			 <div class="item">内容10</div>
-			 
-			 <div class="item">内容1</div>
-			 <div class="item">内容2</div>
-			 <div class="item">内容3</div>
-			 <div class="item">内容4</div>
-			 <div class="item">内容5</div>
-			 <div class="item">内容6</div>
-			 <div class="item">内容7</div>
-			 <div class="item">内容8</div>
-			 <div class="item">内容9</div>
-			 <div class="item">内容10</div>
-			</div>
+			 <div id="infin_content">            <!-- 容器 -->  
+		        <div class="scroll">         <!-- 每次要加载数据的数据块-->  
+				        第一页内容第一页内容<br>  
+				        第一页内容<br>第一页内容<br>第一页内容<br>  
+				        第一页内容<br>第一页内容<br>第一页内容<br>  
+				        第一页内容<br>第一页内容<br>第一页内容  
+		        </div>  
+		    </div>  
+		    
+		    <div id="navigation" align="center">         <!-- 页面导航-->  
+		        <a href="${basePath}/project/test1?page=1"></a>        <!-- 此处可以是url，可以是action，要注意不是每种html都可以加，是跟当前网页有相同布局的才可以。另外一个重要的地方是page参数，这个一定要加在这里，它的作用是指出当前页面页码，没加载一次数据，page自动+1,我们可以从服务器用request拿到他然后进行后面的分页处理。-->  
+		    </div>  
 			
-			 <div id="next">
-			    <a href="${basePath}/project/test1">next</a>
-			</div>
 			
 		</div>
 	</div>
+	
+	
+	<script>  
+ $(document).ready(function (){               //别忘了加这句，除非你没学Jquery  
+      $("#infin_content").infinitescroll({  
+            navSelector: "#navigation",     //页面分页元素--成功后自动隐藏  
+            nextSelector: "#navigation a",  
+            itemSelector: ".scroll " ,             
+            animate: true, 
+            currPage: 1,
+            debug: true, 
+            dataType: 'html',
+            maxPage: 10,
+            loading: {
+            	finishedMsg: '<h5><small>没有更多内容了</small></h5>' ,
+            	msgText : '<h5><small>正在加载中...</small></h5>'
+            }                                               
+        });  
+ });   
+    </script>  

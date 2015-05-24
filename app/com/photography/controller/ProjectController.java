@@ -1,6 +1,7 @@
 package com.photography.controller;
 
 import java.io.File;
+import java.util.List;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,6 +17,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.photography.dao.exp.Condition;
+import com.photography.dao.exp.Expression;
+import com.photography.dao.query.Pager;
+import com.photography.dao.query.QueryConstants;
+import com.photography.dao.query.Sort;
 import com.photography.exception.ErrorCode;
 import com.photography.exception.ErrorMessage;
 import com.photography.exception.ServiceException;
@@ -91,12 +97,7 @@ public class ProjectController extends BaseController {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("project/project_create");
 		try{
-			User user = (User) request.getSession().getAttribute(Constants.SESSION_USER_KEY);
-			if(user == null){
-				mav.addObject("project", project);
-				mav.addObject("errorMessage", ErrorMessage.get(ErrorCode.SESSION_TIMEOUT));
-				return mav;
-			}
+			User user = getUser(request, mav);
 			
 			Project projectDb = null;
 			if(project.getId() != null && !"".equals(project.getId())){
@@ -124,13 +125,12 @@ public class ProjectController extends BaseController {
 			
 		}catch(Exception e){
 			if(e instanceof ServiceException){
+				mav.addObject("project", project);
 				ServiceException se = (ServiceException) e;
 				mav.addObject("errorMessage", se.getErrorMessage()); 
-				mav.setViewName("error/error");
 			}else{
 				log.error("error",e);
 				mav.addObject("error_message", ErrorMessage.get(ErrorCode.UNKNOWN_ERROR));
-				mav.setViewName("error/error");
 			}
 		}
 		return mav;
@@ -210,31 +210,22 @@ public class ProjectController extends BaseController {
 			mav.addObject("errorMessage", ErrorMessage.get(ErrorCode.PROJECT_NOT_EXIST));
 		}
 		mav.addObject("project", project);
-		
-		//根据用户确定是否显示预定按钮
-		User user = (User) request.getSession().getAttribute(Constants.SESSION_USER_KEY);
-		if(user == null){
-			mav.addObject("errorMessage", ErrorMessage.get(ErrorCode.SESSION_TIMEOUT));
-			return mav;
-		}
-		mav.addObject("isCanYd",projectOrderService.isCanYd(user.getId(), id));
-		
 		try {
+			//根据用户确定是否显示预定按钮
+			User user = getUser(request, mav);
+			mav.addObject("isCanYd",projectOrderService.isCanYd(user.getId(), id));
 			mav.addObject("rela_projects", projectService.getRelaProject(id));
+			
+			//更新浏览次数
+			String viewNumber = project.getViewedNumber();
+			if(viewNumber == null || "".equals(viewNumber)){
+				viewNumber = "0";
+			}
+			project.setViewedNumber(Integer.toString(Integer.parseInt(viewNumber) + 1));
+			projectService.savePojo(project, user);
 		} catch (ServiceException e) {
 			log.error("ProjectController.toReview(): ServiceException", e);
-		}
-		
-		//更新浏览次数
-		String viewNumber = project.getViewedNumber();
-		if(viewNumber == null || "".equals(viewNumber)){
-			viewNumber = "0";
-		}
-		project.setViewedNumber(Integer.toString(Integer.parseInt(viewNumber) + 1));
-		try {
-			projectService.savePojo(project, null);
-		} catch (ServiceException e) {
-			log.error("ProjectController.toReview(): ServiceException", e);
+			mav.addObject("errorMessage", e.getErrorMessage()); 
 		}
 		
 		return mav;
@@ -251,13 +242,9 @@ public class ProjectController extends BaseController {
 	@RequestMapping(value="/orderProject")
 	public ModelAndView orderProject(String id,HttpServletRequest request, Model model){
 		ModelAndView mav = new ModelAndView();
-		//根据用户确定是否显示预定按钮
-		User user = (User) request.getSession().getAttribute(Constants.SESSION_USER_KEY);
-		if(user == null){
-			return reviewProject(id, request, mav);
-		}
-		
 		try {
+			//根据用户确定是否显示预定按钮
+			User user = getUser(request, mav);
 			projectOrderService.saveOrderProject(user.getId(), id);
 			mav.addObject("successMessage", MessageConstants.ORDER_SUCCESS);
 		} catch (ServiceException e) {
@@ -266,6 +253,34 @@ public class ProjectController extends BaseController {
 		}
 		
 		return reviewProject(id, request, mav);
+	}
+	
+	/**
+	 * 获得用户发布的活动列表
+	 * @param page
+	 * @param request
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value="/getUserCreatedProject",produces = "text/html;charset=UTF-8")
+	public ModelAndView getUserCreatedProject(String page,HttpServletRequest request, Model model){
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("user/person_info/project_fb_item");
+		try{
+			User user = getUser(request, mav);
+			
+			//取得订单信息
+			Pager pager= new Pager();
+			pager.setPageSize(3);
+			pager.setCurrentPage(Integer.parseInt(page));
+			Expression exp = Condition.eq("createUser.id", user.getId());
+			List<Project> projects = projectService.getPojoList(Project.class, pager, exp, new Sort("createTime",QueryConstants.DESC), user);
+			mav.addObject("projects", projects);
+		} catch (ServiceException e) {
+			log.error("ProjectController.orderProject(): ServiceException", e);
+			mav.addObject("errorMessage", ErrorMessage.get(e.getErrorCode()));
+		}
+		return mav;
 	}
 	
 	@RequestMapping(value="/test")
@@ -280,8 +295,27 @@ public class ProjectController extends BaseController {
 	
 	@RequestMapping(value="/test1")
 	@ResponseBody
-	public String test1(HttpServletRequest request){
-		return "1111";
+	public String test1(Pager page,HttpServletRequest request){
+		System.out.println("page:" + page.getCurrentPage());
+		return "<div class=\"scroll\">"
+				        + "2222222222222222222<br>"    
+				        + "2222222222222222222<br>"    
+				        + "2222222222222222222<br>"    
+				        + "2222222222222222222<br>"    
+				        + "2222222222222222222<br>"    
+				        + "2222222222222222222<br>"    
+				        + "2222222222222222222<br>"    
+				        + "2222222222222222222<br>"    
+				        + "2222222222222222222<br>"    
+				        + "2222222222222222222<br>"    
+				        + "2222222222222222222<br>"    
+				        + "2222222222222222222<br>"    
+				        + "2222222222222222222<br>"    
+				        + "2222222222222222222<br>"    
+				        + "2222222222222222222<br>"    
+				        + "2222222222222222222<br>"    
+				        + "2222222222222222222<br>"    
+		        + "</div>";
 	}
 	
 	

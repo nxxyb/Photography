@@ -109,13 +109,15 @@ public class UserInfoController extends BaseController {
 			pager.setPageSize(5);
 			Expression exp = Condition.eq("user.id", user.getId());
 			List<ProjectOrder> projectOrders = projectOrderService.getPojoList(ProjectOrder.class, pager, exp, new Sort("createTime",QueryConstants.DESC), user);
+			mv.addObject("pager", pager);
 			mv.addObject("projectOrders", projectOrders);
 		}else if("project_fb".equals(tabName)){
 			//取得订单信息
 			Pager pager= new Pager();
-			pager.setPageSize(5);
+			pager.setPageSize(2);
 			Expression exp = Condition.eq("createUser.id", user.getId());
 			List<Project> projects = projectService.getPojoList(Project.class, pager, exp, new Sort("createTime",QueryConstants.DESC), user);
+			mv.addObject("pager", pager);
 			mv.addObject("projects", projects);
 		}
 		
@@ -345,7 +347,7 @@ public class UserInfoController extends BaseController {
 	@RequestMapping(value="/test")
 	public ModelAndView test(HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView();
-		mv.setViewName("user/person_info/info");
+		mv.setViewName("user/person_info/sms");
 		return mv;
 	}
 

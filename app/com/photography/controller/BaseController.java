@@ -6,12 +6,17 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.photography.controller.propertyeditor.DateEditor;
 import com.photography.controller.propertyeditor.DoubleEditor;
 import com.photography.controller.propertyeditor.FloatEditor;
 import com.photography.controller.propertyeditor.IntegerEditor;
 import com.photography.controller.propertyeditor.LongEditor;
+import com.photography.exception.ErrorCode;
+import com.photography.exception.ServiceException;
+import com.photography.mapping.User;
+import com.photography.utils.Constants;
 
 /**
  * 
@@ -29,6 +34,19 @@ public class BaseController {
 		binder.registerCustomEditor(long.class, new LongEditor());
 		binder.registerCustomEditor(double.class, new DoubleEditor());
 		binder.registerCustomEditor(float.class, new FloatEditor());
+	}
+	
+	/**
+	 * 从session取出user，如果不存在则抛出异常
+	 * @param request
+	 * @param mav
+	 */
+	protected User getUser(HttpServletRequest request,ModelAndView mav) throws ServiceException{
+		User user = (User) request.getSession().getAttribute(Constants.SESSION_USER_KEY);
+		if(user == null){
+			throw new ServiceException(ErrorCode.SESSION_TIMEOUT);
+		}
+		return user;
 	}
 
 }
