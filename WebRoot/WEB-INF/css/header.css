@@ -4,9 +4,14 @@
 
 .main-header {
 	margin: 2% 0;
-	background-color: #FF6666;
+	background-color: #FF9900;
 }
 
-.main-content {
-	margin: 5% 0;
+.main-header .navbar-nav  a:hover,
+.main-header .navbar-nav a:focus {
+  background-color: #FFCC00;
+}
+
+.main-header a{
+	color: #FFFFFF;
 }
