@@ -3,7 +3,7 @@
 	<#if projects??>
 	 <#list projects as project>
 	 <div class="col-sm-6 col-md-6 column item">
-			 <div class="thumbnail panel panel-warning">
+			 <div class="thumbnail panel panel-warning" style="background-color: #EEEEEE;">
 		        <h5><a href="${basePath}/project/toReview?id=${(project.id)!''}" target="_blank">${project.name}</a></h5>
 		      	<a href="${basePath}/project/toReview?id=${(project.id)!''}" target="_blank">
 			      	<img class="media-object" <#if project?? && project.photos?? && project.photos.fileInfos??>src="${basePath}/${project.photos.fileInfos[0].realPath}"<#else>src="http://placehold.it/350x300"</#if> 

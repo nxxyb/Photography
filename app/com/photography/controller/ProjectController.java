@@ -283,6 +283,32 @@ public class ProjectController extends BaseController {
 		return mav;
 	}
 	
+	/**
+	 * 删除活动
+	 * @param request
+	 * @param model
+	 * @return
+	 * @author 徐雁斌
+	 */
+	@RequestMapping(value="/delete")
+	public ModelAndView delete(String id,HttpServletRequest request, Model model){
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("project/project_create");
+		
+		if(!StringUtils.isEmpty(id)){
+			mav.addObject("project", projectService.loadPojo(Project.class,id));
+		}
+		
+		Project project = (Project) projectService.loadPojo(Project.class,id);
+		try {
+			projectService.deletePojo(project, null);
+		} catch (ServiceException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return mav;
+	}
+	
 	@RequestMapping(value="/test")
 	public ModelAndView test(HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView();
