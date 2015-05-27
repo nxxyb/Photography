@@ -271,7 +271,7 @@ public class ProjectController extends BaseController {
 			
 			//取得订单信息
 			Pager pager= new Pager();
-			pager.setPageSize(3);
+			pager.setPageSize(Constants.PAGER_PROJECT_FB);
 			pager.setCurrentPage(Integer.parseInt(page));
 			Expression exp = Condition.eq("createUser.id", user.getId());
 			List<Project> projects = projectService.getPojoList(Project.class, pager, exp, new Sort("createTime",QueryConstants.DESC), user);

@@ -106,7 +106,7 @@ public class UserInfoController extends BaseController {
 		if("project_order".equals(tabName)){
 			//取得订单信息
 			Pager pager= new Pager();
-			pager.setPageSize(5);
+			pager.setPageSize(Constants.PAGER_PROJECT_ORDER);
 			Expression exp = Condition.eq("user.id", user.getId());
 			List<ProjectOrder> projectOrders = projectOrderService.getPojoList(ProjectOrder.class, pager, exp, new Sort("createTime",QueryConstants.DESC), user);
 			mv.addObject("pager", pager);
@@ -114,7 +114,7 @@ public class UserInfoController extends BaseController {
 		}else if("project_fb".equals(tabName)){
 			//取得订单信息
 			Pager pager= new Pager();
-			pager.setPageSize(2);
+			pager.setPageSize(Constants.PAGER_PROJECT_FB);
 			Expression exp = Condition.eq("createUser.id", user.getId());
 			List<Project> projects = projectService.getPojoList(Project.class, pager, exp, new Sort("createTime",QueryConstants.DESC), user);
 			mv.addObject("pager", pager);

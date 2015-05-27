@@ -1,0 +1,40 @@
+<#assign basePath=request.contextPath>
+
+<#if projectOrders?? && (projectOrders?size > 0)>
+			 <#list projectOrders as projectOrder>
+			 <div class="col-sm-6 col-md-6 column item">
+			 <div class="thumbnail panel panel-warning">
+				        <h5>订单编号：${projectOrder.id}</h5>
+				        <a href="${basePath}/project/toReview?id=${(projectOrder.project.id)!''}" target="_blank">
+						    <img class="media-object" <#if projectOrder?? && projectOrder.project?? && projectOrder.project.photos?? && projectOrder.project.photos.fileInfos??>src="${basePath}/${projectOrder.project.photos.fileInfos[0].realPath}"<#else>src="http://placehold.it/350x300"</#if> 
+										       alt="" style="width: 350px; height: 300px;">
+						</a>
+						 <div class="caption">
+							  <h5 class="lead"><a href="${basePath}/project/toReview?id=${(projectOrder.project.id)!''}" target="_blank">${(projectOrder.project.name)!''}</a></h5>
+							  <h5><small class="pull-right">订单状态：
+						        <#if projectOrder?? && projectOrder.status?? && projectOrder.status=='1' > 未支付
+						        <#elseif projectOrder?? && projectOrder.status?? && projectOrder.status=='2' > 已取消
+						        <#elseif projectOrder?? && projectOrder.status?? && projectOrder.status=='3' > 已支付
+						        <#else> 
+						        </#if>
+						        </small></h5>
+							  <h5><small>价格：<span class="glyphicon glyphicon-yen"></span> ${(projectOrder.project.cost)!''}</small></h5>
+							  <h5><small>下单时间：${(projectOrder.createTime)!''}</small></h5>
+							  <div>
+							  	<a href="${basePath}/project/toReview?id=${(projectOrder.project.id)!''}" class="btn btn-block btn-success" role="button">查看详情</a>
+							  	<a href="#" class="btn btn-block btn-info <#if projectOrder?? && projectOrder.status?? && projectOrder.status!='1'>disabled</#if>" role="button">取消订单</a>
+							 </div>
+						  </div>
+					  </div>
+				</div>
+			 </#list>
+			 <#else>
+			 <table class="table table-bordered">
+				<tr><td>
+							<p class="text-center" style="font-size: 20px">
+							<span class="glyphicon glyphicon-ban-circle orange-color" style="font-size: 40px"></span>
+							<br><h4 class="text-center"><small>您还没有任何订单</small></h4>
+							</p>
+				</td></tr>
+			</table>
+			</#if>
