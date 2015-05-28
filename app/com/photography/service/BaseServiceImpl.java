@@ -35,16 +35,15 @@ public class BaseServiceImpl implements IBaseService {
 	/* 
 	 * @see com.photography.service.IBaseService#loadPojo(java.lang.String)
 	 */
-	public BaseMapping loadPojo(Class clazz, String id) {
-		return (BaseMapping) hibernateDao.getById(clazz, id);
+	public <T> T loadPojo(Class<T> clazz, String id) {
+		return hibernateDao.getById(clazz, id);
 	}
 
 	/* 
 	 * @see com.photography.service.IBaseService#loadPojoByExpression(com.photography.dao.exp.Expression, com.photography.dao.query.Sort)
 	 */
-	@SuppressWarnings("unchecked")
-	public List<BaseMapping> loadPojoByExpression(Class clazz, Expression expression, Sort sort) {
-		return (List<BaseMapping>) hibernateDao.getByQuery(clazz, expression,sort);
+	public <T> List<T> loadPojoByExpression(Class<T> clazz, Expression expression, Sort sort) {
+		return hibernateDao.getByQuery(clazz, expression,sort);
 	}
 
 	/* 

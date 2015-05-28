@@ -78,8 +78,8 @@ CREATE TABLE `file_info` (
   `id` varchar(36) NOT NULL PRIMARY KEY,
   `real_name` varchar(200) comment '真实文件名',
   `real_path` varchar(500) comment '存储文件全路径',
-  `ext` varchar(20) comment '活动开始时间',
-  `file_group` varchar(36) comment '活动时长',
+  `ext` varchar(20) comment '扩展名',
+  `file_group` varchar(36) comment '附件组',
   `create_time` datetime comment '创建时间',
   `last_update_time` datetime comment '最后修改时间'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -91,6 +91,19 @@ CREATE TABLE `project_order` (
   `user` varchar(36) comment '用户',
   `project` varchar(36) comment '活动',
   `status` varchar(10) comment '状态 1-未支付 2-已取消  3-已支付',
+  `create_time` datetime comment '创建时间',
+  `last_update_time` datetime comment '最后修改时间'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/**活动评论表 */
+DROP TABLE IF EXISTS `project_comment`;
+CREATE TABLE `project_comment` (
+  `id` varchar(36) NOT NULL PRIMARY KEY,
+  `create_user` varchar(36) comment '用户',
+  `project` varchar(36) comment '活动',
+  `type` varchar(10) comment '评论类型  1-好评  2-中评  3-差评',
+  `photos` varchar(500) comment '评论图片',
+  `content` varchar(2000) comment '评论内容',
   `create_time` datetime comment '创建时间',
   `last_update_time` datetime comment '最后修改时间'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
