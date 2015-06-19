@@ -50,8 +50,8 @@
 				<h4 class="modal-title" id="myModalLabel">模态框（Modal）标题</h4>
 			</div>
 			<div class="modal-body">
-				在这里添加一些文本
-			</div>
+				<input id="input-id" type="number" class="rating" min=0 max=5 step=0.5 data-size="lg" >
+			</div> 
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
 				<button type="button" class="btn btn-primary">评价</button>
@@ -59,3 +59,9 @@
 		</div>
 	</div>
 </div>
+
+<script type="text/javascript">
+jQuery(document).ready(function () {
+	$("#input-id").rating();
+}
+</script>

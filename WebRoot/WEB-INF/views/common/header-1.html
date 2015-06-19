@@ -1,4 +1,4 @@
-<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+<div class="navbar navbar-inverse" role="navigation">
 	<div class="container">
 		 <button class="navbar-toggle" data-toggle="collapse" data-target=".navHeaderCollapse">
              <span class="icon-bar"></span>
@@ -7,39 +7,20 @@
          </button>
                 
 		<div class="navbar-collapse collapse navHeaderCollapse">
-		<div class="center-block" style="display: table;">
-			<ul class="nav navbar-nav">
-					<li style="margin: 5% auto;"><a href="${basePath}/index">首页</a></li>
-					<li style="margin: 5% auto;"><a href="#">活动</a></li>
-					<li style="margin: 5% auto;"><a href="#">拍友</a></li>
-					<li style="margin: 5% auto;"><a href="#">照片</a></li>
-					<li>
-						<div>
-						<img class="center-block" src="${basePath}/images/logo.png" />
-						<input type="text" class="form-control" placeholder="搜索活动">
-						</div>
-					</li>
-
-					<li style="margin: 5% auto;"><a href="#">登录</a></li>
-					<li style="margin: 5% auto;"><a href="#">马上注册</a></li>
-					<li style="margin: 5% auto;"><a href="#">关注</a></li>
-					<li style="margin: 5% auto;"><a href="#">APP</a></li>
-					<!--
-					<#if Session.user?exists>
-						<li><a href="${basePath}/userinfo/toUserInfo"><small>欢迎您 <#if Session.user?? && Session.user.nackName?? && Session.user.nackName !=''>${Session.user.nackName}<#else>${Session.user.email} </#if></small></a></li>
-						<li><a href="${basePath}/user/logout"><small>退出登录</small></a></li>
-					<#else>
-						<li><a href="${basePath}/user/toLogin"><small>登录</small></a></li>
-						<li><a href="${basePath}/user/toRegister"><small>注册</small></a></li>
-					</#if>
-					-->
+			<ul class="nav navbar-nav navbar-right" >
+				<#if Session.user?exists>
+					<li><a href="${basePath}/userinfo/toUserInfo"><small>欢迎您 <#if Session.user?? && Session.user.nackName?? && Session.user.nackName !=''>${Session.user.nackName}<#else>${Session.user.email} </#if></small></a></li>
+					<li><a href="${basePath}/user/logout"><small>退出登录</small></a></li>
+				<#else>
+					<li><a href="${basePath}/user/toLogin"><small>登录</small></a></li>
+					<li><a href="${basePath}/user/toRegister"><small>注册</small></a></li>
+				</#if>
 			</ul>
-			</div>
 		</div>
 	</div>
 </div>
 
-<!--<div class="container">
+<div class="container">
 	<div class="row clearfix">
 		<div class="col-sm-3 col-md-3 column">
 			<img src="${basePath}/images/logo.png" />
@@ -88,4 +69,4 @@
 		
 	</ul>
 </div>
-</div>-->
+</div>

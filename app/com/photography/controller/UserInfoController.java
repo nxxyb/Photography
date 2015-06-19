@@ -97,10 +97,11 @@ public class UserInfoController extends BaseController {
 	@RequestMapping(value="/changeTab")
 	public ModelAndView changeTab(String tabName,HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView();
+		mv.setViewName("user/person_info/" + tabName);
 		
 		User user = (User) request.getSession().getAttribute(Constants.SESSION_USER_KEY);
 		if(user == null){
-			mv.addObject("errorMessage", ErrorMessage.get(ErrorCode.SESSION_TIMEOUT));
+			return mv;
 		}
 		
 		if("project_order".equals(tabName)){
@@ -121,7 +122,6 @@ public class UserInfoController extends BaseController {
 			mv.addObject("projects", projects);
 		}
 		
-		mv.setViewName("user/person_info/" + tabName);
 		return mv;
 	}
 	
