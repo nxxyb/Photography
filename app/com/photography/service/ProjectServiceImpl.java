@@ -10,6 +10,7 @@ import com.photography.dao.query.Sort;
 import com.photography.exception.ErrorCode;
 import com.photography.exception.ServiceException;
 import com.photography.mapping.Project;
+import com.photography.utils.StringUtil;
 
 /**
  * 
@@ -41,8 +42,8 @@ public class ProjectServiceImpl extends BaseServiceImpl implements IProjectServi
 	@Override
 	public List<Project> getIndexProject(String type) throws ServiceException {
 		Pager pager= new Pager();
-		pager.setPageSize(4);
-		List<Project> projects = hibernateDao.getByQuery(Project.class, pager,Condition.eq("type", type), new Sort());
+		pager.setPageSize(8);
+		List<Project> projects = hibernateDao.getByQuery(Project.class, pager,StringUtil.isEmpty(type)?null:Condition.eq("type", type), new Sort());
 		return projects;
 	}
 

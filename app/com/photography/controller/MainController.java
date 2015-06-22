@@ -17,6 +17,7 @@ import com.photography.exception.ServiceException;
 import com.photography.mapping.Project;
 import com.photography.service.IProjectService;
 import com.photography.utils.Constants;
+import com.photography.utils.StringUtil;
 
 /**
  * 
@@ -39,10 +40,10 @@ private final static Logger log = Logger.getLogger(MainController.class);
 	}
 	
 	@RequestMapping("/index")
-	public ModelAndView toIndex(HttpServletRequest request, Model model) {
+	public ModelAndView toIndex(String type,HttpServletRequest request, Model model) {
 		ModelAndView mav = new ModelAndView();
 		try {
-			mav.addObject("projectMap", getIndexProjects());
+			mav.addObject("projects", projectService.getIndexProject(type));
 		} catch (ServiceException e) {
 			log.error("MainController.toIndex(): ServiceException", e);
 		}
@@ -50,12 +51,14 @@ private final static Logger log = Logger.getLogger(MainController.class);
 		return mav;
 	}
 	
-	private Map<String,List<Project>> getIndexProjects() throws ServiceException{
-		Map<String,List<Project>> projectMap = new LinkedHashMap<String, List<Project>>();
-		projectMap.put(Constants.PROJECT_TYPE_CITYINSIDE_NAME, projectService.getIndexProject(Constants.PROJECT_TYPE_CITYINSIDE));
-		projectMap.put(Constants.PROJECT_TYPE_CITYOUTSIDE_NAME, projectService.getIndexProject(Constants.PROJECT_TYPE_CITYOUTSIDE));
-		projectMap.put(Constants.PROJECT_TYPE_SAIDPAT_NAME, projectService.getIndexProject(Constants.PROJECT_TYPE_SAIDPAT));
-		projectMap.put(Constants.PROJECT_TYPE_ONETOONE_NAME, projectService.getIndexProject(Constants.PROJECT_TYPE_ONETOONE));
-		return projectMap;
-	}
+//	private List<Project> getIndexProjects(String type) throws ServiceException{
+//			return  ;
+		
+//		Map<String,List<Project>> projectMap = new LinkedHashMap<String, List<Project>>();
+//		projectMap.put(Constants.PROJECT_TYPE_CITYINSIDE_NAME, projectService.getIndexProject(Constants.PROJECT_TYPE_CITYINSIDE));
+//		projectMap.put(Constants.PROJECT_TYPE_CITYOUTSIDE_NAME, projectService.getIndexProject(Constants.PROJECT_TYPE_CITYOUTSIDE));
+//		projectMap.put(Constants.PROJECT_TYPE_SAIDPAT_NAME, projectService.getIndexProject(Constants.PROJECT_TYPE_SAIDPAT));
+//		projectMap.put(Constants.PROJECT_TYPE_ONETOONE_NAME, projectService.getIndexProject(Constants.PROJECT_TYPE_ONETOONE));
+//		return projectMap;
+//	}
 }

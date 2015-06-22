@@ -1,17 +1,12 @@
-.navbar {
-	min-height: 40px;
+.header{
+	background-image: url("../images/header.png");
+	background-repeat:no-repeat;
+	background-size:cover; 
 }
 
-.main-header {
-	margin: 2% 0;
-	background-color: #FF9900;
+.footer{
+	background-image: url("../images/header.png");
+	background-repeat:no-repeat;
+	background-size:cover; 
 }
-
-.main-header .navbar-nav  a:hover,
-.main-header .navbar-nav a:focus {
-  background-color: #FFCC00;
-}
-
-.main-header a{
-	color: #FFFFFF;
-}
+	
