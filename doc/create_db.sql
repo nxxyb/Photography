@@ -84,7 +84,7 @@ CREATE TABLE `file_info` (
   `last_update_time` datetime comment '最后修改时间'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-/**订单表 */
+/**活动订单表 */
 DROP TABLE IF EXISTS `project_order`;
 CREATE TABLE `project_order` (
   `id` varchar(36) NOT NULL PRIMARY KEY,
@@ -101,6 +101,45 @@ CREATE TABLE `project_comment` (
   `id` varchar(36) NOT NULL PRIMARY KEY,
   `create_user` varchar(36) comment '用户',
   `project` varchar(36) comment '活动',
+  `type` varchar(10) comment '评论类型  1-好评  2-中评  3-差评',
+  `photos` varchar(500) comment '评论图片',
+  `content` varchar(2000) comment '评论内容',
+  `create_time` datetime comment '创建时间',
+  `last_update_time` datetime comment '最后修改时间'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/**作品表 */
+DROP TABLE IF EXISTS `work`;
+CREATE TABLE `work` (
+  `id` varchar(36) NOT NULL PRIMARY KEY,
+  `name` varchar(200) comment '名称',
+  `des` varchar(2000) comment '介绍',
+  `cost` varchar(300) comment '费用',
+  `photos` varchar(500) comment '照片',
+  `create_user` varchar(36) comment '创建用户',
+  `joined_number` varchar(10) comment '已订购人数',
+  `viewed_number` varchar(10) comment '浏览次数',
+  `create_time` datetime comment '创建时间',
+  `last_update_time` datetime comment '最后修改时间'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/**作品订单表 */
+DROP TABLE IF EXISTS `work_order`;
+CREATE TABLE `work_order` (
+  `id` varchar(36) NOT NULL PRIMARY KEY,
+  `user` varchar(36) comment '用户',
+  `work` varchar(36) comment '作品',
+  `status` varchar(10) comment '状态 1-未支付 2-已取消  3-已支付',
+  `create_time` datetime comment '创建时间',
+  `last_update_time` datetime comment '最后修改时间'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/**作品评论表 */
+DROP TABLE IF EXISTS `work_comment`;
+CREATE TABLE `work_comment` (
+  `id` varchar(36) NOT NULL PRIMARY KEY,
+  `create_user` varchar(36) comment '用户',
+  `work` varchar(36) comment '作品',
   `type` varchar(10) comment '评论类型  1-好评  2-中评  3-差评',
   `photos` varchar(500) comment '评论图片',
   `content` varchar(2000) comment '评论内容',
