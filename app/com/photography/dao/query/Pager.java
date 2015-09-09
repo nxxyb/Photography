@@ -2,6 +2,8 @@ package com.photography.dao.query;
 
 import java.io.Serializable;
 
+import com.photography.utils.Constants;
+
 /**
  * 
  * 
@@ -18,7 +20,7 @@ public class Pager implements Serializable {
 	private int currentPage;
 
 	// 页面大小
-	private int pageSize;
+	private int pageSize = Constants.PAGER_SIZE;
 
 	// 总记录数
 	private int totalCount;

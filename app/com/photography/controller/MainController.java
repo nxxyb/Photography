@@ -1,9 +1,5 @@
 package com.photography.controller;
 
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
@@ -14,10 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.photography.exception.ServiceException;
-import com.photography.mapping.Project;
 import com.photography.service.IProjectService;
-import com.photography.utils.Constants;
-import com.photography.utils.StringUtil;
+import com.photography.service.IWorkService;
 
 /**
  * 
@@ -35,15 +29,23 @@ private final static Logger log = Logger.getLogger(MainController.class);
 	@Autowired
 	private IProjectService projectService;
 	
+	@Autowired
+	private IWorkService workService;
+	
 	public void setProjectService(IProjectService projectService) {
 		this.projectService = projectService;
 	}
 	
+	public void setWorkService(IWorkService workService) {
+		this.workService = workService;
+	}
+
 	@RequestMapping("/index")
 	public ModelAndView toIndex(String type,HttpServletRequest request, Model model) {
 		ModelAndView mav = new ModelAndView();
 		try {
 			mav.addObject("projects", projectService.getIndexProject(type));
+			mav.addObject("works", workService.getIndexProject());
 		} catch (ServiceException e) {
 			log.error("MainController.toIndex(): ServiceException", e);
 		}

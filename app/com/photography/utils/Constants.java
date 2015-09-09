@@ -91,4 +91,8 @@ public class Constants {
 	//用户中心-活动订单每页显示条数
 	public final static int PAGER_PROJECT_ORDER = 4;
 	
+	/**
+	 * 分页
+	 */
+	public final static int PAGER_SIZE = 10;
 }

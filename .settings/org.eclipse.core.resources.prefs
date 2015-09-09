@@ -1,18 +1,29 @@
-#Tue Apr 21 17:56:41 CST 2015
+#Sun Jul 05 16:35:17 CST 2015
 eclipse.preferences.version=1
+encoding//WebRoot/WEB-INF/css/style.css=UTF-8
 encoding//WebRoot/WEB-INF/views=UTF-8
+encoding//WebRoot/WEB-INF/views/common/footer.html=UTF-8
+encoding//WebRoot/WEB-INF/views/common/fwslider.html=UTF-8
 encoding//WebRoot/WEB-INF/views/common/header.html=UTF-8
 encoding//WebRoot/WEB-INF/views/common/locate.html=UTF-8
+encoding//WebRoot/WEB-INF/views/index.html=UTF-8
 encoding//WebRoot/WEB-INF/views/project/project_create.html=UTF-8
+encoding//WebRoot/WEB-INF/views/project/project_review.html=UTF-8
 encoding//WebRoot/WEB-INF/views/user/login.html=UTF-8
 encoding//WebRoot/WEB-INF/views/user/person_info/auth.html=UTF-8
 encoding//WebRoot/WEB-INF/views/user/person_info/info.html=UTF-8
 encoding//WebRoot/WEB-INF/views/user/person_info/person_info.html=UTF-8
+encoding//WebRoot/WEB-INF/views/user/person_info/project_fb.html=UTF-8
+encoding//WebRoot/WEB-INF/views/user/person_info/project_fb_item.html=UTF-8
+encoding//WebRoot/WEB-INF/views/user/person_info/project_order.html=UTF-8
+encoding//WebRoot/WEB-INF/views/user/person_info/project_order_item.html=UTF-8
+encoding//WebRoot/WEB-INF/views/user/person_info/sms.html=UTF-8
 encoding//WebRoot/WEB-INF/views/user/register/register_normal.html=UTF-8
 encoding//WebRoot/WEB-INF/views/user/register/register_normal_email.html=UTF-8
 encoding//WebRoot/WEB-INF/views/user/register/register_normal_email_confirm.html=UTF-8
 encoding//WebRoot/WEB-INF/views/user/register_normal.html=UTF-8
 encoding//WebRoot/WEB-INF/views/user/register_publisher.html=UTF-8
+encoding//WebRoot/index.html=UTF-8
 encoding//resources/jdbc.properties=UTF-8
 encoding//resources/log4j.properties=UTF-8
 encoding//resources/system.properties=UTF-8
