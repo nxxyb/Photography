@@ -11,7 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.photography.exception.ServiceException;
 import com.photography.service.IProjectService;
-import com.photography.service.IWorkService;
+import com.photography.utils.Constants;
 
 /**
  * 
@@ -29,26 +29,15 @@ private final static Logger log = Logger.getLogger(MainController.class);
 	@Autowired
 	private IProjectService projectService;
 	
-	@Autowired
-	private IWorkService workService;
-	
 	public void setProjectService(IProjectService projectService) {
 		this.projectService = projectService;
 	}
 	
-	public void setWorkService(IWorkService workService) {
-		this.workService = workService;
-	}
-
 	@RequestMapping("/index")
-	public ModelAndView toIndex(String type,HttpServletRequest request, Model model) {
+	public ModelAndView toIndex(String errorMessage,HttpServletRequest request, Model model) {
 		ModelAndView mav = new ModelAndView();
-		try {
-			mav.addObject("projects", projectService.getIndexProject(type));
-			mav.addObject("works", workService.getIndexProject());
-		} catch (ServiceException e) {
-			log.error("MainController.toIndex(): ServiceException", e);
-		}
+		mav.addObject(Constants.ERROR_MESSAGE, errorMessage);
+			
 		mav.setViewName("index");
 		return mav;
 	}

@@ -70,24 +70,22 @@ public class UserController extends BaseController{
 	 * @author 徐雁斌
 	 */
 	@RequestMapping(value="/login",method=RequestMethod.POST)
-	public ModelAndView login(String email,String password,HttpServletRequest request, Model model){
+	public ModelAndView login(String mobile,String password,HttpServletRequest request, Model model){
 		ModelAndView mav = new ModelAndView();
 		try{
-			User user = userService.login(email, MD5Util.md5(password));
+			User user = userService.login(mobile, MD5Util.md5(password));
 			request.getSession().setAttribute(Constants.SESSION_USER_KEY, user);
-			mav.setViewName("redirect:/index");
 		}catch(Exception e){
 			if(e instanceof ServiceException){
 				ServiceException se = (ServiceException) e;
 				String message = se.getErrorMessage();
-				mav.addObject("errorMessage", message); 
-				mav.setViewName("user/login");
+				mav.addObject(Constants.ERROR_MESSAGE, message); 
 			}else{
 				log.error("login error",e);
-				mav.addObject("errorMessage", ErrorMessage.get(ErrorCode.UNKNOWN_ERROR));
-				mav.setViewName("user/login");
+				mav.addObject(Constants.ERROR_MESSAGE, ErrorMessage.get(ErrorCode.UNKNOWN_ERROR));
 			}
 		}
+		mav.setViewName("redirect:/index");
 		return mav;
 	}
 	

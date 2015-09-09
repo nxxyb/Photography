@@ -19,6 +19,7 @@ import com.photography.utils.StringUtil;
  * 
  * @copyright 2015 天大求实电力新技术股份有限公司 版权所有
  */
+@SuppressWarnings("unchecked")
 @Service("projectService")
 public class ProjectServiceImpl extends BaseServiceImpl implements IProjectService {
 

@@ -31,10 +31,4 @@ public class ErrorCode {
 	 * 系统异常：10200-10299
 	 */
 	public static final int PROJECT_NOT_EXIST = 10200;
-	
-	/*
-	 *作品
-	 * 系统异常：10300-10399
-	 */
-	public static final int WORK_NOT_EXIST = 10300;
 }

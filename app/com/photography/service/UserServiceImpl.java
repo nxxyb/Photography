@@ -26,7 +26,7 @@ public class UserServiceImpl extends BaseServiceImpl implements IUserService {
 	 */
 	public User login(String email, String password) throws ServiceException {
 		User user = null;
-		List<User> userList = (List<User>) hibernateDao.getByQuery(User.class, Condition.eq("email", email));
+		List<User> userList = (List<User>) hibernateDao.getByQuery(User.class, Condition.eq("mobile", email));
 		if(userList.size()>0) {
 			user = userList.get(0);
 		}

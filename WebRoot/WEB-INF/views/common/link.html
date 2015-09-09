@@ -1,28 +1,58 @@
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<link href="${basePath}/css/bootstrap.min.css" rel="stylesheet" type="text/css" media="all" />
-<link href="${basePath}/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css" media="all" />
-<link href="${basePath}/css/header.css" rel="stylesheet" type="text/css" media="all" />
-<link href="${basePath}/css/style.css" rel="stylesheet" type="text/css" media="all" />
-<link href="${basePath}/css/bootstrapValidator.min.css" rel="stylesheet" type="text/css" media="all" />
-<link href="${basePath}/css/fileinput.css" rel="stylesheet" type="text/css" media="all" />
-<link href="${basePath}/css/stickup.css" rel="stylesheet" type="text/css" media="all" />
-<link href="${basePath}/css/jquery.datetimepicker.css" rel="stylesheet" type="text/css" media="all" />
-<link href="${basePath}/css/star-rating.min.css" rel="stylesheet" type="text/css" media="all" />
-<link href="${basePath}/css/font-awesome.min.css" rel="stylesheet" type="text/css" media="all" />
-<!--<link href="${basePath}/css/flat-ui.min.css" rel="stylesheet" type="text/css" media="all" />-->
+<#assign basePath=request.contextPath>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+<meta content="" name="description"/>
+<meta content="" name="author"/>
+<!-- BEGIN GLOBAL MANDATORY STYLES -->
+<link href='http://fonts.googleapis.com/css?family=Roboto+Condensed:300italic,400italic,700italic,400,300,700&amp;subset=all' rel='stylesheet' type='text/css'>
+<link href="${basePath}/assets/plugins/socicon/socicon.css" rel="stylesheet" type="text/css"/>
+<link href="${basePath}/assets/plugins/bootstrap-social/bootstrap-social.css" rel="stylesheet" type="text/css"/>
+<link href="${basePath}/assets/plugins/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+<link href="${basePath}/assets/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css"/>
+<link href="${basePath}/assets/plugins/animate/animate.min.css" rel="stylesheet" type="text/css"/>
+<link href="${basePath}/assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+<!-- END GLOBAL MANDATORY STYLES -->
+<!-- BEGIN: BASE PLUGINS  -->
+<link href="${basePath}/assets/plugins/revo-slider/css/settings.css" rel="stylesheet" type="text/css"/>
+<link href="${basePath}/assets/plugins/cubeportfolio/css/cubeportfolio.min.css" rel="stylesheet" type="text/css"/>
+<link href="${basePath}/assets/plugins/owl-carousel/owl.carousel.css" rel="stylesheet" type="text/css"/>
+<link href="${basePath}/assets/plugins/owl-carousel/owl.theme.css" rel="stylesheet" type="text/css"/>
+<link href="${basePath}/assets/plugins/owl-carousel/owl.transitions.css" rel="stylesheet" type="text/css"/>
+<link href="${basePath}/assets/plugins/fancybox/jquery.fancybox.css" rel="stylesheet" type="text/css"/>
+<link href="${basePath}/assets/plugins/slider-for-bootstrap/css/slider.css" rel="stylesheet" type="text/css"/>
 
+<!-- END: BASE PLUGINS -->
+<!-- BEGIN THEME STYLES -->
+<link href="${basePath}/assets/base/css/plugins.css" rel="stylesheet" type="text/css"/>
+<link href="${basePath}/assets/base/css/components.css" id="style_components" rel="stylesheet" type="text/css"/>
+<link href="${basePath}/assets/base/css/themes/default.css" rel="stylesheet" id="style_theme" type="text/css"/>
+<link href="${basePath}/assets/base/css/custom.css" rel="stylesheet" type="text/css"/>
+<!-- END THEME STYLES -->
+<link rel="shortcut icon" href="favicon.ico"/>
 
-<script type="text/javascript" src="${basePath}/js/jquery-2.1.3.min.js"></script>
-<script type="text/javascript" src="${basePath}/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="${basePath}/js/megamenu.js"></script>
-<script type="text/javascript" src="${basePath}/js/bootstrapValidator.min.js"></script>
-<script type="text/javascript" src="${basePath}/js/fileinput.min.js"></script>
-<script type="text/javascript" src="${basePath}/js/fileinput_locale_zh.js"></script>
-<script type="text/javascript" src="${basePath}/js/distpicker.data.min.js"></script>
-<script type="text/javascript" src="${basePath}/js/distpicker.min.js"></script>
-<script type="text/javascript" src="${basePath}/js/jquery.datetimepicker.js"></script>
-<script type="text/javascript" src="${basePath}/js/jquery.infinitescroll.min.js"></script>
-<script type="text/javascript" src="${basePath}/js/star-rating.min.js"></script>
-<!--<script type="text/javascript" src="${basePath}/js/flat-ui.min.js"></script>-->
-<script>$(document).ready(function(){$(".megamenu").megamenu();});</script>
+<!-- script -->
+<!--[if lt IE 9]>
+	<script src="${basePath}/assets/plugins/excanvas.min.js"></script> 
+	<![endif]-->
+
+<script src="${basePath}/assets/plugins/jquery.min.js" type="text/javascript"></script>
+<script src="${basePath}/assets/plugins/jquery-migrate.min.js" type="text/javascript"></script>
+<script src="${basePath}/assets/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="${basePath}/assets/plugins/jquery.easing.min.js" type="text/javascript"></script>
+<!-- END: CORE PLUGINS -->
+<!-- BEGIN: LAYOUT PLUGINS -->
+<script src="${basePath}/assets/plugins/revo-slider/js/jquery.themepunch.tools.min.js" type="text/javascript"></script>
+<script src="${basePath}/assets/plugins/revo-slider/js/jquery.themepunch.revolution.min.js" type="text/javascript"></script>
+<script src="${basePath}/assets/plugins/cubeportfolio/js/jquery.cubeportfolio.min.js" type="text/javascript"></script>
+<script src="${basePath}/assets/plugins/owl-carousel/owl.carousel.min.js" type="text/javascript"></script>
+<script src="${basePath}/assets/plugins/counterup/jquery.waypoints.min.js" type="text/javascript"></script>
+<script src="${basePath}/assets/plugins/counterup/jquery.counterup.min.js" type="text/javascript"></script>
+<script src="${basePath}/assets/plugins/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+<script src="${basePath}/assets/plugins/slider-for-bootstrap/js/bootstrap-slider.js" type="text/javascript"></script>
+
+<!-- END: LAYOUT PLUGINS -->
+<!-- BEGIN: THEME SCRIPTS -->
+<script src="${basePath}/assets/base/js/components.js" type="text/javascript"></script>
+<script src="${basePath}/assets/base/js/components-shop.js" type="text/javascript"></script>
+<script src="${basePath}/assets/base/js/app.js" type="text/javascript"></script>

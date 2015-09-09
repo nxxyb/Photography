@@ -41,6 +41,10 @@ public class Constants {
 	//session
 	public final static String SESSION_USER_KEY = "user";
 	
+	//template 
+	public final static String ERROR_MESSAGE = "errorMessage";
+	public final static String SUCCESS_MESSAGE = "successMessage";
+	
 
 	/**
 	 * 活动类型
@@ -91,8 +95,4 @@ public class Constants {
 	//用户中心-活动订单每页显示条数
 	public final static int PAGER_PROJECT_ORDER = 4;
 	
-	/**
-	 * 分页
-	 */
-	public final static int PAGER_SIZE = 10;
 }

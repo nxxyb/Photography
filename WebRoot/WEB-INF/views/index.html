@@ -1,77 +1,51 @@
-<#assign basePath=request.contextPath>
-<!DOCTYPE HTML>
+<!DOCTYPE html>
+<!--[if IE 9]> <html lang="zh-CN" class="ie9"> <![endif]-->
+<!--[if !IE]><!-->
 <html lang="zh-CN">
+<!--<![endif]-->
+<!-- BEGIN HEAD -->
 <head>
-  <!-- title start-->
-   <#include "./common/title.html">
-  <!-- title end-->
-  
-  <!-- link start-->
-   <#include "./common/link.html">
-  <!-- link end-->
-  
+	<#include "./common/title.html">
+	<#include "./common/link.html">
+	<link rel="shortcut icon" href="favicon.ico"/>
 </head>
+<body class="c-layout-header-fixed c-layout-header-mobile-fixed c-layout-header-fullscreen">
 
-<body>
-    
-  <!-- header start-->
-  <#include "./common/header.html">
-  <!-- header end -->
-  
-   <!-- fwslider start-->
-   <#include "./common/fwslider.html">
-  <!-- fwslider end-->
-  
-<div class="main-content">
-	<div class="container">
+	<#include "./common/header.html">
+
+<!-- BEGIN: PAGE CONTAINER -->
+<div class="c-layout-page" style="background-image: url(${basePath}/images/example/project-bg.jpg)">
+	<!-- BEGIN: PAGE CONTENT -->
 	
-			<!-- 活动 -->
-			<div class="panel" style="background-color: rgba(0, 0, 0, 0);">
-			  <div class="panel-heading" style="background-color: #052F28;">
-			  		<a href="#" style="color: #FFFF01;"><strong>热门活动推荐</strong></a> 
-			  		<a href="#" style="color: #FFFF01;"><strong>长线专区</strong></a> 
-			  		<a href="#" style="color: #FFFF01;"><strong>短线专区</strong></a>
-			  		<a class="pull-right" href="#" style="color: #FFFF01;"><strong>更多活动>></strong></a> 
-			  </div>
-				<div class="panel-body">
-					<#if projects??>
-					 <#list projects as project>
-						<div class="col-sm-6 col-md-6">
-							<div class="thumbnail" style="background-color: #052F28;color:#fff; border: 0px;">
-									<div class="pull-right" style="background-color: #05090E;position: absolute;right: 180px;top: 265px;width: 150px; text-align: center;"> 
-											<span class="glyphicon glyphicon-picture"> ${(project.viewedNumber)!'0'}</span>	 			
-											<span class="glyphicon glyphicon-user"> ${(project.joinedNumber)!'0'}</span> 
-									</div>
-									<div class="pull-right" style="background-color: #02ADEA;position: absolute;right: 30px;top: 265px;width: 150px;text-align: center;">
-										立刻报名
-									</div>
-								<a href="${basePath}/project/toReview?id=${project.id}">
-									<img <#if project?? && project.photos?? && project.photos.fileInfos??>src="${basePath}/${project.photos.fileInfos[0].realPath}"</#if> style="width: 100%; height: 300px;"/>
-									
-								</a>
-								<div class="caption" style="color:#EB3F3F;">
-									<a href="${basePath}/project/toReview?id=${project.id}">${(project.name)!''}</a>
-									<div class="pull-right">
-										<span class="glyphicon glyphicon-gift"> 赠HASKI背包+Fenix头灯</span> 
-									</div>
-									<!--
-									<p><small><span class="glyphicon glyphicon-time text-success"></span> ${(project.startTime?string("yyyy-MM-dd"))!''} <p class="pull-right">目的地 ${(project.province)!''}</p></small></p>
-									<h4 class="orange-color"><span class="glyphicon glyphicon-yen"></span><strong>${(project.cost)!''}</strong></h4>
-									-->
-								</div>
-							</div>
-						</div>
-						</#list>
-						</#if>
-				</div>
-			</div>
-			
-		
-	</div>
+	<#include "./common/fwslider.html">
+	
+	<#include "./home/recommend.html">
+	
+	<#include "./home/project.html">
+	
+	<#include "./home/work.html">
+	
+	<!-- END: PAGE CONTENT -->
 </div>
-  <!-- footer start-->
-  <#include "./common/footer.html">
-  <!-- footer end -->
-  
-  </body>
+<!-- END: PAGE CONTAINER -->
+
+<#include "./common/footer.html">
+
+<script>
+	$(document).ready(function() {    
+		App.init(); // init core    
+	});
+	</script>
+<!-- END: THEME SCRIPTS -->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-64667612-1', 'themehats.com');
+  ga('send', 'pageview');
+</script>
+
+</body>
+
 </html>
