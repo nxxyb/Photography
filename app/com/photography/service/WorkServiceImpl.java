@@ -17,7 +17,7 @@ public class WorkServiceImpl extends BaseServiceImpl implements IWorkService {
 	public List<Work> getRelaWorks(String id) throws ServiceException {
 		Work work = hibernateDao.loadById(Work.class, id);
 		if(work == null){
-			throw new ServiceException(ErrorCode.WORK_NOT_EXIST);
+//			throw new ServiceException(ErrorCode.WORK_NOT_EXIST);
 		}
 		
 		Pager pager= new Pager();
