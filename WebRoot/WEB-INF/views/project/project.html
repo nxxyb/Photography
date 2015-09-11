@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<!--[if IE 9]> <html lang="zh-CN" class="ie9"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="zh-CN">
+<!--<![endif]-->
+<!-- BEGIN HEAD -->
+<head>
+	<#include "../common/title.html">
+	<#include "../common/link.html">
+	<link rel="shortcut icon" href="favicon.ico"/>
+</head>
+<body class="c-layout-header-fixed c-layout-header-mobile-fixed">
+
+	<#include "../common/header.html">
+
+<!-- BEGIN: PAGE CONTAINER -->
+<div class="c-layout-page" style="background-image: url(${basePath}/images/example/project-bg.jpg)">
+	<!-- BEGIN: PAGE CONTENT -->
+	
+	<div class="c-content-box c-overflow-hide c-bg-grey">
+	<div class="c-content-product-3 c-bs-grid-reset-space">
+		<div class="row">
+			<div class="col-md-8 col-sm-6">
+				<div class="c-content-overlay">
+					<div class="c-overlay-wrapper">
+						<div class="c-overlay-content">
+							<a href="shop-product-details-2.html" class="btn btn-md c-btn-grey-1 c-btn-uppercase c-btn-bold c-btn-border-1x c-btn-square">Explore</a>
+						</div>
+					</div>
+					<div class="c-bg-img-center c-overlay-object" data-height="height" style="height: 550px; background-image: url(${basePath}/images/example/project1.jpg);"></div>
+				</div>
+			</div>
+			<div class="col-md-4 col-sm-6">
+				<div class="c-wrapper c-bg-red" style="height: 550px;">
+					<div class="c-content c-border c-border-padding c-border-padding-right">
+						<h3 class="c-title c-font-25 c-font-white c-font-uppercase c-font-bold">MOTO 360 WATCH</h3>
+						<p class="c-description c-font-17 c-font-white">Lorem ipsum dolor sit amet, consectetuer adipiscing elit sed diam nonummy et nibh euismod aliquam erat volutpat.</p>
+						<p class="c-description c-font-17 c-font-white">Dolor sit amet, consectetuer adipiscing elit sed diam nonummy</p>
+						<p class="c-price c-font-55 c-font-white c-font-thin">$249</p>
+						<a href="shop-product-details-2.html" class="btn btn-lg c-btn-white c-font-uppercase c-btn-square c-btn-border-1x">BUY NOW</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div><!-- END: CONTENT/SHOPS/SHOP-3-1 -->
+
+<!-- BEGIN: CONTENT/SHOPS/SHOP-3-2 -->
+<div class="c-content-box c-size-lg c-no-padding c-overflow-hide c-bg-white">
+	<div class="c-content-product-3 c-bs-grid-reset-space">
+		<div class="row">
+			<div class="col-md-4 col-sm-6">
+				<div class="c-wrapper c-theme-bg" style="height: 550px;">
+					<div class="c-content c-border c-border-padding c-border-padding-left">
+						<h3 class="c-title c-font-25 c-font-white c-font-uppercase c-font-bold">With Theme Color</h3>
+						<p class="c-description c-font-17 c-font-white">Lorem ipsum dolor sit amet, consectetuer adipiscing elit sed diam nonummy et nibh euismod aliquam erat volutpat.</p>
+						<p class="c-description c-font-17 c-font-white">Dolor sit amet, consectetuer adipiscing elit sed diam nonummy</p>
+						<p class="c-price c-font-55 c-font-white c-font-thin">$249</p>
+						<a href="shop-product-details.html" class="btn btn-lg c-btn-white c-font-uppercase c-btn-square c-btn-border-1x">BUY NOW</a>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-8 col-sm-6">
+				<div class="c-content-overlay">
+					<div class="c-overlay-wrapper">
+						<div class="c-overlay-content">
+							<a href="shop-product-details.html" class="btn btn-md c-btn-grey-1 c-btn-uppercase c-btn-bold c-btn-border-1x c-btn-square">Explore</a>
+						</div>
+					</div>
+					<div class="c-bg-img-center c-overlay-object" data-height="height" style="height: 550px; background-image: url(${basePath}/images/example/project2.jpg);"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div><!-- END: CONTENT/SHOPS/SHOP-3-2 -->
+
+	
+	<!-- END: PAGE CONTENT -->
+</div>
+<!-- END: PAGE CONTAINER -->
+
+<#include "../common/footer.html">
+
+<script>
+	$(document).ready(function() {    
+		App.init(); // init core    
+	});
+	</script>
+<!-- END: THEME SCRIPTS -->
+<script>
+$(document).ready(function(){
+
+	$('#project').addClass('c-active');
+  
+  });
+</script>
+
+</body>
+
+</html>

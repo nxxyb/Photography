@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.photography.exception.ErrorCode;
 import com.photography.exception.ErrorMessage;
@@ -70,8 +71,7 @@ public class UserController extends BaseController{
 	 * @author 徐雁斌
 	 */
 	@RequestMapping(value="/login",method=RequestMethod.POST)
-	public ModelAndView login(String mobile,String password,HttpServletRequest request, Model model){
-		ModelAndView mav = new ModelAndView();
+	public String login(String mobile,String password,HttpServletRequest request,RedirectAttributes attr){
 		try{
 			User user = userService.login(mobile, MD5Util.md5(password));
 			request.getSession().setAttribute(Constants.SESSION_USER_KEY, user);
@@ -79,30 +79,17 @@ public class UserController extends BaseController{
 			if(e instanceof ServiceException){
 				ServiceException se = (ServiceException) e;
 				String message = se.getErrorMessage();
-				mav.addObject(Constants.ERROR_MESSAGE, message); 
+				attr.addFlashAttribute(Constants.ERROR_MESSAGE, message);
 			}else{
 				log.error("login error",e);
-				mav.addObject(Constants.ERROR_MESSAGE, ErrorMessage.get(ErrorCode.UNKNOWN_ERROR));
+				attr.addFlashAttribute(Constants.ERROR_MESSAGE, ErrorMessage.get(ErrorCode.UNKNOWN_ERROR));
 			}
 		}
-		mav.setViewName("redirect:/index");
-		return mav;
+		return "redirect:/index";
 	}
 	
 	/**
-	 * 跳转到register页面(爱好者用户)
-	 * @param request
-	 * @param model
-	 * @return
-	 * @author 徐雁斌
-	 */
-	@RequestMapping("/toRegister")
-	public String toRegister(HttpServletRequest request, Model model) {
-		return "user/register/register_normal";
-	}
-	
-	/**
-	 * 用户注册(爱好者用户)
+	 * 用户注册
 	 * @param user
 	 * @param request
 	 * @param model
@@ -110,8 +97,7 @@ public class UserController extends BaseController{
 	 * @author 徐雁斌
 	 */
 	@RequestMapping(value="/register",method=RequestMethod.POST)
-	public ModelAndView register(User user,HttpServletRequest request, Model model){
-		ModelAndView mav = new ModelAndView();
+	public ModelAndView register(User user,HttpServletRequest request, ModelAndView mav){
 		try{
 			user.setType(Constants.USER_TYPE_NORMAL);
 			user.setPassword(MD5Util.md5(user.getPassword()));

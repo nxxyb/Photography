@@ -1,20 +1,26 @@
 <#if successMessage??>
-<div class="modal fade" id="success_modal" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title text-success"><span class="glyphicon glyphicon-ok"></span> 成功</h4>
-      </div>
-      <div class="modal-body">
-        <p>${successMessage!''}</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-      </div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+<div class="modal fade bs-example-modal-sm" id="success_modal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-sm">
+		<div class="modal-content c-square">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+				<h4 class="modal-title">
+					<span class="glyphicon glyphicon-ok c-font-green-1" ></span> 成功
+				</h4>
+			</div>
+			<div class="modal-body">
+				<p>
+					${successMessage!''}
+				</p>
+			</div>
+			<div class="modal-footer">								
+				<button type="button" class="btn c-theme-btn c-btn-border-2x c-btn-square c-btn-bold c-btn-uppercase" data-dismiss="modal">关闭</button>
+			</div>
+		</div>
+		<!-- /.modal-content -->
+	</div>
+	<!-- /.modal-dialog -->
+</div>
 <<script type="text/javascript">
 <!--
 	$("#success_modal").modal('show');

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.photography.exception.ServiceException;
 import com.photography.service.IProjectService;
@@ -34,12 +35,8 @@ private final static Logger log = Logger.getLogger(MainController.class);
 	}
 	
 	@RequestMapping("/index")
-	public ModelAndView toIndex(String errorMessage,HttpServletRequest request, Model model) {
-		ModelAndView mav = new ModelAndView();
-		mav.addObject(Constants.ERROR_MESSAGE, errorMessage);
-			
-		mav.setViewName("index");
-		return mav;
+	public String toIndex(String errorMessage,HttpServletRequest request, RedirectAttributes attr) {
+		return "/index";
 	}
 	
 //	private List<Project> getIndexProjects(String type) throws ServiceException{

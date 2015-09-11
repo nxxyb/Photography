@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.photography.dao.exp.Condition;
 import com.photography.dao.exp.Expression;
@@ -63,6 +64,14 @@ public class ProjectController extends BaseController {
 	
 	public void setProjectOrderService(IProjectOrderService projectOrderService) {
 		this.projectOrderService = projectOrderService;
+	}
+	
+	/**
+	 * 活动首页
+	 */
+	@RequestMapping("/index")
+	public String toIndex(String errorMessage,HttpServletRequest request, RedirectAttributes attr) {
+		return "project/project";
 	}
 
 	/**
