@@ -320,6 +320,17 @@ a {
 .c-content-tab-2.c-theme > ul > li:hover > a > .c-content-line-icon {
   background-image: url(../../img/content/line-icons/default.png); }
 
+.c-content-tab-5.c-theme .c-nav-tab > li.active > a,
+.c-content-tab-5.c-theme .c-nav-tab > li a:hover {
+  color: #fff;
+  background-color: #32c5d2; }
+
+.c-content-tab-5.c-theme .c-nav-tab.c-arrow a:hover:after {
+  border-left-color: #32c5d2; }
+
+.c-content-tab-5.c-theme .c-nav-tab.c-arrow .active > a:after {
+  border-left-color: #32c5d2; }
+
 .c-content-accordion-1.c-theme .panel > .panel-heading > .panel-title > a {
   background-color: #32c5d2; }
   .c-content-accordion-1.c-theme .panel > .panel-heading > .panel-title > a.collapsed {
@@ -351,6 +362,9 @@ a {
   background-color: #32c5d2; }
   .c-layout-sidebar-menu.c-theme .c-sidebar-menu.c-option-2 > li.c-active > a > .c-arrow {
     color: #ffffff; }
+
+.c-content-title-4.c-theme .c-line-strike:before {
+  border-top: 1px solid #32c5d2; }
 
 .owl-carousel.c-theme .owl-pagination .owl-page span {
   background: #e1e1e1; }

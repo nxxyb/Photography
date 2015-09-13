@@ -197,9 +197,10 @@ public class ProjectController extends BaseController {
 	 * @author 徐雁斌
 	 */
 	@RequestMapping(value="/toReview")
-	public ModelAndView toReview(String id,HttpServletRequest request, Model model){
-		ModelAndView mav = new ModelAndView();
-		return reviewProject(id, request, mav);
+	public String toReview(String id,HttpServletRequest request, RedirectAttributes attr){
+//		ModelAndView mav = new ModelAndView();
+//		return reviewProject(id, request, mav);
+		return "project/project_review";
 	}
 
 	/**
