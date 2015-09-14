@@ -1,0 +1,65 @@
+<div class="c-layout-sidebar-menu c-theme ">
+    <!-- BEGIN: LAYOUT/SIDEBARS/SHOP-SIDEBAR-DASHBOARD -->
+    <div class="c-sidebar-menu-toggler">
+        <h3 class="c-title c-font-uppercase c-font-bold">用户中心</h3>
+        <a href="javascript:;" class="c-content-toggler" data-toggle="collapse" data-target="#sidebar-menu-1">
+            <span class="c-line"></span>
+            <span class="c-line"></span>
+            <span class="c-line"></span>
+        </a>
+    </div>
+    <div class="c-sidebar-menu-toggler">
+        <h3 class="c-title c-font-uppercase c-font-bold">发布中心</h3>
+        <a href="javascript:;" class="c-content-toggler" data-toggle="collapse" data-target="#sidebar-menu-2">
+            <span class="c-line"></span>
+            <span class="c-line"></span>
+            <span class="c-line"></span>
+        </a>
+    </div>
+    <ul class="c-sidebar-menu collapse " id="sidebar-menu-1">
+        <li class="c-dropdown c-open">
+            <a href="javascript:;" class="c-toggler">用户中心
+                <span class="c-arrow"></span>
+            </a>
+            <ul class="c-dropdown-menu">
+                <li id="user_info">
+                    <a href="${basePath}/userinfo/toUserInfo?type=1">个人资料</a>
+                </li>
+                <li id="user_auth">
+                    <a href="${basePath}/userinfo/toUserInfo?type=2">认证信息</a>
+                </li>
+                <li id="user_collect">
+                    <a href="${basePath}/userinfo/toUserInfo?type=3">我的收藏</a>
+                </li>
+                <li id="user_bill">
+                    <a href="${basePath}/userinfo/toUserInfo?type=4">我的订单</a>
+                </li>
+                <li id="user_coupon">
+                    <a href="${basePath}/userinfo/toUserInfo?type=5">优惠卷</a>
+                </li>
+                <li id="user_changepw">
+                    <a href="${basePath}/userinfo/toUserInfo?type=6">修改密码</a>
+                </li>
+                <li>
+                    <a href="${basePath}/user/logout">退出登录</a>
+                </li>
+            </ul>
+        </li>
+    </ul>
+    <ul class="c-sidebar-menu collapse " id="sidebar-menu-2">
+        <li class="c-dropdown c-open">
+            <a href="javascript:;" class="c-toggler">发布中心
+                <span class="c-arrow"></span>
+            </a>
+            <ul class="c-dropdown-menu">
+                <li id="user_info">
+                    <a href="${basePath}/userinfo/toUserInfo?type=1">活动发布</a>
+                </li>
+                <li id="user_auth">
+                    <a href="${basePath}/userinfo/toUserInfo?type=2">作品发布</a>
+                </li>
+            </ul>
+        </li>
+    </ul>
+    <!-- END: LAYOUT/SIDEBARS/SHOP-SIDEBAR-DASHBOARD -->
+</div>

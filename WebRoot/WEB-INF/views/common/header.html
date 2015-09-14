@@ -108,17 +108,17 @@
 						</li>
 				
 						<li class="c-cart-toggler-wrapper">
-							<a  href="#" class="c-btn-icon c-cart-toggler"><i class="icon-handbag c-cart-icon"></i> <span class="c-cart-number c-theme-bg">2</span></a>
+							<a  href="#" class="c-btn-icon c-cart-toggler">我的订单 <span class="c-cart-number c-theme-bg">2</span></a>
 						</li>
 				
 						<#if Session.user?exists>
 						<li class="c-menu-type-classic">
 							<a href="javascript:;" class="c-link dropdown-toggle">
-								<#if Session.user?? && Session.user.nackName?? && Session.user.nackName !=''>${Session.user.nackName}<#else>${Session.user.mobile} </#if>
+								<#if Session.user?? && Session.user.realName?? && Session.user.realName !=''>${Session.user.realName}<#else>${Session.user.mobile} </#if>
 								<span class="c-arrow c-toggler"></span>
 							</a>
 							<ul class="dropdown-menu c-menu-type-classic c-pull-left">
-								<li> <a href="${basePath}/userinfo/toUserInfo">用户中心</a></li>
+								<li> <a href="${basePath}/userinfo/toUserInfo?type=1">用户中心</a></li>
 								<li><a href="${basePath}/user/logout">退出登录</a></li>
 							</ul>
 						</li>

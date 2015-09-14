@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.photography.dao.exp.Condition;
 import com.photography.dao.exp.Expression;
@@ -77,15 +78,28 @@ public class UserInfoController extends BaseController {
 
 	/**
 	 * 用户中心页面
+	 * type: 1 个人资料  2 认证信息 3 我的收藏 4 我的订单 5 优惠卷 6 修改密码
 	 * @param request
 	 * @return
 	 * @author 徐雁斌
 	 */
 	@RequestMapping(value="/toUserInfo")
-	public ModelAndView toUserInfo(HttpServletRequest request) {
-		ModelAndView mv = new ModelAndView();
-		mv.setViewName("user/person_info/person_info");
-		return mv;
+	public String toUserInfo(String type,HttpServletRequest request, RedirectAttributes attr) {
+		String page = "user/user_info";
+		if(type.equals("1")){
+			page = "user/user_info";
+		}else if(type.equals("2")){
+			page = "user/user_auth";
+		}else if(type.equals("3")){
+			page = "user/user_collect";
+		}else if(type.equals("4")){
+			page = "user/user_bill";
+		}else if(type.equals("5")){
+			page = "user/user_coupon";
+		}else if(type.equals("6")){
+			page = "user/user_changepw";
+		}
+		return page;
 	}
 	
 	/**

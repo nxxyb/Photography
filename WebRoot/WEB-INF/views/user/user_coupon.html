@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<!--[if IE 9]> <html lang="zh-CN" class="ie9"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="zh-CN">
+<!--<![endif]-->
+<!-- BEGIN HEAD -->
+<head>
+	<#include "../common/title.html">
+	<#include "../common/link.html">
+	<link rel="shortcut icon" href="favicon.ico"/>
+</head>
+<body class="c-layout-header-fixed c-layout-header-mobile-fixed">
+
+	<#include "../common/header.html">
+
+<!-- BEGIN: PAGE CONTAINER -->
+<div class="c-layout-page" >
+	<div class="c-content-box c-size-md c-bg-white">
+	<!-- BEGIN: PAGE CONTENT -->
+	<div class="container">
+		<#include "./common/menu.html">
+		
+		
+		
+	</div>
+	<!-- END: PAGE CONTENT -->
+	</div>
+</div>
+<!-- END: PAGE CONTAINER -->
+
+<#include "../common/footer.html">
+
+<script>
+	$(document).ready(function() {    
+		App.init(); // init core    
+	});
+	</script>
+<!-- END: THEME SCRIPTS -->
+<script>
+$(document).ready(function(){
+
+	$('#user_coupon').addClass('c-active');
+  
+  });
+</script>
+
+</body>
+
+</html>
