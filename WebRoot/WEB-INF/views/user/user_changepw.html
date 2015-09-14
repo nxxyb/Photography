@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<!--[if IE 9]> <html lang="zh-CN" class="ie9"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="zh-CN">
+<!--<![endif]-->
+<!-- BEGIN HEAD -->
+<head>
+	<#include "../common/title.html">
+	<#include "../common/link.html">
+	<link rel="shortcut icon" href="favicon.ico"/>
+</head>
+<body class="c-layout-header-fixed c-layout-header-mobile-fixed">
+
+	<#include "../common/header.html">
+
+<!-- BEGIN: PAGE CONTAINER -->
+<div class="c-layout-page" >
+	<div class="c-content-box c-size-md c-bg-white">
+	<!-- BEGIN: PAGE CONTENT -->
+	<div class="container">
+		<#include "./common/menu.html">
+		
+		<div class="c-layout-sidebar-content ">
+              <!-- BEGIN: PAGE CONTENT -->
+              <div class="c-content-title-1">
+                  <h3 class="c-font-uppercase c-font-bold">修改密码</h3>
+                  <div class="c-line-left"></div>
+              </div>
+              
+              <form class="form-horizontal c-shop-form-1">
+                  <!-- BEGIN: ADDRESS FORM -->
+                  <div class="">
+                      <!-- BEGIN: BILLING ADDRESS -->
+                      <div class="row">
+                          <div class="form-group col-md-6">
+                              <label class="control-label">已验证手机号码</label>
+                              <input type="text" class="form-control c-square c-theme" placeholder="手机号码"> 
+                          </div>
+                          <div class="col-md-6"></div>
+                      </div>
+                      <div class="row">
+                          <div class="form-group col-md-6">
+                              <label class="control-label">验证码</label>
+                              <div class="input-group c-square">
+                                  <input type="text" class="form-control  c-square c-theme" placeholder="验证码">
+                                  <span class="input-group-btn">
+                                      <button class="btn btn-default" type="button">获取验证码</button>
+                                  </span>
+                              </div>
+                          </div>
+                          <div class="col-md-6"></div>
+                      </div>
+                      
+                      <div class="row c-margin-t-30">
+                          <div class="form-group col-md-12" role="group">
+                              <button type="submit" class="btn btn-lg c-theme-btn c-btn-square c-btn-uppercase c-btn-bold">提交</button>
+                              <button type="submit" class="btn btn-lg btn-default c-btn-square c-btn-uppercase c-btn-bold">取消</button>
+                          </div>
+                      </div>
+                  </div>
+                  <!-- END: ADDRESS FORM -->
+              </form>
+               
+             </div>
+		
+	</div>
+	<!-- END: PAGE CONTENT -->
+	</div>
+</div>
+<!-- END: PAGE CONTAINER -->
+
+<#include "../common/footer.html">
+
+<script>
+	$(document).ready(function() {    
+		App.init(); // init core    
+	});
+	</script>
+<!-- END: THEME SCRIPTS -->
+<script>
+$(document).ready(function(){
+
+	$('#user_changepw').addClass('c-active');
+  
+  });
+</script>
+
+</body>
+
+</html>
