@@ -14,12 +14,15 @@
         gridAdjustment: 'responsive',
         mediaQueries: [{
             width: 1100,
+            cols: 5
+        }, {
+            width: 900,
             cols: 4
         }, {
-            width: 800,
-            cols: 3
-        }, {
-            width: 500,
+        	 width: 600,
+             cols: 3
+         }, {
+            width: 400,
             cols: 2
         }, {
             width: 320,
@@ -56,7 +59,7 @@
                 .fail(function() {
                     t.updateSinglePage("Error! Please refresh the page!");
                 });
-        }
+        },
     });
 
 })(jQuery, window, document);
