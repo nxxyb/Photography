@@ -7,9 +7,10 @@
 			<!-- BEGIN: INLINE NAV -->
 			<nav class="c-top-menu c-pull-left">
 				<ul class="c-icons c-theme-ul">
-					<li><a href="#"><i class="icon-social-twitter"></i></a></li>
-					<li><a href="#"><i class="icon-social-facebook"></i></a></li>
-					<li><a href="#"><i class="icon-social-dribbble"></i></a></li>
+					<li><a href="#"><i style="font-size: 25px;" class="fa fa-android"></i></a></li>
+					<li><a href="#"><i style="font-size: 25px;" class="fa fa-apple"></i></a></li>
+					<li><a href="#"><i style="font-size: 23px;" class="fa fa-windows"></i></a></li>
+					<li><a id="weixinpop" href="#" data-toggle="popover" data-trigger="hover" html="true" data-placement="bottom" data-content="<img width='200' height='160' src='${basePath}/images/example/weixin.jpg'>"><i style="font-size: 25px;" class="fa fa-weixin"></i></a></li>
 					<li class="hide"><span>Phone: +99890345677</span></li>
 				</ul>
 			</nav>
@@ -88,19 +89,19 @@
 				<nav class="c-mega-menu c-pull-right c-mega-menu-dark c-mega-menu-dark-mobile c-fonts-bold">
 					<ul class="nav navbar-nav c-theme-nav"> 
 						<li id="home">
-							<a href="${basePath}/index" class="c-link dropdown-toggle">首页<span class="c-arrow c-toggler"></span></a>		
+							<a href="${basePath}/index" class="c-link">首页<span class="c-arrow c-toggler"></span></a>		
 						</li>
 						
 						<li id="project" class="c-menu-type-classic">
-							<a href="${basePath}/project/index" class="c-link dropdown-toggle">活动<span class="c-arrow c-toggler"></span></a>
+							<a href="${basePath}/project/index" class="c-link">活动<span class="c-arrow c-toggler"></span></a>
 						</li>
 						
 						<li id="work">
-							<a href="${basePath}/work/index" class="c-link dropdown-toggle">照片<span class="c-arrow c-toggler"></span></a>						
+							<a href="${basePath}/work/index" class="c-link">照片<span class="c-arrow c-toggler"></span></a>						
 						</li>
 						
 						<li id="firend">
-							<a href="#" class="c-link dropdown-toggle">拍友<span class="c-arrow c-toggler"></span></a>
+							<a href="#" class="c-link">拍友<span class="c-arrow c-toggler"></span></a>
 						</li>
 				
 						<li class="c-search-toggler-wrapper">
@@ -108,7 +109,7 @@
 						</li>
 				
 						<li class="c-cart-toggler-wrapper">
-							<a  href="#" class="c-btn-icon c-cart-toggler">我的订单 <span class="c-cart-number c-theme-bg">2</span></a>
+							<a  href="#" class="c-btn-icon">我的订单 <span class="c-cart-number c-theme-bg">2</span></a>
 						</li>
 				
 						<#if Session.user?exists>
@@ -143,41 +144,6 @@
 				<!-- END: MEGA MENU --><!-- END: LAYOUT/HEADERS/MEGA-MENU -->
 								<!-- END: HOR NAV -->		
 			</div>			
-			<!-- BEGIN: LAYOUT/HEADERS/QUICK-CART -->
-			<!-- BEGIN: CART MENU -->
-			<div class="c-cart-menu">
-				<div class="c-cart-menu-title">
-					<p class="c-cart-menu-float-l c-font-sbold">2 item(s)</p>
-					<p class="c-cart-menu-float-r c-theme-font c-font-sbold">$79.00</p>
-				</div>
-				<ul class="c-cart-menu-items">
-					<li>
-						<div class="c-cart-menu-close">
-							<a href="#" class="c-theme-link">×</a>
-						</div>
-						<img src="assets/base/img/content/shop2/24.jpg"/>
-						<div class="c-cart-menu-content">
-							<p>1 x <span class="c-item-price c-theme-font">$30</span></p>
-							<a href="shop-product-details-2.html" class="c-item-name c-font-sbold">Winter Coat</a>
-						</div>
-					</li>
-					<li>
-						<div class="c-cart-menu-close">
-							<a href="#" class="c-theme-link">×</a>
-						</div>
-						<img src="assets/base/img/content/shop2/12.jpg"/>
-						<div class="c-cart-menu-content">
-							<p>1 x <span class="c-item-price c-theme-font">$30</span></p>
-							<a href="shop-product-details.html" class="c-item-name c-font-sbold">Sports Wear</a>
-						</div>
-					</li>
-				</ul> 
-				<div class="c-cart-menu-footer">
-					<a href="shop-cart.html" class="btn btn-md c-btn c-btn-square c-btn-grey-3 c-font-white c-font-bold c-center c-font-uppercase">View Cart</a>
-					<a href="shop-checkout.html" class="btn btn-md c-btn c-btn-square c-theme-btn c-font-white c-font-bold c-center c-font-uppercase">Checkout</a>
-				</div>
-			</div>
-			<!-- END: CART MENU --><!-- END: LAYOUT/HEADERS/QUICK-CART -->
 		</div>
 	</div>
 </header>
@@ -386,6 +352,12 @@
 	</div>
 </div>
 </nav>
+
+<script type="text/javascript">
+<!--
+$('#weixinpop').popover({html: 'true'});
+//-->
+</script>
 
 <#include "../error/error_modal.html">
 <#include "../error/success_modal.html">

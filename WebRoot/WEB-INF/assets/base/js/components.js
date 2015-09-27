@@ -24,6 +24,7 @@ var LayoutHeaderCart = function () {
 	return {
 		//main function to initiate the module
 		init: function () {
+			/**
 			var cart = $('.c-cart-menu');
 
 			if (cart.size() === 0) {
@@ -55,7 +56,9 @@ var LayoutHeaderCart = function () {
 					$('body').removeClass("c-header-cart-shown");
 				});
 			}
+			*/
 		}
+	
 	};
 }();
 // END
