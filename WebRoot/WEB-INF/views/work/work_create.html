@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<!--[if IE 9]> <html lang="zh-CN" class="ie9"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="zh-CN">
+<!--<![endif]-->
+<!-- BEGIN HEAD -->
+<head>
+	<#include "../common/title.html">
+	<#include "../common/link.html">
+	<link rel="shortcut icon" href="favicon.ico"/>
+</head>
+<body class="c-layout-header-fixed c-layout-header-mobile-fixed">
+
+	<#include "../common/header.html">
+
+<!-- BEGIN: PAGE CONTAINER -->
+<div class="c-layout-page" >
+	
+	<!-- BEGIN: PAGE CONTENT -->
+    <div class="c-content-box c-size-md">
+        <div class="container">
+    		<form>
+    		   <div class="row">
+                   <div class="col-md-12">
+                      <div class="panel panel-default">
+              	  		<div class="panel-heading">
+                            <h3 class="panel-title">作品信息</h3>
+                        </div>
+                  		<div class="panel-body">
+                       		<div class="form-group col-md-12">
+                           		<label class="control-label">作品标题</label>
+                           		<input type="text" class="form-control c-square c-theme" placeholder="作品标题  20字"> 
+                       		</div>
+                       		
+                       		<div class="form-group col-md-12">
+	                              <label class="control-label">作品图片<p><small class="c-font-grey-2">作品图片最多5张，长高比例建议为16:10，图片宽度建议在600px~750px之间，支持jpg,gif,png格式</small></p></label> 
+	                              <input id="modelPics" name="modelPics" type="file" class="form-control c-square c-theme file-loading" accept="image/*" multiple>
+									<script type="text/javascript">
+											$("#modelPics").fileinput({
+											    uploadUrl: "#", // server upload action
+					    						showUpload: false,
+					    						overwriteInitial: false,
+					    						allowedFileExtensions:['jpg', 'gif', 'png'],
+					    						minFileCount: 1,
+					    						<#if project?? && project.modelPhotos?? && project.modelPhotos.fileInfos??>
+					    							initialPreview: [
+					    							<#list project.modelPhotos.fileInfos as photo>
+					    								"<img src='${basePath}/${photo.realPath}' class='file-preview-image'>",
+					    							</#list>
+					    							],
+					    						</#if>
+					    						maxFileCount: 5
+											});
+									</script>
+		                     </div>
+                       		
+                       		<div class="form-group col-md-12">
+	                              <label class="control-label">作品介绍</label>
+	                              <textarea class="form-control c-square c-theme" rows="6" placeholder="作品介绍  1000字"></textarea>
+	                         </div>
+                       	</div>
+                   	   </div>
+                   </div>
+               </div>
+    		</form>
+        </div>
+    </div>
+    <!-- END: PAGE CONTENT -->
+	
+</div>
+<!-- END: PAGE CONTAINER -->
+
+<#include "../common/footer.html">
+
+<script>
+$(document).ready(function(){
+
+	$('#work').addClass('c-active');
+	
+	$(".file-loading").fileinput({
+	    uploadUrl: "#", // server upload action
+		showUpload: false,
+		overwriteInitial: false,
+		allowedFileExtensions:['jpg', 'gif', 'png'],
+		minFileCount: 1,
+		maxFileCount: 5
+	});
+  });
+</script>
+
+</body>
+
+</html>
