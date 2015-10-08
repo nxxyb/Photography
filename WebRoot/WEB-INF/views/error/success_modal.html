@@ -1,4 +1,3 @@
-<#if successMessage??>
 <div class="modal fade bs-example-modal-sm" id="success_modal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-sm">
 		<div class="modal-content c-square">
@@ -9,7 +8,7 @@
 				</h4>
 			</div>
 			<div class="modal-body">
-				<p>
+				<p id="success_modal_message">
 					${successMessage!''}
 				</p>
 			</div>
@@ -21,9 +20,9 @@
 	</div>
 	<!-- /.modal-dialog -->
 </div>
-<<script type="text/javascript">
-<!--
+
+<#if successMessage??>
+<script type="text/javascript">
 	$("#success_modal").modal('show');
-//-->
 </script>
 </#if>

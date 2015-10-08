@@ -24,9 +24,9 @@ public class UserServiceImpl extends BaseServiceImpl implements IUserService {
 	/* 
 	 * @see com.photography.service.IUserService#login(java.lang.String, java.lang.String)
 	 */
-	public User login(String email, String password) throws ServiceException {
+	public User login(String mobile, String password) throws ServiceException {
 		User user = null;
-		List<User> userList = (List<User>) hibernateDao.getByQuery(User.class, Condition.eq("mobile", email));
+		List<User> userList = (List<User>) hibernateDao.getByQuery(User.class, Condition.eq("mobile", mobile));
 		if(userList.size()>0) {
 			user = userList.get(0);
 		}
@@ -34,7 +34,7 @@ public class UserServiceImpl extends BaseServiceImpl implements IUserService {
 			throw new ServiceException(ErrorCode.USER_NOT_EXIST);
 		}
 
-		if (!password.equals(user.getPassword())) {
+		if (!password.equalsIgnoreCase(user.getPassword())) {
 			throw new ServiceException(ErrorCode.USER_PWD_NOT_MATCH);
 		}
 		
@@ -56,8 +56,8 @@ public class UserServiceImpl extends BaseServiceImpl implements IUserService {
 	 * @see com.photography.service.IUserService#getByEmail(java.lang.String)
 	 */
 	@Override
-	public User getByEmail(String email) {
-		List<User> users = hibernateDao.getByQuery(User.class, Condition.eq("email", email));
+	public User getByMobile(String mobile) {
+		List<User> users = hibernateDao.getByQuery(User.class, Condition.eq("mobile", mobile));
 		if(users != null && !users.isEmpty()){
 			return users.get(0);
 		}

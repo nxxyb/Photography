@@ -9,8 +9,16 @@ package com.photography.utils;
  */
 public class MessageConstants {
 
+	//success
+	
 	public static final String SAVE_SUCCESS = "保存成功";
 	
 	public static final String ORDER_SUCCESS = "预定成功";
+	
+	public static final String REGISTER_SUCCESS = "注册成功";
+	
+	public static final String PWD_SAVE_SUCCESS = "密码修改成功";
+	
+	
 	
 }

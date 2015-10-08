@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.photography.controller.propertyeditor.DateEditor;
 import com.photography.controller.propertyeditor.DoubleEditor;
@@ -14,6 +15,7 @@ import com.photography.controller.propertyeditor.FloatEditor;
 import com.photography.controller.propertyeditor.IntegerEditor;
 import com.photography.controller.propertyeditor.LongEditor;
 import com.photography.exception.ErrorCode;
+import com.photography.exception.ErrorMessage;
 import com.photography.exception.ServiceException;
 import com.photography.mapping.User;
 import com.photography.utils.Constants;
@@ -47,6 +49,22 @@ public class BaseController {
 			throw new ServiceException(ErrorCode.SESSION_TIMEOUT);
 		}
 		return user;
+	}
+	
+	/**
+	 * 处理错误消息
+	 * @param attr
+	 * @param e
+	 * @author 徐雁斌
+	 */
+	protected void handleError(RedirectAttributes attr, Exception e) {
+		if(e instanceof ServiceException){
+			ServiceException se = (ServiceException) e;
+			String message = se.getErrorMessage();
+			attr.addFlashAttribute(Constants.ERROR_MESSAGE, message);
+		}else{
+			attr.addFlashAttribute(Constants.ERROR_MESSAGE, ErrorMessage.get(ErrorCode.UNKNOWN_ERROR));
+		}
 	}
 
 }

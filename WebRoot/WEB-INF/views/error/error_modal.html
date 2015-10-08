@@ -1,4 +1,4 @@
-<#if errorMessage??>
+
 <div class="modal fade bs-example-modal-sm" id="error_modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-sm">
 		<div class="modal-content c-square">
@@ -9,7 +9,7 @@
 				</h4>
 			</div>
 			<div class="modal-body">
-				<p>
+				<p id="error_modal_message">
 					${errorMessage!''}
 				</p>
 			</div>
@@ -21,9 +21,9 @@
 	</div>
 	<!-- /.modal-dialog -->
 </div>
+
+<#if errorMessage??>
 <script type="text/javascript">
-<!--
 	$("#error_modal").modal('show');
-//-->
 </script>
 </#if>
