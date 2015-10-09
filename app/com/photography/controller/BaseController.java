@@ -43,12 +43,22 @@ public class BaseController {
 	 * @param request
 	 * @param mav
 	 */
-	protected User getUser(HttpServletRequest request,ModelAndView mav) throws ServiceException{
+	protected User getSessionUser(HttpServletRequest request) throws ServiceException{
 		User user = (User) request.getSession().getAttribute(Constants.SESSION_USER_KEY);
 		if(user == null){
 			throw new ServiceException(ErrorCode.SESSION_TIMEOUT);
 		}
 		return user;
+	}
+	
+	/**
+	 * 将user添加到session
+	 * @param request
+	 * @param user
+	 * @author 徐雁斌
+	 */
+	protected void setSessionUser(HttpServletRequest request, User user) {
+		request.getSession().setAttribute(Constants.SESSION_USER_KEY, user);
 	}
 	
 	/**
@@ -64,6 +74,22 @@ public class BaseController {
 			attr.addFlashAttribute(Constants.ERROR_MESSAGE, message);
 		}else{
 			attr.addFlashAttribute(Constants.ERROR_MESSAGE, ErrorMessage.get(ErrorCode.UNKNOWN_ERROR));
+		}
+	}
+	
+	/**
+	 * 处理错误消息
+	 * @param attr
+	 * @param e
+	 * @author 徐雁斌
+	 */
+	protected void handleErrorModelAndView(ModelAndView mv, Exception e) {
+		if(e instanceof ServiceException){
+			ServiceException se = (ServiceException) e;
+			String message = se.getErrorMessage();
+			mv.addObject(Constants.ERROR_MESSAGE, message);
+		}else{
+			mv.addObject(Constants.ERROR_MESSAGE, ErrorMessage.get(ErrorCode.UNKNOWN_ERROR));
 		}
 	}
 

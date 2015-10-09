@@ -1,7 +1,6 @@
 package com.photography.controller;
 
 import java.io.File;
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -14,17 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.photography.dao.exp.Condition;
-import com.photography.dao.exp.Expression;
-import com.photography.dao.query.Pager;
-import com.photography.dao.query.QueryConstants;
-import com.photography.dao.query.Sort;
 import com.photography.exception.ErrorCode;
 import com.photography.exception.ErrorMessage;
-import com.photography.mapping.Project;
-import com.photography.mapping.ProjectOrder;
+import com.photography.exception.ServiceException;
 import com.photography.mapping.User;
 import com.photography.service.IMailService;
 import com.photography.service.IProjectOrderService;
@@ -82,9 +74,14 @@ public class UserInfoController extends BaseController {
 	 * @param request
 	 * @return
 	 * @author 徐雁斌
+	 * @throws ServiceException 
 	 */
 	@RequestMapping(value="/toUserInfo")
-	public String toUserInfo(String type,HttpServletRequest request, RedirectAttributes attr) {
+	public ModelAndView toUserInfo(String type,HttpServletRequest request, ModelAndView mv) throws ServiceException {
+		User user = getSessionUser(request);
+		user = userService.loadPojo(User.class, user.getId());
+		mv.addObject("user", user);
+		
 		String page = "user/user_info";
 		if(type.equals("1")){
 			page = "user/user_info";
@@ -99,81 +96,82 @@ public class UserInfoController extends BaseController {
 		}else if(type.equals("6")){
 			page = "user/user_changepw";
 		}
-		return page;
-	}
-	
-	/**
-	 * 切换tab，异步加载内容
-	 * @param request
-	 * @return
-	 * @author 徐雁斌
-	 */
-	@RequestMapping(value="/changeTab")
-	public ModelAndView changeTab(String tabName,HttpServletRequest request) {
-		ModelAndView mv = new ModelAndView();
-		mv.setViewName("user/person_info/" + tabName);
-		
-		User user = (User) request.getSession().getAttribute(Constants.SESSION_USER_KEY);
-		if(user == null){
-			return mv;
-		}
-		
-		if("project_order".equals(tabName)){
-			//取得订单信息
-			Pager pager= new Pager();
-			pager.setPageSize(Constants.PAGER_PROJECT_ORDER);
-			Expression exp = Condition.eq("user.id", user.getId());
-			List<ProjectOrder> projectOrders = projectOrderService.getPojoList(ProjectOrder.class, pager, exp, new Sort("createTime",QueryConstants.DESC), user);
-			mv.addObject("pager", pager);
-			mv.addObject("projectOrders", projectOrders);
-		}else if("project_fb".equals(tabName)){
-			//取得订单信息
-			Pager pager= new Pager();
-			pager.setPageSize(Constants.PAGER_PROJECT_FB);
-			Expression exp = Condition.eq("createUser.id", user.getId());
-			List<Project> projects = projectService.getPojoList(Project.class, pager, exp, new Sort("createTime",QueryConstants.DESC), user);
-			mv.addObject("pager", pager);
-			mv.addObject("projects", projects);
-		}
-		
+		mv.setViewName(page);
 		return mv;
 	}
 	
-	/**
-	 * 修改头像
-	 * @param request
-	 * @param model
-	 * @return
-	 * @author 徐雁斌
-	 */
-	@RequestMapping(value="/updateHeadPhoto")
-	@ResponseBody
-	public String updateHeadPhoto(MultipartFile headFile,HttpServletRequest request, Model model){
-		User user = (User) request.getSession().getAttribute(Constants.SESSION_USER_KEY);
-		if(user == null){
-			return (String) ErrorMessage.get(ErrorCode.SESSION_TIMEOUT);
-		}
-		String filePath = request.getSession().getServletContext().getRealPath((String)
-    			CustomizedPropertyPlaceholderConfigurer.getContextProperty("user.confirm.file"))  + File.separator + user.getEmail();
-    	
-    	//数据库存储相对路径
-    	String relativePath = CustomizedPropertyPlaceholderConfigurer.getContextProperty("user.confirm.file") + user.getEmail();
-    	File userFile = new File(filePath);
-    	if(!userFile.exists()){
-    		userFile.mkdir();
-    	}
-    	
-    	try{
-			FileUtils.copyInputStreamToFile(headFile.getInputStream(), new File(filePath, headFile.getOriginalFilename()));
-			
-			user.setHeadPic(relativePath + "/" + headFile.getOriginalFilename());
-			userService.savePojo(user, user);
-    	}catch(Exception e){
-    		return (String) ErrorMessage.get(ErrorCode.UNKNOWN_ERROR);
-    	}
-    	request.getSession().setAttribute(Constants.SESSION_USER_KEY, user);
-    	return Constants.YES;
-	}
+//	/**
+//	 * 切换tab，异步加载内容
+//	 * @param request
+//	 * @return
+//	 * @author 徐雁斌
+//	 */
+//	@RequestMapping(value="/changeTab")
+//	public ModelAndView changeTab(String tabName,HttpServletRequest request) {
+//		ModelAndView mv = new ModelAndView();
+//		mv.setViewName("user/person_info/" + tabName);
+//		
+//		User user = (User) request.getSession().getAttribute(Constants.SESSION_USER_KEY);
+//		if(user == null){
+//			return mv;
+//		}
+//		
+//		if("project_order".equals(tabName)){
+//			//取得订单信息
+//			Pager pager= new Pager();
+//			pager.setPageSize(Constants.PAGER_PROJECT_ORDER);
+//			Expression exp = Condition.eq("user.id", user.getId());
+//			List<ProjectOrder> projectOrders = projectOrderService.getPojoList(ProjectOrder.class, pager, exp, new Sort("createTime",QueryConstants.DESC), user);
+//			mv.addObject("pager", pager);
+//			mv.addObject("projectOrders", projectOrders);
+//		}else if("project_fb".equals(tabName)){
+//			//取得订单信息
+//			Pager pager= new Pager();
+//			pager.setPageSize(Constants.PAGER_PROJECT_FB);
+//			Expression exp = Condition.eq("createUser.id", user.getId());
+//			List<Project> projects = projectService.getPojoList(Project.class, pager, exp, new Sort("createTime",QueryConstants.DESC), user);
+//			mv.addObject("pager", pager);
+//			mv.addObject("projects", projects);
+//		}
+//		
+//		return mv;
+//	}
+	
+//	/**
+//	 * 修改头像
+//	 * @param request
+//	 * @param model
+//	 * @return
+//	 * @author 徐雁斌
+//	 */
+//	@RequestMapping(value="/updateHeadPhoto")
+//	@ResponseBody
+//	public String updateHeadPhoto(MultipartFile headFile,HttpServletRequest request, Model model){
+//		User user = (User) request.getSession().getAttribute(Constants.SESSION_USER_KEY);
+//		if(user == null){
+//			return (String) ErrorMessage.get(ErrorCode.SESSION_TIMEOUT);
+//		}
+//		String filePath = request.getSession().getServletContext().getRealPath((String)
+//    			CustomizedPropertyPlaceholderConfigurer.getContextProperty("user.confirm.file"))  + File.separator + user.getEmail();
+//    	
+//    	//数据库存储相对路径
+//    	String relativePath = CustomizedPropertyPlaceholderConfigurer.getContextProperty("user.confirm.file") + user.getEmail();
+//    	File userFile = new File(filePath);
+//    	if(!userFile.exists()){
+//    		userFile.mkdir();
+//    	}
+//    	
+//    	try{
+//			FileUtils.copyInputStreamToFile(headFile.getInputStream(), new File(filePath, headFile.getOriginalFilename()));
+//			
+//			user.setHeadPic(relativePath + "/" + headFile.getOriginalFilename());
+//			userService.savePojo(user, user);
+//    	}catch(Exception e){
+//    		return (String) ErrorMessage.get(ErrorCode.UNKNOWN_ERROR);
+//    	}
+//    	request.getSession().setAttribute(Constants.SESSION_USER_KEY, user);
+//    	return Constants.YES;
+//	}
 	
 	/**
 	 * 修改头像
@@ -220,44 +218,24 @@ public class UserInfoController extends BaseController {
 	 * @author 徐雁斌
 	 */
 	@RequestMapping(value="/updateUserInfo")
-	public ModelAndView updateUserInfo(User user,HttpServletRequest request, Model model){
-		ModelAndView mv = new ModelAndView();
-		mv.setViewName("user/person_info/person_info");
-		
-		if(user ==null || user.getId() == null){
-			mv.addObject("errorMessage", ErrorMessage.get(ErrorCode.SESSION_TIMEOUT));
-			return mv;
-		}
-		
-		User userDB = (User) userService.loadPojo(User.class,user.getId());
-		
-		if(userDB == null){
-			mv.addObject("errorMessage", ErrorMessage.get(ErrorCode.SESSION_TIMEOUT));
-			return mv;
-		}
-		
-		userDB.setBirthDay(user.getBirthDay());
-//		userDB.setCity(user.getCity());
-//		userDB.setCompanyName(user.getCompanyName());
-//		userDB.setCounty(user.getCounty());
-//		userDB.setEmail(user.getEmail());
-//		userDB.setIdCard(user.getIdCard());
-		userDB.setMobile(user.getMobile());
-		userDB.setNackName(user.getNackName());
-		userDB.setPersonSignature(user.getPersonSignature());
-//		userDB.setProvince(user.getProvince());
-		userDB.setQqNumber(user.getQqNumber());
-//		userDB.setRealName(user.getRealName());
-		userDB.setSex(user.getSex());
+	public ModelAndView updateUserInfo(User user,HttpServletRequest request, ModelAndView mv){
+		try{
+			User userDB = (User) userService.loadPojo(User.class,user.getId());
+			userDB.setBirthDay(user.getBirthDay());
+			userDB.setRealName(user.getRealName());
+			userDB.setEmail(user.getEmail());
+			userDB.setQqNumber(user.getQqNumber());
+			userDB.setSex(user.getSex());
     	
-    	try{
 			userService.savePojo(userDB, userDB);
-			mv.addObject("href", "info");
-			mv.addObject("successMessage", MessageConstants.SAVE_SUCCESS);
+			setSessionUser(request, userDB);
+			mv.addObject("user", userDB);
+			mv.addObject(Constants.SUCCESS_MESSAGE, MessageConstants.SAVE_SUCCESS);
     	}catch(Exception e){
-    		mv.addObject("errorMessage", ErrorMessage.get(ErrorCode.UNKNOWN_ERROR));
+    		handleErrorModelAndView(mv, e);
+    		mv.addObject("user", user);
     	}
-    	request.getSession().setAttribute(Constants.SESSION_USER_KEY, userDB);
+    	mv.setViewName("user/user_info");
     	return mv;
 	}
 	
@@ -270,42 +248,34 @@ public class UserInfoController extends BaseController {
 	 * @author 徐雁斌
 	 */
 	@RequestMapping(value="/updateAuthInfo")
-	public ModelAndView updateAuthInfo(User user,HttpServletRequest request, Model model){
-		ModelAndView mv = new ModelAndView();
-		mv.setViewName("user/person_info/person_info");
+	public ModelAndView updateAuthInfo(User user,MultipartFile comfirmFile,HttpServletRequest request, ModelAndView mv){
 		
-		if(user ==null || user.getId() == null){
-			mv.addObject("errorMessage", ErrorMessage.get(ErrorCode.SESSION_TIMEOUT));
-			return mv;
-		}
-		
-		User userDB = (User) userService.loadPojo(User.class,user.getId());
-		if(userDB == null){
-			mv.addObject("errorMessage", ErrorMessage.get(ErrorCode.SESSION_TIMEOUT));
-			return mv;
-		}
+		try{
+			User userDB = (User) userService.loadPojo(User.class,user.getId());
+			userDB.setIdCard(user.getIdCard());
 			
-//		userDB.setBirthDay(user.getBirthDay());
-//		userDB.setCity(user.getCity());
-//		userDB.setCompanyName(user.getCompanyName());
-//		userDB.setCounty(user.getCounty());
-//		userDB.setEmail(user.getEmail());
-		userDB.setIdCard(user.getIdCard());
-		userDB.setMobile(user.getMobile());
-//		userDB.setNackName(user.getNackName());
-//		userDB.setPersonSignature(user.getPersonSignature());
-//		userDB.setProvince(user.getProvince());
-//		userDB.setQqNumber(user.getQqNumber());
-		userDB.setRealName(user.getRealName());
-    	
-    	try{
+			String filePath = request.getSession().getServletContext().getRealPath((String)
+	    			CustomizedPropertyPlaceholderConfigurer.getContextProperty("user.confirm.file"))  + File.separator + user.getMobile();
+	    	
+	    	//数据库存储相对路径
+	    	String relativePath = CustomizedPropertyPlaceholderConfigurer.getContextProperty("user.confirm.file") + user.getMobile();
+	    	File userFile = new File(filePath);
+	    	if(!userFile.exists()){
+	    		userFile.mkdir();
+	    	}
+	    	FileUtils.copyInputStreamToFile(comfirmFile.getInputStream(), new File(filePath, comfirmFile.getOriginalFilename()));
+			user.setComfirmPic(relativePath + "/" + comfirmFile.getOriginalFilename());
+			
 			userService.savePojo(userDB, userDB);
-			mv.addObject("href", "auth");
-			mv.addObject("successMessage", MessageConstants.SAVE_SUCCESS);
+			
+			setSessionUser(request, userDB);
+			mv.addObject("user", userDB);
+			mv.addObject(Constants.SUCCESS_MESSAGE, MessageConstants.SAVE_SUCCESS);
     	}catch(Exception e){
-    		mv.addObject("errorMessage", ErrorMessage.get(ErrorCode.UNKNOWN_ERROR));
+    		handleErrorModelAndView(mv, e);
+    		mv.addObject("user", user);
     	}
-    	request.getSession().setAttribute(Constants.SESSION_USER_KEY, userDB);
+    	mv.setViewName("user/user_auth");
     	return mv;
 	}
 	

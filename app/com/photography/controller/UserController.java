@@ -73,7 +73,7 @@ public class UserController extends BaseController{
 	public String login(String mobile,String password,HttpServletRequest request,RedirectAttributes attr){
 		try{
 			User user = userService.login(mobile, MD5Util.md5(password));
-			request.getSession().setAttribute(Constants.SESSION_USER_KEY, user);
+			setSessionUser(request, user);
 		}catch(Exception e){
 			handleError(attr, e);
 		}
@@ -97,7 +97,7 @@ public class UserController extends BaseController{
 			user.setPassword(MD5Util.md5(user.getPassword()));
 			user.setEnable(Constants.YES);
 			userService.savePojo(user, user);
-	        request.getSession().setAttribute(Constants.SESSION_USER_KEY, user);
+	        setSessionUser(request, user);
 	        attr.addFlashAttribute(Constants.SUCCESS_MESSAGE, MessageConstants.REGISTER_SUCCESS);
 		}catch(Exception e){
 			log.error("register error",e);
@@ -142,7 +142,7 @@ public class UserController extends BaseController{
 			}else{
 				user.setPassword(MD5Util.md5(password));
 				userService.savePojo(user, user);
-		        request.getSession().setAttribute(Constants.SESSION_USER_KEY, user);
+		        setSessionUser(request, user);
 		        attr.addFlashAttribute(Constants.SUCCESS_MESSAGE, MessageConstants.PWD_SAVE_SUCCESS);
 			}
 		}catch(Exception e){

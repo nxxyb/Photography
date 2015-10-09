@@ -26,26 +26,32 @@
                   <h3 class="c-font-uppercase c-font-bold">用户认证</h3>
                   <div class="c-line-left"></div>
               </div>
-              <form class="form-horizontal c-shop-form-1">
-                  <!-- BEGIN: ADDRESS FORM -->
+              <form class="form-horizontal c-shop-form-1" action="${basePath}/userinfo/updateUserInfo" method="post">
                   <div class="">
-                      <!-- BEGIN: BILLING ADDRESS -->
+					  <input type="hidden" name="id" value="${(user.id)!''}">
                       <div class="row">
                           <div class="form-group col-md-12">
                               <label class="control-label">身份证号</label>
-                              <input type="text" class="form-control c-square c-theme" placeholder="身份证号"> 
+                              <input type="text" class="form-control c-square c-theme" placeholder="身份证号" name="idCard" value="${(user.idCard)!''}"> 
                           </div>
                       </div>
                       <div class="row">
                            <div class="form-group col-md-6">
-                               <label class="control-label">验证照片</label>
+                               <label class="control-label">验证照片</label> 
+                               <a class="c-theme-font" href="#" data-toggle="popover" data-trigger="click" html="true" data-placement="bottom" data-content="<img src='${basePath}/images/comfirm_example.jpg'>" ><i class="fa fa-question"></i>帮助</a>
                                <input id="comfirmFile" name="comfirmFile" type="file" accept="image/*" class="file-loading">
                                <script type="text/javascript">
 									$("#comfirmFile").fileinput({
-									    uploadUrl: "${basePath}/userinfo/updateComfirmPhoto", // server upload action
-			    						uploadAsync: false,
-			    						 minFileCount: 1,
-			    						 maxFileCount: 1
+									    uploadUrl: "#", // server upload action
+										showUpload: false,
+										overwriteInitial: true,
+										minFileCount: 1,
+										<#if user?? && user.comfirmPic??>
+											initialPreview: [
+												"<img src='${basePath}/${user.comfirmPic}' class='file-preview-image'>",
+											],
+										</#if>
+										maxFileCount: 1
 									});
 								</script>
                            </div> 
@@ -53,11 +59,9 @@
                       <div class="row c-margin-t-30">
                           <div class="form-group col-md-12" role="group">
                               <button type="submit" class="btn btn-lg c-theme-btn c-btn-square c-btn-uppercase c-btn-bold">认证</button>
-                              <button type="submit" class="btn btn-lg btn-default c-btn-square c-btn-uppercase c-btn-bold">取消</button>
                           </div>
                       </div>
                   </div>
-                  <!-- END: ADDRESS FORM -->
               </form>
               <!-- END: PAGE CONTENT -->
           </div>
@@ -80,6 +84,8 @@
 $(document).ready(function(){
 
 	$('#user_auth').addClass('c-active');
+	
+	$('[data-toggle="popover"]').popover({html: 'true'});
   
   });
 </script>

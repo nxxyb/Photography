@@ -106,7 +106,7 @@ public class ProjectController extends BaseController {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("project/project_create");
 		try{
-			User user = getUser(request, mav);
+			User user = getSessionUser(request);
 			
 			Project projectDb = null;
 			if(project.getId() != null && !"".equals(project.getId())){
@@ -222,7 +222,7 @@ public class ProjectController extends BaseController {
 		mav.addObject("project", project);
 		try {
 			//根据用户确定是否显示预定按钮
-			User user = getUser(request, mav);
+			User user = getSessionUser(request);
 			mav.addObject("isCanYd",projectOrderService.isCanYd(user.getId(), id));
 			mav.addObject("rela_projects", projectService.getRelaProject(id));
 			
@@ -254,7 +254,7 @@ public class ProjectController extends BaseController {
 		ModelAndView mav = new ModelAndView();
 		try {
 			//根据用户确定是否显示预定按钮
-			User user = getUser(request, mav);
+			User user = getSessionUser(request);
 			projectOrderService.saveOrderProject(user.getId(), id);
 			mav.addObject("successMessage", MessageConstants.ORDER_SUCCESS);
 		} catch (ServiceException e) {
@@ -277,7 +277,7 @@ public class ProjectController extends BaseController {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("user/person_info/project_fb_item");
 		try{
-			User user = getUser(request, mav);
+			User user = getSessionUser(request);
 			
 			//取得订单信息
 			Pager pager= new Pager();

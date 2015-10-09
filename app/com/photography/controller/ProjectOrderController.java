@@ -55,7 +55,7 @@ public class ProjectOrderController extends BaseController {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("user/person_info/project_order_item");
 		try{
-			User user = getUser(request, mav);
+			User user = getSessionUser(request);
 			
 			//取得订单信息
 			Pager pager= new Pager();
