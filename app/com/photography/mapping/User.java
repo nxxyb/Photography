@@ -78,7 +78,13 @@ public class User extends BaseMapping{
 	 * 是否审核
 	 */
 	@Column(name="verify")
-	private String verify = Constants.NO;
+	private String verify = Constants.VERIFY_NO;
+	
+	/**
+	 * 审核结果信息
+	 */
+	@Column(name="verify_message")
+	private String verifyMessage;
 	
 	/**
 	 * 是否激活
@@ -298,6 +304,14 @@ public class User extends BaseMapping{
 
 	public void setHeadPic(String headPic) {
 		this.headPic = headPic;
+	}
+
+	public String getVerifyMessage() {
+		return verifyMessage;
+	}
+
+	public void setVerifyMessage(String verifyMessage) {
+		this.verifyMessage = verifyMessage;
 	}
 
 }

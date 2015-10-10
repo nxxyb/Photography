@@ -112,10 +112,10 @@
 							<a  href="#" class="c-btn-icon">我的订单 </a>
 						</li>
 				
-						<#if Session.user?exists>
+						<#if Session.sessionuser?exists>
 						<li class="c-menu-type-classic">
 							<a href="javascript:;" class="c-link dropdown-toggle">
-								<#if Session.user?? && Session.user.realName?? && Session.user.realName !=''>${Session.user.realName}<#else>${Session.user.mobile} </#if>
+								<#if Session.sessionuser?? && Session.sessionuser.realName?? && Session.sessionuser.realName !=''>${Session.sessionuser.realName}<#else>${Session.sessionuser.mobile} </#if>
 								<span class="c-arrow c-toggler"></span>
 							</a>
 							<ul class="dropdown-menu c-menu-type-classic c-pull-left">

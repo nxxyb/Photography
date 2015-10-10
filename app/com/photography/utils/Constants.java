@@ -24,6 +24,18 @@ public class Constants {
 	public final static String SEX_WOMAN = "1";
 	
 	/**
+	 * 审核状态
+	 */
+	//未提交审核
+	public final static String VERIFY_NO = "0";
+	//提交审核
+	public final static String VERIFY_ING = "1";
+	//审核不通过
+	public final static String VERIFY_NOTPASS = "2";
+	//审核通过
+	public final static String VERIFY_PASS = "3";
+	
+	/**
 	 * 用户类型
 	 */
 	//普通用户
@@ -39,7 +51,7 @@ public class Constants {
 	public final static String USER_TYPE_ADMIN = "1";
 	
 	//session
-	public final static String SESSION_USER_KEY = "user";
+	public final static String SESSION_USER_KEY = "sessionuser";
 	
 	//template 
 	public final static String ERROR_MESSAGE = "errorMessage";

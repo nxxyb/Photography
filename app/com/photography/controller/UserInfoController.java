@@ -77,7 +77,8 @@ public class UserInfoController extends BaseController {
 	 * @throws ServiceException 
 	 */
 	@RequestMapping(value="/toUserInfo")
-	public ModelAndView toUserInfo(String type,HttpServletRequest request, ModelAndView mv) throws ServiceException {
+	public ModelAndView toUserInfo(String type,HttpServletRequest request) throws ServiceException {
+		ModelAndView mv = new ModelAndView();
 		User user = getSessionUser(request);
 		user = userService.loadPojo(User.class, user.getId());
 		mv.addObject("user", user);
@@ -95,6 +96,10 @@ public class UserInfoController extends BaseController {
 			page = "user/user_coupon";
 		}else if(type.equals("6")){
 			page = "user/user_changepw";
+		}else if(type.equals("7")){
+			page = "user/user_project";
+		}else if(type.equals("8")){
+			page = "user/user_work";
 		}
 		mv.setViewName(page);
 		return mv;
@@ -218,7 +223,8 @@ public class UserInfoController extends BaseController {
 	 * @author 徐雁斌
 	 */
 	@RequestMapping(value="/updateUserInfo")
-	public ModelAndView updateUserInfo(User user,HttpServletRequest request, ModelAndView mv){
+	public ModelAndView updateUserInfo(User user,HttpServletRequest request){
+		ModelAndView mv = new ModelAndView();
 		try{
 			User userDB = (User) userService.loadPojo(User.class,user.getId());
 			userDB.setBirthDay(user.getBirthDay());
@@ -248,24 +254,26 @@ public class UserInfoController extends BaseController {
 	 * @author 徐雁斌
 	 */
 	@RequestMapping(value="/updateAuthInfo")
-	public ModelAndView updateAuthInfo(User user,MultipartFile comfirmFile,HttpServletRequest request, ModelAndView mv){
-		
+	public ModelAndView updateAuthInfo(User user,MultipartFile comfirmFile,HttpServletRequest request){
+		ModelAndView mv = new ModelAndView();
 		try{
 			User userDB = (User) userService.loadPojo(User.class,user.getId());
 			userDB.setIdCard(user.getIdCard());
 			
-			String filePath = request.getSession().getServletContext().getRealPath((String)
-	    			CustomizedPropertyPlaceholderConfigurer.getContextProperty("user.confirm.file"))  + File.separator + user.getMobile();
-	    	
-	    	//数据库存储相对路径
-	    	String relativePath = CustomizedPropertyPlaceholderConfigurer.getContextProperty("user.confirm.file") + user.getMobile();
-	    	File userFile = new File(filePath);
-	    	if(!userFile.exists()){
-	    		userFile.mkdir();
-	    	}
-	    	FileUtils.copyInputStreamToFile(comfirmFile.getInputStream(), new File(filePath, comfirmFile.getOriginalFilename()));
-			user.setComfirmPic(relativePath + "/" + comfirmFile.getOriginalFilename());
-			
+			if(!comfirmFile.isEmpty()){
+				String filePath = request.getSession().getServletContext().getRealPath((String)
+		    			CustomizedPropertyPlaceholderConfigurer.getContextProperty("user.confirm.file"))  + File.separator + userDB.getMobile();
+		    	
+		    	//数据库存储相对路径
+		    	String relativePath = CustomizedPropertyPlaceholderConfigurer.getContextProperty("user.confirm.file") + userDB.getMobile();
+		    	File userFile = new File(filePath);
+		    	if(!userFile.exists()){
+		    		userFile.mkdir();
+		    	}
+		    	FileUtils.copyInputStreamToFile(comfirmFile.getInputStream(), new File(filePath, comfirmFile.getOriginalFilename()));
+		    	userDB.setComfirmPic(relativePath + "/" + comfirmFile.getOriginalFilename());
+			}
+	    	userDB.setVerify(Constants.VERIFY_ING);
 			userService.savePojo(userDB, userDB);
 			
 			setSessionUser(request, userDB);
@@ -288,37 +296,23 @@ public class UserInfoController extends BaseController {
 	 * @author 徐雁斌
 	 */
 	@RequestMapping(value="/updateUserPasswordInfo")
-	public ModelAndView updateUserPasswordInfo(String id,String oldPassword, String password,HttpServletRequest request, Model model){
+	public ModelAndView updateUserPasswordInfo(User user,String verifyCode,HttpServletRequest request, Model model){
 		ModelAndView mv = new ModelAndView();
-		mv.setViewName("user/person_info/person_info");
-		
-		if(id == null){
-			mv.addObject("errorMessage", ErrorMessage.get(ErrorCode.SESSION_TIMEOUT));
-			return mv;
-		}
-		
-		User userDB = (User) userService.loadPojo(User.class,id);
-		
-		if(userDB == null){
-			mv.addObject("errorMessage", ErrorMessage.get(ErrorCode.SESSION_TIMEOUT));
-			return mv;
-		}
-		
-		if(!userDB.getPassword().equals(MD5Util.md5(oldPassword))){
-			mv.addObject("errorMessage", ErrorMessage.get(ErrorCode.USER_PWD_NOT_MATCH));
-			return mv;
-		}
-		
-		userDB.setPassword(password);
-    	
-    	try{
+		try{
+			//处理验证码
+			
+			User userDB = (User) userService.loadPojo(User.class,user.getId());
+			userDB.setPassword(MD5Util.md5(user.getPassword()));
 			userService.savePojo(userDB, userDB);
-			mv.addObject("href", "modifyps");
-			mv.addObject("successMessage", MessageConstants.SAVE_SUCCESS);
+			
+			setSessionUser(request, userDB);
+			mv.addObject("user", userDB);
+			mv.addObject(Constants.SUCCESS_MESSAGE, MessageConstants.PWD_SAVE_SUCCESS);
     	}catch(Exception e){
-    		mv.addObject("errorMessage", ErrorMessage.get(ErrorCode.UNKNOWN_ERROR));
+    		handleErrorModelAndView(mv, e);
+    		mv.addObject("user", user);
     	}
-    	request.getSession().setAttribute(Constants.SESSION_USER_KEY, userDB);
+    	mv.setViewName("user/user_changepw");
     	return mv;
 	}
 	

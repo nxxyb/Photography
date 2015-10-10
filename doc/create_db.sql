@@ -18,6 +18,7 @@ CREATE TABLE `user` (
   `email` varchar(20) comment '邮箱',
   `birth_day` date comment '生日',
   `verify` varchar(2) comment '是否审核',
+  `verify_message` varchar(2000) comment '审核结果信息',
   `enable` varchar(2) comment '是否激活',
   `province` varchar(20) comment '省',
   `city` varchar(20) comment '市',
