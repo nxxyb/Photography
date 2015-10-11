@@ -42,39 +42,39 @@
                                             <h3 class="panel-title">信息</h3>
                                         </div>
 					                  <div class="panel-body">
-		                          <div class="form-group col-md-7">
+		                          <div class="form-group col-md-6">
 		                              <label class="control-label">活动标题</label>
-		                              <input type="text" class="form-control c-square c-theme" placeholder="活动标题  20字"> 
+		                              <input type="text" class="form-control c-square c-theme input-lg" placeholder="活动标题  20字" name="name" value="${(project.name)!''}"> 
 		                          </div>
 		                          
-		                          <div class="form-group col-md-7">
+		                          <div class="form-group col-md-12">
 		                              <label class="control-label">活动简介</label>
-		                              <textarea class="form-control c-square c-theme" rows="3" placeholder="活动简介  100字"></textarea>
+		                              <textarea class="form-control c-square c-theme input-lg" rows="6" placeholder="活动简介  1000字" name="des">${(project.des)!''}</textarea>
 		                          </div>
 		                          
 		                          <div class="form-group col-md-7">
 		                              <label class="control-label">活动类型</label>
 		                              <div class="c-radio-inline">
 		                                 <div class="c-radio">
-		                                     <input type="radio" id="radio1" class="c-radio" checked name="type">
+		                                     <input type="radio" id="radio1" class="c-radio input-lg" checked name="type">
 		                                     <label for="radio1">
 		                                         <span></span><span class="check"></span>
 		                                         <span class="box"></span> 市内采风</label>
 		                                 </div>
 		                                 <div class="c-radio">
-		                                     <input type="radio" id="radio2" class="c-radio" name="type">
+		                                     <input type="radio" id="radio2" class="c-radio input-lg" name="type">
 		                                     <label for="radio2">
 		                                         <span></span><span class="check"></span>
 		                                         <span class="box"></span> 远郊采风</label>
 		                                 </div>
 		                                 <div class="c-radio">
-		                                     <input type="radio" id="radio3" class="c-radio" name="type">
+		                                     <input type="radio" id="radio3" class="c-radio input-lg" name="type">
 		                                     <label for="radio3"> 
 		                                         <span></span><span class="check"></span>
 		                                         <span class="box"></span> 说拍就拍</label>
 		                                 </div>
 		                                 <div class="c-radio">
-		                                     <input type="radio" id="radio4" class="c-radio" name="type">
+		                                     <input type="radio" id="radio4" class="c-radio input-lg" name="type">
 		                                     <label for="radio4">
 		                                         <span></span><span class="check"></span>
 		                                         <span class="box"></span> 一对一</label>
@@ -86,24 +86,30 @@
 	                          		<label class="control-label">日程</label>
 	                          		<div class="row">
                                                <div class="form-group col-md-6">
-                                                   <select class="form-control c-square c-theme"> 
-                                                       <option value="0">0</option>
-                                                       <option value="1">1</option>
-                                                       <option value="2">2</option>
-                                                       <option value="3">3</option>
-                                                       <option value="4">4</option>
-                                                       <option value="5">5</option>
-                                                   </select> 天
+	                                               <div class="input-group c-square">
+	                                                   <select class="form-control c-square c-theme input-lg"> 
+	                                                       <option value="0">0</option>
+	                                                       <option value="1">1</option>
+	                                                       <option value="2">2</option>
+	                                                       <option value="3">3</option>
+	                                                       <option value="4">4</option>
+	                                                       <option value="5">5</option>
+	                                                   </select> 
+	                                                   <span class="input-group-addon">天</span>
+	                                                </div>
                                                </div>
                                                <div class="col-md-6">
-                                                   <select class="form-control c-square c-theme">
+                                               	<div class="input-group c-square">
+                                                   <select class="form-control c-square c-theme input-lg">
                                                        <option value="0">0</option>
                                                        <option value="1">1</option>
                                                        <option value="2">2</option>
                                                        <option value="3">3</option>
                                                        <option value="4">4</option>
                                                        <option value="5">5</option>
-                                                   </select> 晚
+                                                   </select> 
+                                                   <span class="input-group-addon">晚</span>
+                                                </div>
                                            </div>
                                   		</div>
 		                          </div>
@@ -113,13 +119,13 @@
 	                          		<div class="row">
                                                <div id="cfd" data-toggle="distpicker">
                                                    <div class="form-group col-md-2">
-													<select class="form-control c-square c-theme" name="province"></select>
+													<select class="form-control c-square c-theme input-lg" name="province"></select>
 												   </div>
 												   <div class="form-group col-md-2">
-													<select class="form-control c-square c-theme" name="city"></select>
+													<select class="form-control c-square c-theme input-lg" name="city"></select>
 												   </div>
 												   <div class="form-group col-md-2">
-													<select class="form-control c-square c-theme" name="county"></select>
+													<select class="form-control c-square c-theme input-lg" name="county"></select>
 												   </div>
 													<script type="text/javascript">
 														$('#cfd').distpicker({
@@ -136,7 +142,7 @@
 													</script>
                                                </div>
                                                <div class="col-md-6">
-                                                   <input class="form-control" type="text" name="place" maxlength="50"  placeholder="具体地址" value="${(project.place)!''}">
+                                                   <input class="form-control input-lg" type="text" name="place" maxlength="50"  placeholder="具体地址" value="${(project.place)!''}">
                                            </div>
                                   		</div>
 		                          </div>
@@ -146,13 +152,13 @@
 	                          		<div class="row">
                                                <div id="mdd" data-toggle="distpicker">
                                                    <div class="form-group col-md-2">
-													<select class="form-control c-square c-theme" name="province"></select>
+													<select class="form-control c-square c-theme input-lg" name="province"></select>
 												   </div>
 												   <div class="form-group col-md-2">
-													<select class="form-control c-square c-theme" name="city"></select>
+													<select class="form-control c-square c-theme input-lg" name="city"></select>
 												   </div>
 												   <div class="form-group col-md-2">
-													<select class="form-control c-square c-theme" name="county"></select>
+													<select class="form-control c-square c-theme input-lg" name="county"></select>
 												   </div>
 													<script type="text/javascript">
 														$('#mdd').distpicker({
@@ -169,14 +175,14 @@
 													</script>
                                                </div>
                                                <div class="col-md-6">
-                                                   <input class="form-control" type="text" name="place" maxlength="50"  placeholder="具体地址" value="${(project.place)!''}">
+                                                   <input class="form-control input-lg" type="text" name="place" maxlength="50"  placeholder="具体地址" value="${(project.place)!''}">
                                            </div>
                                   		</div>
 		                          </div>
 		                          
 		                          <div class="form-group col-md-12">
 		                              <label class="control-label">实拍图片<p><small class="c-font-grey-2">实拍图片配图最多5张，长高比例建议为16:10，图片宽度建议在600px~750px之间，支持jpg,gif,png格式</small></p></label> 
-		                              <input id="modelPics" name="modelPics" type="file" class="form-control c-square c-theme file-loading" accept="image/*" multiple>
+		                              <input id="modelPics" name="modelPics" type="file" class="form-control c-square c-theme file-loading input-lg" accept="image/*" multiple>
 										<script type="text/javascript">
 												$("#modelPics").fileinput({
 												    uploadUrl: "#", // server upload action
@@ -213,19 +219,19 @@
 			                                            <h3 class="panel-title">行程1</h3>
 			                                        </div>
 								                  <div class="panel-body">
-								                  		 <div class="form-group col-md-7">
+								                  		 <div class="form-group col-md-6">
 								                              <label class="control-label">行程标题</label>
-								                              <input type="text" class="form-control c-square c-theme" placeholder="行程标题  20字"> 
+								                              <input type="text" class="form-control c-square c-theme input-lg" placeholder="行程标题  20字"> 
 								                          </div>
 								                          
-								                          <div class="form-group col-md-7">
+								                          <div class="form-group col-md-12">
 								                              <label class="control-label">行程简介</label>
-								                              <textarea class="form-control c-square c-theme" rows="3" placeholder="行程简介  100字"></textarea>
+								                              <textarea class="form-control c-square c-theme input-lg" rows="6" placeholder="行程简介  100字"></textarea>
 								                          </div>
 								                          
 								                          <div class="form-group col-md-12">
 								                              <label class="control-label">行程图片<p><small class="c-font-grey-2">行程图片配图最多5张，长高比例建议为16:10，图片宽度建议在600px~750px之间，支持jpg,gif,png格式</small></p></label> 
-								                              <input name="travelPics" type="file" class="form-control c-square c-theme file-loading" accept="image/*" multiple>
+								                              <input name="travelPics" type="file" class="form-control c-square c-theme file-loading input-lg" accept="image/*" multiple>
 								                          	</div>
 								                  </div>
 								              </div>
@@ -253,11 +259,11 @@
 		                          		<label class="control-label">出发时间</label>
 		                          		<div class="row">
                                           <div class="form-group col-md-6">
-		                                      <input type="date" class="form-control c-square c-theme" placeholder="出发时间"> 
+		                                      <input type="date" class="form-control c-square c-theme input-lg" placeholder="出发时间"> 
 		                                  </div>
 		                                  
 	                                  	  <div class="col-md-6">
-		                                      <input type="date" class="form-control c-square c-theme" placeholder="截至日期"> 
+		                                      <input type="date" class="form-control c-square c-theme input-lg" placeholder="截至日期"> 
 	                                      </div>
                                   		</div>
 		                          	</div>
@@ -266,12 +272,12 @@
 		                          		<div class="row">
                                           <div class="form-group col-md-6">
                                           	  <label class="control-label">提前报名天数</label>
-		                                      <input type="number" class="form-control c-square c-theme" placeholder=""> 
+		                                      <input type="number" class="form-control c-square c-theme input-lg" placeholder=""> 
 		                                  </div>
 		                                  
 	                                  	  <div class="col-md-6">
 	                                  	  	  <label class="control-label">人数限制</label>
-		                                      <input type="number" class="form-control c-square c-theme" placeholder=""> 
+		                                      <input type="number" class="form-control c-square c-theme input-lg" placeholder=""> 
 	                                      </div>
                                   		</div>
 		                          	</div>
@@ -280,16 +286,16 @@
 		                          		<div class="row">
                                           <div class="form-group col-md-6">
                                           	  <label class="control-label">费用</label>
-		                                      <input type="number" class="form-control c-square c-theme" placeholder=""> 
+		                                      <input type="number" class="form-control c-square c-theme input-lg" placeholder=""> 
 		                                  </div>
 		                                  
 	                                  	  <div class="col-md-6"></div>
                                   		</div>
 		                          	</div>
 		                          	
-		                          	<div class="form-group col-md-7">
+		                          	<div class="form-group col-md-12">
 			                              <label class="control-label">费用说明</label>
-			                              <textarea class="form-control c-square c-theme" rows="3" placeholder="费用说明  200字"></textarea>
+			                              <textarea class="form-control c-square c-theme input-lg" rows="6" placeholder="费用说明  200字"></textarea>
 			                          </div>
 		                          	
                             	 </div>
@@ -343,17 +349,17 @@ function addxc(){
                                       '<h3 class="panel-title">行程' + index +'</h3>'+
                                   '</div>'+
                  '<div class="panel-body">'+
-                 		 '<div class="form-group col-md-7">'+
+                 		 '<div class="form-group col-md-6">'+
                              '<label class="control-label">行程标题</label>'+
-                             '<input type="text" class="form-control c-square c-theme" placeholder="行程标题  20字"> '+
+                             '<input type="text" class="form-control c-square c-theme input-lg" placeholder="行程标题  20字"> '+
                          '</div>'+
-                         '<div class="form-group col-md-7">'+
+                         '<div class="form-group col-md-12">'+
                              '<label class="control-label">行程简介</label>'+
-                             '<textarea class="form-control c-square c-theme" rows="3" placeholder="行程简介  100字"></textarea>'+
+                             '<textarea class="form-control c-square c-theme input-lg" rows="6" placeholder="行程简介  100字"></textarea>'+
                          '</div>'+
                          '<div class="form-group col-md-12">'+
                              '<label class="control-label">行程图片<p><small class="c-font-grey-2">行程图片配图最多5张，长高比例建议为16:10，图片宽度建议在600px~750px之间，支持jpg,gif,png格式</small></p></label>'+ 
-                             '<input name="travelPics" type="file" class="form-control c-square c-theme file-loading" accept="image/*" multiple>'+
+                             '<input name="travelPics" type="file" class="form-control c-square c-theme file-loading input-lg" accept="image/*" multiple>'+
                          	'</div>'+
                  '</div>'+
              '</div>'+
