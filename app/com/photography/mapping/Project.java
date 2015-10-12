@@ -1,6 +1,7 @@
 package com.photography.mapping;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -8,6 +9,8 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 
 import org.hibernate.annotations.LazyToOne;
 import org.hibernate.annotations.LazyToOneOption;
@@ -46,13 +49,25 @@ public class Project extends BaseMapping{
 	private Date startTime;
 	
 	/**
-	 * 活动时长
+	 * 活动时长（天）
 	 */
 	@Column(name="time_length")
 	private String timeLength;
 	
 	/**
-	 * 活动人数
+	 * 活动时长（晚）
+	 */
+	@Column(name="time_night_length")
+	private String timeNightLength;
+	
+	/**
+	 * 提前报名天数
+	 */
+	@Column(name="early_days")
+	private String earlyDays;
+	
+	/**
+	 * 最多开办人数
 	 */
 	@Column(name="people_num")
 	private String peopleNum;
@@ -74,6 +89,12 @@ public class Project extends BaseMapping{
 	 */
 	@Column(name="venue_place")
 	private String venuePlace;
+	
+	/**
+	 * 目的地点
+	 */
+	@Column(name="destination_place")
+	private String destinationPlace;
 	
 	/**
 	 * 省
@@ -106,10 +127,11 @@ public class Project extends BaseMapping{
 	private String des;
 	
 	/**
-	 * 行程介绍
+	 * 行程
 	 */
-	@Column(name="xc_des")
-	private String xcDes;
+	@OneToMany(mappedBy="project",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OrderBy(value= "create_time ASC")
+	private List<ProjectTrip> ProjectTrips;
 	
 	/**
 	 * 费用介绍
@@ -137,11 +159,11 @@ public class Project extends BaseMapping{
 	private FileGroup photos;
 	
 	/**
-	 * 场地、模特 照片
+	 * 介绍照片
 	 */
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinColumn(name="model_photos")
-	private FileGroup modelPhotos;
+	@JoinColumn(name="des_photos")
+	private FileGroup desPhotos;
 	
 	/**
 	 * 创建用户
@@ -267,14 +289,6 @@ public class Project extends BaseMapping{
 		this.photos = photos;
 	}
 
-	public FileGroup getModelPhotos() {
-		return modelPhotos;
-	}
-
-	public void setModelPhotos(FileGroup modelPhotos) {
-		this.modelPhotos = modelPhotos;
-	}
-
 	public String getProvince() {
 		return province;
 	}
@@ -299,12 +313,12 @@ public class Project extends BaseMapping{
 		this.county = county;
 	}
 
-	public String getXcDes() {
-		return xcDes;
+	public List<ProjectTrip> getProjectTrips() {
+		return ProjectTrips;
 	}
 
-	public void setXcDes(String xcDes) {
-		this.xcDes = xcDes;
+	public void setProjectTrips(List<ProjectTrip> projectTrips) {
+		ProjectTrips = projectTrips;
 	}
 
 	public String getFeeDes() {
@@ -345,6 +359,38 @@ public class Project extends BaseMapping{
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	public String getTimeNightLength() {
+		return timeNightLength;
+	}
+
+	public void setTimeNightLength(String timeNightLength) {
+		this.timeNightLength = timeNightLength;
+	}
+
+	public FileGroup getDesPhotos() {
+		return desPhotos;
+	}
+
+	public void setDesPhotos(FileGroup desPhotos) {
+		this.desPhotos = desPhotos;
+	}
+
+	public String getDestinationPlace() {
+		return destinationPlace;
+	}
+
+	public void setDestinationPlace(String destinationPlace) {
+		this.destinationPlace = destinationPlace;
+	}
+
+	public String getEarlyDays() {
+		return earlyDays;
+	}
+
+	public void setEarlyDays(String earlyDays) {
+		this.earlyDays = earlyDays;
 	}
 	
 	

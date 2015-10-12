@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.photography.controller.view.ProjectTripList;
 import com.photography.dao.exp.Condition;
 import com.photography.dao.exp.Expression;
 import com.photography.dao.query.Pager;
@@ -29,6 +30,7 @@ import com.photography.exception.ServiceException;
 import com.photography.mapping.FileGroup;
 import com.photography.mapping.FileInfo;
 import com.photography.mapping.Project;
+import com.photography.mapping.ProjectTrip;
 import com.photography.mapping.User;
 import com.photography.service.IProjectOrderService;
 import com.photography.service.IProjectService;
@@ -102,45 +104,54 @@ public class ProjectController extends BaseController {
 	 * @author 徐雁斌
 	 */
 	@RequestMapping(value="/create")
-	public ModelAndView create(Project project,@RequestParam MultipartFile[] photoPics,@RequestParam MultipartFile[] modelPics,HttpServletRequest request, Model model){
+	public ModelAndView create(Project project,@RequestParam MultipartFile[] photoPics,@RequestParam MultipartFile[] desPhotoPics,ProjectTripList tripList,HttpServletRequest request){
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("project/project_create");
 		try{
 			User user = getSessionUser(request);
 			
 			Project projectDb = null;
-			if(project.getId() != null && !"".equals(project.getId())){
+			if(!StringUtils.isEmpty(project.getId())){
 				projectDb = (Project) projectService.loadPojo(Project.class,project.getId());
+			}else{
+				projectDb = project;
 			}
 			
-        	FileGroup photoGroup = null;
-        	if(projectDb != null){
-        		photoGroup = projectDb.getPhotos();
-        	}
-        	photoGroup = saveAndReturnFile(photoPics, request, user, photoGroup);
+        	FileGroup photoGroup = saveAndReturnFile(photoPics, request, user, projectDb.getPhotos());
         	project.setPhotos(photoGroup);
         	
-        	FileGroup modelPhotoGroup = null;
-        	if(projectDb != null){
-        		modelPhotoGroup = projectDb.getModelPhotos();
-        	}
-        	modelPhotoGroup = saveAndReturnFile(modelPics, request, user, modelPhotoGroup);
-        	project.setModelPhotos(modelPhotoGroup);
+        	FileGroup desPhotoGroup = saveAndReturnFile(desPhotoPics, request, user, projectDb.getDesPhotos());
+        	project.setDesPhotos(desPhotoGroup);
         	
         	project.setCreateUser(user);
         	
         	projectService.savePojo(project, user);
-        	mav.addObject("project", project);
+        	
+        	//处理行程
+        	if(tripList != null && tripList.getTrips() != null && !tripList.getTrips().isEmpty()){
+        		for(ProjectTrip projectTrip : tripList.getTrips()){
+        			ProjectTrip projectTripDb = null;
+        			if(!StringUtils.isEmpty(projectTrip.getId())){
+        				projectTripDb = projectService.loadPojo(ProjectTrip.class,projectTrip.getId());
+        			}else{
+        				projectTripDb = projectTrip;
+        			}
+        			FileGroup desPhotos = saveAndReturnFile(projectTrip.getDesPhotoPics(), request, user, projectTrip.getDesPhotos());
+        			projectTripDb.setDesPhotos(desPhotos);
+        			projectTripDb.setTitle(projectTrip.getTitle());
+        			projectTripDb.setDes(projectTrip.getDes());
+        			projectTripDb.setProject(project);
+        			projectService.savePojo(projectTripDb, user);
+        		}
+        	}
+        	
+        	mav.addObject("project", (Project) projectService.loadPojo(Project.class,project.getId()));
+        	
+        	mav.addObject(Constants.SUCCESS_MESSAGE, MessageConstants.SAVE_SUCCESS);
 			
 		}catch(Exception e){
-			if(e instanceof ServiceException){
-				mav.addObject("project", project);
-				ServiceException se = (ServiceException) e;
-				mav.addObject("errorMessage", se.getErrorMessage()); 
-			}else{
-				log.error("error",e);
-				mav.addObject("error_message", ErrorMessage.get(ErrorCode.UNKNOWN_ERROR));
-			}
+			log.error(e);
+			handleErrorModelAndView(mav, e);
 		}
 		return mav;
 	}
@@ -160,13 +171,13 @@ public class ProjectController extends BaseController {
 		}
 		//绝对路径
 		String filePath = request.getSession().getServletContext().getRealPath((String)
-    			CustomizedPropertyPlaceholderConfigurer.getContextProperty(PROJECT_FILE))  + File.separator + user.getEmail();       	
+    			CustomizedPropertyPlaceholderConfigurer.getContextProperty(PROJECT_FILE))  + File.separator + user.getMobile();       	
     	//相对路径
-    	String relativePath = CustomizedPropertyPlaceholderConfigurer.getContextProperty(PROJECT_FILE) + user.getEmail();
+    	String relativePath = CustomizedPropertyPlaceholderConfigurer.getContextProperty(PROJECT_FILE) + user.getMobile();
   
     	
 		for(int i=0;i<files.length;i++){
-			MultipartFile file =  files[i];
+			MultipartFile file = files[i];
 			if(file.isEmpty()){
 				continue;
 			}
