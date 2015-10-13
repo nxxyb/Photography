@@ -1,6 +1,7 @@
 package com.photography.controller;
 
 import java.io.File;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -9,14 +10,19 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.photography.dao.exp.Condition;
+import com.photography.dao.query.Pager;
 import com.photography.exception.ErrorCode;
 import com.photography.exception.ErrorMessage;
 import com.photography.exception.ServiceException;
+import com.photography.mapping.Project;
 import com.photography.mapping.User;
 import com.photography.service.IMailService;
 import com.photography.service.IProjectOrderService;
@@ -70,14 +76,14 @@ public class UserInfoController extends BaseController {
 
 	/**
 	 * 用户中心页面
-	 * type: 1 个人资料  2 认证信息 3 我的收藏 4 我的订单 5 优惠卷 6 修改密码
+	 * type: 1 个人资料  2 认证信息 3 我的收藏 4 我的订单 5 优惠卷 6 修改密码  7 发布活动  8 发布作品
 	 * @param request
 	 * @return
 	 * @author 徐雁斌
 	 * @throws ServiceException 
 	 */
 	@RequestMapping(value="/toUserInfo")
-	public ModelAndView toUserInfo(String type,HttpServletRequest request) throws ServiceException {
+	public ModelAndView toUserInfo(@ModelAttribute("type")String type,HttpServletRequest request) throws ServiceException {
 		ModelAndView mv = new ModelAndView();
 		User user = getSessionUser(request);
 		user = userService.loadPojo(User.class, user.getId());
@@ -97,6 +103,10 @@ public class UserInfoController extends BaseController {
 		}else if(type.equals("6")){
 			page = "user/user_changepw";
 		}else if(type.equals("7")){
+			Pager pager = new Pager();
+			List<Project> projects = projectService.getPojoList(Project.class, pager, Condition.eq("createUser.id", user.getId()), null,user);
+			mv.addObject("pager", pager);
+			mv.addObject("projects", projects);
 			page = "user/user_project";
 		}else if(type.equals("8")){
 			page = "user/user_work";
@@ -104,6 +114,45 @@ public class UserInfoController extends BaseController {
 		mv.setViewName(page);
 		return mv;
 	}
+	
+	/**
+	 * 获取用户发布活动列表
+	 * type: 1-进行中  2-历史
+	 * @param request
+	 * @return
+	 * @author 徐雁斌
+	 * @throws ServiceException 
+	 */
+	@RequestMapping(value="/getUserFBProject")
+	public ModelAndView getUserFBProject(String type,Pager pager,HttpServletRequest request) throws ServiceException {
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("user/user_project_item");
+		User user = getSessionUser(request);
+		List<Project> projects = projectService.getPojoList(Project.class, pager, Condition.eq("createUser.id", user.getId()), null,user);
+		mv.addObject("projects", projects);
+		return mv;
+	}
+	
+	/**
+	 * 用户删除活动
+	 * @param request
+	 * @return
+	 * @author 徐雁斌
+	 * @throws ServiceException 
+	 */
+	@RequestMapping(value="/deleteUserFBProject")
+	public String deleteUserFBProject(String id,HttpServletRequest request,RedirectAttributes ra) throws ServiceException {
+		Project project = projectService.loadPojo(Project.class, id);
+		if(project != null){
+			projectService.deletePojo(project, getSessionUser(request));
+		}
+		ra.addFlashAttribute("type", "7");
+		return "redirect:toUserInfo";
+	}
+	
+	
+	
+	
 	
 //	/**
 //	 * 切换tab，异步加载内容

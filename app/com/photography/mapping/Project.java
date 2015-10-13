@@ -131,7 +131,7 @@ public class Project extends BaseMapping{
 	 */
 	@OneToMany(mappedBy="project",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @OrderBy(value= "create_time ASC")
-	private List<ProjectTrip> ProjectTrips;
+	private List<ProjectTrip> projectTrips;
 	
 	/**
 	 * 费用介绍
@@ -314,11 +314,11 @@ public class Project extends BaseMapping{
 	}
 
 	public List<ProjectTrip> getProjectTrips() {
-		return ProjectTrips;
+		return projectTrips;
 	}
 
 	public void setProjectTrips(List<ProjectTrip> projectTrips) {
-		ProjectTrips = projectTrips;
+		this.projectTrips = projectTrips;
 	}
 
 	public String getFeeDes() {

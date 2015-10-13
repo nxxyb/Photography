@@ -1,0 +1,43 @@
+<#assign basePath=request.contextPath>
+
+<#list projects as project>
+   <div class="c-border-bottom c-row-item">
+       <div class="row">
+           <div class="col-md-2 col-sm-12">
+               <div class="c-content-overlay">
+                   <div class="c-overlay-wrapper">
+                       <div class="c-overlay-content">
+                           <a href="shop-product-details-2.html" class="c-action-btn btn btn-sm c-btn-square c-btn-bold c-btn-border-2x c-theme-btn c-btn-uppercase c-center">查看</a>
+                       </div>
+                   </div>
+                   <div class="c-bg-img-top-center c-overlay-object" data-height="height">
+                       <img width="100%" class="img-responsive" <#if (project.photos.fileInfos)??>src="${basePath}/${project.photos.fileInfos[0].realPath}"</#if> > </div>
+               </div>
+           </div>
+           <div class="col-md-6 col-sm-8">
+               <ul class="c-list list-unstyled">
+                   <li class="c-margin-b-25">
+                       <a href="shop-product-details-2.html" class="c-font-bold c-font-22 c-theme-link">${(project.name)!''}</a>
+                   </li>
+                   
+                   <li class="c-margin-t-30">
+                       <div class="form-group" role="group">
+                           <a href="${basePath}/project/toCreate?id=${project.id}" class="btn btn-sm c-theme-btn c-btn-square  c-btn-bold">
+                               <i class="fa fa-edit"></i>编 辑</a>
+                           <a href="${basePath}/userinfo/deleteUserFBProject?id=${project.id}" class="btn btn-sm btn-default c-btn-square  c-btn-bold">
+                           	<i class="fa fa-times"></i>删 除 </a>
+                       </div>
+                   </li>
+               </ul>
+           </div>
+           <div class="col-md-2 col-sm-2">
+               <p class="visible-xs-block c-theme-font c-font-uppercase c-font-bold">Stock</p>
+               <p class="c-font-sbold c-font-18">In Stock</p>
+           </div>
+           <div class="col-md-2 col-sm-2">
+               <p class="visible-xs-block c-theme-font c-font-uppercase c-font-bold">价格</p>
+               <p class="c-font-sbold c-font-uppercase c-font-18">￥${(project.cost)!''}</p>
+           </div>
+       </div>
+   </div>
+</#list>

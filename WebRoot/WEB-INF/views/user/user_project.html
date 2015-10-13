@@ -59,45 +59,58 @@
                                 </div>
                             </div>
                         </div>
+                        
+                        
                         <!-- BEGIN: PRODUCT ITEM ROW -->
-                        <div class="c-border-bottom c-row-item">
-                            <div class="row">
-                                <div class="col-md-3 col-sm-12">
-                                    <div class="c-content-overlay">
-                                        <div class="c-overlay-wrapper">
-                                            <div class="c-overlay-content">
-                                                <a href="shop-product-details-2.html" class="btn btn-md c-btn-grey-1 c-btn-uppercase c-btn-bold c-btn-border-1x c-btn-square">Explore</a>
-                                            </div>
-                                        </div>
-                                        <div class="c-bg-img-top-center c-overlay-object" data-height="height">
-                                            <img width="100%" class="img-responsive" src="${basePath}/images/example/project1.jpg"> </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-5 col-sm-8">
-                                    <ul class="c-list list-unstyled">
-                                        <li class="c-margin-b-25">
-                                            <a href="shop-product-details-2.html" class="c-font-bold c-font-22 c-theme-link">Winter Coat</a>
-                                        </li>
-                                        
-                                        <li class="c-margin-t-30">
-                                            <div class="form-group" role="group">
-                                                <button type="submit" class="btn btn-sm c-theme-btn c-btn-square c-btn-uppercase c-btn-bold">
-                                                    <i class="fa fa-shopping-cart"></i>Add Cart</button>
-                                                <button type="submit" class="btn btn-sm btn-default c-btn-square c-btn-uppercase c-btn-bold">Remove</button>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="col-md-2 col-sm-2">
-                                    <p class="visible-xs-block c-theme-font c-font-uppercase c-font-bold">Stock</p>
-                                    <p class="c-font-sbold c-font-18">In Stock</p>
-                                </div>
-                                <div class="col-md-2 col-sm-2">
-                                    <p class="visible-xs-block c-theme-font c-font-uppercase c-font-bold">Unit Price</p>
-                                    <p class="c-font-sbold c-font-uppercase c-font-18">$20.00</p>
-                                </div>
-                            </div>
+                        <#if projects?? && (projects?size>0)>
+                       
+                        <div id="going_project">
+							<#include "./user_project_item.html">
                         </div>
+                        
+                        <div class="row c-margin-t-40 pull-right">
+                              <ul id="going_project_pager" class="c-content-pagination c-square c-theme ">
+                              </ul>
+						</div>
+						<script type='text/javascript'>  
+							$.ajax({
+				                url:"${basePath}/userinfo/getUserFBProject?type=1&currentPage=1",
+				                type:"Post",
+				                success: function (data) {
+				                	$("#going_project").html(data);
+				                }
+				            });
+						
+					        var options = {  
+					             size:"large",
+					             bootstrapMajorVersion:3,
+					             currentPage: ${(pager.currentPage)!1},
+					             numberOfPages: ${(pager.pageSize)!5},
+					             totalPages:${(pager.totalPage)!1},
+					             onPageClicked: function (e, originalEvent, type, page) {  
+					                $.ajax({
+						                url:"${basePath}/userinfo/getUserFBProject?type=1&currentPage=" + page,
+						                type:"Post",
+						                success: function (data) {
+						                	$("#going_project").html(data);
+						                }
+						            });
+					             }  
+					        }
+					  
+					        $('#going_project_pager').bootstrapPaginator(options);  
+					    </script>
+					    <#else>
+					    	<div class="c-content-box c-size-lg">
+				                <div class="container">
+				                    <div class="c-shop-cart-page-1 c-center">
+				                        <i class="fa fa-frown-o c-font-dark c-font-50 c-font-thin "></i>
+				                        <h2 class="c-font-thin c-center">您还没有发布活动</h2>
+				                    </div>
+				                </div>
+				            </div>  
+                        </#if>
+                        
                         <!-- END: PRODUCT ITEM ROW -->
                     </div>
                      </div>

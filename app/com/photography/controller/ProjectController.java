@@ -1,6 +1,7 @@
 package com.photography.controller;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -128,6 +129,7 @@ public class ProjectController extends BaseController {
         	projectService.savePojo(project, user);
         	
         	//处理行程
+        	List<ProjectTrip> l = new ArrayList<ProjectTrip>();
         	if(tripList != null && tripList.getTrips() != null && !tripList.getTrips().isEmpty()){
         		for(ProjectTrip projectTrip : tripList.getTrips()){
         			ProjectTrip projectTripDb = null;
@@ -136,16 +138,19 @@ public class ProjectController extends BaseController {
         			}else{
         				projectTripDb = projectTrip;
         			}
-        			FileGroup desPhotos = saveAndReturnFile(projectTrip.getDesPhotoPics(), request, user, projectTrip.getDesPhotos());
+        			FileGroup desPhotos = saveAndReturnFile(projectTrip.getDesPhotoPics(), request, user, projectTripDb.getDesPhotos());
         			projectTripDb.setDesPhotos(desPhotos);
         			projectTripDb.setTitle(projectTrip.getTitle());
         			projectTripDb.setDes(projectTrip.getDes());
         			projectTripDb.setProject(project);
         			projectService.savePojo(projectTripDb, user);
+        			l.add(projectTripDb);
         		}
         	}
-        	
-        	mav.addObject("project", (Project) projectService.loadPojo(Project.class,project.getId()));
+        	project.setProjectTrips(l);
+        	projectService.savePojo(project, user);
+
+        	mav.addObject("project", project);
         	
         	mav.addObject(Constants.SUCCESS_MESSAGE, MessageConstants.SAVE_SUCCESS);
 			
@@ -176,6 +181,7 @@ public class ProjectController extends BaseController {
     	String relativePath = CustomizedPropertyPlaceholderConfigurer.getContextProperty(PROJECT_FILE) + user.getMobile();
   
     	
+    	List<FileInfo> fileinfos = new ArrayList<FileInfo>();
 		for(int i=0;i<files.length;i++){
 			MultipartFile file = files[i];
 			if(file.isEmpty()){
@@ -189,10 +195,20 @@ public class ProjectController extends BaseController {
 			fileInfo.setRealPath(relativePath + "/" + fileName);
 			fileInfo.setFileGroup(fileGroup);
 			
-			fileGroup.getFileInfos().add(fileInfo);
+			fileinfos.add(fileInfo);
 			
 			
 			FileUtil.saveFileByName(filePath, file, fileName);
+		}
+		
+		if(!fileinfos.isEmpty()){
+			List<FileInfo> oldFileinfos = fileGroup.getFileInfos();
+			fileGroup.setFileInfos(null);
+			for(FileInfo fileInfo:oldFileinfos){
+				projectService.deletePojo(fileInfo, user);
+			}
+			
+			fileGroup.setFileInfos(fileinfos);
 		}
 		
 		projectService.savePojo(fileGroup, user);

@@ -2,23 +2,23 @@ package com.photography.dao.query;
 
 import java.io.Serializable;
 
+import com.photography.utils.Constants;
+
 /**
  * 
  * 
- * @author 门宏建 
- * @since 2011-8-11 
- * 
- * @Copyright (C) 2012 天大求实电力新技术股份有限公司 版权所有
+ * @author 徐雁斌
+ * @since 2015-10-13
  */
 public class Pager implements Serializable {
 
 	private static final long serialVersionUID = 8916582610329737188L;
 
 	// 当前页
-	private int currentPage;
+	private int currentPage = 1;
 
 	// 页面大小
-	private int pageSize;
+	private int pageSize = Constants.PAGER_DEFALUT_SIZE;
 
 	// 总记录数
 	private int totalCount;

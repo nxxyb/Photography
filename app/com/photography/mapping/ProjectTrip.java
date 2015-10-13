@@ -7,7 +7,6 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
-import javax.transaction.Transactional;
 
 import org.springframework.web.multipart.MultipartFile;
 

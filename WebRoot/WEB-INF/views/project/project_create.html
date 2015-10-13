@@ -51,7 +51,7 @@
 												$("#photos").fileinput({
 												    uploadUrl: "#", // server upload action
 						    						showUpload: false,
-						    						overwriteInitial: false,
+						    						overwriteInitial: true,
 						    						allowedFileExtensions:['jpg', 'gif', 'png'],
 						    						minFileCount: 1,
 						    						<#if project?? && project.photos?? && project.photos.fileInfos??>
@@ -83,7 +83,7 @@
 												$("#desPhotos").fileinput({
 												    uploadUrl: "#", // server upload action
 						    						showUpload: false,
-						    						overwriteInitial: false,
+						    						overwriteInitial: true,
 						    						allowedFileExtensions:['jpg', 'gif', 'png'],
 						    						minFileCount: 1,
 						    						<#if project?? && project.desPhotos?? && project.desPhotos.fileInfos??>
@@ -208,8 +208,8 @@
 	                           <div class="c-content-panel">
 								  <div class="c-body">
 								      <div id="xc" class="row">
-								      	  <#if (project.ProjectTrips)??>
-								          		<#list project.ProjectTrips as projectTrip>
+								      	  <#if (project.projectTrips)??>
+								          		<#list project.projectTrips as projectTrip>
 								          			<div class="col-md-12 xcdiv">
 										              <div class="panel panel-warning">
 										              	  <div class="panel-heading">
@@ -234,7 +234,7 @@
 																			$("#trips_${projectTrip_index}_desPhotoPics").fileinput({
 																			    uploadUrl: "#", // server upload action
 													    						showUpload: false,
-													    						overwriteInitial: false,
+													    						overwriteInitial: true,
 													    						allowedFileExtensions:['jpg', 'gif', 'png'],
 													    						minFileCount: 1,
 													    						<#if (projectTrip.desPhotos.fileInfos)??>
@@ -276,7 +276,7 @@
 																			$("#trips_0_desPhotoPics").fileinput({
 																			    uploadUrl: "#", // server upload action
 													    						showUpload: false,
-													    						overwriteInitial: false,
+													    						overwriteInitial: true,
 													    						allowedFileExtensions:['jpg', 'gif', 'png'],
 													    						minFileCount: 1,
 													    						maxFileCount: 5
@@ -387,7 +387,11 @@ $(document).ready(function(){
 	App.init(); // init core  
 });
 
-var index=2;
+<#if (project.projectTrips)??>
+	var index=${(project.projectTrips)?size + 1};
+<#else>
+	var index=2;
+</#if>
 
 function addxc(){
 	var xc = '<div class="col-md-12 xcdiv">'+
@@ -411,7 +415,6 @@ function addxc(){
                  '</div>'+
              '</div>'+
          '</div>';
-         alert(xc);
       $("#xc").append(xc);
       initFile();
 	index++;
@@ -421,7 +424,7 @@ function initFile(){
 	$(".file-loading").fileinput({
 	    uploadUrl: "#", // server upload action
 		showUpload: false,
-		overwriteInitial: false,
+		overwriteInitial: true,
 		allowedFileExtensions:['jpg', 'gif', 'png'],
 		minFileCount: 1,
 		maxFileCount: 5
@@ -429,7 +432,7 @@ function initFile(){
 }
 
 function removexc(){
-	if(index > 2){
+	if(index >= 2){
 		$(".xcdiv:last").remove();
 		index--;
 	}

@@ -101,6 +101,12 @@ public class Constants {
 	//已支付
 	public final static String USER_ORDER_STATUS_YZF = "3";
 	
+	
+	/**
+	 * 分页
+	 */
+	public final static int PAGER_DEFALUT_SIZE = 5;
+	
 	//用户中心-发布活动每页显示条数
 	public final static int PAGER_PROJECT_FB = 4;
 	
