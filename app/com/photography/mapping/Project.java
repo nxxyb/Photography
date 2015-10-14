@@ -79,7 +79,7 @@ public class Project extends BaseMapping{
 	private String modelNum;
 	
 	/**
-	 * 活动地点
+	 * 出发地点
 	 */
 	@Column(name="place")
 	private String place;

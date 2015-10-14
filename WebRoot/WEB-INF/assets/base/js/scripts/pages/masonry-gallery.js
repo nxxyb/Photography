@@ -2,7 +2,7 @@
     'use strict';
 
     // init cubeportfolio
-    $('#grid-container').cubeportfolio({
+    $('.cbp-l-grid-masonry-projects').cubeportfolio({
         filters: '#filters-container',
         loadMore: '#loadMore-container',
         loadMoreAction: 'click',

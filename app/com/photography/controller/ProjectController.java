@@ -129,7 +129,12 @@ public class ProjectController extends BaseController {
         	projectService.savePojo(project, user);
         	
         	//处理行程
-        	List<ProjectTrip> l = new ArrayList<ProjectTrip>();
+        	List<ProjectTrip> oldProjectTrips = new ArrayList<ProjectTrip>();
+        	if(!StringUtils.isEmpty(project.getId())){
+        		oldProjectTrips = projectService.loadPojoByExpression(ProjectTrip.class, Condition.eq("project.id", projectDb.getId()), new Sort("createTime","ASC"));
+        	}
+        	
+        	List<ProjectTrip> addProjectTrips = new ArrayList<ProjectTrip>();
         	if(tripList != null && tripList.getTrips() != null && !tripList.getTrips().isEmpty()){
         		for(ProjectTrip projectTrip : tripList.getTrips()){
         			ProjectTrip projectTripDb = null;
@@ -144,10 +149,20 @@ public class ProjectController extends BaseController {
         			projectTripDb.setDes(projectTrip.getDes());
         			projectTripDb.setProject(project);
         			projectService.savePojo(projectTripDb, user);
-        			l.add(projectTripDb);
+        			addProjectTrips.add(projectTripDb);
         		}
+        		
+        		//删除以前的行程
+        		
+        		for(ProjectTrip pt:oldProjectTrips){
+        			if(!addProjectTrips.contains(pt)){
+//        				oldProjectTrips.remove(pt);
+        				projectService.deletePojo(pt, user);
+        			}
+        		}
+        		project.setProjectTrips(addProjectTrips);	
+        		
         	}
-        	project.setProjectTrips(l);
         	projectService.savePojo(project, user);
 
         	mav.addObject("project", project);
@@ -155,7 +170,7 @@ public class ProjectController extends BaseController {
         	mav.addObject(Constants.SUCCESS_MESSAGE, MessageConstants.SAVE_SUCCESS);
 			
 		}catch(Exception e){
-			log.error(e);
+			log.error("ProjectController create",e);
 			handleErrorModelAndView(mav, e);
 		}
 		return mav;
@@ -217,17 +232,21 @@ public class ProjectController extends BaseController {
 	}
 	
 	/**
-	 * 进入新建页面
+	 * 进入查看页面
 	 * @param request
 	 * @param model
 	 * @return
 	 * @author 徐雁斌
 	 */
 	@RequestMapping(value="/toReview")
-	public String toReview(String id,HttpServletRequest request, RedirectAttributes attr){
-//		ModelAndView mav = new ModelAndView();
-//		return reviewProject(id, request, mav);
-		return "project/project_review";
+	public ModelAndView toReview(String id,HttpServletRequest request){
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("project/project_review");
+		if(!StringUtils.isEmpty(id)){
+			Project project = (Project) projectService.loadPojo(Project.class,id);
+			mav.addObject("project", project);
+		}
+		return mav;
 	}
 
 	/**
