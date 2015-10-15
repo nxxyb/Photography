@@ -31,6 +31,7 @@ import com.photography.exception.ServiceException;
 import com.photography.mapping.FileGroup;
 import com.photography.mapping.FileInfo;
 import com.photography.mapping.Project;
+import com.photography.mapping.ProjectComment;
 import com.photography.mapping.ProjectTrip;
 import com.photography.mapping.User;
 import com.photography.service.IProjectOrderService;
@@ -224,10 +225,8 @@ public class ProjectController extends BaseController {
 			}
 			
 			fileGroup.setFileInfos(fileinfos);
+			projectService.savePojo(fileGroup, user);
 		}
-		
-		projectService.savePojo(fileGroup, user);
-		
 		return fileGroup;
 	}
 	
@@ -247,6 +246,54 @@ public class ProjectController extends BaseController {
 			mav.addObject("project", project);
 		}
 		return mav;
+	}
+	
+	/**
+	 * 获取用户发布活动列表
+	 * type: 1-进行中  2-历史
+	 * @param request
+	 * @return
+	 * @author 徐雁斌
+	 * @throws ServiceException 
+	 */
+	@RequestMapping(value="/getProjectComment")
+	public ModelAndView getProjectComment(String projectId,Pager pager,HttpServletRequest request) throws ServiceException {
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("project/project_comment_item");
+		User user = getSessionUser(request);
+		List<ProjectComment> projectComments = projectService.getPojoList(ProjectComment.class, pager, Condition.eq("project.id", projectId), new Sort("createTime",QueryConstants.DESC),user);
+		mv.addObject("projectComments", projectComments);
+		return mv;
+	}
+	
+	/**
+	 * 提交评论
+	 */
+	@RequestMapping(value="/saveProjectComment")
+	public String saveProjectComment(ProjectComment projectComment, @RequestParam MultipartFile[] photoPics,HttpServletRequest request,RedirectAttributes attr){
+		String projectId = null;
+		try{
+			User user = getSessionUser(request);
+			if(!StringUtils.isEmpty(projectComment.getProject().getId())){
+				projectId = projectComment.getProject().getId();
+				Project project = (Project) projectService.loadPojo(Project.class,projectId);
+				projectComment.setProject(project);
+			}
+			
+			projectComment.setCreateUser(user);
+			
+			FileGroup photos = saveAndReturnFile(photoPics, request, user, projectComment.getPhotos());
+			projectComment.setPhotos(photos);
+			
+			projectService.savePojo(projectComment, user);
+			
+			attr.addFlashAttribute(Constants.SUCCESS_MESSAGE, MessageConstants.SAVE_SUCCESS);
+		}catch(Exception e){
+			log.error("ProjectController saveProjectComment",e);
+			attr.addFlashAttribute(Constants.ERROR_MESSAGE, ErrorMessage.getErrorMessage(e)); 
+		}
+		
+		return "redirect:toReview?id=" + projectId;
 	}
 
 	/**

@@ -72,14 +72,9 @@
                               <ul id="going_project_pager" class="c-content-pagination c-square c-theme ">
                               </ul>
 						</div>
-						<script type='text/javascript'>  
-							$.ajax({
-				                url:"${basePath}/userinfo/getUserFBProject?type=1&currentPage=1",
-				                type:"Post",
-				                success: function (data) {
-				                	$("#going_project").html(data);
-				                }
-				            });
+						<script type='text/javascript'>
+				            
+				            getByAjax("${basePath}/userinfo/getUserFBProject?type=1&currentPage=1","going_project");
 						
 					        var options = {  
 					             size:"large",
@@ -87,14 +82,8 @@
 					             currentPage: ${(pager.currentPage)!1},
 					             numberOfPages: ${(pager.pageSize)!5},
 					             totalPages:${(pager.totalPage)!1},
-					             onPageClicked: function (e, originalEvent, type, page) {  
-					                $.ajax({
-						                url:"${basePath}/userinfo/getUserFBProject?type=1&currentPage=" + page,
-						                type:"Post",
-						                success: function (data) {
-						                	$("#going_project").html(data);
-						                }
-						            });
+					             onPageClicked: function (e, originalEvent, type, page) {
+						            getByAjax("${basePath}/userinfo/getUserFBProject?type=1&currentPage=" + page,"going_project");
 					             }  
 					        }
 					  

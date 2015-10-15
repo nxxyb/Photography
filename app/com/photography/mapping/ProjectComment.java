@@ -34,8 +34,8 @@ public class ProjectComment extends BaseMapping {
 	private Project project;
 	
 	/**
-	 * 评论类型
-	 * 1-好评  2-中评  3-差评
+	 * 评论分数
+	 * 1-5
 	 */
 	@Column(name="type")
 	private String type;

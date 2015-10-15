@@ -19,6 +19,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.photography.dao.exp.Condition;
 import com.photography.dao.query.Pager;
+import com.photography.dao.query.QueryConstants;
+import com.photography.dao.query.Sort;
 import com.photography.exception.ErrorCode;
 import com.photography.exception.ErrorMessage;
 import com.photography.exception.ServiceException;
@@ -104,7 +106,7 @@ public class UserInfoController extends BaseController {
 			page = "user/user_changepw";
 		}else if(type.equals("7")){
 			Pager pager = new Pager();
-			List<Project> projects = projectService.getPojoList(Project.class, pager, Condition.eq("createUser.id", user.getId()), null,user);
+			List<Project> projects = projectService.getPojoList(Project.class, pager, Condition.eq("createUser.id", user.getId()), new Sort("createTime",QueryConstants.DESC),user);
 			mv.addObject("pager", pager);
 			mv.addObject("projects", projects);
 			page = "user/user_project";
@@ -128,7 +130,7 @@ public class UserInfoController extends BaseController {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("user/user_project_item");
 		User user = getSessionUser(request);
-		List<Project> projects = projectService.getPojoList(Project.class, pager, Condition.eq("createUser.id", user.getId()), null,user);
+		List<Project> projects = projectService.getPojoList(Project.class, pager, Condition.eq("createUser.id", user.getId()), new Sort("createTime",QueryConstants.DESC),user);
 		mv.addObject("projects", projects);
 		return mv;
 	}

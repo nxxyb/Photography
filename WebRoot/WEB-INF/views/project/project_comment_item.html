@@ -1,0 +1,58 @@
+<#assign basePath=request.contextPath>
+
+<#if projectComments?? && (projectComments?size>0)>
+	<#list projectComments as projectComment>
+	<div class="row">
+	    <div class="col-xs-6">
+	        
+	        <div class="c-product-review-name">
+	            <h3 class="c-font-bold c-font-24 c-margin-b-5"><#if (projectComment.createUser.realName)??> ${projectComment.createUser.realName}<#else>${projectComment.createUser.mobile}</#if></h3>
+	            <p class="c-date c-theme-font c-font-14">${(projectComment.createTime?string('yyyy-MM-dd HH:mm'))!''}</p>
+	        </div>
+	    </div>
+	    <div class="col-xs-6">
+	        <div class="c-product-rating c-right">
+	           <input id="input-2c" name="type" class="rating" min="0" max="5" step="0.5" data-size="xs" data-default-caption="{rating} 星" data-star-captions="{}"
+           				data-symbol="&#xf005;" data-glyphicon="false" data-rating-class="rating-fa"  value="${(projectComment.type)!'0'}" disabled>
+	        </div>
+	    </div>
+	</div>
+	<div class="c-product-review-content">
+        <p> ${(projectComment.content)!''}</p>
+    </div>
+    
+    <div class="c-product-review-content">
+        <div class="cbp-panel">
+		   <div class="cbp cbp-l-grid-masonry-projects">
+			<#if (projectComment.photos.fileInfos)??>
+			   <#list projectComment.photos.fileInfos as photo>
+			   		<div class="cbp-item">
+	                      <div class="cbp-caption">
+	                          <div class="cbp-caption-defaultWrap">
+	                              <img src="${basePath}/${photo.realPath}" alt=""> </div>
+	                          <div class="cbp-caption-activeWrap">
+	                              <div class="c-masonry-border"></div>
+	                              <div class="cbp-l-caption-alignCenter">
+	                                  <div class="cbp-l-caption-body">
+	                                      <a href="${basePath}/${photo.realPath}" class="cbp-lightbox cbp-l-caption-buttonRight btn c-btn-square c-btn-border-1x c-btn-white c-btn-bold c-btn-uppercase" data-title="Dashboard<br>by Paul Flavius Nechita">查看</a>
+	                                  </div>
+	                              </div>
+	                          </div>
+	                      </div>
+	                  </div>
+			   </#list>
+			</#if>
+		   </div>
+		</div>
+    </div>
+    
+	</#list>
+	
+<#else>
+    <div class="c-product-review-content">
+        <div class="c-shop-cart-page-1 c-center">
+            <i class="fa fa-frown-o c-font-dark c-font-50 c-font-thin "></i>
+            <h2 class="c-font-thin c-center">还没有评价</h2>
+        </div>
+    </div>  
+</#if>

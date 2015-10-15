@@ -45,4 +45,15 @@ public class ErrorMessage {
 	public static void put(Map<Integer, String> message){
 		msg.putAll(message);
 	}
+	
+	public static String getErrorMessage(Exception e){
+		String message = null;
+		if(e instanceof ServiceException){
+			ServiceException se = (ServiceException) e;
+			message = se.getErrorMessage();
+		}else{
+			message = ErrorMessage.get(ErrorCode.UNKNOWN_ERROR);
+		}
+		return message;
+	}
 }
