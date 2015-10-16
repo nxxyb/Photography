@@ -1,0 +1,83 @@
+<#assign basePath=request.contextPath>
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+	<head>
+		<!-- title start-->
+		<#include "./common/title.html">
+		<!-- title end-->
+
+		<!-- link start-->
+		<#include "./common/link.html">
+		<!-- link end-->
+		<link href="${basePath}/assets/base/admin/css/login.css" rel="stylesheet" type="text/css" media="all" />
+
+	</head>
+
+	<body>
+		<div id="login_bg" class="login_bg"></div>
+		<div class="login_header">
+			<span></span>
+		</div>
+
+		<div class="container">
+			<div class="form_header">
+				<h1 id="logo">视觉增强后台管理</h1>
+				<h2 id="subheading"></h2>
+			</div>
+			
+			<#if errorMessage??>
+				<div class="alert alert-danger alert-dismissable">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <i class="icon fa fa-warning"></i> ${errorMessage}
+                    
+                  </div>
+			</#if>
+			
+			<form class="signup_form_form" id="loginForm" method="post" action="${basePath}/login">
+			<div class="signup_forms" class="signup_forms">
+				<div id="signup_forms_container" class="signup_forms_container">
+						<div class="signup_account" id="signup_account">
+							<div class="form_user form-group">
+								<input type="text" name="loginName" placeholder="用户名" id="loginName">
+							</div>
+							<div class="form_password form-group">
+								<input type="password" name="password" placeholder="密码" id="password">
+							</div>
+						</div>
+				</div>
+				<button type="submit" id="signup_forms_submit">
+					<span><strong>登录</strong></span>
+				</button>
+			</div>
+			</form>
+		</div>
+		
+		<script type="text/javascript">
+			$('#loginForm').bootstrapValidator({
+		 	message: '非法的输入值',
+	        feedbackIcons: {
+	            valid: 'glyphicon glyphicon-ok',
+	            invalid: 'glyphicon glyphicon-remove',
+	            validating: 'glyphicon glyphicon-refresh'
+        	},
+        	 fields: {
+        	 	loginName: {
+	                validators: {
+	                    notEmpty: {
+	                        message: '用户名未填写'
+	                    }
+	                }
+	            },
+	            password: {
+	                validators: {
+	                    notEmpty: {
+	                        message: '密码未填写'
+	                    }
+	                }
+	            }
+		 	  }
+		 	});
+		</script>
+
+	</body>
+</html>

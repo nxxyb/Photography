@@ -25,7 +25,6 @@ import com.photography.dao.exp.Expression;
 import com.photography.dao.query.Pager;
 import com.photography.dao.query.QueryConstants;
 import com.photography.dao.query.Sort;
-import com.photography.exception.ErrorCode;
 import com.photography.exception.ErrorMessage;
 import com.photography.exception.ServiceException;
 import com.photography.mapping.FileGroup;
@@ -262,6 +261,8 @@ public class ProjectController extends BaseController {
 		mv.setViewName("project/project_comment_item");
 		User user = getSessionUser(request);
 		List<ProjectComment> projectComments = projectService.getPojoList(ProjectComment.class, pager, Condition.eq("project.id", projectId), new Sort("createTime",QueryConstants.DESC),user);
+		mv.addObject("projectId", projectId);
+		mv.addObject("pager", pager);
 		mv.addObject("projectComments", projectComments);
 		return mv;
 	}
@@ -296,66 +297,59 @@ public class ProjectController extends BaseController {
 		return "redirect:toReview?id=" + projectId;
 	}
 
-	/**
-	 * @param id
-	 * @param request
-	 * @param mav
-	 * @return
-	 * @author 徐雁斌
-	 */
-	private ModelAndView reviewProject(String id, HttpServletRequest request, ModelAndView mav) {
-		
-		mav.setViewName("project/project_review");
-		
-		//查找浏览的活动
-		Project project = (Project) projectService.loadPojo(Project.class,id);
-		if(project == null){
-			mav.addObject("errorMessage", ErrorMessage.get(ErrorCode.PROJECT_NOT_EXIST));
-		}
-		mav.addObject("project", project);
-		try {
-			//根据用户确定是否显示预定按钮
-			User user = getSessionUser(request);
-			mav.addObject("isCanYd",projectOrderService.isCanYd(user.getId(), id));
-			mav.addObject("rela_projects", projectService.getRelaProject(id));
-			
-			//更新浏览次数
-			String viewNumber = project.getViewedNumber();
-			if(viewNumber == null || "".equals(viewNumber)){
-				viewNumber = "0";
-			}
-			project.setViewedNumber(Integer.toString(Integer.parseInt(viewNumber) + 1));
-			projectService.savePojo(project, user);
-		} catch (ServiceException e) {
-			log.error("ProjectController.toReview(): ServiceException", e);
-			mav.addObject("errorMessage", e.getErrorMessage()); 
-		}
-		
-		return mav;
-	}
+//	/**
+//	 * @param id
+//	 * @param request
+//	 * @param mav
+//	 * @return
+//	 * @author 徐雁斌
+//	 */
+//	private ModelAndView reviewProject(String id, HttpServletRequest request, ModelAndView mav) {
+//		
+//		mav.setViewName("project/project_review");
+//		
+//		//查找浏览的活动
+//		Project project = (Project) projectService.loadPojo(Project.class,id);
+//		if(project == null){
+//			mav.addObject("errorMessage", ErrorMessage.get(ErrorCode.PROJECT_NOT_EXIST));
+//		}
+//		mav.addObject("project", project);
+//		try {
+//			//根据用户确定是否显示预定按钮
+//			User user = getSessionUser(request);
+//			mav.addObject("isCanYd",projectOrderService.isCanYd(user.getId(), id));
+//			mav.addObject("rela_projects", projectService.getRelaProject(id));
+//			
+//			//更新浏览次数
+//			String viewNumber = project.getViewedNumber();
+//			if(viewNumber == null || "".equals(viewNumber)){
+//				viewNumber = "0";
+//			}
+//			project.setViewedNumber(Integer.toString(Integer.parseInt(viewNumber) + 1));
+//			projectService.savePojo(project, user);
+//		} catch (ServiceException e) {
+//			log.error("ProjectController.toReview(): ServiceException", e);
+//			mav.addObject("errorMessage", e.getErrorMessage()); 
+//		}
+//		
+//		return mav;
+//	}
 	
 	/**
-	 * 预定活动
+	 * 预定活动页面
 	 * @param id
 	 * @param request
 	 * @param model
 	 * @return
 	 * @author 徐雁斌
 	 */
-	@RequestMapping(value="/orderProject")
-	public ModelAndView orderProject(String id,HttpServletRequest request, Model model){
+	@RequestMapping(value="/toProjectCheckout")
+	public ModelAndView toProjectCheckout(String id,String number,HttpServletRequest request, Model model){
 		ModelAndView mav = new ModelAndView();
-		try {
-			//根据用户确定是否显示预定按钮
-			User user = getSessionUser(request);
-			projectOrderService.saveOrderProject(user.getId(), id);
-			mav.addObject("successMessage", MessageConstants.ORDER_SUCCESS);
-		} catch (ServiceException e) {
-			log.error("ProjectController.orderProject(): ServiceException", e);
-			mav.addObject("errorMessage", ErrorMessage.get(e.getErrorCode()));
-		}
-		
-		return reviewProject(id, request, mav);
+		mav.addObject("project", projectService.loadPojo(Project.class,id));
+		mav.addObject("number", number);
+		mav.setViewName("project/project_checkout");
+		return mav;
 	}
 	
 	/**

@@ -102,14 +102,15 @@
                                         </div>
                                     </div>
                                     
-                                    <form>
+                                    <form id="projectCreateForm" action="${basePath}/project/toProjectCheckout" method="post">
+                                    	<input type="hidden" name="id" value="${(project.id)!''}">
                                     <div class="c-product-add-cart c-margin-t-20">
                                         <div class="row">
                                             <div class="col-sm-12 col-xs-12">
                                                 <div class="c-input-group c-spinner">
                                                 	<dl class="dl-horizontal">
                                                     <dt><p class="c-product-meta-label c-product-margin-2 c-font-uppercase c-font-bold">预定数量</p></dt>
-                                                    <dd><input type="text" class="form-control c-item-1" value="1">
+                                                    <dd><input type="text" name="number" class="form-control c-item-1" value="1">
                                                     <div class="c-input-group-btn-vertical">
                                                         <button class="btn btn-default" type="button" data_input="c-item-1">
                                                             <i class="fa fa-caret-up"></i>
@@ -123,7 +124,7 @@
                                                 </div>
                                             </div>
                                             <div class="col-sm-12 col-xs-12 c-margin-t-20">
-                                                <a href="#" class="btn c-btn btn-lg c-font-bold c-font-white c-theme-btn c-btn-square">立即预定</a>
+                                                <button type="submit" class="btn c-btn btn-lg c-font-bold c-font-white c-theme-btn c-btn-square">立即预定</button>
                                                 <a href="#" class="btn c-btn btn-lg c-font-bold c-font-white c-btn-purple c-btn-square">加入收藏</a>
                                             </div>
                                         </div>
@@ -234,7 +235,7 @@
 															                              <div class="c-masonry-border"></div>
 															                              <div class="cbp-l-caption-alignCenter">
 															                                  <div class="cbp-l-caption-body">
-															                                      <a href="${basePath}/${photo.realPath}" class="cbp-lightbox cbp-l-caption-buttonRight btn c-btn-square c-btn-border-1x c-btn-white c-btn-bold c-btn-uppercase" data-title="Dashboard<br>by Paul Flavius Nechita">查看</a>
+															                                      <a href="${basePath}/${photo.realPath}" class="cbp-lightbox cbp-l-caption-buttonRight btn c-btn-square c-btn-bold c-btn-border-1x c-theme-btn c-btn-uppercase c-center" data-title="Dashboard<br>by Paul Flavius Nechita">查看</a>
 															                                  </div>
 															                              </div>
 															                          </div>
@@ -270,28 +271,17 @@
                                 </div>
                                 
                                 <div id="project_comment">
-                                	<#include "./project_comment_item.html">
+                                	
                                 </div>
 								
-								<div class="row c-margin-t-40 pull-right">
+								<div class="row pull-right">
 		                              <ul id="project_comment_pager" class="c-content-pagination c-square c-theme ">
 		                              </ul>
 								</div>
 								<script type='text/javascript'>				            
-							        var options = {  
-							             size:"large",
-							             bootstrapMajorVersion:3,
-							             currentPage: ${(pager.currentPage)!1},
-							             numberOfPages: ${(pager.pageSize)!5},
-							             totalPages:${(pager.totalPage)!1},
-							             onPageClicked: function (e, originalEvent, type, page) {
-								            getByAjax("${basePath}/project/getProjectComment?projectId=${project.id}&currentPage=" + page,"project_comment");
-							             }  
-							        }
-							  
-							        $('#project_comment_pager').bootstrapPaginator(options);  
-							        
-							        getByAjax("${basePath}/project/getProjectComment?projectId=${project.id}&currentPage=1","project_comment");
+							        $(document).ready(function(){
+							        	getByAjax("${basePath}/project/getProjectComment?projectId=${project.id}&currentPage=1","project_comment");
+							        });
 							    </script>
 								
                                 

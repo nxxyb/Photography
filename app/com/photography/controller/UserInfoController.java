@@ -1,6 +1,7 @@
 package com.photography.controller;
 
 import java.io.File;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.photography.dao.exp.Condition;
+import com.photography.dao.exp.Expression;
 import com.photography.dao.query.Pager;
 import com.photography.dao.query.QueryConstants;
 import com.photography.dao.query.Sort;
@@ -105,10 +107,6 @@ public class UserInfoController extends BaseController {
 		}else if(type.equals("6")){
 			page = "user/user_changepw";
 		}else if(type.equals("7")){
-			Pager pager = new Pager();
-			List<Project> projects = projectService.getPojoList(Project.class, pager, Condition.eq("createUser.id", user.getId()), new Sort("createTime",QueryConstants.DESC),user);
-			mv.addObject("pager", pager);
-			mv.addObject("projects", projects);
 			page = "user/user_project";
 		}else if(type.equals("8")){
 			page = "user/user_work";
@@ -128,9 +126,19 @@ public class UserInfoController extends BaseController {
 	@RequestMapping(value="/getUserFBProject")
 	public ModelAndView getUserFBProject(String type,Pager pager,HttpServletRequest request) throws ServiceException {
 		ModelAndView mv = new ModelAndView();
-		mv.setViewName("user/user_project_item");
+		
 		User user = getSessionUser(request);
-		List<Project> projects = projectService.getPojoList(Project.class, pager, Condition.eq("createUser.id", user.getId()), new Sort("createTime",QueryConstants.DESC),user);
+		List<Project> projects = null;
+		if("1".equals(type)){
+			Expression exp = Condition.and(Condition.gt("startTime", new Date()),Condition.eq("createUser.id", user.getId()));
+			projects = projectService.getPojoList(Project.class, pager, exp, new Sort("createTime",QueryConstants.DESC),user);
+			mv.setViewName("user/user_project_going_item");
+		}else{
+			Expression exp = Condition.and(Condition.le("startTime", new Date()),Condition.eq("createUser.id", user.getId()));
+			projects = projectService.getPojoList(Project.class, pager, exp, new Sort("createTime",QueryConstants.DESC),user);
+			mv.setViewName("user/user_project_history_item");
+		}
+		mv.addObject("pager", pager);
 		mv.addObject("projects", projects);
 		return mv;
 	}

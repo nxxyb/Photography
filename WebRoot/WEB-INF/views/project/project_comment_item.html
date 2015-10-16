@@ -2,6 +2,8 @@
 
 <#if projectComments?? && (projectComments?size>0)>
 	<#list projectComments as projectComment>
+	<div class="c-content-panel">
+	<div class="c-body">
 	<div class="row">
 	    <div class="col-xs-6">
 	        
@@ -23,7 +25,7 @@
     
     <div class="c-product-review-content">
         <div class="cbp-panel">
-		   <div class="cbp cbp-l-grid-masonry-projects">
+		   <div class="cbp cbp-l-grid-masonry-project-comments">
 			<#if (projectComment.photos.fileInfos)??>
 			   <#list projectComment.photos.fileInfos as photo>
 			   		<div class="cbp-item">
@@ -34,7 +36,7 @@
 	                              <div class="c-masonry-border"></div>
 	                              <div class="cbp-l-caption-alignCenter">
 	                                  <div class="cbp-l-caption-body">
-	                                      <a href="${basePath}/${photo.realPath}" class="cbp-lightbox cbp-l-caption-buttonRight btn c-btn-square c-btn-border-1x c-btn-white c-btn-bold c-btn-uppercase" data-title="Dashboard<br>by Paul Flavius Nechita">查看</a>
+	                                      <a href="${basePath}/${photo.realPath}" class="cbp-lightbox cbp-l-caption-buttonRight btn btn-sm c-btn-square c-btn-bold c-btn-border-1x c-theme-btn c-btn-uppercase c-center" data-title="Dashboard<br>by Paul Flavius Nechita">查看</a>
 	                                  </div>
 	                              </div>
 	                          </div>
@@ -45,8 +47,66 @@
 		   </div>
 		</div>
     </div>
-    
+    </div>
+    </div>
 	</#list>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+	    //评论图片
+	    $('.cbp-l-grid-masonry-project-comments').cubeportfolio({
+	        layoutMode: 'grid',
+	        defaultFilter: '*',
+	        animationType: 'quicksand',
+	        gapHorizontal: 35,
+	        gapVertical: 25,
+	        gridAdjustment: 'responsive',
+	        mediaQueries: [{
+	            width: 1100,
+	            cols: 8
+	        }, {
+	            width: 900,
+	            cols: 6
+	        }, {
+	        	 width: 600,
+	             cols: 4
+	         }, {
+	            width: 400,
+	            cols: 2
+	        }, {
+	            width: 320,
+	            cols: 1
+	        }],
+	        caption: 'zoom',
+	        displayType: 'lazyLoading',
+	        displayTypeSpeed: 100,
+	
+	        // lightbox
+	        lightboxDelegate: '.cbp-lightbox',
+	        lightboxGallery: true,
+	        lightboxTitleSrc: 'data-title',
+	        lightboxCounter: '<div class="cbp-popup-lightbox-counter">{{current}} of {{total}}</div>'
+	    });
+	    
+	    //评分
+	    $('.rating').rating({});
+	    
+	    //分页
+	     var options = {  
+             size:"large",
+             bootstrapMajorVersion:3,
+             currentPage: ${(pager.currentPage)!1},
+             numberOfPages: ${(pager.pageSize)!5},
+             totalPages:${(pager.totalPage)!1},
+             onPageClicked: function (e, originalEvent, type, page) {
+	            getByAjax("${basePath}/project/getProjectComment?projectId=${projectId}&currentPage=" + page,"project_comment");
+             }  
+        }
+  
+        $('#project_comment_pager').bootstrapPaginator(options);
+	    
+	});
+</script>
 	
 <#else>
     <div class="c-product-review-content">
@@ -56,3 +116,4 @@
         </div>
     </div>  
 </#if>
+
