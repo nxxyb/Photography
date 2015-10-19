@@ -61,10 +61,10 @@ public class Project extends BaseMapping{
 	private String timeNightLength;
 	
 	/**
-	 * 提前报名天数
+	 * 报名截至日期
 	 */
 	@Column(name="early_days")
-	private String earlyDays;
+	private Date earlyDays;
 	
 	/**
 	 * 最多开办人数
@@ -385,11 +385,11 @@ public class Project extends BaseMapping{
 		this.destinationPlace = destinationPlace;
 	}
 
-	public String getEarlyDays() {
+	public Date getEarlyDays() {
 		return earlyDays;
 	}
 
-	public void setEarlyDays(String earlyDays) {
+	public void setEarlyDays(Date earlyDays) {
 		this.earlyDays = earlyDays;
 	}
 	

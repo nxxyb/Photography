@@ -45,7 +45,7 @@ CREATE TABLE `project` (
   `time_night_length` varchar(50) comment '活动时长(晚)',
   `people_num` varchar(50) comment '活动人数',
   `less_num` varchar(50) comment '最低人数',
-  `early_days` varchar(50) comment '提前报名天数',
+  `early_days` datetime comment '提前报名天数',
   `model_num` varchar(50) comment '模特数量',
   `place` varchar(200) comment '活动地点',
   `venue_place` varchar(200) comment '集合地点',

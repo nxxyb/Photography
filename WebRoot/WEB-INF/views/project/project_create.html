@@ -332,9 +332,9 @@
 		                          	<div class="form-group col-md-7">
 		                          		<div class="row">
                                           <div class="form-group col-md-6">
-                                          	  <label class="control-label">提前报名天数</label>
+                                          	  <label class="control-label">报名截至日期</label>
                                           	  <div class="input-group c-square">
-			                                      <input type="number" class="form-control c-square c-theme input-lg" placeholder="提前报名天数" name="earlyDays" value="${(project.earlyDays)!''}">
+			                                      <input type="datetime" class="form-control c-square c-theme input-lg" placeholder="报名截至日期" name="earlyDays" value="${(project.earlyDays?string('yyyy-MM-dd HH:mm'))!''}">
 			                                      <span class="input-group-addon">天</span> 
 			                                  </div>
 		                                  </div>
