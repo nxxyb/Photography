@@ -61,6 +61,10 @@ public class Constants {
 	/**
 	 * 活动类型
 	 */
+	//棚拍
+	public final static String PROJECT_TYPE_PP = "0";
+	public final static String PROJECT_TYPE_PP_NAME = "棚拍";
+	
 	//市内采风
 	public final static String PROJECT_TYPE_CITYINSIDE = "1";
 	public final static String PROJECT_TYPE_CITYINSIDE_NAME = "市内采风";

@@ -102,8 +102,14 @@
 		                              <label class="control-label">活动类型</label>
 		                              <div class="c-radio-inline">
 		                                 <div class="c-radio">
-		                                     <input type="radio" id="radio1" class="c-radio input-lg" <#if (project.type)??><#if project.type == '1'>checked</#if><#else>checked</#if> value="1" name="type" >
+		                                     <input type="radio" id="radio1" class="c-radio input-lg" <#if (project.type)??><#if project.type == '0'>checked</#if><#else>checked</#if> value="0" name="type" >
 		                                     <label for="radio1">
+		                                         <span></span><span class="check"></span>
+		                                         <span class="box"></span> 棚拍</label>
+		                                 </div>
+		                                 <div class="c-radio">
+		                                     <input type="radio" id="radio2" class="c-radio input-lg" <#if (project.type)?? && project.type == '1'>checked</#if> value="1" name="type">
+		                                     <label for="radio2">
 		                                         <span></span><span class="check"></span>
 		                                         <span class="box"></span> 市内采风</label>
 		                                 </div>
@@ -129,7 +135,6 @@
 		                          </div>
 		                          
 		                          <div class="form-group col-md-7">
-		                          		<label class="control-label">出发时间</label>
 		                          		<div class="row">
                                           <div class="form-group col-md-6">
 		                                      <input type="datetime" class="form-control c-square c-theme input-lg" placeholder="出发时间" name="startTime" value="${(project.startTime?string('yyyy-MM-dd HH:mm'))!''}"> 

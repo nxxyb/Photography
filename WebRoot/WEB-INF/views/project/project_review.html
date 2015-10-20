@@ -87,12 +87,15 @@
 	                                            <dd><p class="c-product-meta-label  c-font-uppercase">${(project.destinationPlace)!''}</p><dd>
 	                                            <dt><p class="c-product-meta-label  c-font-uppercase c-font-bold">活动类型</p></dt>
 	                                            <dd><p class="c-product-meta-label  c-font-uppercase">
+	                                            	 <#if (project.type)?? && project.type == "0">棚拍</#if>
 													 <#if (project.type)?? && project.type == "1">市内采风</#if>
 													 <#if (project.type)?? && project.type == "2">远郊采风</#if>
 													 <#if (project.type)?? && project.type == "3">说拍就拍</#if>
 													 <#if (project.type)?? && project.type == "4">一对一</#if>
 													</p><dd>
 	                                            <dt><p class="c-product-meta-label  c-font-uppercase c-font-bold">出发时间</p></dt>
+	                                            <dd><p class="c-product-meta-label  c-font-uppercase">${(project.startTime?string('yyyy-MM-dd HH:mm'))!''}</p><dd>
+	                                             <dt><p class="c-product-meta-label  c-font-uppercase c-font-bold">预定截至时间</p></dt>
 	                                            <dd><p class="c-product-meta-label  c-font-uppercase">${(project.startTime?string('yyyy-MM-dd HH:mm'))!''}</p><dd>
 	                                            <dt><p class="c-product-meta-label  c-font-uppercase c-font-bold">行程天数</p></dt>
 	                                            <dd><p class="c-product-meta-label  c-font-uppercase">${(project.timeLength)!''}天 ${(project.timeNightLength)!''}晚</p><dd>
