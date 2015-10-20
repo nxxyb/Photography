@@ -2,8 +2,8 @@
 <html>
 
 <head>
-	 <#include "/common/title.html">
-	 <#include "/common/link.html">
+	 <#include "../common/title.html">
+	 <#include "../common/link.html">
 	 
 	 <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js" type="text/javascript"></script>
      <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip  -->
@@ -11,15 +11,15 @@
       $.widget.bridge('uibutton', $.ui.button);
     </script>
 
-	 <script src="${basePath}/plugins/morris/morris.min.js" type="text/javascript"></script>
-	 <script src="${basePath}/js/dashboard.js" type="text/javascript"></script>
+	 <script src="${basePath}/assets/plugins/morris/morris.min.js" type="text/javascript"></script>
+	 <script src="${basePath}/assets/base/admin/js/dashboard.js" type="text/javascript"></script>
 </head>
 
 <body class="skin-blue sidebar-mini">
 
     <div id="wrapper">
 		
-		<#include "/common/header.html">
+		<#include "../common/header.html">
 		
         <div class="content-wrapper">
         <!-- Content Header (Page header) -->
@@ -40,34 +40,34 @@
             <div class="col-lg-3 col-xs-6">
             	<div class="small-box bg-red">
                 <div class="inner">
-                  <h3>识别库</h3>
-                  <p>添加识别库</p>
+                  <h3>活动</h3>
+                  <p>管理活动</p>
                 </div>
                 <div class="icon">
                   <i class="fa fa-edit"></i>
                 </div>
-                <a href="${basePath}/imagetarget/toForm" class="small-box-footer">添加 <i class="fa fa-arrow-circle-right"></i></a>
+                <a href="${basePath}/imagetarget/toForm" class="small-box-footer">查看 <i class="fa fa-arrow-circle-right"></i></a>
               </div>
             </div><!-- ./col -->
             
             <div class="col-lg-3 col-xs-6">
               <div class="small-box bg-aqua">
                 <div class="inner">
-                  <h3>识别对象</h3>
-                  <p>添加识别对象</p>
+                  <h3>作品</h3>
+                  <p>管理作品</p>
                 </div>
                 <div class="icon">
                   <i class="fa fa-edit"></i>
                 </div>
-                <a href="${basePath}/imageobject/toForm" class="small-box-footer">添加 <i class="fa fa-arrow-circle-right"></i></a>
+                <a href="${basePath}/imageobject/toForm" class="small-box-footer">查看 <i class="fa fa-arrow-circle-right"></i></a>
               </div>
             </div><!-- ./col -->
             
             <div class="col-lg-3 col-xs-6">
               <div class="small-box bg-yellow">
                 <div class="inner">
-                  <h3>识别库</h3>
-                  <p>识别库列表</p>
+                  <h3>用户</h3>
+                  <p>管理用户</p>
                 </div>
                 <div class="icon">
                   <i class="fa fa-cog"></i>
@@ -80,8 +80,8 @@
               <!-- small box -->
               <div class="small-box bg-green">
                 <div class="inner">
-                  <h3>识别对象</h3>
-                  <p>识别对象列表</p>
+                  <h3>用户审核</h3>
+                  <p>审核用户资料</p>
                 </div>
                 <div class="icon">
                   <i class="fa fa-camera"></i>
@@ -92,39 +92,12 @@
             
           </div><!-- /.row -->
           <!-- Main row -->
-          <div class="row">
-            
-            <!-- 费用统计 -->
-            
-	          </div>
             	
-              <div class="box box-warning">
-                
-                <div class="box-body c-bg-parallax" style="background-image: url(${basePath}/images/bg_5.jpg)">
-                   <div class="c-content-counter-1 c-opt-1">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="c-counter c-theme-border c-font-bold c-theme-font" data-counter="counterup">${imageTargetCount}</div>
-                                <h4 class="c-title c-first c-font-uppercase c-font-bold">识别库数量</h4>
-                                <p class="c-content"></p>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="c-counter c-theme-border c-font-bold c-theme-font" data-counter="counterup">${imageObjectCount}</div>
-                                <h4 class="c-title c-font-uppercase c-font-bold">识别对象数量</h4>
-                                <p class="c-content"></p>
-                            </div>
-                           
-                        </div>
-                    </div>
-                </div>
-              </div>
+              
 
             </section>
             
           </div>
-
-        </section><!-- /.content -->
-      </div><!-- /.content-wrapper -->
       
       
 
@@ -132,17 +105,12 @@
     <!-- /#wrapper -->
     
     <!-- footer start-->
-		<#include "/common/footer.html">
+		<#include "../common/footer.html">
 	<!-- footer end -->
 
 </body>
 
 <script type="text/javascript">
-	// init counter up
-		$("[data-counter='counterup']").counterUp({
-			delay: 10,
-			time: 1000
-		});
 </script>
 
 </html>
