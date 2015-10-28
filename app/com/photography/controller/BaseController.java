@@ -62,19 +62,27 @@ public class BaseController {
 	}
 	
 	/**
+	 * 获取错误信息
+	 */
+	protected String getErrorMessage(Exception e) {
+		String message = null;
+		if(e instanceof ServiceException){
+			ServiceException se = (ServiceException) e;
+			message = se.getErrorMessage();
+		}else{
+			message = ErrorMessage.get(ErrorCode.UNKNOWN_ERROR);
+		}
+		return message;
+	}
+	
+	/**
 	 * 处理错误消息
 	 * @param attr
 	 * @param e
 	 * @author 徐雁斌
 	 */
-	protected void handleError(RedirectAttributes attr, Exception e) {
-		if(e instanceof ServiceException){
-			ServiceException se = (ServiceException) e;
-			String message = se.getErrorMessage();
-			attr.addFlashAttribute(Constants.ERROR_MESSAGE, message);
-		}else{
-			attr.addFlashAttribute(Constants.ERROR_MESSAGE, ErrorMessage.get(ErrorCode.UNKNOWN_ERROR));
-		}
+	protected void handleError(RedirectAttributes attr, Exception e) {		
+		attr.addFlashAttribute(Constants.ERROR_MESSAGE, getErrorMessage(e));
 	}
 	
 	/**
@@ -84,13 +92,9 @@ public class BaseController {
 	 * @author 徐雁斌
 	 */
 	protected void handleErrorModelAndView(ModelAndView mv, Exception e) {
-		if(e instanceof ServiceException){
-			ServiceException se = (ServiceException) e;
-			String message = se.getErrorMessage();
-			mv.addObject(Constants.ERROR_MESSAGE, message);
-		}else{
-			mv.addObject(Constants.ERROR_MESSAGE, ErrorMessage.get(ErrorCode.UNKNOWN_ERROR));
-		}
+		mv.addObject(Constants.ERROR_MESSAGE, getErrorMessage(e));
 	}
+	
+	
 
 }

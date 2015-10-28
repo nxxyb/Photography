@@ -30,6 +30,7 @@ import com.photography.exception.ServiceException;
 import com.photography.mapping.FileGroup;
 import com.photography.mapping.FileInfo;
 import com.photography.mapping.Project;
+import com.photography.mapping.ProjectCollect;
 import com.photography.mapping.ProjectComment;
 import com.photography.mapping.ProjectTrip;
 import com.photography.mapping.User;
@@ -350,6 +351,35 @@ public class ProjectController extends BaseController {
 		mav.addObject("number", number);
 		mav.setViewName("project/project_checkout");
 		return mav;
+	}
+	
+	/**
+	 * 收藏活动
+	 * @param id
+	 * @return
+	 * @author 徐雁斌
+	 * @throws ServiceException 
+	 */
+	@RequestMapping(value="/addCollect")
+	@ResponseBody
+	public String addCollect(String id,HttpServletRequest request){
+		try{
+			User user = getSessionUser(request);
+			if(!StringUtils.isEmpty(id)){
+				List<ProjectCollect> projectCollects = projectService.loadPojoByExpression(ProjectCollect.class, 
+						Condition.and(Condition.eq("project.id", id), Condition.eq("user.id", user.getId())), null);
+				if(projectCollects.isEmpty()){
+					ProjectCollect projectCollect = new ProjectCollect();
+					projectCollect.setProject(projectService.loadPojo(Project.class, id));
+					projectCollect.setUser(user);
+					projectService.savePojo(projectCollect, user);
+				}
+			}
+			return Constants.YES;
+		}catch(Exception e){
+			log.error("addCollect error",e);
+			return getErrorMessage(e);
+		}
 	}
 	
 	/**

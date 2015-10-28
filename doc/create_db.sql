@@ -125,6 +125,16 @@ CREATE TABLE `project_comment` (
   `last_update_time` datetime comment '最后修改时间'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+/**活动收藏表 */
+DROP TABLE IF EXISTS `project_collect`;
+CREATE TABLE `project_collect` (
+  `id` varchar(36) NOT NULL PRIMARY KEY,
+  `project` varchar(36) comment '活动',
+  `user` varchar(36) comment '用户',
+  `create_time` datetime comment '创建时间',
+  `last_update_time` datetime comment '最后修改时间'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 /**作品表 */
 DROP TABLE IF EXISTS `work`;
 CREATE TABLE `work` (

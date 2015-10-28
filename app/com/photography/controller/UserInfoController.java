@@ -27,6 +27,7 @@ import com.photography.exception.ErrorCode;
 import com.photography.exception.ErrorMessage;
 import com.photography.exception.ServiceException;
 import com.photography.mapping.Project;
+import com.photography.mapping.ProjectCollect;
 import com.photography.mapping.User;
 import com.photography.service.IMailService;
 import com.photography.service.IProjectOrderService;
@@ -157,6 +158,45 @@ public class UserInfoController extends BaseController {
 			projectService.deletePojo(project, getSessionUser(request));
 		}
 		ra.addFlashAttribute("type", "7");
+		return "redirect:toUserInfo";
+	}
+	
+	/**
+	 * 获取收藏活动列表
+	 * @param request
+	 * @return
+	 * @author 徐雁斌
+	 * @throws ServiceException 
+	 */
+	@RequestMapping(value="/getUserProjectCollect")
+	public ModelAndView getUserProjectCollect(Pager pager,HttpServletRequest request) throws ServiceException {
+		ModelAndView mv = new ModelAndView();
+		
+		User user = getSessionUser(request);
+		List<ProjectCollect> projectCollects = null;
+		Expression exp =Condition.eq("user.id", user.getId());
+		projectCollects = projectService.getPojoList(ProjectCollect.class, pager, exp, new Sort("createTime",QueryConstants.DESC),user);
+		mv.setViewName("user/user_collect_item");
+
+		mv.addObject("pager", pager);
+		mv.addObject("projectCollects", projectCollects);
+		return mv;
+	}
+	
+	/**
+	 * 用户删除收藏
+	 * @param request
+	 * @return
+	 * @author 徐雁斌
+	 * @throws ServiceException 
+	 */
+	@RequestMapping(value="/deleteUserProjectCollect")
+	public String deleteUserProjectCollect(String id,HttpServletRequest request,RedirectAttributes ra) throws ServiceException {
+		ProjectCollect projectCollect = projectService.loadPojo(ProjectCollect.class, id);
+		if(projectCollect != null){
+			projectService.deletePojo(projectCollect, getSessionUser(request));
+		}
+		ra.addFlashAttribute("type", "3");
 		return "redirect:toUserInfo";
 	}
 	
