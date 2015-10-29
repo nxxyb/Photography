@@ -29,6 +29,7 @@ CREATE TABLE `user` (
   `head_pic` varchar(300) comment '头像照片地址',
   `qq_number` varchar(40) comment 'QQ',
   `person_signature` varchar(300) comment '个性签名',
+  `coupon_num` varchar(20) comment '胶卷数量',
   `create_time` datetime comment '注册时间',
   `last_update_time` datetime comment '最后登录时间'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -108,6 +109,11 @@ CREATE TABLE `project_order` (
   `user` varchar(36) comment '用户',
   `project` varchar(36) comment '活动',
   `status` varchar(10) comment '状态 1-未支付 2-已取消  3-已支付',
+  `number` varchar(10) comment '数量',
+  `unit_price` varchar(10) comment '单价',
+  `coupon` varchar(10) comment '使用胶卷数',
+  `original_price` varchar(10) comment '原总价',
+  `actual_price` varchar(10) comment '实际支付总价',
   `create_time` datetime comment '创建时间',
   `last_update_time` datetime comment '最后修改时间'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -170,6 +176,18 @@ CREATE TABLE `work_comment` (
   `type` varchar(10) comment '评论类型  1-好评  2-中评  3-差评',
   `photos` varchar(500) comment '评论图片',
   `content` varchar(2000) comment '评论内容',
+  `create_time` datetime comment '创建时间',
+  `last_update_time` datetime comment '最后修改时间'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/**胶卷记录表 */
+DROP TABLE IF EXISTS `user_coupon`;
+CREATE TABLE `user_coupon` (
+  `id` varchar(36) NOT NULL PRIMARY KEY,
+  `coupon_num` varchar(36) comment '胶卷数量',
+  `type` varchar(10) comment '胶卷类型  1-收入  2-支出',
+  `message` varchar(2000) comment '详细信息',
+  `user` varchar(36) comment '用户',
   `create_time` datetime comment '创建时间',
   `last_update_time` datetime comment '最后修改时间'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

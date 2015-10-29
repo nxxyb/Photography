@@ -31,6 +31,36 @@ public class ProjectOrder extends BaseMapping {
 	//状态 1-未支付 2-已取消  3-已支付
 	@Column(name="status")
 	private String status;
+	
+	/**
+	 * 数量
+	 */
+	@Column(name="number")
+	private String number;
+	
+	/**
+	 * 单价
+	 */
+	@Column(name="unit_price")
+	private String unitPrice;
+	
+	/**
+	 * 使用胶卷数
+	 */
+	@Column(name="coupon")
+	private String coupon;
+	
+	/**
+	 * 原总价
+	 */
+	@Column(name="original_price")
+	private String originalPrice;
+	
+	/**
+	 * 实际支付总价
+	 */
+	@Column(name="actual_price")
+	private String actualPrice;
 
 	public User getUser() {
 		return user;
@@ -54,6 +84,46 @@ public class ProjectOrder extends BaseMapping {
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	public String getNumber() {
+		return number;
+	}
+
+	public void setNumber(String number) {
+		this.number = number;
+	}
+
+	public String getUnitPrice() {
+		return unitPrice;
+	}
+
+	public void setUnitPrice(String unitPrice) {
+		this.unitPrice = unitPrice;
+	}
+
+	public String getCoupon() {
+		return coupon;
+	}
+
+	public void setCoupon(String coupon) {
+		this.coupon = coupon;
+	}
+
+	public String getOriginalPrice() {
+		return originalPrice;
+	}
+
+	public void setOriginalPrice(String originalPrice) {
+		this.originalPrice = originalPrice;
+	}
+
+	public String getActualPrice() {
+		return actualPrice;
+	}
+
+	public void setActualPrice(String actualPrice) {
+		this.actualPrice = actualPrice;
 	}
 	
 	

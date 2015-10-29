@@ -32,6 +32,7 @@ import com.photography.mapping.FileInfo;
 import com.photography.mapping.Project;
 import com.photography.mapping.ProjectCollect;
 import com.photography.mapping.ProjectComment;
+import com.photography.mapping.ProjectOrder;
 import com.photography.mapping.ProjectTrip;
 import com.photography.mapping.User;
 import com.photography.service.IProjectOrderService;
@@ -250,7 +251,6 @@ public class ProjectController extends BaseController {
 	
 	/**
 	 * 获取用户发布活动列表
-	 * type: 1-进行中  2-历史
 	 * @param request
 	 * @return
 	 * @author 徐雁斌
@@ -296,6 +296,25 @@ public class ProjectController extends BaseController {
 		}
 		
 		return "redirect:toReview?id=" + projectId;
+	}
+	
+	/**
+	 * 获取用户预定活动列表
+	 * @param request
+	 * @return
+	 * @author 徐雁斌
+	 * @throws ServiceException 
+	 */
+	@RequestMapping(value="/getProjectOrder")
+	public ModelAndView getProjectOrder(String projectId,Pager pager,HttpServletRequest request) throws ServiceException {
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("project/project_order_item");
+		User user = getSessionUser(request);
+		List<ProjectOrder> projectOrders = projectService.getPojoList(ProjectOrder.class, pager, Condition.eq("project.id", projectId), new Sort("createTime",QueryConstants.DESC),user);
+		mv.addObject("projectId", projectId);
+		mv.addObject("pager", pager);
+		mv.addObject("projectOrders", projectOrders);
+		return mv;
 	}
 
 //	/**

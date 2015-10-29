@@ -18,7 +18,7 @@
 	<!-- BEGIN: PAGE CONTENT -->
         <div class="c-content-box c-size-lg">
                 <div class="container">
-                    <form class="c-shop-form-1" action="${basePath}/project/create" method="post">
+                    <form class="c-shop-form-1" action="${basePath}/projectorder/orderProject" method="post">
                         <div class="row">
                             
                             <!-- BEGIN: ORDER FORM -->
@@ -45,6 +45,12 @@
                                         </li>
                                         <li class="row c-border-bottom"></li>
                                         <li class="row c-margin-b-15 c-margin-t-15">
+                                        	<input type="hidden" name="project.id" value="${project.id}">
+                                        	<input type="hidden" name="number" value="${number!''}">
+                                        	<input type="hidden" name="unitPrice" value="${(project.cost)!''}">
+                                        	<input type="hidden" name="originalPrice" value="${project.cost?number * number?number}">
+                                        	
+                                        	
                                         	<div class="col-md-2 col-sm-12">
 								               <div class="c-content-overlay">
 								                   <div class="c-overlay-wrapper">
@@ -72,28 +78,33 @@
                                         </li>
                                         <li class="row c-border-top c-margin-b-15"></li>
                                         <li class="row">
-                                            <div class="col-md-10"></div>
-                                            <div class="col-md-2">
+                                            <div class="col-md-9"></div>
+                                            <div class="col-md-3">
                                             	 <div class="c-checkbox c-toggle-hide" data-object-selector="c-coupon" data-animation-speed="600">
-		                                            <input type="checkbox" id="checkbox1-77" class="c-check">
-		                                            <label for="checkbox1-77">
+		                                            <input type="checkbox" id="coupon_checkbox" class="c-check">
+		                                            <label for="coupon_checkbox">
 		                                                <span class="inc"></span>
 		                                                <span class="check"></span>
 		                                                <span class="box"></span> 使用活动券? </label>
 		                                        </div>
 		                                        
-                                           		<div class="c-coupon">
-                                           			<p class="c-shipping-price c-font-bold c-font-20">￥200</p>
+                                           		<div id="coupon" class="c-coupon">
+                                           			<p class="c-shipping-price c-font-bold c-font-20">￥
+                                           				<span id="coupon_num" class="c-shipping-total">200</span>
+                                           			</p>
+                                           			<input id="projectOrder_coupon" type="hidden" name="coupon" value="0">
                                            		</div>
+                                           		
                                             </div>
                                         </li>
                                         <li class="row c-margin-b-15 c-margin-t-15">
-                                            <div class="col-md-10 c-font-20">
+                                            <div class="col-md-9 c-font-20">
                                                 <p class="c-font-30">实付款</p>
                                             </div>
-                                            <div class="col-md-2 c-font-20">
+                                            <div class="col-md-3 c-font-20">
                                                 <p class="c-font-bold c-font-30">￥
-                                                    <span class="c-shipping-total">${project.cost?number * number?number}</span>
+                                                    <span id="total_cost" class="c-shipping-total">${project.cost?number * number?number}</span>
+                                                    <input type="hidden" id="projectOrder_actualPrice" name="actualPrice" value="${project.cost?number * number?number}">
                                                 </p>
                                             </div>
                                         </li>
@@ -128,7 +139,7 @@
                                         <li class="row">
                                             <div class="form-group col-md-12" role="group">
                                                 <button type="submit" class="btn btn-lg c-theme-btn c-btn-square c-btn-uppercase c-btn-bold">提交</button>
-                                                <button type="submit" class="btn btn-lg btn-default c-btn-square c-btn-uppercase c-btn-bold">取消</button>
+                                                <a href="${basePath}/project/toReview?id=${project.id}" class="btn btn-lg btn-default c-btn-square c-btn-uppercase c-btn-bold">取消</a>
                                             </div>
                                         </li>
                                     </ul>
@@ -149,6 +160,26 @@
 <script>
 	$(document).ready(function() {    
 		$('#project').addClass('c-active');
+		
+		$("#coupon_checkbox").click(function(){
+			if ($("#coupon").is(':hidden')) {
+				var couponNum = parseFloat($("#coupon_num").text());
+				var totalCost = parseFloat($("#total_cost").text());
+				var total = Subtr(totalCost,couponNum);
+				$("#total_cost").text(total);
+				$("#projectOrder_coupon").val(couponNum);
+				$("#projectOrder_actualPrice").val(total);
+				
+			} else {
+				var couponNum = parseFloat($("#coupon_num").text());
+				var totalCost = parseFloat($("#total_cost").text());
+				var total = accAdd(totalCost, couponNum);
+				$("#total_cost").text(total);
+				$("#projectOrder_coupon").val("0");
+				$("#projectOrder_actualPrice").val(total);
+			}
+		});
+		
 	});
 	</script>
 <!-- END: THEME SCRIPTS -->

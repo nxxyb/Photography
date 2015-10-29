@@ -145,6 +145,12 @@ public class User extends BaseMapping{
 	*/
 	@Column(name="person_signature")
 	private String personSignature;
+	
+	/**
+	 * 胶卷数量
+	 */
+	@Column(name="coupon_num")
+	private String couponNum = "0";
 
 	public String getLoginName() {
 		return loginName;
@@ -312,6 +318,14 @@ public class User extends BaseMapping{
 
 	public void setVerifyMessage(String verifyMessage) {
 		this.verifyMessage = verifyMessage;
+	}
+
+	public String getCouponNum() {
+		return couponNum;
+	}
+
+	public void setCouponNum(String couponNum) {
+		this.couponNum = couponNum;
 	}
 
 }

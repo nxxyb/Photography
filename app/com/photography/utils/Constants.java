@@ -117,4 +117,12 @@ public class Constants {
 	//用户中心-活动订单每页显示条数
 	public final static int PAGER_PROJECT_ORDER = 4;
 	
+	/**
+	 * 胶卷类型
+	 */
+	//收入
+	public final static String COUPON_TYPE_INCOME = "1";
+	//支出
+	public final static String COUPON_TYPE_SPEND = "2";
+	
 }

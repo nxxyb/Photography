@@ -9,8 +9,6 @@ package com.photography.utils;
  */
 public class MessageConstants {
 
-	//success
-	
 	public static final String SAVE_SUCCESS = "保存成功";
 	
 	public static final String ORDER_SUCCESS = "预定成功";
@@ -18,6 +16,17 @@ public class MessageConstants {
 	public static final String REGISTER_SUCCESS = "注册成功";
 	
 	public static final String PWD_SAVE_SUCCESS = "密码修改成功";
+	
+	//胶卷
+	//赚取胶卷
+	public static final String COUPON_REGISTRATION = "用户注册";
+	public static final String COUPON_SIGN = "登录签到";
+	public static final String COUPON_COMMENT = "评论";
+	public static final String COUPON_SHARE = "分享";
+	public static final String COUPON_JOINPROJECT = "参加活动";
+	
+	//消费胶卷
+	public static final String COUPON_ORDERPROJECT = "预定活动";
 	
 	
 	

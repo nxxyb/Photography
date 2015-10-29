@@ -1,11 +1,10 @@
-#Tue Sep 15 09:30:55 CST 2015
+#Thu Oct 29 15:58:50 CST 2015
 eclipse.preferences.version=1
 encoding//WebRoot/WEB-INF/views=UTF-8
 encoding//WebRoot/WEB-INF/views/common/header-1.html=UTF-8
 encoding//WebRoot/WEB-INF/views/common/locate.html=UTF-8
 encoding//WebRoot/WEB-INF/views/home/project.html=UTF-8
 encoding//WebRoot/WEB-INF/views/home/project1.html=UTF-8
-encoding//WebRoot/WEB-INF/views/project/project_create1.html=UTF-8
 encoding//WebRoot/WEB-INF/views/user/person_info1/auth.html=UTF-8
 encoding//WebRoot/WEB-INF/views/user/person_info1/info.html=UTF-8
 encoding//WebRoot/WEB-INF/views/user/person_info1/person_info.html=UTF-8

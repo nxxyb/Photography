@@ -1,0 +1,90 @@
+<#assign basePath=request.contextPath>
+
+<#if projectOrders?? && (projectOrders?size>0)>
+	<div class="c-shop-wishlist-1">
+        <div class="c-border-bottom hidden-sm hidden-xs">
+            <div class="row">
+                <div class="col-md-8">
+                    <h3 class="c-font-uppercase c-font-16 c-font-grey-2 c-font-bold">订单详情</h3>
+                </div>
+                <div class="col-md-2">
+                    <h3 class="c-font-uppercase c-font-16 c-font-grey-2 c-font-bold">价格</h3>
+                </div>
+                <div class="col-md-2">
+                    <h3 class="c-font-uppercase c-font-16 c-font-grey-2 c-font-bold">订单时间</h3>
+                </div>
+            </div>
+        </div>
+	<#list projectOrders as projectOrder>
+	   <div class="c-border-bottom c-row-item">
+	   	   <div class="row">
+	   	   		订单号 ：${(projectOrder.id)!''}
+	   	   </div>
+	       <div class="row">
+	           <div class="col-md-2 col-sm-12">
+	               <div class="c-content-overlay">
+	                   <div class="c-overlay-wrapper">
+	                       <div class="c-overlay-content">
+	                           <a href="${basePath}/project/toReview?id=${projectOrder.project.id}" class="c-action-btn btn btn-sm c-btn-square c-btn-bold c-btn-border-1x c-theme-btn c-btn-uppercase c-center">查看</a>
+	                       </div>
+	                   </div>
+	                   <div class="c-bg-img-top-center c-overlay-object" data-height="height">
+	                       <img width="100%" class="img-responsive" <#if (projectOrder.project.photos.fileInfos)??>src="${basePath}/${projectOrder.project.photos.fileInfos[0].realPath}"</#if> > </div>
+	               </div>
+	           </div>
+	           <div class="col-md-4 col-sm-8">
+	               <ul class="c-list list-unstyled">
+	                   <li class="c-margin-b-25">
+	                       <a href="${basePath}/project/toReview?id=${projectOrder.project.id}" class="c-font-bold c-font-22 c-theme-link">${(projectOrder.project.name)!''}</a>
+	                   </li>
+	                   
+	                   <li class="c-margin-t-30">
+	                       <div class="form-group" role="group">
+	                           <a href="${basePath}/userinfo/deleteUserProjectOrder?id=${projectOrder.id}" class="btn btn-sm c-theme-btn c-btn-square  c-btn-bold">
+	                           	<i class="fa fa-times"></i>删 除 </a>
+	                       </div>
+	                   </li>
+	               </ul>
+	           </div>
+	           <div class="col-md-2 col-sm-2">
+	               <p class="visible-xs-block c-theme-font c-font-uppercase c-font-bold">数量</p>
+	               <p class="c-font-sbold c-font-18">x ${projectOrder.number!''}</p>
+	           </div>
+	           <div class="col-md-2 col-sm-2">
+	               <p class="visible-xs-block c-theme-font c-font-uppercase c-font-bold">价格</p>
+	               <p class="c-font-sbold c-font-uppercase c-font-18">￥${(projectOrder.actualPrice)!''}</p>
+	           </div>
+	           <div class="col-md-2 col-sm-2">
+	               <p class="visible-xs-block c-theme-font c-font-uppercase c-font-bold">订单时间</p>
+	               <p class="c-font-sbold c-font-uppercase c-font-18">${(projectOrder.createTime?string('yyyy-MM-dd HH:mm'))!''}</p>
+	           </div>
+	       </div>
+	   </div>
+	</#list>
+	</div>
+	
+	<script type="text/javascript">
+    $(document).ready(function(){
+    	var options${type} = {
+            size:"large",
+            bootstrapMajorVersion:3,
+            currentPage: ${(pager.currentPage)!1},
+            numberOfPages: ${(pager.pageSize)!5},
+            totalPages:${(pager.totalPage)!1},
+            onPageClicked: function (e, originalEvent, type, page) {
+            	getByAjax("${basePath}/userinfo/getUserProjectOrder?type=${type}&currentPage=" + page,"project_order_${type}");
+            }  
+       }
+ 
+       $('#project_order_pager_${type}').bootstrapPaginator(options${type});  
+    });
+</script>
+
+<#else>
+   	<div class="c-content-box c-size-lg">
+          <div class="c-shop-cart-page-1 c-center">
+              <i class="fa fa-frown-o c-font-dark c-font-50 c-font-thin "></i>
+              <h2 class="c-font-thin c-center">您还没有订单</h2>
+          </div>
+     </div>  
+</#if>
