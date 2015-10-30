@@ -245,6 +245,9 @@ public class ProjectController extends BaseController {
 		if(!StringUtils.isEmpty(id)){
 			Project project = (Project) projectService.loadPojo(Project.class,id);
 			mav.addObject("project", project);
+			
+			mav.addObject("pjNum", projectService.getCountByQuery(ProjectComment.class, Condition.eq("project.id", project.getId())));
+			mav.addObject("ydNum", projectService.getCountByQuery(ProjectOrder.class, Condition.eq("project.id", project.getId()).and(Condition.eq("status", Constants.USER_ORDER_STATUS_YZF))));
 		}
 		return mav;
 	}
@@ -310,7 +313,8 @@ public class ProjectController extends BaseController {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("project/project_order_item");
 		User user = getSessionUser(request);
-		List<ProjectOrder> projectOrders = projectService.getPojoList(ProjectOrder.class, pager, Condition.eq("project.id", projectId), new Sort("createTime",QueryConstants.DESC),user);
+		List<ProjectOrder> projectOrders = projectService.getPojoList(ProjectOrder.class, pager, Condition.eq("project.id", projectId).and(Condition.eq("status", Constants.USER_ORDER_STATUS_YZF)), new Sort("createTime",
+				QueryConstants.DESC), user);
 		mv.addObject("projectId", projectId);
 		mv.addObject("pager", pager);
 		mv.addObject("projectOrders", projectOrders);
@@ -355,22 +359,6 @@ public class ProjectController extends BaseController {
 //		return mav;
 //	}
 	
-	/**
-	 * 预定活动页面
-	 * @param id
-	 * @param request
-	 * @param model
-	 * @return
-	 * @author 徐雁斌
-	 */
-	@RequestMapping(value="/toProjectCheckout")
-	public ModelAndView toProjectCheckout(String id,String number,HttpServletRequest request, Model model){
-		ModelAndView mav = new ModelAndView();
-		mav.addObject("project", projectService.loadPojo(Project.class,id));
-		mav.addObject("number", number);
-		mav.setViewName("project/project_checkout");
-		return mav;
-	}
 	
 	/**
 	 * 收藏活动

@@ -6,6 +6,8 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.photography.utils.Constants;
+
 /**
  * 订单表
  * @author 徐雁斌
@@ -61,6 +63,12 @@ public class ProjectOrder extends BaseMapping {
 	 */
 	@Column(name="actual_price")
 	private String actualPrice;
+	
+	/**
+	 * 是否评价
+	 */
+	@Column(name="is_comment")
+	private String isComment = Constants.NO;
 
 	public User getUser() {
 		return user;
@@ -124,6 +132,14 @@ public class ProjectOrder extends BaseMapping {
 
 	public void setActualPrice(String actualPrice) {
 		this.actualPrice = actualPrice;
+	}
+
+	public String getIsComment() {
+		return isComment;
+	}
+
+	public void setIsComment(String isComment) {
+		this.isComment = isComment;
 	}
 	
 	

@@ -4,22 +4,28 @@
 	<div class="c-shop-wishlist-1">
         <div class="c-border-bottom hidden-sm hidden-xs">
             <div class="row">
-                <div class="col-md-8">
+                <div class="col-md-7">
                     <h3 class="c-font-uppercase c-font-16 c-font-grey-2 c-font-bold">订单详情</h3>
                 </div>
                 <div class="col-md-2">
                     <h3 class="c-font-uppercase c-font-16 c-font-grey-2 c-font-bold">价格</h3>
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-3">
                     <h3 class="c-font-uppercase c-font-16 c-font-grey-2 c-font-bold">订单时间</h3>
                 </div>
             </div>
         </div>
 	<#list projectOrders as projectOrder>
-	   <div class="c-border-bottom c-row-item">
-	   	   <div class="row">
-	   	   		订单号 ：${(projectOrder.id)!''}
-	   	   </div>
+                    
+	   <div class="c-row-item c-border-bottom c-content-title-2 c-title-md">
+	   	   <span class="c-content-label c-font-uppercase c-font-bold c-bg-red c-label-sm pull-right">
+	   	   <#if projectOrder.status=="1">未支付</#if>
+	   	   <#if projectOrder.status=="2">已取消</#if>
+	   	   <#if projectOrder.status=="3">已支付</#if>
+	   	   </span>
+	   	   <h3 class="c-font-bold">订单号 : ${(projectOrder.id)!''}</h3>
+	   	   
+	   	   <div class="c-line c-theme-bg c-theme-bg-after c-margin-b-20"></div>
 	       <div class="row">
 	           <div class="col-md-2 col-sm-12">
 	               <div class="c-content-overlay">
@@ -40,13 +46,22 @@
 	                   
 	                   <li class="c-margin-t-30">
 	                       <div class="form-group" role="group">
-	                           <a href="${basePath}/userinfo/deleteUserProjectOrder?id=${projectOrder.id}" class="btn btn-sm c-theme-btn c-btn-square  c-btn-bold">
-	                           	<i class="fa fa-times"></i>删 除 </a>
+	                       	   <#if projectOrder.status=="1">
+	                             <a href="${basePath}/projectorder/toProjectCheckout?id=${projectOrder.id}" class="btn btn-sm c-theme-btn c-btn-square  c-btn-bold">
+	                           	 <i class="fa fa-credit-card"></i>支付 </a>
+	                           	 
+	                           	 <a href="${basePath}/projectorder/cancelProjectOrder?id=${projectOrder.id}" class="btn btn-sm btn-default c-btn-square  c-btn-bold">
+	                           	 <i class="fa fa-times"></i>取消订单</a>
+	                           </#if>
+	                           <#if projectOrder.status=="3" && projectOrder.isComment=="0">
+	                           		<a href="${basePath}/project/toReview?id=${projectOrder.project.id}" class="btn btn-sm c-theme-btn c-btn-square  c-btn-bold">
+	                           	 	<i class="fa fa-comment-o"></i>评价 </a>
+	                           </#if>
 	                       </div>
 	                   </li>
 	               </ul>
 	           </div>
-	           <div class="col-md-2 col-sm-2">
+	           <div class="col-md-1 col-sm-1">
 	               <p class="visible-xs-block c-theme-font c-font-uppercase c-font-bold">数量</p>
 	               <p class="c-font-sbold c-font-18">x ${projectOrder.number!''}</p>
 	           </div>
@@ -54,7 +69,7 @@
 	               <p class="visible-xs-block c-theme-font c-font-uppercase c-font-bold">价格</p>
 	               <p class="c-font-sbold c-font-uppercase c-font-18">￥${(projectOrder.actualPrice)!''}</p>
 	           </div>
-	           <div class="col-md-2 col-sm-2">
+	           <div class="col-md-3 col-sm-2">
 	               <p class="visible-xs-block c-theme-font c-font-uppercase c-font-bold">订单时间</p>
 	               <p class="c-font-sbold c-font-uppercase c-font-18">${(projectOrder.createTime?string('yyyy-MM-dd HH:mm'))!''}</p>
 	           </div>

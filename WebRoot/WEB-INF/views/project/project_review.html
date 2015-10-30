@@ -105,8 +105,8 @@
                                         </div>
                                     </div>
                                     
-                                    <form id="projectCreateForm" action="${basePath}/project/toProjectCheckout" method="post">
-                                    	<input type="hidden" name="id" value="${(project.id)!''}">
+                                    <form id="projectCreateForm" action="${basePath}/projectorder/toProjectCheckout" method="post">
+                                    	<input type="hidden" name="project.id" value="${(project.id)!''}">
                                     <div class="c-product-add-cart c-margin-t-20">
                                         <div class="row">
                                             <div class="col-sm-12 col-xs-12">
@@ -155,10 +155,10 @@
                                 <a class="c-font-uppercase c-font-bold c-font-30" href="#tab-3" >行程描述</a>
                             </li>
                             <li class="c-onepage-link ">
-                                <a class="c-font-uppercase c-font-bold c-font-30" href="#tab-4" >用户评价  <span class="badge c-theme-bg">172</span></a>
+                                <a class="c-font-uppercase c-font-bold c-font-30" href="#tab-4" >用户评价  <span class="badge c-theme-bg">${pjNum}</span></a>
                             </li>
                             <li class="c-onepage-link ">
-                                <a class="c-font-uppercase c-font-bold c-font-30" href="#tab-5" >订购记录  <span class="badge c-theme-bg">34</span></a>
+                                <a class="c-font-uppercase c-font-bold c-font-30" href="#tab-5" >预定记录  <span class="badge c-theme-bg">${ydNum}</span></a>
                             </li>
                         </ul>
                     </div>
@@ -238,7 +238,7 @@
 															                              <div class="c-masonry-border"></div>
 															                              <div class="cbp-l-caption-alignCenter">
 															                                  <div class="cbp-l-caption-body">
-															                                      <a href="${basePath}/${photo.realPath}" class="cbp-lightbox cbp-l-caption-buttonRight btn c-btn-square c-btn-bold c-btn-border-1x c-theme-btn c-btn-uppercase c-center" data-title="Dashboard<br>by Paul Flavius Nechita">查看</a>
+															                                      <a href="${basePath}/${photo.realPath}" class="cbp-lightbox cbp-l-caption-buttonRight btn c-btn-square c-btn-bold c-btn-border-1x c-theme-btn c-btn-uppercase c-center" >查看</a>
 															                                  </div>
 															                              </div>
 															                          </div>

@@ -34,10 +34,10 @@
                                <a href="#tab_1_1_content" data-toggle="tab">全部</a>
                            </li>
                            <li>
-                               <a href="#tab_1_1_content" data-toggle="tab">待支付</a>
+                               <a href="#tab_1_2_content" data-toggle="tab">待支付 <span class="badge c-theme-bg">${dzfNum}</span></a>
                            </li>
                            <li>
-                               <a href="#tab_1_2_content" data-toggle="tab">进行中</a>
+                               <a href="#tab_1_3_content" data-toggle="tab">待评价 <span class="badge c-theme-bg">${dpjNum}</span></a>
                            </li>
                        </ul>
                    </div>
@@ -53,21 +53,32 @@
 						</div>
 						
 						<script type='text/javascript'>
-				            getByAjax("${basePath}/userinfo/getUserProjectCollect?type=1&currentPage=1","project_order_1");
+				            getByAjax("${basePath}/userinfo/getUserProjectOrder?type=1&currentPage=1","project_order_1");
 					    </script>
                      </div>
                      <div class="tab-pane" id="tab_1_2_content">
-                         <p> Lorem ipsum dolor sit amet, exerci et tation diam nisl ut aliquip ex ea commodo consequat euismod tincidunt ut laoreet dolore magna aluam sed elit diam nonummy nibh euismod tincidunt ut laoreet dolore magna sed
-                             elit diam nonummy nibh euismod tincidunt ut laoreet dolore magna. </p>
-                         <p> Lorem ipsum dolor sit amet, consectetuer tation diam nisl ut aliquip ex ea commodo consequat euismod tincidunt ut laoreet dolore magna aluam sed elit diam nonummy nibh euismod tincidunt ut laoreet dolore magna ex
-                             ea commodo consequat euismod tincidunt ut laoreet dolore magna aluam sed elit diam nonummy nibh euismod tincidunt ut laoreet dolore magna sed elit diam nonummy nibh euismod tincidunt ut laoreet dolore magna.
-                             </p>
+                         <div id="project_order_2"></div>
+                        
+                        <div class="row c-margin-t-40 pull-right">
+                              <ul id="project_order_pager_2" class="c-content-pagination c-square c-theme">
+                              </ul>
+						</div>
+						
+						<script type='text/javascript'>
+				            getByAjax("${basePath}/userinfo/getUserProjectOrder?type=2&currentPage=1","project_order_2");
+					    </script>
                      </div>
                      <div class="tab-pane" id="tab_1_3_content">
-                         <p> Lorem ipsum dolor sit amet, consectetuer adipiscing diam nisl ut aliquip ex ea commodo consequat euismod tincidunt ut laoreet dolore magna aluam sed elit diam nonummy nibh euismod tincidunt ut laoreet dolore magna
-                             sed elit diam nonummy nibh euismod tincidunt ut laoreet dolore magna. </p>
-                         <p> Lorem ipsum dolor sit amet, consectetuer adipiscing elit, nisl ut aliquip ex ea commodo consequat euismod tincidunt ut laoreet dolore magna aluam sed elit diam nonummy nibh euismod tincidunt ut laoreet dolore magna
-                             sed elit diam nonummy nibh euismod tincidunt ut laoreet dolore magna. </p>
+                         <div id="project_order_3"></div>
+                        
+                        <div class="row c-margin-t-40 pull-right">
+                              <ul id="project_order_pager_3" class="c-content-pagination c-square c-theme">
+                              </ul>
+						</div>
+						
+						<script type='text/javascript'>
+				            getByAjax("${basePath}/userinfo/getUserProjectOrder?type=3&currentPage=1","project_order_3");
+					    </script>
                      </div>
                  </div>
                  </div>

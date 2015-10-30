@@ -28,6 +28,7 @@ import com.photography.exception.ErrorMessage;
 import com.photography.exception.ServiceException;
 import com.photography.mapping.Project;
 import com.photography.mapping.ProjectCollect;
+import com.photography.mapping.ProjectOrder;
 import com.photography.mapping.User;
 import com.photography.service.IMailService;
 import com.photography.service.IProjectOrderService;
@@ -102,7 +103,10 @@ public class UserInfoController extends BaseController {
 		}else if(type.equals("3")){
 			page = "user/user_collect";
 		}else if(type.equals("4")){
-			page = "user/user_bill";
+			mv.addObject("dzfNum", projectOrderService.getCountByQuery(ProjectOrder.class, Condition.eq("user.id", user.getId()).and(Condition.eq("status", Constants.USER_ORDER_STATUS_WZF))));
+			mv.addObject("dpjNum", projectOrderService.getCountByQuery(ProjectOrder.class, Condition.eq("user.id", user.getId()).
+					and(Condition.eq("status", Constants.USER_ORDER_STATUS_YZF)).and(Condition.or(Condition.eq("isComment",null),Condition.eq("isComment",Constants.NO)))));
+			page = "user/user_order";
 		}else if(type.equals("5")){
 			page = "user/user_coupon";
 		}else if(type.equals("6")){
@@ -200,7 +204,35 @@ public class UserInfoController extends BaseController {
 		return "redirect:toUserInfo";
 	}
 	
-	
+	/**
+	 * 获取活动订单列表
+	 * @param type 1 全部   2 待支付  3 待评价
+	 * @param request
+	 * @return
+	 * @author 徐雁斌
+	 * @throws ServiceException 
+	 */
+	@RequestMapping(value="/getUserProjectOrder")
+	public ModelAndView getUserProjectOrder(String type,Pager pager,HttpServletRequest request) throws ServiceException {
+		ModelAndView mv = new ModelAndView();
+		
+		User user = getSessionUser(request);
+		List<ProjectOrder> projectOrders = null;
+		Expression exp = Condition.eq("user.id", user.getId());
+		if("1".equals(type)){
+			
+		}else if("2".equals(type)){
+			exp = exp.and(Condition.eq("status", Constants.USER_ORDER_STATUS_WZF));
+		}else if("3".equals(type)){
+			exp = exp.and(Condition.eq("status", Constants.USER_ORDER_STATUS_YZF)).and(Condition.or(Condition.eq("isComment",null),Condition.eq("isComment",Constants.NO)));
+		}
+		projectOrders = projectOrderService.getPojoList(ProjectOrder.class, pager, exp, new Sort("createTime",QueryConstants.DESC),user);
+		mv.setViewName("user/user_order_item");
+		mv.addObject("type",type);
+		mv.addObject("pager", pager);
+		mv.addObject("projectOrders", projectOrders);
+		return mv;
+	}
 	
 	
 	

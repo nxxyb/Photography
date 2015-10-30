@@ -73,6 +73,10 @@ public class BaseServiceImpl implements IBaseService {
 		return hibernateDao.getByQuery(clazz, pager, expression, sort);
 	}
 	
+	public <T> int getCountByQuery(Class<T> entityType, Expression expression) {
+		return hibernateDao.getCountByQuery(entityType,expression);
+	}
+	
 	/* 
 	 * @see com.photography.service.IBaseService#addUpdateLog(com.photography.mapping.BaseMapping, com.photography.mapping.User)
 	 */

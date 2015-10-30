@@ -1,6 +1,6 @@
 <#assign basePath=request.contextPath>
 
-<div class="row c-cart-table-title">
+<div class="row c-cart-table-title c-border-bottom">
     <div class="col-md-4 c-cart-image">
         <h3 class="c-font-uppercase c-font-bold c-font-16 c-font-grey-2">活动</h3>
     </div>
@@ -20,7 +20,7 @@
 
 <#if projectOrders?? && (projectOrders?size>0)>
 	<#list projectOrders as projectOrder>
-		<div class="row c-cart-table-row">
+		<div class="row c-cart-table-row c-border-bottom">
              <h2 class="c-font-uppercase c-font-bold c-theme-bg c-font-white c-cart-item-title c-cart-item-first">活动</h2>
              <div class="col-md-4 col-sm-4 col-xs-5 c-cart-image">
                  ${(projectOrder.project.name)!''} 

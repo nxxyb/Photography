@@ -114,6 +114,7 @@ CREATE TABLE `project_order` (
   `coupon` varchar(10) comment '使用胶卷数',
   `original_price` varchar(10) comment '原总价',
   `actual_price` varchar(10) comment '实际支付总价',
+  `is_comment` varchar(2) comment '是否评价',
   `create_time` datetime comment '创建时间',
   `last_update_time` datetime comment '最后修改时间'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

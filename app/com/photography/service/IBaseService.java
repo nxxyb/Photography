@@ -60,6 +60,16 @@ public interface IBaseService {
 	public <T> List<T> getPojoList(Class<T> clazz, Pager pager, Expression expression, Sort sort, User user);
 	
 	/**
+	 * 获取数量
+	 * @param <T>
+	 * @param entityType
+	 * @param expression
+	 * @return
+	 * @author 徐雁斌
+	 */
+	public <T> int getCountByQuery(Class<T> entityType, Expression expression);
+	
+	/**
 	 * 合计列表，支持分页以及查询
 	 * @param pager
 	 * @param expression
