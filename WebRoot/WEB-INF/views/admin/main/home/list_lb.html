@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	 <#include "../../common/title.html">
+	 <#include "../../common/link.html">
+	 <link href="${basePath}/assets/plugins/datatables/dataTables.bootstrap.css" rel="stylesheet" type="text/css" />
+	 <script src="${basePath}/assets/plugins/datatables/jquery.dataTables.min.js" type="text/javascript"></script>
+    <script src="${basePath}/assets/plugins/datatables/dataTables.bootstrap.min.js" type="text/javascript"></script>
+</head>
+
+<body class="skin-blue sidebar-mini">
+
+    <div id="wrapper">
+		
+		<#include "../../common/header.html">
+		
+		<#include "../../error/error_modal.html">
+		
+        
+      <div class="content-wrapper">
+      
+        <section class="content-header">
+          <h1>首页管理</h1>
+          <ol class="breadcrumb">
+            <li><a href="${basePath}/toMain"><i class="fa fa-dashboard"></i> 首页</a></li>
+            <li class="active"> 首页管理</li>
+          </ol>
+        </section>
+            
+        <section class="content">
+            <!-- /.row -->
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="box">
+                        <div class="box-header">
+                 			 <a href="${basePath}/user/toForm" class="btn btn-success"><i class="fa fa-plus"></i> 新建</a>
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="box-body">
+                                <table class="table table-bordered table-striped" id="dataTables-users">
+                                    <thead>
+                                        <tr>
+                                        	<th>序号</th>
+                                            <th>活动名称</th>
+                                            <th>排序</th>
+                                            <th>操作</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    	
+                                    	<#list adminLbs as adminLb>
+                                    		<tr>
+                                    			<td>${adminLb_index+1}</td>
+                                    			<td>${(adminLb.project.name)!''}</td>
+                                    			<td>${(adminLb.sort)!''}</td>
+                                    			<td>
+                                    				<div class="tipbtn"> 
+                                    					<a href="${basePath}/user/toForm?id=${(adminLb.id)!''}" class="btn btn-primary"><i class="fa fa-edit"></i> 编辑</a>
+                                    					<a id='delete' data-href="${basePath}/user/delete?id=${(adminLb.id)!''}" class="btn btn-warning confirmation"><i class="fa fa-times"></i> 删除</a>
+                                    				</div>
+                                    			</td>
+                                    		</tr>
+                                    	</#list>
+                                    	
+                                       
+                                    </tbody>
+                                </table>
+                             </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- /.row -->
+          </section>
+            
+        </div>
+        <!-- /#page-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+    
+    <!-- footer start-->
+		<#include "/common/footer.html">
+	<!-- footer end -->
+    
+    <script>
+    $(document).ready(function() {
+        $('#dataTables-users').DataTable({
+	        "language": {
+				"url":  "${basePath}/assets/plugins/datatables/i18n/Chinese.lang"
+			},
+			"responsive": true,
+			"paging": true,
+          	"lengthChange": true,
+          	"searching": true,
+          	"ordering": true,
+          	"info": true,
+          	"autoWidth": false
+        });
+		
+		$('#sy').addClass('active');
+		$('#home_lb').addClass('active');
+    });
+    </script>
+
+</body>
+
+</html>

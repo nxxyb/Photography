@@ -192,3 +192,16 @@ CREATE TABLE `user_coupon` (
   `create_time` datetime comment '创建时间',
   `last_update_time` datetime comment '最后修改时间'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+/** 后台管理 */
+/**活动行程表 */
+DROP TABLE IF EXISTS `admin_lb`;
+CREATE TABLE `admin_lb` (
+  `id` varchar(36) NOT NULL PRIMARY KEY,
+  `project` varchar(36) comment '所属活动',
+  `sort` varchar(10) comment '排序',
+  `create_time` datetime comment '创建时间',
+  `last_update_time` datetime comment '最后修改时间'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
