@@ -8,6 +8,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
@@ -67,6 +68,7 @@ public class ProjectTrip extends BaseMapping {
 		this.des = des;
 	}
 
+	@JsonIgnore
 	public FileGroup getDesPhotos() {
 		return desPhotos;
 	}
@@ -83,6 +85,7 @@ public class ProjectTrip extends BaseMapping {
 		this.project = project;
 	}
 
+	@JsonIgnore
 	public MultipartFile[] getDesPhotoPics() {
 		return desPhotoPics;
 	}

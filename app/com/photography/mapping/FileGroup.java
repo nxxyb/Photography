@@ -9,6 +9,8 @@ import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+
 /**
  * 文件组 
  * @author 徐雁斌

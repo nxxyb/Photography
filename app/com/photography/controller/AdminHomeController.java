@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.photography.dao.query.Sort;
@@ -42,9 +43,14 @@ public class AdminHomeController extends BaseController {
 	@RequestMapping("/tolb")
 	public ModelAndView toLb(HttpServletRequest request, Model model) {
 		ModelAndView mav = new ModelAndView();
-		List<AdminLb> adminLbs = adminService.loadPojoByExpression(AdminLb.class, null, new Sort("sort","asc"));
-		mav.addObject("adminLbs", adminLbs);
 		mav.setViewName("admin/main/home/list_lb");
 		return mav;
+	}
+	
+	@RequestMapping(value="/getLbs",produces="application/json;charset=UTF-8")
+	@ResponseBody
+	public List<AdminLb> getLbs(HttpServletRequest request, Model model) {
+		List<AdminLb> adminLbs = adminService.loadPojoByExpression(AdminLb.class, null, new Sort("sort","asc"));
+		return adminLbs;
 	}
 }

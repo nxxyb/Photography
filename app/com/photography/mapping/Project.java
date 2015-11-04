@@ -11,10 +11,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
-
 import org.hibernate.annotations.LazyToOne;
 import org.hibernate.annotations.LazyToOneOption;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.photography.utils.Constants;
 
 /**
@@ -281,6 +281,7 @@ public class Project extends BaseMapping{
 		this.lessNum = lessNum;
 	}
 
+	@JsonIgnoreProperties(value={"hibernateLazyInitializer","handler","fieldHandler"}) 
 	public FileGroup getPhotos() {
 		return photos;
 	}
@@ -313,6 +314,7 @@ public class Project extends BaseMapping{
 		this.county = county;
 	}
 
+	@com.fasterxml.jackson.annotation.JsonIgnore
 	public List<ProjectTrip> getProjectTrips() {
 		return projectTrips;
 	}
@@ -369,6 +371,7 @@ public class Project extends BaseMapping{
 		this.timeNightLength = timeNightLength;
 	}
 
+	@com.fasterxml.jackson.annotation.JsonIgnore
 	public FileGroup getDesPhotos() {
 		return desPhotos;
 	}

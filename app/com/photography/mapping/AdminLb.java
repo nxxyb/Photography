@@ -6,6 +6,8 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 /**
  * 轮播活动配置表
  * @author 徐雁斌
@@ -27,6 +29,7 @@ public class AdminLb extends BaseMapping {
 	@Column(name="sort")
 	private String sort;
 
+	@JsonIgnoreProperties(value={"hibernateLazyInitializer","handler","fieldHandler"}) 
 	public Project getProject() {
 		return project;
 	}
