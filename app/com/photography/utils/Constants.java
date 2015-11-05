@@ -84,6 +84,9 @@ public class Constants {
 	/**
 	 * 活动状态
 	 */
+	//未审核
+	public final static String PROJECT_STATUS_WSH = "0";
+	
 	//未开始
 	public final static String PROJECT_STATUS_WKS = "1";
 	

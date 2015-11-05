@@ -51,6 +51,9 @@ private final static Logger log = Logger.getLogger(MainController.class);
 		
 		try {
 			User user = userService.login(loginName, MD5Util.md5(password));
+			if(!Constants.USER_TYPE_ADMIN.equals(user.getType())){
+				throw new ServiceException(ErrorCode.USER_NOT_EXIST);
+			}
 			request.getSession().setAttribute(Constants.SESSION_USER_KEY, user);
 		} catch (Exception e) {
 			log.error("MainController.login(): ServiceException", e);

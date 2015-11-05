@@ -21,10 +21,10 @@
       <div class="content-wrapper">
       
         <section class="content-header">
-          <h1>用户审核</h1>
+          <h1>用户管理</h1>
           <ol class="breadcrumb">
             <li><a href="${basePath}/admin/toMain"><i class="fa fa-dashboard"></i> 首页</a></li>
-            <li class="active"> 用户审核</li>
+            <li class="active"> 用户管理</li>
           </ol>
         </section>
             
@@ -34,7 +34,7 @@
                 <div class="col-md-12">
                     <div class="box">
                         <div class="box-header">
-                 			
+                 			<a href="${basePath}/admin/user/toUserGlForm" class="btn btn-success"><i class="fa fa-plus"></i> 新建</a>
                         </div>
                         <!-- /.panel-heading -->
                         <div class="box-body">
@@ -44,7 +44,10 @@
                                         	<th>序号</th>
                                             <th>真实名称</th>
                                             <th>手机号</th>
-                                            <th>提交审核时间</th>
+                                            <th>类型</th>
+                                            <th>审核状态</th>
+                                            <th>注册时间</th>
+                                            <th>胶卷数量</th>
                                             <th>操作</th>
                                         </tr>
                                     </thead>
@@ -55,10 +58,23 @@
                                     			<td>${user_index+1}</td>
                                     			<td>${(user.realName)!''}</td>
                                     			<td>${(user.mobile)!''}</td>
-                                    			<td>${(user.verifyTime?string('yyyy-MM-dd HH:mm'))!''}</td>
+                                    			<td>
+                                    				<#if user.type == "1"> 管理员 </#if>
+                                    				<#if user.type == "2"> 用户 </#if>
+                                    				<#if user.type == "3"> 活动发布 </#if>
+                                    			</td>
+                                    			<td>
+                                    				<#if user.verify == "0"> <span class="badge bg-light-blue">未提交审核</span> </#if>
+                                    				<#if user.verify == "1"> <span class="badge bg-yellow">提交审核</span> </#if>
+                                    				<#if user.verify == "2"> <span class="badge bg-red">审核不通过</span> </#if>
+                                    				<#if user.verify == "3"> <span class="badge bg-green">审核通过</span> </#if>
+                                    			</td>
+                                    			<td>${(user.createTime?string('yyyy-MM-dd HH:mm'))!''}</td>
+                                    			<td>${(user.couponNum)!''}</td>
                                     			<td>
                                     				<div class="tipbtn">
-                                    					<a href="${basePath}/admin/user/toUserShForm?id=${(user.id)!''}" class="btn btn-warning"><i class="fa fa-edit"></i> 审核</a>
+                                    					<a href="${basePath}/admin/user/toUserGlForm?id=${(user.id)!''}" class="btn btn-info"><i class="fa fa-edit"></i> 修改</a>
+                                    					<a href="${basePath}/admin/user/deleteUser?id=${(user.id)!''}" class="btn btn-warning"><i class="fa fa-close"></i> 删除</a>
                                     				</div>
                                     			</td>
                                     		</tr>
@@ -103,7 +119,7 @@
         });
 		
 		$('#yh').addClass('active');
-    	$('#yh_sh').addClass('active');
+    	$('#yh_gl').addClass('active');
     });
     </script>
 

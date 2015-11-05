@@ -17,7 +17,8 @@ CREATE TABLE `user` (
   `mobile` varchar(20) comment '手机号码',
   `email` varchar(20) comment '邮箱',
   `birth_day` date comment '生日',
-  `verify` varchar(2) comment '是否审核',
+  `verify` varchar(2) comment '审核状态',
+  `verify_time` datetime comment '审核时间',
   `verify_message` varchar(2000) comment '审核结果信息',
   `enable` varchar(2) comment '是否激活',
   `province` varchar(20) comment '省',
@@ -205,3 +206,7 @@ CREATE TABLE `admin_lb` (
   `create_time` datetime comment '创建时间',
   `last_update_time` datetime comment '最后修改时间'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/** 初始化管理员用户 */
+INSERT INTO `user` (`id`, `login_name`, `password`, `type`, `nack_name`, `real_name`, `sex`, `mobile`, `email`, `birth_day`, `verify`, `verify_time`, `verify_message`, `enable`, `province`, `city`, `county`, `id_card`, `company_name`, `comfirm_pic`, `qq_number`, `person_signature`, `coupon_num`, `create_time`, `last_update_time`, `head_pic`) VALUES ('297ea9d450d5addf0150d5cc3c840006', NULL, '21232F297A57A5A743894A0E4A801FC3', '1', NULL, '管理员', NULL, '13920672357', NULL, NULL, '0', NULL, NULL, '1', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', '2015-11-05 11:59:03', '2015-11-05 11:59:03', NULL);
+

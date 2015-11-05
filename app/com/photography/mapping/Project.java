@@ -181,9 +181,9 @@ public class Project extends BaseMapping{
 	@Column(name="viewed_number")
 	private String viewedNumber;
 	
-	//项目状态 1-未开始 2-已开始 3-已结束
+	//项目状态 0-未审核 1-未开始 2-已开始 3-已结束
 	@Column(name="status")
-	private String status = Constants.PROJECT_STATUS_WKS;
+	private String status = Constants.PROJECT_STATUS_WSH;
 
 	public String getName() {
 		return name;

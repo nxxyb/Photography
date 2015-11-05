@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	 <#include "../../common/title.html">
+	 <#include "../../common/link.html">
+</head>
+
+<body class="skin-blue sidebar-mini">
+
+    <div id="wrapper">
+		
+		<#include "../../common/header.html">
+		
+		<#include "../../error/error_modal.html">
+            
+        <div class="content-wrapper">
+      
+	        <section class="content-header">
+	          <h1>审核</h1>
+	          <ol class="breadcrumb">
+	            <li><a href="${basePath}/admin/toMain"><i class="fa fa-dashboard"></i> 首页</a></li>
+	            <li><a href="${basePath}/admin/user/toUserShList"> 用户审核</a></li>
+	            <li class="active"> 审核</li>
+	          </ol>
+	        </section>
+            
+             <section class="content">
+            <!-- /.row -->
+            <div class="row">
+            	<div class="col-md-12">
+                   <div class="box box-info">
+                        <form id="userForm" role="form-horizontal" action="${basePath}/admin/user/userSh" method="post">
+                                <div class="box-body">
+                                	<input type="hidden" name="id" value="${(user.id)!''}">
+                                    
+                                    <div class="form-group">
+                                            <label class="control-label">真实姓名</label>
+                                            <input class="form-control" name="realName" value="${(user.realName)!''}" disabled>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                            <label class="control-label">手机号</label>
+                                            <input class="form-control" name="mobile" value="${(user.mobile)!''}" disabled>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                     	<label class="control-label">身份证号</label>
+                              			<input class="form-control" placeholder="身份证号" name="idCard" value="${(user.idCard)!''}" disabled>
+                              		</div>
+                              		
+                              		<div class="form-group">
+                              			<label class="control-label">验证照片</label> 
+                              			<img class="img-responsive img-thumbnail" src='${basePath}/${user.comfirmPic}' class='file-preview-image'>
+                              		</div>
+                              		
+                              		<div class="form-group">
+		                             	<label>
+					                      <input type="radio" name="verify" class="flat-red" value="3" checked /> 审核通过
+					                    </label>
+					                    <label>
+					                      <input type="radio" name="verify" class="flat-red" value="2" /> 审核不通过 
+					                    </label>
+		                          </div>
+		                          
+		                          <div class="form-group">
+		                          		<label class="control-label">审核结果信息</label>
+		                              <textarea class="form-control" rows="6" placeholder="审核结果信息" maxlength="1000" name="verifyMessage">您的信息审核通过</textarea>
+		                          </div>
+                              		
+                                    
+                                    <div class="box-footer">
+                                    	<button type="submit" class="btn btn-info">保存</button>
+                                    	<a href="#" onclick="self.location=document.referrer" class="btn btn-info">返回</a>
+                                    </div>
+                        	</div>
+                        </form>
+                        
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- /.row -->
+          </section>
+            
+        </div>
+        <!-- /#page-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+    
+    <!-- footer start-->
+		<#include "../../common/footer.html">
+	<!-- footer end -->
+    
+    <script>
+    $(document).ready(function() {
+    	
+    	 $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
+    	        checkboxClass: 'icheckbox_flat-green',
+    	        radioClass: 'iradio_flat-green'
+    	 });
+    	 
+    	 $('#yh').addClass('active');
+    	 $('#yh_sh').addClass('active');
+    });
+    
+    </script>
+
+</body>
+
+</html>

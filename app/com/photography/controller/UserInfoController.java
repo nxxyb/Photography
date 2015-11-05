@@ -405,6 +405,7 @@ public class UserInfoController extends BaseController {
 		    	userDB.setComfirmPic(relativePath + "/" + comfirmFile.getOriginalFilename());
 			}
 	    	userDB.setVerify(Constants.VERIFY_ING);
+	    	userDB.setVerifyTime(new Date());
 			userService.savePojo(userDB, userDB);
 			
 			setSessionUser(request, userDB);

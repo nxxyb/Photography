@@ -52,9 +52,11 @@
                 <span class="c-arrow"></span>
             </a>
             <ul class="c-dropdown-menu">
+            	<#if Session.sessionuser?? && Session.sessionuser.type?? && Session.sessionuser.type !="2">
                 <li id="user_project">
                     <a href="${basePath}/userinfo/toUserInfo?type=7">活动发布</a>
                 </li>
+                </#if>
                 <li id="user_work">
                     <a href="${basePath}/userinfo/toUserInfo?type=8">作品发布</a>
                 </li>

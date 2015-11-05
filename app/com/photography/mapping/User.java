@@ -75,10 +75,17 @@ public class User extends BaseMapping{
 	private Date birthDay;
 	
 	/**
-	 * 是否审核
+	 * 审核状态
 	 */
 	@Column(name="verify")
 	private String verify = Constants.VERIFY_NO;
+	
+	/**
+	 * 审核时间
+	 * 
+	 */
+	@Column(name="verify_time")
+	private Date verifyTime;
 	
 	/**
 	 * 审核结果信息
@@ -326,6 +333,14 @@ public class User extends BaseMapping{
 
 	public void setCouponNum(String couponNum) {
 		this.couponNum = couponNum;
+	}
+
+	public Date getVerifyTime() {
+		return verifyTime;
+	}
+
+	public void setVerifyTime(Date verifyTime) {
+		this.verifyTime = verifyTime;
 	}
 
 }
