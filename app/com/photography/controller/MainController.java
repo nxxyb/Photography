@@ -5,14 +5,12 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.photography.exception.ServiceException;
 import com.photography.service.IProjectService;
-import com.photography.utils.Constants;
 
 /**
  * 
@@ -35,8 +33,13 @@ private final static Logger log = Logger.getLogger(MainController.class);
 	}
 	
 	@RequestMapping("/index")
-	public String toIndex(String errorMessage,HttpServletRequest request, RedirectAttributes attr) {
-		return "/index";
+	public ModelAndView toIndex(String errorMessage,HttpServletRequest request, RedirectAttributes attr) throws ServiceException {
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("lbProjects", projectService.getIndexProject("1"));
+		mav.addObject("tjProjects", projectService.getIndexProject("2"));
+		mav.addObject("rmProjects", projectService.getIndexProject("3"));
+		mav.setViewName("/index");
+		return mav;
 	}
 	
 //	private List<Project> getIndexProjects(String type) throws ServiceException{

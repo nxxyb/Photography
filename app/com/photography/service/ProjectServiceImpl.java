@@ -1,5 +1,6 @@
 package com.photography.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -9,8 +10,8 @@ import com.photography.dao.query.Pager;
 import com.photography.dao.query.Sort;
 import com.photography.exception.ErrorCode;
 import com.photography.exception.ServiceException;
+import com.photography.mapping.AdminLb;
 import com.photography.mapping.Project;
-import com.photography.utils.StringUtil;
 
 /**
  * 
@@ -19,7 +20,6 @@ import com.photography.utils.StringUtil;
  * 
  * @copyright 2015 天大求实电力新技术股份有限公司 版权所有
  */
-@SuppressWarnings("unchecked")
 @Service("projectService")
 public class ProjectServiceImpl extends BaseServiceImpl implements IProjectService {
 
@@ -41,9 +41,11 @@ public class ProjectServiceImpl extends BaseServiceImpl implements IProjectServi
 	
 	@Override
 	public List<Project> getIndexProject(String type) throws ServiceException {
-		Pager pager= new Pager();
-		pager.setPageSize(8);
-		List<Project> projects = hibernateDao.getByQuery(Project.class, pager,StringUtil.isEmpty(type)?null:Condition.eq("type", type), new Sort());
+		List<AdminLb> adminLbs = hibernateDao.getByQuery(AdminLb.class, Condition.eq("type", type), new Sort("sort","asc"));
+		List<Project> projects = new ArrayList<Project>();
+		for(AdminLb adminLb : adminLbs){
+			projects.add(adminLb.getProject());
+		}
 		return projects;
 	}
 

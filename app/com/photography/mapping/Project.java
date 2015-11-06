@@ -37,7 +37,7 @@ public class Project extends BaseMapping{
 	
 	/**
 	 * 活动类型
-	 * 1-市内采风 2-远郊采风 3-说拍就拍 4-一对一
+	 * 0-棚拍 1-市内采风 2-远郊采风 3-说拍就拍 4-一对一
 	 */
 	@Column(name="type")
 	private String type;

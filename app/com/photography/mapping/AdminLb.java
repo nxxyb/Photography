@@ -28,6 +28,10 @@ public class AdminLb extends BaseMapping {
 	//排序
 	@Column(name="sort")
 	private String sort;
+	
+	//类型 1:轮播  2：活动推荐  3：热门活动
+	@Column(name="type")
+	private String type;
 
 	@JsonIgnoreProperties(value={"hibernateLazyInitializer","handler","fieldHandler"}) 
 	public Project getProject() {
@@ -44,6 +48,14 @@ public class AdminLb extends BaseMapping {
 
 	public void setSort(String sort) {
 		this.sort = sort;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 	
 	

@@ -18,90 +18,64 @@
 	<!-- BEGIN: PAGE CONTENT -->
 	
 	<!-- BEGIN: SEARCH -->
-	<div class="c-content-box c-size-md c-bg-white">
-       	<div class="c-content-panel">
-             <div class="c-body">
-                 <div class="row">
-                     <div class="col-md-12">
-                         <div class="c-content-title-3 c-title-md c-theme-border">
-                            <div class="c-content-tab-2 c-theme c-opt-1">
-                             	<ul class="nav c-tab-icon-stack c-font-sbold c-font-uppercase">
-                             		<li class="active">
-                                        <a href="#">
-                                            <span class="c-content-line-icon c-icon-25"></span>
-                                            <span class="c-title">全部</span>
-                                        </a>
-                                        <div class="c-arrow"></div>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span class="c-content-line-icon c-icon-25"></span>
-                                            <span class="c-title">市内采风</span>
-                                        </a>
-                                        <div class="c-arrow"></div>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span class="c-content-line-icon c-icon-19"></span>
-                                            <span class="c-title">远郊采风</span>
-                                        </a>
-                                        <div class="c-arrow"></div>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span class="c-content-line-icon c-icon-14"></span>
-                                            <span class="c-title">说拍就拍</span>
-                                        </a>
-                                        <div class="c-arrow"></div>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span class="c-content-line-icon c-icon-20"></span>
-                                            <span class="c-title">一对一</span>
-                                        </a>
-                                        <div class="c-arrow"></div>
-                                    </li>
-                                </ul>
-                            </div>
-                            
-                            <div class="c-content-tab-2 c-theme c-opt-1">
-                             	<ul class="nav c-tab-icon-stack c-font-sbold c-font-uppercase">
-                                    <li>
-                                        <a href="#">
-                                            <input id="startTime" class="form-control" type="text" name="startTime">
-											<script type="text/javascript">
-												$('#startTime').datetimepicker({lang:'zh',format:'Y-m-d H:i',step:30});
-											</script>
-                                            <span class="c-title">出发时间</span>
-                                        </a>
-                                        <div class="c-arrow"></div>
-                                    </li>
-                                    <li>
-                                        <span>至</span>
-                                        <div class="c-arrow"></div>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <input id="endTime" class="form-control" type="text" name="startTime">
-											<script type="text/javascript">
-												$('#endTime').datetimepicker({lang:'zh',format:'Y-m-d H:i',step:30});
-											</script>
-                                            <span class="c-title">出发时间</span>
-                                        </a>
-                                        <div class="c-arrow"></div>
-                                    </li>
-                                </ul>
-                              </div>
-                             
-                         </div>
-                         
-                     </div>
+      <div class="row c-margin-t-50">
+          <div class="col-md-12">
+              <div class="c-content-title-3 c-title-md c-theme-border">
+                 <div class="c-content-tab-2 c-theme c-opt-1">
+                  	<ul class="nav c-tab-icon-stack c-font-sbold c-font-uppercase">
+                  		<li <#if type??><#else> class="active"</#if>>
+                             <a href="${basePath}/project/index">
+                                 <span class="c-content-line-icon c-icon-1"></span>
+                                 <span class="c-title">全部</span>
+                             </a>
+                             <div class="c-arrow"></div>
+                         </li>
+                         <li <#if type?? && type="0">class="active"</#if>>
+                             <a href="${basePath}/project/index?type=0">
+                                 <span class="c-content-line-icon c-icon-19"></span>
+                                 <span class="c-title">棚拍</span>
+                             </a>
+                             <div class="c-arrow"></div>
+                         </li>
+                         <li <#if type?? && type="1">class="active"</#if>>
+                             <a href="${basePath}/project/index?type=1">
+                                 <span class="c-content-line-icon c-icon-16"></span>
+                                 <span class="c-title">市内采风</span>
+                             </a>
+                             <div class="c-arrow"></div>
+                         </li>
+                         <li <#if type?? && type="2">class="active"</#if>>
+                             <a href="${basePath}/project/index?type=2">
+                                 <span class="c-content-line-icon c-icon-32"></span>
+                                 <span class="c-title">远郊采风</span>
+                             </a>
+                             <div class="c-arrow"></div>
+                         </li>
+                         <li <#if type?? && type="3">class="active"</#if>>
+                             <a href="${basePath}/project/index?type=3">
+                                 <span class="c-content-line-icon c-icon-14"></span>
+                                 <span class="c-title">说拍就拍</span>
+                             </a>
+                             <div class="c-arrow"></div>
+                         </li>
+                         <li <#if type?? && type="4">class="active"</#if>>
+                             <a href="${basePath}/project/index?type=4">
+                                 <span class="c-content-line-icon c-icon-20"></span>
+                                 <span class="c-title">一对一</span>
+                             </a>
+                             <div class="c-arrow"></div>
+                         </li>
+                     </ul>
                  </div>
-             </div>
-         </div>
-    </div>
+                  
+              </div>
+              
+          </div>
+      </div>
+
 	<!-- END: SEARCH -->
-            
+    <#list projects as project>
+    <#if project_index%2==0 >  
 	<div class="c-content-box c-overflow-hide">
 	<div class="c-content-product-3 c-bs-grid-reset-space">
 		<div class="row">
@@ -109,39 +83,38 @@
 				<div class="c-content-overlay">
 					<div class="c-overlay-wrapper">
 						<div class="c-overlay-content">
-							<a href="${basePath}/project/toReview" class="btn btn-md c-btn-grey-1 c-btn-uppercase c-btn-bold c-btn-border-1x c-btn-square">Explore</a>
+							<a href="${basePath}/project/toReview?id=${project.id}" class="btn btn-md c-btn-grey-1 c-btn-uppercase c-btn-bold c-btn-border-1x c-btn-square">查看</a>
 						</div>
 					</div>
-					<div class="c-bg-img-center c-overlay-object" data-height="height" style="height: 550px; background-image: url(${basePath}/images/example/project1.jpg);"></div>
+					<div class="c-bg-img-center c-overlay-object" data-height="height" style="height: 550px; background-image: url(${basePath}/${project.photos.fileInfos[0].realPath});"></div>
 				</div>
 			</div>
 			<div class="col-md-4 col-sm-6">
 				<div class="c-wrapper c-bg-red" style="height: 550px;">
 					<div class="c-content c-border c-border-padding c-border-padding-right">
-						<h3 class="c-title c-font-25 c-font-white c-font-uppercase c-font-bold">MOTO 360 WATCH</h3>
-						<p class="c-description c-font-17 c-font-white">Lorem ipsum dolor sit amet, consectetuer adipiscing elit sed diam nonummy et nibh euismod aliquam erat volutpat.</p>
-						<p class="c-description c-font-17 c-font-white">Dolor sit amet, consectetuer adipiscing elit sed diam nonummy</p>
-						<p class="c-price c-font-55 c-font-white c-font-thin">$249</p>
-						<a href="${basePath}/project/toReview" class="btn btn-lg c-btn-white c-font-uppercase c-btn-square c-btn-border-1x">BUY NOW</a>
+						<p class="c-price c-font-55 c-font-white c-font-thin"><#if (project.cost)?? && project.cost=="0">免费<#else> ￥${(project.cost)!''}</#if></p>
+						<h3 class="c-title c-font-25 c-font-white c-font-uppercase c-font-bold"><a href="${basePath}/project/toReview?id=${project.id}">${(project.name)!''}</a></h3>
+						<p class="c-description c-font-17 c-font-white">${(project.des)!''}</p>
+						
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
-</div><!-- END: CONTENT/SHOPS/SHOP-3-1 -->
-
-<!-- BEGIN: CONTENT/SHOPS/SHOP-3-2 -->
-<div class="c-content-box c-overflow-hide">
+	   </div>
+	</div><!-- END: CONTENT/SHOPS/SHOP-3-1 -->
+	</#if>
+	
+	<#if project_index%2==1 >
+	<div class="c-content-box c-overflow-hide">
 	<div class="c-content-product-3 c-bs-grid-reset-space">
 		<div class="row">
 			<div class="col-md-4 col-sm-6">
 				<div class="c-wrapper c-theme-bg" style="height: 550px;">
 					<div class="c-content c-border c-border-padding c-border-padding-left">
-						<h3 class="c-title c-font-25 c-font-white c-font-uppercase c-font-bold">With Theme Color</h3>
-						<p class="c-description c-font-17 c-font-white">Lorem ipsum dolor sit amet, consectetuer adipiscing elit sed diam nonummy et nibh euismod aliquam erat volutpat.</p>
-						<p class="c-description c-font-17 c-font-white">Dolor sit amet, consectetuer adipiscing elit sed diam nonummy</p>
-						<p class="c-price c-font-55 c-font-white c-font-thin">$249</p>
-						<a href="${basePath}/project/toReview" class="btn btn-lg c-btn-white c-font-uppercase c-btn-square c-btn-border-1x">BUY NOW</a>
+						<p class="c-price c-font-55 c-font-white c-font-thin"><#if (project.cost)?? && project.cost=="0">免费<#else> ￥${(project.cost)!''}</#if></p>
+						<h3 class="c-title c-font-25 c-font-white c-font-uppercase c-font-bold"><a href="${basePath}/project/toReview?id=${project.id}">${(project.name)!''}</a></h3>
+						<p class="c-description c-font-17 c-font-white">${(project.des)!''}</p>
+						
 					</div>
 				</div>
 			</div>
@@ -149,44 +122,27 @@
 				<div class="c-content-overlay">
 					<div class="c-overlay-wrapper">
 						<div class="c-overlay-content">
-							<a href="${basePath}/project/toReview" class="btn btn-md c-btn-grey-1 c-btn-uppercase c-btn-bold c-btn-border-1x c-btn-square">Explore</a>
+							<a href="${basePath}/project/toReview?id=${project.id}" class="btn btn-md c-btn-grey-1 c-btn-uppercase c-btn-bold c-btn-border-1x c-btn-square">查看</a>
 						</div>
 					</div>
-					<div class="c-bg-img-center c-overlay-object" data-height="height" style="height: 550px; background-image: url(${basePath}/images/example/project2.jpg);"></div>
+					<div class="c-bg-img-center c-overlay-object" data-height="height" style="height: 550px; background-image: url(${basePath}/${project.photos.fileInfos[0].realPath});"></div>
 				</div>
 			</div>
 		</div>
 	</div>
-</div><!-- END: CONTENT/SHOPS/SHOP-3-2 -->
+</div>
+	</#if> 
+</#list>
 
 <!-- BEGIN: PAGINATION -->
 <div class="c-content-box c-overflow-hide">
-<div class="c-margin-t-30"></div>
-<ul class="c-content-pagination c-square c-theme pull-right">
-    <li class="c-prev">
-        <a href="#">
-            <i class="fa fa-angle-left"></i>
-        </a>
-    </li>
-    <li>
-        <a href="#">1</a>
-    </li>
-    <li class="c-active">
-        <a href="#">2</a>
-    </li>
-    <li>
-        <a href="#">3</a>
-    </li>
-    <li>
-        <a href="#">4</a>
-    </li>
-    <li class="c-next">
-        <a href="#">
-            <i class="fa fa-angle-right"></i>
-        </a>
-    </li>
-</ul>
-<div class="c-margin-b-80"></div>
+<div class="c-margin-t-20"></div>
+<div class="row pull-right">
+	<div class="col-md-12">
+		<ul id="project_pager" class="c-content-pagination c-square c-theme"></ul>
+	</div>
+</div>
+<div class="c-margin-b-20"></div>
 </div>
 	
 	<!-- END: PAGE CONTENT -->
@@ -205,6 +161,19 @@
 $(document).ready(function(){
 
 	$('#project').addClass('c-active');
+	
+	var options = {  
+            size:"large",
+            bootstrapMajorVersion:3,
+            currentPage: ${(pager.currentPage)!1},
+            numberOfPages: ${(pager.pageSize)!5},
+            totalPages:${(pager.totalPage)!1},
+            onPageClicked: function (e, originalEvent, type, page) {
+				location.href = "${basePath}/project/index?type=${type!''}&currentPage=" + page;
+            }  
+       }
+ 
+       $('#project_pager').bootstrapPaginator(options);  
   
   });
 </script>

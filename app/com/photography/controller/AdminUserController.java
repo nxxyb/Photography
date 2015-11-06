@@ -110,7 +110,7 @@ public class AdminUserController extends BaseController {
 	}
 	
 	/**
-	 * 跳转到用户管理列表
+	 * 跳转到用户管理表单
 	 * @param request
 	 * @param model
 	 * @return

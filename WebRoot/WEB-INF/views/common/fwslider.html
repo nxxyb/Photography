@@ -3,11 +3,12 @@
 	<div class="tp-banner-container tp-fullscreen">
 		<div class="tp-banner">
 			<ul>
+				<#list lbProjects as lbProject>
 				<!--BEGIN: SLIDE #1 -->
 				<li data-transition="fade" data-slotamount="1" data-masterspeed="1000">
 					<img
 						alt=""
-						src="${basePath}/images/example/slide-1.jpg"
+						src="${basePath}/${lbProject.photos.fileInfos[0].realPath}"
 						data-bgposition="center center"
 						data-bgfit="cover"
 						data-bgrepeat="no-repeat">
@@ -31,9 +32,9 @@
 						data-endspeed="600">
 
 						<div class="c-slider-14-title c-center">
-							<p class="c-font-white c-font-uppercase c-font-19">Whatever you will ever need is</p>
-							<h3 class="c-main-title c-font-bold c-font-uppercase c-font-white">
-								<span class="c-theme-font">In</span> The <span class="c-theme-font">Shop</span>
+							<!--<p class="c-font-white c-font-uppercase c-font-19">${(lbProject.name)!''}</p>
+							--><h3 class="c-main-title c-font-bold c-font-uppercase c-font-white">
+								<span class="c-theme-font">${(lbProject.name)!''}</span>
 							</h3>
 						</div>
 					</div>
@@ -48,62 +49,14 @@
 						data-speed="500"
 						data-start="2000"
 						data-easing="Back.easeOut">
-							<a href="#" class="c-action-btn btn btn-md c-btn-square c-btn-bold c-btn-border-2x c-theme-btn c-btn-uppercase c-center">Shop Now</a>
+							<a href="${basePath}/project/toReview?id=${lbProject.id}" class="c-action-btn btn btn-md c-btn-square c-btn-bold c-btn-border-2x c-theme-btn c-btn-uppercase c-center">立刻预定</a>
 					</div>
 					<!--END -->
 		 		</li>
 		 		<!--END -->
+		 		</#list>
 
-				<!--BEGIN: SLIDE #2 -->
-				<li data-transition="fade" data-slotamount="1" data-masterspeed="1000">
-					<img
-						alt=""
-						src="${basePath}/images/example/slide-2.jpg"
-						data-bgposition="center center"
-						data-bgfit="cover"
-						data-bgrepeat="no-repeat">
-
-					<!--BEGIN: MAIN TITLE -->
-					<div class="caption customin customout tp-resizeme"
-						data-x="center"
-						data-y="center"
-						data-hoffset="-385"
-						data-voffset="-50"
-
-						data-speed="500"
-						data-start="1000"
-						data-customin="x:0;y:0;z:0;rotationX:0.5;rotationY:0;rotationZ:0;scaleX:0.75;scaleY:0.75;skewX:0;skewY:0;opacity:0;transformPerspective:600;transformOrigin:50% 50%;"
-						data-customout="x:0;y:0;z:0;rotationX:0;rotationY:0;rotationZ:0;scaleX:0.75;scaleY:0.75;skewX:0;skewY:0;opacity:0;transformPerspective:600;transformOrigin:50% 50%;"
-						data-easing="Back.easeOut"
-						data-splitin="none"
-						data-splitout="none"
-						data-elementdelay="0.1"
-						data-endelementdelay="0.1"
-						data-endspeed="600">
-
-						<div class="c-slider-14-title c-center">
-							<p class="c-font-white c-font-uppercase c-font-19">Whatever you will ever need is</p>
-							<h3 class="c-main-title c-font-bold c-font-uppercase c-font-white">
-								<span class="c-theme-font">In</span> The <span class="c-theme-font">Shop</span>
-							</h3>
-						</div>
-					</div>
-					<!--END -->
-
-					<!--BEGIN: ACTION BUTTON -->
-					<div class="caption randomrotateout tp-resizeme"
-						data-x="center"
-						data-y="center"
-						data-hoffset="-390"
-						data-voffset="100"
-						data-speed="500"
-						data-start="2000"
-						data-easing="Back.easeOut">
-							<a href="#" class="c-action-btn btn btn-md c-btn-square c-btn-bold c-theme-btn c-btn-uppercase c-center">Shop Now</a>
-					</div>
-					<!--END -->
-		 		</li>
-		 		<!--END -->
+				
 
 			</ul>
 		</div>

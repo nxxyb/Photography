@@ -24,7 +24,7 @@ public interface IProjectService extends IBaseService {
 	
 	/**
 	 * 获取首页活动
-	 * @return
+	 * @return 1:轮播  2：活动推荐  3：热门活动
 	 * @throws ServiceException
 	 * @author 徐雁斌
 	 */

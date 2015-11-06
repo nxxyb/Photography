@@ -75,8 +75,17 @@ public class ProjectController extends BaseController {
 	 * 活动首页
 	 */
 	@RequestMapping("/index")
-	public String toIndex(String errorMessage,HttpServletRequest request, RedirectAttributes attr) {
-		return "project/project";
+	public ModelAndView toIndex(Pager pager,String type,HttpServletRequest request,Model model) {
+		ModelAndView mav = new ModelAndView();
+		Expression exp = null;
+		if(!StringUtils.isEmpty(type)){
+			exp = Condition.eq("type", type);
+			mav.addObject("type", type);
+		}
+		List<Project> projects = projectService.getPojoList(Project.class, pager, exp, new Sort("createTime",QueryConstants.DESC),null);
+		mav.addObject("projects", projects);
+		mav.setViewName("project/project");
+		return mav;
 	}
 
 	/**
@@ -107,10 +116,10 @@ public class ProjectController extends BaseController {
 	 * @author 徐雁斌
 	 */
 	@RequestMapping(value="/create")
-	public ModelAndView create(Project project,@RequestParam MultipartFile[] photoPics,@RequestParam MultipartFile[] desPhotoPics,ProjectTripList tripList,HttpServletRequest request){
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName("project/project_create");
-		try{
+	public String create(Project project, @RequestParam MultipartFile[] photoPics, @RequestParam MultipartFile[] desPhotoPics, 
+			ProjectTripList tripList, HttpServletRequest request, RedirectAttributes ra) {
+		
+		try {
 			User user = getSessionUser(request);
 			
 			Project projectDb = null;
@@ -166,16 +175,15 @@ public class ProjectController extends BaseController {
         		
         	}
         	projectService.savePojo(project, user);
-
-        	mav.addObject("project", project);
-        	
-        	mav.addObject(Constants.SUCCESS_MESSAGE, MessageConstants.SAVE_SUCCESS);
+        	ra.addFlashAttribute("type", "7");
+        	ra.addFlashAttribute(Constants.SUCCESS_MESSAGE, MessageConstants.SAVE_SUCCESS);
 			
 		}catch(Exception e){
 			log.error("ProjectController create",e);
-			handleErrorModelAndView(mav, e);
+			handleError(ra, e);
+			return "redirect:toCreate?id=" + project.getId();
 		}
-		return mav;
+		return "redirect:/userinfo/toUserInfo";
 	}
 
 	/**
@@ -253,7 +261,7 @@ public class ProjectController extends BaseController {
 	}
 	
 	/**
-	 * 获取用户发布活动列表
+	 * 获取用户评论列表
 	 * @param request
 	 * @return
 	 * @author 徐雁斌
@@ -320,44 +328,6 @@ public class ProjectController extends BaseController {
 		mv.addObject("projectOrders", projectOrders);
 		return mv;
 	}
-
-//	/**
-//	 * @param id
-//	 * @param request
-//	 * @param mav
-//	 * @return
-//	 * @author 徐雁斌
-//	 */
-//	private ModelAndView reviewProject(String id, HttpServletRequest request, ModelAndView mav) {
-//		
-//		mav.setViewName("project/project_review");
-//		
-//		//查找浏览的活动
-//		Project project = (Project) projectService.loadPojo(Project.class,id);
-//		if(project == null){
-//			mav.addObject("errorMessage", ErrorMessage.get(ErrorCode.PROJECT_NOT_EXIST));
-//		}
-//		mav.addObject("project", project);
-//		try {
-//			//根据用户确定是否显示预定按钮
-//			User user = getSessionUser(request);
-//			mav.addObject("isCanYd",projectOrderService.isCanYd(user.getId(), id));
-//			mav.addObject("rela_projects", projectService.getRelaProject(id));
-//			
-//			//更新浏览次数
-//			String viewNumber = project.getViewedNumber();
-//			if(viewNumber == null || "".equals(viewNumber)){
-//				viewNumber = "0";
-//			}
-//			project.setViewedNumber(Integer.toString(Integer.parseInt(viewNumber) + 1));
-//			projectService.savePojo(project, user);
-//		} catch (ServiceException e) {
-//			log.error("ProjectController.toReview(): ServiceException", e);
-//			mav.addObject("errorMessage", e.getErrorMessage()); 
-//		}
-//		
-//		return mav;
-//	}
 	
 	
 	/**
