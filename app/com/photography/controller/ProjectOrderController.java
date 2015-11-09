@@ -62,24 +62,29 @@ public class ProjectOrderController extends BaseController {
 	 * @throws ServiceException 
 	 */
 	@RequestMapping(value="/toProjectCheckout")
-	public ModelAndView toProjectCheckout(ProjectOrder projectOrder,HttpServletRequest request, Model model) throws ServiceException{
-		ModelAndView mav = new ModelAndView();
-		User user = getSessionUser(request);
-		if(projectOrder != null && !StringUtils.isEmpty(projectOrder.getId())){
-			projectOrder = projectOrderService.loadPojo(ProjectOrder.class, projectOrder.getId());
-		}else{
-			if(projectOrder != null && projectOrder.getProject() != null && !StringUtils.isEmpty(projectOrder.getProject().getId())){
-				Project project = projectOrderService.loadPojo(Project.class, projectOrder.getProject().getId());
-				projectOrder.setProject(project);
+	public String toProjectCheckout(ProjectOrder projectOrder,HttpServletRequest request,RedirectAttributes attr){
+		try{
+			User user = getSessionUser(request);
+			if(projectOrder != null && !StringUtils.isEmpty(projectOrder.getId())){
+				projectOrder = projectOrderService.loadPojo(ProjectOrder.class, projectOrder.getId());
+			}else{
+				if(projectOrder != null && projectOrder.getProject() != null && !StringUtils.isEmpty(projectOrder.getProject().getId())){
+					Project project = projectOrderService.loadPojo(Project.class, projectOrder.getProject().getId());
+					projectOrder.setProject(project);
+				}
+				projectOrder.setUser(user);
+				projectOrder.setStatus(Constants.USER_ORDER_STATUS_WZF);
+				projectOrderService.savePojo(projectOrder, user);
 			}
-			projectOrder.setUser(user);
-			projectOrder.setStatus(Constants.USER_ORDER_STATUS_WZF);
-			projectOrderService.savePojo(projectOrder, user);
+			attr.addFlashAttribute("projectOrder", projectOrder);
+			
+			return "project/project_checkout";
+		}catch(Exception e){
+			log.error("ProjectController toProjectCheckout",e);
+			handleError(attr, e);
+			String projectId = projectOrder.getProject().getId();
+			return "redirect:/project/toReview?id=" + projectId;
 		}
-		mav.addObject("projectOrder", projectOrder);
-		
-		mav.setViewName("project/project_checkout");
-		return mav;
 	}
 	
 	/**
@@ -91,30 +96,38 @@ public class ProjectOrderController extends BaseController {
 	 * @throws ServiceException 
 	 */
 	@RequestMapping(value="/orderProject",produces = "text/html;charset=UTF-8")
-	public ModelAndView orderProject(ProjectOrder projectOrder,HttpServletRequest request) throws ServiceException{
+	public ModelAndView orderProject(ProjectOrder projectOrder,HttpServletRequest request){
 		ModelAndView mav = new ModelAndView();
 		
-		User user = getSessionUser(request);
-		
-		ProjectOrder projectOrderDB = projectOrderService.loadPojo(ProjectOrder.class, projectOrder.getId());
-		projectOrderDB.setCoupon(projectOrder.getCoupon());
-		projectOrderDB.setOriginalPrice(projectOrder.getOriginalPrice());
-		projectOrderDB.setUnitPrice(projectOrder.getUnitPrice());
-		projectOrderDB.setActualPrice(projectOrder.getActualPrice());
-		projectOrderDB.setStatus(Constants.USER_ORDER_STATUS_YZF);
-		projectOrderService.savePojo(projectOrderDB, user);
-
-		//使用胶卷,则生成胶卷使用记录
-		if(!StringUtils.isEmpty(projectOrder.getCoupon()) && !"0".equals(projectOrder.getCoupon())){
-			UserCoupon userCoupon = new UserCoupon();
-			userCoupon.setCouponNum(projectOrder.getCoupon());
-			userCoupon.setMessage(MessageConstants.COUPON_ORDERPROJECT);
-			userCoupon.setType(Constants.COUPON_TYPE_SPEND);
-			projectOrderService.savePojo(userCoupon, user);
+		try{
+			User user = getSessionUser(request);
+			
+			ProjectOrder projectOrderDB = projectOrderService.loadPojo(ProjectOrder.class, projectOrder.getId());
+			projectOrderDB.setCoupon(projectOrder.getCoupon());
+			projectOrderDB.setOriginalPrice(projectOrder.getOriginalPrice());
+			projectOrderDB.setUnitPrice(projectOrder.getUnitPrice());
+			projectOrderDB.setActualPrice(projectOrder.getActualPrice());
+			projectOrderDB.setStatus(Constants.USER_ORDER_STATUS_YZF);
+			projectOrderService.savePojo(projectOrderDB, user);
+	
+			//使用胶卷,则生成胶卷使用记录
+			if(!StringUtils.isEmpty(projectOrder.getCoupon()) && !"0".equals(projectOrder.getCoupon())){
+				UserCoupon userCoupon = new UserCoupon();
+				userCoupon.setCouponNum(projectOrder.getCoupon());
+				userCoupon.setMessage(MessageConstants.COUPON_ORDERPROJECT);
+				userCoupon.setType(Constants.COUPON_TYPE_SPEND);
+				projectOrderService.savePojo(userCoupon, user);
+			}
+			
+			mav.addObject("projectOrder", projectOrderDB);
+			mav.setViewName("project/project_checkout_complete");
+		}catch(Exception e){
+			log.error("ProjectController orderProject",e);
+			handleErrorModelAndView(mav, e);
+			mav.addObject("projectOrder", projectOrder);
+			mav.setViewName("project/project_checkout");
 		}
 		
-		mav.addObject("projectOrder", projectOrderDB);
-		mav.setViewName("project/project_checkout_complete");
 		return mav;
 	}
 	

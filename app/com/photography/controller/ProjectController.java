@@ -271,8 +271,7 @@ public class ProjectController extends BaseController {
 	public ModelAndView getProjectComment(String projectId,Pager pager,HttpServletRequest request) throws ServiceException {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("project/project_comment_item");
-		User user = getSessionUser(request);
-		List<ProjectComment> projectComments = projectService.getPojoList(ProjectComment.class, pager, Condition.eq("project.id", projectId), new Sort("createTime",QueryConstants.DESC),user);
+		List<ProjectComment> projectComments = projectService.getPojoList(ProjectComment.class, pager, Condition.eq("project.id", projectId), new Sort("createTime",QueryConstants.DESC),null);
 		mv.addObject("projectId", projectId);
 		mv.addObject("pager", pager);
 		mv.addObject("projectComments", projectComments);
@@ -320,9 +319,8 @@ public class ProjectController extends BaseController {
 	public ModelAndView getProjectOrder(String projectId,Pager pager,HttpServletRequest request) throws ServiceException {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("project/project_order_item");
-		User user = getSessionUser(request);
 		List<ProjectOrder> projectOrders = projectService.getPojoList(ProjectOrder.class, pager, Condition.eq("project.id", projectId).and(Condition.eq("status", Constants.USER_ORDER_STATUS_YZF)), new Sort("createTime",
-				QueryConstants.DESC), user);
+				QueryConstants.DESC), null);
 		mv.addObject("projectId", projectId);
 		mv.addObject("pager", pager);
 		mv.addObject("projectOrders", projectOrders);
@@ -337,7 +335,7 @@ public class ProjectController extends BaseController {
 	 * @author 徐雁斌
 	 * @throws ServiceException 
 	 */
-	@RequestMapping(value="/addCollect")
+	@RequestMapping(value="/addCollect",produces = "text/html;charset=UTF-8")
 	@ResponseBody
 	public String addCollect(String id,HttpServletRequest request){
 		try{

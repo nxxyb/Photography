@@ -109,11 +109,13 @@
 </script>
 	
 <#else>
+	<#if Session.sessionuser??>
     <div class="c-product-review-content">
         <div class="c-shop-cart-page-1 c-center">
             <i class="fa fa-frown-o c-font-dark c-font-50 c-font-thin "></i>
             <h2 class="c-font-thin c-center">还没有评价</h2>
         </div>
-    </div>  
+    </div>
+    </#if>
 </#if>
 
