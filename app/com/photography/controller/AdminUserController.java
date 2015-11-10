@@ -82,6 +82,9 @@ public class AdminUserController extends BaseController {
 			if(user != null && !StringUtils.isEmpty(user.getId())){
 				User userDB =  adminService.loadPojo(User.class, user.getId());
 				userDB.setVerify(user.getVerify());
+				if(Constants.VERIFY_PASS.equals(user.getVerify())){
+					userDB.setType(Constants.USER_TYPE_PERSON_PUBLISH);
+				}
 				userDB.setVerifyMessage(user.getVerifyMessage());
 				adminService.savePojo(userDB, null);
 				

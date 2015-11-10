@@ -6,6 +6,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -70,12 +71,15 @@ public class UserController extends BaseController{
 	 * @author 徐雁斌
 	 */
 	@RequestMapping(value="/login",method=RequestMethod.POST)
-	public String login(String mobile,String password,HttpServletRequest request,RedirectAttributes attr){
+	public String login(String mobile,String password,String redirectURL,HttpServletRequest request,RedirectAttributes attr){
 		try{
 			User user = userService.login(mobile, MD5Util.md5(password));
 			setSessionUser(request, user);
 		}catch(Exception e){
 			handleError(attr, e);
+		}
+		if(!StringUtils.isEmpty(redirectURL)){
+			return redirectURL;
 		}
 		return "redirect:/index";
 	}
@@ -295,11 +299,9 @@ public class UserController extends BaseController{
 	 * @author 徐雁斌
 	 */
 	@RequestMapping(value="/logout")
-	public ModelAndView logout(HttpServletRequest request) {
-		ModelAndView mav=new ModelAndView();
+	public String logout(HttpServletRequest request, RedirectAttributes attr) {
 		request.getSession().invalidate();
-		mav.setViewName("index");
-		return mav;
+		return "redirect:/index";
 	}
 	
 	@RequestMapping("/test")
