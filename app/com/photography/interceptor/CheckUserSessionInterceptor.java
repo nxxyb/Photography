@@ -1,13 +1,18 @@
 package com.photography.interceptor;
 
 import java.net.URLEncoder;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
+import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.photography.mapping.User;
+import com.photography.utils.Constants;
 
 /**
  * 检查用户是否登录
@@ -19,6 +24,16 @@ import org.springframework.web.servlet.ModelAndView;
 public class CheckUserSessionInterceptor implements HandlerInterceptor {
 	
 	private final static Logger log = Logger.getLogger(CheckUserSessionInterceptor.class);
+	
+	private List<String> checkUrls;
+
+	public List<String> getCheckUrls() {
+		return checkUrls;
+	}
+
+	public void setCheckUrls(List<String> checkUrls) {
+		this.checkUrls = checkUrls;
+	}
 
 	/* 
 	 * @see org.springframework.web.servlet.HandlerInterceptor#preHandle(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse, java.lang.Object)
@@ -26,16 +41,21 @@ public class CheckUserSessionInterceptor implements HandlerInterceptor {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 		log.debug("preHandle");
-		System.out.println(request.getHeader("referer"));
-		System.out.println(request.getServletPath());
+		User sessionUser = (User) request.getSession().getAttribute(Constants.SESSION_USER_KEY);
+		String redirectURL = request.getServletPath();
 		
-		if("/Photography/project/index".equals(request.getRequestURI())){
-			String redirectURL = request.getServletPath();
-			String oldURI = request.getHeader("referer");
-			if(oldURI.contains("?")){
-				response.sendRedirect(request.getHeader("referer") + "&redirectURL=" + URLEncoder.encode(redirectURL));
+		//拦截非登录用户访问
+		if(checkUrls.contains(redirectURL) && sessionUser == null){
+			if(!StringUtils.isEmpty(request.getQueryString())){
+				redirectURL = redirectURL + "?" + request.getQueryString();
+			}
+			request.getSession().setAttribute(Constants.SESSION_LOGIN_REDIRECTURL, URLEncoder.encode(redirectURL));
+			String requestType = request.getHeader("X-Requested-With");
+			if(requestType == null){
+				//正常请求
+				response.sendRedirect(request.getHeader("referer"));
 			}else{
-				response.sendRedirect(request.getHeader("referer") + "?redirectURL=" + URLEncoder.encode(redirectURL));
+				//ajax请求
 			}
 			return false;
 		}
@@ -72,6 +92,7 @@ public class CheckUserSessionInterceptor implements HandlerInterceptor {
 	 */
 	@Override
 	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
+		request.getSession().removeAttribute(Constants.SESSION_LOGIN_REDIRECTURL);
 	}
 
 }

@@ -14,13 +14,7 @@ $(document).ready(function(){
                     }
                 }
             },
-            photoPics: {
-                validators: {
-                    notEmpty: {
-                        message: '滚动图片未上传！'
-                    }
-                }
-            },
+            
             place: {
                 validators: {
                     notEmpty: {

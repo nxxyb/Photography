@@ -1,5 +1,7 @@
 package com.photography.controller;
 
+import java.net.URLDecoder;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
@@ -70,6 +72,7 @@ public class UserController extends BaseController{
 	 * @return
 	 * @author 徐雁斌
 	 */
+	@SuppressWarnings("deprecation")
 	@RequestMapping(value="/login",method=RequestMethod.POST)
 	public String login(String mobile,String password,String redirectURL,HttpServletRequest request,RedirectAttributes attr){
 		try{
@@ -78,8 +81,9 @@ public class UserController extends BaseController{
 		}catch(Exception e){
 			handleError(attr, e);
 		}
+		
 		if(!StringUtils.isEmpty(redirectURL)){
-			return redirectURL;
+			return "redirect:" + URLDecoder.decode(redirectURL);
 		}
 		return "redirect:/index";
 	}

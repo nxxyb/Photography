@@ -17,6 +17,8 @@ public class MessageConstants {
 	
 	public static final String PWD_SAVE_SUCCESS = "密码修改成功";
 	
+	public static final String COLLECT_SUCCESS = "收藏成功";
+	
 	//胶卷
 	//赚取胶卷
 	public static final String COUPON_REGISTRATION = "用户注册";

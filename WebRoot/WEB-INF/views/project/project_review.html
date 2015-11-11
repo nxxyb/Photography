@@ -128,7 +128,7 @@
                                             </div>
                                             <div class="col-sm-12 col-xs-12 c-margin-t-20">
                                                 <button type="submit" class="btn c-btn btn-lg c-font-bold c-font-white c-theme-btn c-btn-square">立即预定</button>
-                                                <a href="#" onclick="addCollect('${(project.id)!''}');return false;" class="btn c-btn btn-lg c-font-bold c-font-white c-btn-purple c-btn-square">加入收藏</a>
+                                                <a href="${basePath}/project/addCollect?id=${(project.id)!''}" class="btn c-btn btn-lg c-font-bold c-font-white c-btn-purple c-btn-square">加入收藏</a>
                                             </div>
                                         </div>
                                     </div>
@@ -550,19 +550,6 @@ $(document).ready(function(){
 	
   
   });
-  
-  function addCollect(id){
-  	$.post("${basePath}/project/addCollect", {id: id},
-			   function(data){
-			     if(data =='1'){
-			     	$("#success_modal_message").html("收藏成功");
-					$("#success_modal").modal('show');
-			     }else{
-			     	$("#error_modal_message").html(data);
-					$("#error_modal").modal('show');
-			     }
-			   });
-  }
 </script>
 
 </body>

@@ -335,9 +335,8 @@ public class ProjectController extends BaseController {
 	 * @author 徐雁斌
 	 * @throws ServiceException 
 	 */
-	@RequestMapping(value="/addCollect",produces = "text/html;charset=UTF-8")
-	@ResponseBody
-	public String addCollect(String id,HttpServletRequest request){
+	@RequestMapping(value="/addCollect")
+	public String addCollect(String id,HttpServletRequest request,RedirectAttributes attr){
 		try{
 			User user = getSessionUser(request);
 			if(!StringUtils.isEmpty(id)){
@@ -350,39 +349,12 @@ public class ProjectController extends BaseController {
 					projectService.savePojo(projectCollect, user);
 				}
 			}
-			return Constants.YES;
+			attr.addFlashAttribute(Constants.SUCCESS_MESSAGE, MessageConstants.COLLECT_SUCCESS);
 		}catch(Exception e){
 			log.error("addCollect error",e);
-			return getErrorMessage(e);
+			handleError(attr, e);
 		}
-	}
-	
-	/**
-	 * 获得用户发布的活动列表
-	 * @param page
-	 * @param request
-	 * @param model
-	 * @return
-	 */
-	@RequestMapping(value="/getUserCreatedProject",produces = "text/html;charset=UTF-8")
-	public ModelAndView getUserCreatedProject(String page,HttpServletRequest request, Model model){
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName("user/person_info/project_fb_item");
-		try{
-			User user = getSessionUser(request);
-			
-			//取得订单信息
-			Pager pager= new Pager();
-			pager.setPageSize(Constants.PAGER_PROJECT_FB);
-			pager.setCurrentPage(Integer.parseInt(page));
-			Expression exp = Condition.eq("createUser.id", user.getId());
-			List<Project> projects = projectService.getPojoList(Project.class, pager, exp, new Sort("createTime",QueryConstants.DESC), user);
-			mav.addObject("projects", projects);
-		} catch (ServiceException e) {
-			log.error("ProjectController.orderProject(): ServiceException", e);
-			mav.addObject("errorMessage", ErrorMessage.get(e.getErrorCode()));
-		}
-		return mav;
+		return "redirect:toReview?id=" + id;
 	}
 	
 	/**

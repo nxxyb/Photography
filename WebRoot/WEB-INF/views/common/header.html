@@ -250,7 +250,7 @@
 				<h3 class="c-font-24 c-font-sbold">登录</h3>
 				
 				<form id="loginForm" action="${basePath}/user/login" method="post">
-					<input type="hidden" name="redirectURL" value="${redirectURL!''}">
+					<input type="hidden" name="redirectURL" value="${(Session.sessionLoginRedirectURL)!''}">
 					<div class="form-group">
 						<label for="login-mobile" class="hide">手机号</label>
 						<input type="text" class="form-control input-lg c-square" id="login-mobile" name="mobile" placeholder="手机号">
@@ -398,8 +398,11 @@ $(document).ready(function() {
 			   });
 		}
 	});
+	
+	<#if Session.sessionLoginRedirectURL?? && Session.sessionLoginRedirectURL !="">
+		$("#login-form").modal('show');
+	</#if>
 });
 </script>
-
 <#include "../error/error_modal.html">
 <#include "../error/success_modal.html">

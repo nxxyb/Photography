@@ -43,11 +43,11 @@ public class BaseController {
 	 * @param request
 	 * @param mav
 	 */
-	protected User getSessionUser(HttpServletRequest request) throws ServiceException{
+	protected User getSessionUser(HttpServletRequest request){
 		User user = (User) request.getSession().getAttribute(Constants.SESSION_USER_KEY);
-		if(user == null){
-			throw new ServiceException(ErrorCode.SESSION_TIMEOUT);
-		}
+//		if(user == null){
+//			throw new ServiceException(ErrorCode.SESSION_TIMEOUT);
+//		}
 		return user;
 	}
 	
