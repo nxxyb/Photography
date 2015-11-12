@@ -2165,8 +2165,12 @@ h1 {
 .c-bg-parallax {
   background-attachment: fixed;
   background-position: center center;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
   background-size: cover;
   background-color: transparent;
+  background:transparent none no-repeat scroll 50% 0;  
   min-height: 100%; }
 
 .c-opacity-0 {
