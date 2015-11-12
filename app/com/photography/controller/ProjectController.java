@@ -25,6 +25,7 @@ import com.photography.dao.exp.Expression;
 import com.photography.dao.query.Pager;
 import com.photography.dao.query.QueryConstants;
 import com.photography.dao.query.Sort;
+import com.photography.exception.ErrorCode;
 import com.photography.exception.ErrorMessage;
 import com.photography.exception.ServiceException;
 import com.photography.mapping.FileGroup;
@@ -129,6 +130,10 @@ public class ProjectController extends BaseController {
 				projectDb = project;
 			}
 			
+			//判断是否上传滚动图片
+			if(!checkFiles(photoPics, projectDb.getPhotos())){
+				throw new ServiceException(ErrorCode.USER_NOT_EXIST);
+			}
         	FileGroup photoGroup = saveAndReturnFile(photoPics, request, user, projectDb.getPhotos());
         	project.setPhotos(photoGroup);
         	

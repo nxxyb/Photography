@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -17,6 +18,7 @@ import com.photography.controller.propertyeditor.LongEditor;
 import com.photography.exception.ErrorCode;
 import com.photography.exception.ErrorMessage;
 import com.photography.exception.ServiceException;
+import com.photography.mapping.FileGroup;
 import com.photography.mapping.User;
 import com.photography.utils.Constants;
 
@@ -93,6 +95,26 @@ public class BaseController {
 	 */
 	protected void handleErrorModelAndView(ModelAndView mv, Exception e) {
 		mv.addObject(Constants.ERROR_MESSAGE, getErrorMessage(e));
+	}
+	
+	/**
+	 * 判断是否上传文件
+	 * @param files
+	 * @param fileGroup
+	 * @return
+	 */
+	protected boolean checkFiles(MultipartFile[] files,FileGroup fileGroup){
+		boolean fileFlag = true;
+		for(MultipartFile file : files){
+			if(file.isEmpty()){
+				fileFlag = false;
+				break;
+			}
+		}
+		if(!fileFlag && (fileGroup == null || fileGroup.getFileInfos() == null || fileGroup.getFileInfos().isEmpty())){
+			return false;
+		}
+		return true;
 	}
 	
 	

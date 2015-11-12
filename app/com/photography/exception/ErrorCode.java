@@ -32,6 +32,8 @@ public class ErrorCode {
 	 */
 	public static final int PROJECT_NOT_EXIST = 10200;
 	
+	public static final int PROJECT_PHOTO_NO_UPLOAD = 10201;
+	
 	/*
 	 * 缓存
 	 * 系统异常：10300-10399

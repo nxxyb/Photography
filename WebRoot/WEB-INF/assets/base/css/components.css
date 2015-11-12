@@ -2165,12 +2165,8 @@ h1 {
 .c-bg-parallax {
   background-attachment: fixed;
   background-position: center center;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
   background-size: cover;
   background-color: transparent;
-  background:transparent none no-repeat scroll 50% 0;  
   min-height: 100%; }
 
 .c-opacity-0 {
@@ -11519,4 +11515,12 @@ h1 {
   .c-order-history-2 > .c-cart-buttons > .c-cart-float-l {
     float: none; }
   .c-order-history-2 > .c-cart-buttons > .c-cart-float-r {
-    float: none; } }
+    float: none; } 
+    
+    .c-bg-parallax {
+	  background:no-repeat scroll right top #000000; 
+	  -o-background-size: cover;   
+	  -moz-background-size: cover;  
+	   -webkit-background-size:cover;  
+	    background-size: cover;}
+ }
