@@ -30,6 +30,7 @@ import com.photography.mapping.Project;
 import com.photography.mapping.ProjectCollect;
 import com.photography.mapping.ProjectOrder;
 import com.photography.mapping.User;
+import com.photography.mapping.Work;
 import com.photography.service.IMailService;
 import com.photography.service.IProjectOrderService;
 import com.photography.service.IProjectService;
@@ -446,6 +447,45 @@ public class UserInfoController extends BaseController {
     	}
     	mv.setViewName("user/user_changepw");
     	return mv;
+	}
+	
+	//作品
+	/**
+	 * 获取用户作品列表
+	 * @param request
+	 * @return
+	 * @author 徐雁斌
+	 * @throws ServiceException 
+	 */
+	@RequestMapping(value="/getUserWork")
+	public ModelAndView getUserWork(Pager pager,HttpServletRequest request) throws ServiceException {
+		ModelAndView mv = new ModelAndView();
+		User user = getSessionUser(request);
+		List<Work> works = null;
+		Expression exp =Condition.eq("createUser.id", user.getId());
+		works = projectService.getPojoList(Work.class, pager, exp, new Sort("createTime",QueryConstants.DESC),user);
+		mv.setViewName("user/user_work_item");
+
+		mv.addObject("pager", pager);
+		mv.addObject("works", works);
+		return mv;
+	}
+	
+	/**
+	 * 用户删除作品
+	 * @param request
+	 * @return
+	 * @author 徐雁斌
+	 * @throws ServiceException 
+	 */
+	@RequestMapping(value="/deleteUserWork")
+	public String deleteUserWork(String id,HttpServletRequest request,RedirectAttributes ra) throws ServiceException {
+		Work work = projectService.loadPojo(Work.class, id);
+		if(work != null){
+			projectService.deletePojo(work, getSessionUser(request));
+		}
+		ra.addFlashAttribute("type", "8");
+		return "redirect:toUserInfo";
 	}
 	
 	/**

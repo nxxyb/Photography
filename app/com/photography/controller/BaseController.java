@@ -1,6 +1,10 @@
 package com.photography.controller;
 
+import java.io.File;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -19,8 +23,12 @@ import com.photography.exception.ErrorCode;
 import com.photography.exception.ErrorMessage;
 import com.photography.exception.ServiceException;
 import com.photography.mapping.FileGroup;
+import com.photography.mapping.FileInfo;
 import com.photography.mapping.User;
+import com.photography.service.IBaseService;
 import com.photography.utils.Constants;
+import com.photography.utils.CustomizedPropertyPlaceholderConfigurer;
+import com.photography.utils.FileUtil;
 
 /**
  * 
@@ -95,6 +103,59 @@ public class BaseController {
 	 */
 	protected void handleErrorModelAndView(ModelAndView mv, Exception e) {
 		mv.addObject(Constants.ERROR_MESSAGE, getErrorMessage(e));
+	}
+	
+	/**
+	 * @param filePath     文件保存路径
+	 * @param relativePath 文件相对路径
+	 * @param files        文件对象
+	 * @return
+	 * @throws Exception
+	 * @author 徐雁斌
+	 */
+	protected FileGroup saveAndReturnFile(MultipartFile[] files,HttpServletRequest request,User user,FileGroup fileGroup,String basePath,IBaseService baseService) throws Exception {
+		
+		if(fileGroup == null){
+			fileGroup = new FileGroup();
+		}
+		//绝对路径
+		String filePath = request.getSession().getServletContext().getRealPath((String)
+    			CustomizedPropertyPlaceholderConfigurer.getContextProperty(basePath))  + File.separator + user.getMobile();       	
+    	//相对路径
+    	String relativePath = CustomizedPropertyPlaceholderConfigurer.getContextProperty(basePath) + user.getMobile();
+  
+    	
+    	List<FileInfo> fileinfos = new ArrayList<FileInfo>();
+		for(int i=0;i<files.length;i++){
+			MultipartFile file = files[i];
+			if(file.isEmpty()){
+				continue;
+			}
+			
+			FileInfo fileInfo = new FileInfo();
+			fileInfo.setExt(FileUtil.getFileExtension(file.getOriginalFilename()));
+			fileInfo.setRealName(file.getOriginalFilename());
+			String fileName = UUID.randomUUID() + "." + fileInfo.getExt();
+			fileInfo.setRealPath(relativePath + "/" + fileName);
+			fileInfo.setFileGroup(fileGroup);
+			
+			fileinfos.add(fileInfo);
+			
+			
+			FileUtil.saveFileByName(filePath, file, fileName);
+		}
+		
+		if(!fileinfos.isEmpty()){
+			List<FileInfo> oldFileinfos = fileGroup.getFileInfos();
+			fileGroup.setFileInfos(null);
+			for(FileInfo fileInfo:oldFileinfos){
+				baseService.deletePojo(fileInfo, user);
+			}
+			
+			fileGroup.setFileInfos(fileinfos);
+			baseService.savePojo(fileGroup, user);
+		}
+		return fileGroup;
 	}
 	
 	/**

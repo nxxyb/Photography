@@ -35,8 +35,16 @@ public class ErrorCode {
 	public static final int PROJECT_PHOTO_NO_UPLOAD = 10201;
 	
 	/*
-	 * 缓存
+	 * 作品
 	 * 系统异常：10300-10399
 	 */
-	public static final int CACHE_EXCEPTION = 10009;
+	public static final int WORK_NOT_EXIST = 10300;
+	
+	public static final int WORK_PHOTO_NO_UPLOAD = 10301;
+	
+	/*
+	 * 缓存
+	 * 系统异常：10400-10499
+	 */
+	public static final int CACHE_EXCEPTION = 10400;
 }

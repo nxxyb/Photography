@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<!--[if IE 9]> <html lang="zh-CN" class="ie9"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="zh-CN">
+<!--<![endif]-->
+<!-- BEGIN HEAD -->
+<head>
+	<#include "../common/title.html">
+	<#include "../common/link.html">
+	<link rel="shortcut icon" href="favicon.ico"/>
+</head>
+<body class="c-layout-header-fixed c-layout-header-mobile-fixed">
+
+	<#include "../common/header.html">
+
+<!-- BEGIN: PAGE CONTAINER -->
+<div class="c-layout-page" >
+	<div class="c-content-box c-size-md c-bg-white">
+	<!-- BEGIN: PAGE CONTENT -->
+	<div class="container">
+		<#include "./common/menu.html">
+		
+		<div class="c-layout-sidebar-content ">
+              <!-- BEGIN: PAGE CONTENT -->
+              <div class="c-content-title-1">
+                  <h3 class="c-font-uppercase c-font-bold">活动信息</h3>
+                  <div class="c-line-left"></div>
+                  <div class="c-pull-right">
+                  	<a href="${basePath}/work/toCreate" class="btn c-theme-btn c-btn-bold"><i class="glyphicon glyphicon-plus"></i>创建作品</a>
+                  </div>
+              </div>
+              <div class="c-shop-wishlist-1">
+                        <div class="c-border-bottom hidden-sm hidden-xs">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <h3 class="c-font-uppercase c-font-16 c-font-grey-2 c-font-bold">作品</h3>
+                                </div>
+                                <div class="col-md-7">
+                                    <h3 class="c-font-uppercase c-font-16 c-font-grey-2 c-font-bold">标题</h3>
+                                </div>
+                                <div class="col-md-2">
+                                    <h3 class="c-font-uppercase c-font-16 c-font-grey-2 c-font-bold">评论人数</h3>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- BEGIN: PRODUCT ITEM ROW -->
+                        <div id="user_create_work"></div>
+                         <!-- END: PRODUCT ITEM ROW -->
+                        
+                        <!-- BEGIN: PAGER -->
+                        <div class="row c-margin-t-40 pull-right">
+                              <ul id="work_pager" class="c-content-pagination c-square c-theme">
+                              </ul>
+						</div>
+						<!-- END: PAGER -->
+						
+						<script type='text/javascript'>
+				            getByAjax("${basePath}/userinfo/getUserWork?currentPage=1","user_create_work");
+					    </script>
+  
+                    </div>
+              <!-- END: PAGE CONTENT -->
+          </div>
+		
+	</div>
+	<!-- END: PAGE CONTENT -->
+	</div>
+</div>
+<!-- END: PAGE CONTAINER -->
+
+<#include "../common/footer.html">
+
+<script>
+$(document).ready(function(){
+
+	$('#user_work').addClass('c-active');
+  
+  });
+</script>
+
+</body>
+
+</html>

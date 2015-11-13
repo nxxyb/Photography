@@ -36,6 +36,8 @@ import com.photography.mapping.ProjectComment;
 import com.photography.mapping.ProjectOrder;
 import com.photography.mapping.ProjectTrip;
 import com.photography.mapping.User;
+import com.photography.service.BaseServiceImpl;
+import com.photography.service.IBaseService;
 import com.photography.service.IProjectOrderService;
 import com.photography.service.IProjectService;
 import com.photography.utils.Constants;
@@ -132,12 +134,12 @@ public class ProjectController extends BaseController {
 			
 			//判断是否上传滚动图片
 			if(!checkFiles(photoPics, projectDb.getPhotos())){
-				throw new ServiceException(ErrorCode.USER_NOT_EXIST);
+				throw new ServiceException(ErrorCode.PROJECT_PHOTO_NO_UPLOAD);
 			}
-        	FileGroup photoGroup = saveAndReturnFile(photoPics, request, user, projectDb.getPhotos());
+        	FileGroup photoGroup = saveAndReturnFile(photoPics, request, user, projectDb.getPhotos(),PROJECT_FILE,projectService);
         	project.setPhotos(photoGroup);
         	
-        	FileGroup desPhotoGroup = saveAndReturnFile(desPhotoPics, request, user, projectDb.getDesPhotos());
+        	FileGroup desPhotoGroup = saveAndReturnFile(desPhotoPics, request, user, projectDb.getDesPhotos(),PROJECT_FILE,projectService);
         	project.setDesPhotos(desPhotoGroup);
         	
         	project.setCreateUser(user);
@@ -159,7 +161,7 @@ public class ProjectController extends BaseController {
         			}else{
         				projectTripDb = projectTrip;
         			}
-        			FileGroup desPhotos = saveAndReturnFile(projectTrip.getDesPhotoPics(), request, user, projectTripDb.getDesPhotos());
+        			FileGroup desPhotos = saveAndReturnFile(projectTrip.getDesPhotoPics(), request, user, projectTripDb.getDesPhotos(),PROJECT_FILE,projectService);
         			projectTripDb.setDesPhotos(desPhotos);
         			projectTripDb.setTitle(projectTrip.getTitle());
         			projectTripDb.setDes(projectTrip.getDes());
@@ -189,59 +191,6 @@ public class ProjectController extends BaseController {
 			return "redirect:toCreate?id=" + project.getId();
 		}
 		return "redirect:/userinfo/toUserInfo";
-	}
-
-	/**
-	 * @param filePath     文件保存路径
-	 * @param relativePath 文件相对路径
-	 * @param files        文件对象
-	 * @return
-	 * @throws Exception
-	 * @author 徐雁斌
-	 */
-	private FileGroup saveAndReturnFile(MultipartFile[] files,HttpServletRequest request,User user,FileGroup fileGroup) throws Exception {
-		
-		if(fileGroup == null){
-			fileGroup = new FileGroup();
-		}
-		//绝对路径
-		String filePath = request.getSession().getServletContext().getRealPath((String)
-    			CustomizedPropertyPlaceholderConfigurer.getContextProperty(PROJECT_FILE))  + File.separator + user.getMobile();       	
-    	//相对路径
-    	String relativePath = CustomizedPropertyPlaceholderConfigurer.getContextProperty(PROJECT_FILE) + user.getMobile();
-  
-    	
-    	List<FileInfo> fileinfos = new ArrayList<FileInfo>();
-		for(int i=0;i<files.length;i++){
-			MultipartFile file = files[i];
-			if(file.isEmpty()){
-				continue;
-			}
-			
-			FileInfo fileInfo = new FileInfo();
-			fileInfo.setExt(FileUtil.getFileExtension(file.getOriginalFilename()));
-			fileInfo.setRealName(file.getOriginalFilename());
-			String fileName = UUID.randomUUID() + "." + fileInfo.getExt();
-			fileInfo.setRealPath(relativePath + "/" + fileName);
-			fileInfo.setFileGroup(fileGroup);
-			
-			fileinfos.add(fileInfo);
-			
-			
-			FileUtil.saveFileByName(filePath, file, fileName);
-		}
-		
-		if(!fileinfos.isEmpty()){
-			List<FileInfo> oldFileinfos = fileGroup.getFileInfos();
-			fileGroup.setFileInfos(null);
-			for(FileInfo fileInfo:oldFileinfos){
-				projectService.deletePojo(fileInfo, user);
-			}
-			
-			fileGroup.setFileInfos(fileinfos);
-			projectService.savePojo(fileGroup, user);
-		}
-		return fileGroup;
 	}
 	
 	/**
@@ -299,7 +248,7 @@ public class ProjectController extends BaseController {
 			
 			projectComment.setCreateUser(user);
 			
-			FileGroup photos = saveAndReturnFile(photoPics, request, user, projectComment.getPhotos());
+			FileGroup photos = saveAndReturnFile(photoPics, request, user, projectComment.getPhotos(),PROJECT_FILE,projectService);
 			projectComment.setPhotos(photos);
 			
 			projectService.savePojo(projectComment, user);
