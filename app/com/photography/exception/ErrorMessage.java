@@ -37,6 +37,12 @@ public class ErrorMessage {
 		 */
 		msg.put(ErrorCode.PROJECT_NOT_EXIST, "该活动不存在或已经被删除！");
 		msg.put(ErrorCode.PROJECT_PHOTO_NO_UPLOAD, "请上传轮播图片！");
+		
+		/*
+		 * 作品
+		 */
+		msg.put(ErrorCode.WORK_NOT_EXIST, "该作品不存在或已经被删除！");
+		msg.put(ErrorCode.WORK_PHOTO_NO_UPLOAD, "请上传作品图片！");
 	}
 
 	public static String get(int errorCode){

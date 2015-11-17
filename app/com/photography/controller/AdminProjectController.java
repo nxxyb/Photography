@@ -46,7 +46,7 @@ public class AdminProjectController extends BaseController {
 	@RequestMapping("/toProjectShList")
 	public ModelAndView toProjectShList(HttpServletRequest request, Model model) {
 		ModelAndView mav = new ModelAndView();
-		List<Project> projects =  adminService.loadPojoByExpression(Project.class, Condition.eq("status", Constants.PROJECT_STATUS_WSH), new Sort("createTime","desc"));
+		List<Project> projects =  adminService.loadPojoByExpression(Project.class, Condition.eq("status", Constants.STATUS_WSH), new Sort("createTime","desc"));
 		mav.addObject("projects", projects);
 		mav.setViewName("admin/main/project/list_sh");
 		return mav;

@@ -9,7 +9,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -18,7 +17,7 @@ import com.photography.dao.exp.Expression;
 import com.photography.dao.query.Sort;
 import com.photography.mapping.AdminLb;
 import com.photography.mapping.Project;
-import com.photography.mapping.User;
+import com.photography.mapping.Work;
 import com.photography.service.IAdminService;
 import com.photography.utils.Constants;
 
@@ -42,7 +41,7 @@ public class AdminHomeController extends BaseController {
 
 	/**
 	 * 跳转到轮播列表
-	 * @param type 1:轮播  2：活动推荐  3：热门活动
+	 * @param type 类型 1:轮播  2：活动推荐  3：热门活动  4-热门作品
 	 * @param request
 	 * @param model
 	 * @return
@@ -59,11 +58,19 @@ public class AdminHomeController extends BaseController {
 				exp = exp.and(Condition.ne("id", adminLb.getProject().getId()));
 			}
 		}
-		List<Project> projects = adminService.loadPojoByExpression(Project.class, exp, new Sort("createTime","desc"));
+		
 		mav.addObject("type", type);
 		mav.addObject("adminLbs", adminLbs);
-		mav.addObject("projects", projects);
-		mav.setViewName("admin/main/home/list_lb");
+		if("4".equals(type)){
+			List<Work> works = adminService.loadPojoByExpression(Work.class, exp, new Sort("createTime","desc"));
+			mav.addObject("works", works);
+			mav.setViewName("admin/main/home/list_work");
+		}else{
+			List<Project> projects = adminService.loadPojoByExpression(Project.class, exp, new Sort("createTime","desc"));
+			mav.addObject("projects", projects);
+			mav.setViewName("admin/main/home/list_lb");
+		}
+		
 		return mav;
 	}
 	
@@ -78,11 +85,18 @@ public class AdminHomeController extends BaseController {
 	public ModelAndView toLbForm(String id,String type,HttpServletRequest request, Model model) {
 		ModelAndView mav = new ModelAndView();
 		if(!StringUtils.isEmpty(id)){
-			Project project = adminService.loadPojo(Project.class, id);
-			mav.addObject("project", project);
+			if("4".equals(type)){
+				Work work = adminService.loadPojo(Work.class, id);
+				mav.addObject("work", work);
+				mav.setViewName("admin/main/home/form_work");
+			}else{
+				Project project = adminService.loadPojo(Project.class, id);
+				mav.addObject("project", project);
+				mav.setViewName("admin/main/home/form_lb");
+			}
 		}
 		mav.addObject("type", type);
-		mav.setViewName("admin/main/home/form_lb");
+		
 		return mav;
 	}
 	
@@ -118,11 +132,20 @@ public class AdminHomeController extends BaseController {
 	@RequestMapping("/addLb")
 	public String addLb(AdminLb adminLb,HttpServletRequest request, RedirectAttributes ra) {
 		try{
-			if(!StringUtils.isEmpty(adminLb.getProject().getId())){
-				Project project = adminService.loadPojo(Project.class, adminLb.getProject().getId());
-				adminLb.setProject(project);
-				adminService.savePojo(adminLb, null);
+			if("4".equals(adminLb.getType())){
+				if(!StringUtils.isEmpty(adminLb.getWork().getId())){
+					Work work = adminService.loadPojo(Work.class, adminLb.getWork().getId());
+					adminLb.setWork(work);
+					adminService.savePojo(adminLb, null);
+				}
+			}else{
+				if(!StringUtils.isEmpty(adminLb.getProject().getId())){
+					Project project = adminService.loadPojo(Project.class, adminLb.getProject().getId());
+					adminLb.setProject(project);
+					adminService.savePojo(adminLb, null);
+				}
 			}
+			
 		}catch(Exception e){
 			handleError(ra, e);
 		}

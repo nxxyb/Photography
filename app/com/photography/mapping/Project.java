@@ -183,7 +183,7 @@ public class Project extends BaseMapping{
 	
 	//项目状态 0-未审核 1-未开始 2-已开始 3-已结束
 	@Column(name="status")
-	private String status = Constants.PROJECT_STATUS_WSH;
+	private String status = Constants.STATUS_WSH;
 
 	public String getName() {
 		return name;

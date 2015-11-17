@@ -25,11 +25,16 @@ public class AdminLb extends BaseMapping {
     @JoinColumn(name = "project")
 	private Project project;
 	
+	//作品
+	@ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "work")
+	private Work work;
+	
 	//排序
 	@Column(name="sort")
 	private String sort;
 	
-	//类型 1:轮播  2：活动推荐  3：热门活动
+	//类型 1:轮播  2：活动推荐  3：热门活动  4-热门作品
 	@Column(name="type")
 	private String type;
 
@@ -56,6 +61,14 @@ public class AdminLb extends BaseMapping {
 
 	public void setType(String type) {
 		this.type = type;
+	}
+
+	public Work getWork() {
+		return work;
+	}
+
+	public void setWork(Work work) {
+		this.work = work;
 	}
 	
 	

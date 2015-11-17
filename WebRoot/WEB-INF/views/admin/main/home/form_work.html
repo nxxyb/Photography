@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	 <#include "../../common/title.html">
+	 <#include "../../common/link.html">
+</head>
+
+<body class="skin-blue sidebar-mini">
+
+    <div id="wrapper">
+		
+		<#include "../../common/header.html">
+		
+		<#include "../../error/error_modal.html">
+            
+        <div class="content-wrapper">
+      
+	        <section class="content-header">
+	          <h1>添加轮播</h1>
+	          <ol class="breadcrumb">
+	            <li><a href="${basePath}/admin/toMain"><i class="fa fa-dashboard"></i> 首页</a></li>
+	            <li><a href="${basePath}/admin/home/tolb"> 轮播</a></li>
+	            <li class="active"> 添加轮播</li>
+	          </ol>
+	        </section>
+            
+             <section class="content">
+            <!-- /.row -->
+            <div class="row">
+            	<div class="col-md-12">
+                   <div class="box box-info">
+                        <form id="userForm" role="form-horizontal" action="${basePath}/admin/home/addLb" method="post">
+                                <div class="box-body">
+                                	<input type="hidden" name="work.id" value="${(work.id)!''}">
+                                    <input type="hidden" name="type" value="${type}">
+                                    <div class="form-group">
+                                            <label class="control-label">活动名称</label>
+                                            <input class="form-control" name="work.name" value="${(work.name)!''}" disabled>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                            <label class="control-label">排序</label>
+                                            <input class="form-control" name="sort">
+                                    </div>
+                                    
+                                    <div class="box-footer">
+                                    	<button type="submit" class="btn btn-info">保存</button>
+                                    	<a href="#" onclick="self.location=document.referrer" class="btn btn-info">返回</a>
+                                    </div>
+                        	</div>
+                        </form>
+                        
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- /.row -->
+          </section>
+            
+        </div>
+        <!-- /#page-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+    
+    <!-- footer start-->
+		<#include "../../common/footer.html">
+	<!-- footer end -->
+    
+    <script>
+    $(document).ready(function() {
+    	 
+    	$('#sy').addClass('active');
+		<#if type="1">$('#home_lb').addClass('active');</#if>
+        <#if type="2">$('#home_tj').addClass('active');</#if>
+        <#if type="3">$('#home_rm').addClass('active');</#if>
+        <#if type="4">$('#home_work_rm').addClass('active');</#if>
+    });
+    
+    </script>
+
+</body>
+
+</html>

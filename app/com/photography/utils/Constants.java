@@ -84,11 +84,17 @@ public class Constants {
 	public final static String PROJECT_TYPE_ONETOONE_NAME = "一对一";
 	
 	/**
-	 * 活动状态
+	 * 审核状态
 	 */
 	//未审核
-	public final static String PROJECT_STATUS_WSH = "0";
+	public final static String STATUS_WSH = "0";
 	
+	//未审核
+	public final static String STATUS_YSH = "1";
+	
+	/**
+	 * 活动状态
+	 */
 	//未开始
 	public final static String PROJECT_STATUS_WKS = "1";
 	

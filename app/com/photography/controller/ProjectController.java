@@ -1,9 +1,7 @@
 package com.photography.controller;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -29,20 +27,15 @@ import com.photography.exception.ErrorCode;
 import com.photography.exception.ErrorMessage;
 import com.photography.exception.ServiceException;
 import com.photography.mapping.FileGroup;
-import com.photography.mapping.FileInfo;
 import com.photography.mapping.Project;
 import com.photography.mapping.ProjectCollect;
 import com.photography.mapping.ProjectComment;
 import com.photography.mapping.ProjectOrder;
 import com.photography.mapping.ProjectTrip;
 import com.photography.mapping.User;
-import com.photography.service.BaseServiceImpl;
-import com.photography.service.IBaseService;
 import com.photography.service.IProjectOrderService;
 import com.photography.service.IProjectService;
 import com.photography.utils.Constants;
-import com.photography.utils.CustomizedPropertyPlaceholderConfigurer;
-import com.photography.utils.FileUtil;
 import com.photography.utils.MessageConstants;
 
 /**
@@ -142,7 +135,9 @@ public class ProjectController extends BaseController {
         	FileGroup desPhotoGroup = saveAndReturnFile(desPhotoPics, request, user, projectDb.getDesPhotos(),PROJECT_FILE,projectService);
         	project.setDesPhotos(desPhotoGroup);
         	
-        	project.setCreateUser(user);
+        	if(StringUtils.isEmpty(project.getId())){
+        		project.setCreateUser(user);
+        	}
         	
         	projectService.savePojo(project, user);
         	

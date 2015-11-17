@@ -2,6 +2,7 @@ package com.photography.mapping;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -9,11 +10,9 @@ import javax.persistence.ManyToOne;
 import org.hibernate.annotations.LazyToOne;
 import org.hibernate.annotations.LazyToOneOption;
 
+@Entity(name="work_comment")
 public class WorkComment extends BaseMapping {
-	
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = -1408657427396548919L;
 
 	/**

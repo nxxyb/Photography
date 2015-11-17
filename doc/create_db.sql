@@ -202,6 +202,7 @@ DROP TABLE IF EXISTS `admin_lb`;
 CREATE TABLE `admin_lb` (
   `id` varchar(36) NOT NULL PRIMARY KEY,
   `project` varchar(36) comment '所属活动',
+  `work` varchar(36) comment '作品',
   `sort` varchar(10) comment '排序',
   `type` varchar(10) comment '类型',
   `create_time` datetime comment '创建时间',

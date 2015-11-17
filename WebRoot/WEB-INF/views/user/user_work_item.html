@@ -18,14 +18,14 @@
 	           <div class="col-md-7 col-sm-8">
 	               <ul class="c-list list-unstyled">
 	                   <li class="c-margin-b-25">
-	                       <a href="${basePath}/project/toReview?id=${work.project.id}" class="c-font-bold c-font-22 c-theme-link">${(work.name)!''}</a>
+	                       <a href="${basePath}/project/toReview?id=${work.id}" class="c-font-bold c-font-22 c-theme-link">${(work.name)!''}</a>
 	                   </li>
 	                   
 	                   <li class="c-margin-t-30">
 	                       <div class="form-group" role="group">
 	                       		<a href="${basePath}/work/toCreate?id=${work.id}" class="btn btn-sm c-theme-btn c-btn-square  c-btn-bold">
 	                               <i class="fa fa-edit"></i>编 辑</a>
-	                           <a href="${basePath}/userinfo/deleteUserWork?id=${work.id}" class="btn btn-sm c-theme-btn c-btn-square  c-btn-bold">
+	                           <a href="${basePath}/userinfo/deleteUserWork?id=${work.id}" class="btn btn-sm btn-default c-btn-square  c-btn-bold">
 	                           	<i class="fa fa-times"></i>删 除 </a>
 	                       </div>
 	                   </li>

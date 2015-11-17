@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	 <#include "../../common/title.html">
+	 <#include "../../common/link.html">
+	 <link href="${basePath}/assets/plugins/datatables/dataTables.bootstrap.css" rel="stylesheet" type="text/css" />
+	 <script src="${basePath}/assets/plugins/datatables/jquery.dataTables.min.js" type="text/javascript"></script>
+    <script src="${basePath}/assets/plugins/datatables/dataTables.bootstrap.min.js" type="text/javascript"></script>
+</head>
+
+<body class="skin-blue sidebar-mini">
+
+    <div id="wrapper">
+		
+		<#include "../../common/header.html">
+		
+		<#include "../../error/error_modal.html">
+		
+        
+      <div class="content-wrapper">
+      
+        <section class="content-header">
+          <h1>首页管理</h1>
+          <ol class="breadcrumb">
+            <li><a href="${basePath}/toMain"><i class="fa fa-dashboard"></i> 首页</a></li>
+            <li class="active"> 首页管理</li>
+          </ol>
+        </section>
+            
+        <section class="content">
+            <!-- /.row -->
+            <div class="row">
+              <!-- 轮播列表 -->
+                <div class="col-md-4">
+	              <div class="box">
+	                <div class="box-header">
+	                  <h3 class="box-title">
+	                  	<#if type="1">轮播列表</#if>
+	                  	<#if type="2">活动推荐列表</#if>
+	                  	<#if type="3">热门活动列表</#if>
+	                  	<#if type="4">热门作品列表</#if>
+	                  </h3>
+	                </div><!-- /.box-header -->
+	                <div class="box-body table-responsive no-padding">
+	                  <table class="table table-hover">
+	                    <tr>
+                          <th>名称</th>
+                          <th>排序</th>
+                          <th>操作</th>
+	                    </tr>
+	                    <#list adminLbs as adminLb>
+                       		<tr>
+                       			<td>
+                       				${(adminLb.work.name)!''}
+                       			</td>
+                       			<td>${(adminLb.sort)!''}</td>
+                       			<td>
+                       				<div class="tipbtn"> 
+                       					<a href="${basePath}/admin/home/deleteLb?id=${(adminLb.id)!''}&type=${type}" class="btn btn-info"><i class="fa fa-close"></i> 删除</a>
+                       				</div>
+                       			</td>
+                       		</tr>
+                       	</#list>
+	                  </table>
+	                </div><!-- /.box-body -->
+	              </div><!-- /.box -->
+	            </div>
+                
+                
+                <!-- 项目列表 -->
+                <div class="col-md-8">
+                <div class="box">
+                        <div class="box-header">
+                        	 <h3 class="box-title">作品列表</h3>
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="box-body">
+                                <table class="table table-bordered table-striped table-hover dataTables">
+                                    <thead>
+                                        <tr>
+                                        	<th width="8%">序号</th>
+                                            <th width="50%">作品</th>
+                                            <th width="15%">发布用户</th>
+                                            <th width="15%">操作</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    	
+                                    	<#list works as work>
+                                    		<tr>
+                                    			<td>${work_index+1}</td>
+                                    			<td>
+                                    				<div class="media">
+													  <div class="media-left">
+													    <a href="${basePath}/work/toReview?id=${work.id}" target="_blank">
+													      <img class="media-object" style="width: 64px; height: 64px;" <#if (work.photos.fileInfos)??>src="${basePath}/${work.photos.fileInfos[0].realPath}"</#if>>
+													    </a>
+													  </div>
+													  <div class="media-body">
+													    <h4 class="media-heading"><a href="${basePath}/work/toReview?id=${work.id}" target="_blank">${(work.name)!''}</a></h4>
+													  </div>
+													</div>
+                                    			</td>
+                                    			<td>${(work.createUser.realName)!'work.createUser.mobile'}</td>
+                                    			<td>
+                                    				<div class="tipbtn"> 
+                                    					<a href="${basePath}/admin/home/toLbForm?id=${(work.id)!''}&type=${type}" class="btn btn-warning"><i class="fa fa-edit"></i> 设置轮播</a>
+                                    				</div>
+                                    			</td>
+                                    		</tr>
+                                    	</#list>
+                                    	
+                                       
+                                    </tbody>
+                                </table>
+                             </div>
+                        <!-- /.panel-body -->
+                    </div>
+                  </div>
+            </div>
+            <!-- /.row -->
+          </section>
+            
+        </div>
+        <!-- /#page-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+    
+    <!-- footer start-->
+		<#include "../../common/footer.html">
+	<!-- footer end -->
+    
+    <script>
+    $(document).ready(function() {
+        $('table.dataTables').DataTable({
+	        "language": {
+				"url":  "${basePath}/assets/plugins/datatables/i18n/Chinese.lang"
+			},
+			"responsive": true,
+			"paging": true,
+          	"lengthChange": true,
+          	"searching": true,
+          	"ordering": true,
+          	"info": true,
+          	"autoWidth": false
+          	
+        });
+		
+		$('#sy').addClass('active');
+		<#if type="1">$('#home_lb').addClass('active');</#if>
+        <#if type="2">$('#home_tj').addClass('active');</#if>
+        <#if type="3">$('#home_rm').addClass('active');</#if>
+        <#if type="4">$('#home_work_rm').addClass('active');</#if>
+    });
+    </script>
+
+</body>
+
+</html>

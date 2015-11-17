@@ -1,5 +1,7 @@
 package com.photography.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
@@ -13,11 +15,17 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.photography.dao.exp.Condition;
+import com.photography.dao.query.Pager;
+import com.photography.dao.query.QueryConstants;
+import com.photography.dao.query.Sort;
 import com.photography.exception.ErrorCode;
+import com.photography.exception.ErrorMessage;
 import com.photography.exception.ServiceException;
 import com.photography.mapping.FileGroup;
 import com.photography.mapping.User;
 import com.photography.mapping.Work;
+import com.photography.mapping.WorkComment;
 import com.photography.service.IWorkService;
 import com.photography.utils.Constants;
 import com.photography.utils.MessageConstants;
@@ -76,10 +84,14 @@ public class WorkController extends BaseController {
 	 * @author 徐雁斌
 	 */
 	@RequestMapping(value="/toReview")
-	public String toReview(String id,HttpServletRequest request, RedirectAttributes attr){
-//		ModelAndView mav = new ModelAndView();
-//		return reviewProject(id, request, mav);
-		return "work/work_review";
+	public ModelAndView toReview(String id,HttpServletRequest request){
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("work/work_review");
+		if(!StringUtils.isEmpty(id)){
+			Work work = (Work) workService.loadPojo(Work.class,id);
+			mav.addObject("work", work);
+		}
+		return mav;
 	}
 	
 	/**
@@ -102,15 +114,15 @@ public class WorkController extends BaseController {
 	
 	/**
 	 * 新建作品
-	 * @param project
-	 * @param imgFiles
+	 * @param work
+	 * @param photoPics
 	 * @param request
 	 * @param model
 	 * @return
 	 * @author 徐雁斌
 	 */
 	@RequestMapping(value="/create")
-	public String create(Work work, @RequestParam MultipartFile[] photos,HttpServletRequest request, RedirectAttributes ra) {
+	public String create(Work work, @RequestParam MultipartFile[] photoPics,HttpServletRequest request, RedirectAttributes ra) {
 		
 		Work workDb = null;
 		try {
@@ -122,15 +134,18 @@ public class WorkController extends BaseController {
 			}
 			
 			//判断是否上传滚动图片
-			if(!checkFiles(photos, workDb.getPhotos())){
+			if(!checkFiles(photoPics, workDb.getPhotos())){
 				throw new ServiceException(ErrorCode.WORK_PHOTO_NO_UPLOAD);
 			}
 			
-        	FileGroup photoGroup = saveAndReturnFile(photos, request, user, workDb.getPhotos(),WORK_FILE,workService);
+        	FileGroup photoGroup = saveAndReturnFile(photoPics, request, user, workDb.getPhotos(),WORK_FILE,workService);
         	workDb.setPhotos(photoGroup);
         	workDb.setName(work.getName());
         	workDb.setDes(work.getDes());
-        	workDb.setCreateUser(user);
+        	
+        	if(StringUtils.isEmpty(work.getId())){
+        		workDb.setCreateUser(user);
+        	}
         	
         	workService.savePojo(workDb, user);
         	ra.addFlashAttribute("type", "8");
@@ -142,6 +157,55 @@ public class WorkController extends BaseController {
 			return "redirect:toCreate?id=" + workDb.getId();
 		}
 		return "redirect:/userinfo/toUserInfo";
+	}
+	
+	
+	/**
+	 * 获取用户评论列表
+	 * @param request
+	 * @return
+	 * @author 徐雁斌
+	 * @throws ServiceException 
+	 */
+	@RequestMapping(value="/getWorkComment")
+	public ModelAndView getWorkComment(String workId,Pager pager,HttpServletRequest request) throws ServiceException {
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("work/work_comment_item");
+		List<WorkComment> workComments = workService.getPojoList(WorkComment.class, pager, Condition.eq("work.id", workId), new Sort("createTime",QueryConstants.DESC),null);
+		mv.addObject("workId", workId);
+		mv.addObject("pager", pager);
+		mv.addObject("workComments", workComments);
+		return mv;
+	}
+	
+	/**
+	 * 提交评论
+	 */
+	@RequestMapping(value="/saveWorkComment")
+	public String saveWorkComment(WorkComment workComment, @RequestParam MultipartFile[] photoPics,HttpServletRequest request,RedirectAttributes attr){
+		String workId = null;
+		try{
+			User user = getSessionUser(request);
+			if(!StringUtils.isEmpty(workComment.getWork().getId())){
+				workId = workComment.getWork().getId();
+				Work work = (Work) workService.loadPojo(Work.class,workId);
+				workComment.setWork(work);
+			}
+			
+			workComment.setCreateUser(user);
+			
+			FileGroup photos = saveAndReturnFile(photoPics, request, user, workComment.getPhotos(),WORK_FILE,workService);
+			workComment.setPhotos(photos);
+			
+			workService.savePojo(workComment, user);
+			
+			attr.addFlashAttribute(Constants.SUCCESS_MESSAGE, MessageConstants.SAVE_SUCCESS);
+		}catch(Exception e){
+			log.error("WorkController saveWorkComment",e);
+			attr.addFlashAttribute(Constants.ERROR_MESSAGE, ErrorMessage.getErrorMessage(e)); 
+		}
+		
+		return "redirect:toReview?id=" + workId;
 	}
 
 }

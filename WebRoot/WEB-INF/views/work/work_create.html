@@ -31,14 +31,14 @@
                   		<div class="panel-body">
                        		<div class="form-group col-md-12">
                            		<label class="control-label">作品标题</label>
-                           		<input type="text" name="name" class="form-control c-square c-theme" placeholder="作品标题  20字"> 
+                           		<input type="text" name="name" class="form-control c-square c-theme" placeholder="作品标题  20字" value="${(work.name)!''}"> 
                        		</div>
                        		
                        		<div class="form-group col-md-12">
 	                              <label class="control-label">作品图片<p><small class="c-font-grey-2">作品图片最多5张，长高比例建议为16:10，图片宽度建议在600px~750px之间，支持jpg,gif,png格式</small></p></label> 
-	                              <input name="photos" type="file" class="form-control c-square c-theme file-loading" accept="image/*" multiple>
+	                              <input id="photoPics" name="photoPics" type="file" class="form-control c-square c-theme file-loading" accept="image/*" multiple>
 									<script type="text/javascript">
-											$("#photos").fileinput({
+											$("#photoPics").fileinput({
 											    uploadUrl: "#", // server upload action
 					    						showUpload: false,
 					    						overwriteInitial: false,
@@ -82,15 +82,6 @@
 $(document).ready(function(){
 
 	$('#user_work').addClass('c-active');
-	
-	$(".file-loading").fileinput({
-	    uploadUrl: "#", // server upload action
-		showUpload: false,
-		overwriteInitial: false,
-		allowedFileExtensions:['jpg', 'gif', 'png'],
-		minFileCount: 1,
-		maxFileCount: 5
-	});
   });
 </script>
 
