@@ -10,6 +10,8 @@ import javax.persistence.ManyToOne;
 import org.hibernate.annotations.LazyToOne;
 import org.hibernate.annotations.LazyToOneOption;
 
+import com.photography.utils.Constants;
+
 /**
  * 摄影作品
  * @author Administrator
@@ -60,6 +62,14 @@ public class Work extends BaseMapping {
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name="photos")
 	private FileGroup photos;
+	
+	//审核状态 
+	@Column(name="verify")
+	private String verify = Constants.VERIFY_NO;
+	
+	 //审核结果信息
+	@Column(name="verify_message")
+	private String verifyMessage;
 
 	public String getName() {
 		return name;
@@ -115,6 +125,22 @@ public class Work extends BaseMapping {
 
 	public void setViewedNumber(String viewedNumber) {
 		this.viewedNumber = viewedNumber;
+	}
+
+	public String getVerify() {
+		return verify;
+	}
+
+	public void setVerify(String verify) {
+		this.verify = verify;
+	}
+
+	public String getVerifyMessage() {
+		return verifyMessage;
+	}
+
+	public void setVerifyMessage(String verifyMessage) {
+		this.verifyMessage = verifyMessage;
 	}
 	
 	

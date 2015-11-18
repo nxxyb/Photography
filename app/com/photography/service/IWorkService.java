@@ -26,5 +26,5 @@ public interface IWorkService extends IBaseService {
 	 * @throws ServiceException
 	 * @author 徐雁斌
 	 */
-	public List<Work> getIndexProject() throws ServiceException;
+	public List<Work> getIndexWorks() throws ServiceException;
 }

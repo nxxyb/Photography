@@ -46,27 +46,27 @@ public class AdminProjectController extends BaseController {
 	@RequestMapping("/toProjectShList")
 	public ModelAndView toProjectShList(HttpServletRequest request, Model model) {
 		ModelAndView mav = new ModelAndView();
-		List<Project> projects =  adminService.loadPojoByExpression(Project.class, Condition.eq("status", Constants.STATUS_WSH), new Sort("createTime","desc"));
+		List<Project> projects =  adminService.loadPojoByExpression(Project.class, Condition.eq("verify", Constants.VERIFY_ING), new Sort("createTime","desc"));
 		mav.addObject("projects", projects);
 		mav.setViewName("admin/main/project/list_sh");
 		return mav;
 	}
 	
-//	/**
-//	 * 跳转到用户审核列表
-//	 * @param request
-//	 * @param model
-//	 * @return
-//	 * @author 徐雁斌
-//	 */
-//	@RequestMapping("/toProjectShForm")
-//	public ModelAndView toUserShForm(String id,HttpServletRequest request, Model model) {
-//		ModelAndView mav = new ModelAndView();
-//		User user =  adminService.loadPojo(User.class, id);
-//		mav.addObject("user", user);
-//		mav.setViewName("admin/main/project/form_sh");
-//		return mav;
-//	}
+	/**
+	 * 跳转到用户审核表单
+	 * @param request
+	 * @param model
+	 * @return
+	 * @author 徐雁斌
+	 */
+	@RequestMapping("/toProjectShForm")
+	public ModelAndView toProjectShForm(String id,HttpServletRequest request, Model model) {
+		ModelAndView mav = new ModelAndView();
+		Project project =  adminService.loadPojo(Project.class, id);
+		mav.addObject("project", project);
+		mav.setViewName("admin/main/project/form_sh");
+		return mav;
+	}
 	
 	/**
 	 * 审核通过操作
@@ -76,12 +76,13 @@ public class AdminProjectController extends BaseController {
 	 * @author 徐雁斌
 	 */
 	@RequestMapping("/projectSh")
-	public String projectSh(String id,HttpServletRequest request, RedirectAttributes ra) {
+	public String projectSh(Project project,HttpServletRequest request, RedirectAttributes ra) {
 		try{
-			if(!StringUtils.isEmpty(id)){
-				Project project =  adminService.loadPojo(Project.class, id);
-				project.setStatus(Constants.PROJECT_STATUS_WKS);
-				adminService.savePojo(project, null);
+			if(!StringUtils.isEmpty(project.getId())){
+				Project projectDB =  adminService.loadPojo(Project.class, project.getId());
+				projectDB.setVerify(project.getVerify());
+				projectDB.setVerifyMessage(project.getVerifyMessage());
+				adminService.savePojo(projectDB, null);
 				
 			}
 		}catch(Exception e){

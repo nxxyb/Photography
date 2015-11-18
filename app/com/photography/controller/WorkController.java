@@ -16,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.photography.dao.exp.Condition;
+import com.photography.dao.exp.Expression;
 import com.photography.dao.query.Pager;
 import com.photography.dao.query.QueryConstants;
 import com.photography.dao.query.Sort;
@@ -56,24 +57,38 @@ public class WorkController extends BaseController {
 	 * 作品首页
 	 */
 	@RequestMapping("/index")
-	public String toIndex(String errorMessage,HttpServletRequest request, RedirectAttributes attr) {
-		return "work/work";
+	public ModelAndView toIndex(Pager pager,HttpServletRequest request) {
+		ModelAndView mav = new ModelAndView();
+		pager.setPageSize(9);
+		Expression exp = null;
+		List<Work> works = workService.getPojoList(Work.class, pager, exp, new Sort("createTime",QueryConstants.DESC),null);
+		mav.addObject("works", works);
+		mav.setViewName("work/work");
+		return mav;
 	}
 	
 	/**
 	 * 作品简介
 	 */
 	@RequestMapping("/introduction")
-	public String toIntroduction(String errorMessage,HttpServletRequest request, RedirectAttributes attr) {
-		return "work/work_introduction";
+	public ModelAndView toIntroduction(String id,HttpServletRequest request) {
+		ModelAndView mav = new ModelAndView();
+		if(!StringUtils.isEmpty(id)){
+			Work work = workService.loadPojo(Work.class, id);
+			mav.addObject("work", work);
+		}
+		mav.setViewName("work/work_introduction");
+		return mav;
 	}
 	
 	/**
 	 * 加载更多
 	 */
 	@RequestMapping("/loadmore")
-	public String loadMore(String errorMessage,HttpServletRequest request, RedirectAttributes attr) {
-		return "work/work_loadmore";
+	public ModelAndView loadMore(Pager pager,HttpServletRequest request) {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("work/work_loadmore");
+		return mav;
 	}
 	
 	/**
@@ -146,6 +161,8 @@ public class WorkController extends BaseController {
         	if(StringUtils.isEmpty(work.getId())){
         		workDb.setCreateUser(user);
         	}
+        	
+        	workDb.setVerify(Constants.VERIFY_ING);
         	
         	workService.savePojo(workDb, user);
         	ra.addFlashAttribute("type", "8");

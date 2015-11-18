@@ -181,9 +181,17 @@ public class Project extends BaseMapping{
 	@Column(name="viewed_number")
 	private String viewedNumber;
 	
-	//项目状态 0-未审核 1-未开始 2-已开始 3-已结束
+	//项目状态 1-未开始 2-已开始 3-已结束
 	@Column(name="status")
-	private String status = Constants.STATUS_WSH;
+	private String status = Constants.PROJECT_STATUS_WKS;
+	
+	//审核状态 
+	@Column(name="verify")
+	private String verify = Constants.VERIFY_NO;
+	
+	 //审核结果信息
+	@Column(name="verify_message")
+	private String verifyMessage;
 
 	public String getName() {
 		return name;
@@ -394,6 +402,22 @@ public class Project extends BaseMapping{
 
 	public void setEarlyDays(Date earlyDays) {
 		this.earlyDays = earlyDays;
+	}
+
+	public String getVerify() {
+		return verify;
+	}
+
+	public void setVerify(String verify) {
+		this.verify = verify;
+	}
+
+	public String getVerifyMessage() {
+		return verifyMessage;
+	}
+
+	public void setVerifyMessage(String verifyMessage) {
+		this.verifyMessage = verifyMessage;
 	}
 	
 	

@@ -66,6 +66,8 @@ CREATE TABLE `project` (
   `joined_number` varchar(10) comment '已参加人数',
   `viewed_number` varchar(10) comment '浏览次数',
   `status` varchar(10) comment '活动状态 1-未开始 2-已开始 3-结束',
+  `verify` varchar(2) comment '审核状态',
+  `verify_message` varchar(2000) comment '审核结果信息',
   `create_time` datetime comment '创建时间',
   `last_update_time` datetime comment '最后修改时间'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -154,6 +156,8 @@ CREATE TABLE `work` (
   `create_user` varchar(36) comment '创建用户',
   `joined_number` varchar(10) comment '已订购人数',
   `viewed_number` varchar(10) comment '浏览次数',
+  `verify` varchar(2) comment '审核状态',
+  `verify_message` varchar(2000) comment '审核结果信息',
   `create_time` datetime comment '创建时间',
   `last_update_time` datetime comment '最后修改时间'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

@@ -19,7 +19,13 @@
 	<!-- BEGIN: PAGE CONTENT -->
     <div class="c-content-box c-size-md">
         <div class="container">
-    		
+    		<#if (work.verify)?? &&  (work.verify == '2' || work.verify == '3')>
+		     	<div class="alert alert-info" role="alert">${(work.verifyMessage)!''}</div>
+		     </#if>
+		     
+		     <#if (work.verify)?? && work.verify == '1'>
+		     	<div class="alert alert-info" role="alert">平台正在审核您的作品信息，请耐心等待。</div>
+		     </#if>
 		<form id="workCreateForm" action="${basePath}/work/create" method="post" enctype="multipart/form-data">
 			<input type="hidden" name="id" value="${(work.id)!''}">
     		   <div class="row">
@@ -35,7 +41,7 @@
                        		</div>
                        		
                        		<div class="form-group col-md-12">
-	                              <label class="control-label">作品图片<p><small class="c-font-grey-2">作品图片最多5张，长高比例建议为16:10，图片宽度建议在600px~750px之间，支持jpg,gif,png格式</small></p></label> 
+	                              <label class="control-label">作品图片<p><small class="c-font-grey-2">作品图片最多10张，长高比例建议为16:10，图片宽度建议在600px~750px之间，支持jpg,gif,png格式</small></p></label> 
 	                              <input id="photoPics" name="photoPics" type="file" class="form-control c-square c-theme file-loading" accept="image/*" multiple>
 									<script type="text/javascript">
 											$("#photoPics").fileinput({
@@ -51,7 +57,7 @@
 					    							</#list>
 					    							],
 					    						</#if>
-					    						maxFileCount: 5
+					    						maxFileCount: 10
 											});
 									</script>
 		                     </div>
@@ -62,7 +68,7 @@
 	                         </div>
 	                         
 	                         <div class="form-group">
-		                         <button type="submit" class="btn c-theme-btn btn-md c-btn-uppercase c-btn-bold c-btn-square">保存</button>
+		                         <button type="submit" class="btn c-theme-btn btn-md c-btn-uppercase c-btn-bold c-btn-square">提交审核</button>
 		                     </div>
                        	</div>
                    	   </div>

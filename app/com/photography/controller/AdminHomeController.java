@@ -52,10 +52,14 @@ public class AdminHomeController extends BaseController {
 		ModelAndView mav = new ModelAndView();
 		List<AdminLb> adminLbs = adminService.loadPojoByExpression(AdminLb.class, Condition.eq("type", type), new Sort("sort","asc"));
 		
-		Expression exp = Condition.ne("status", Constants.PROJECT_STATUS_WSH);
+		Expression exp = Condition.eq("verify", Constants.VERIFY_PASS);
 		if(!adminLbs.isEmpty()){
 			for(AdminLb adminLb : adminLbs){
-				exp = exp.and(Condition.ne("id", adminLb.getProject().getId()));
+				if("4".equals(type)){
+					exp = exp.and(Condition.ne("id", adminLb.getWork().getId()));
+				}else{
+					exp = exp.and(Condition.ne("id", adminLb.getProject().getId()));
+				}
 			}
 		}
 		

@@ -22,10 +22,10 @@
       <div class="content-wrapper">
       
         <section class="content-header">
-          <h1>活动管理</h1>
+          <h1>作品管理</h1>
           <ol class="breadcrumb">
             <li><a href="${basePath}/admin/toMain"><i class="fa fa-dashboard"></i> 首页</a></li>
-            <li class="active"> 活动管理</li>
+            <li class="active"> 作品管理</li>
           </ol>
         </section>
             
@@ -42,8 +42,7 @@
                                     <thead>
                                         <tr>
                                         	<th width="8%">序号</th>
-                                            <th width="50%">活动</th>
-                                            <th width="10%">状态</th>
+                                            <th width="60%">作品</th>
                                              <th width="10%">审核状态</th>
                                             <th width="10%">发布用户</th>
                                             <th width="12%">操作</th>
@@ -51,36 +50,31 @@
                                     </thead>
                                     <tbody>
                                     	
-                                    	<#list projects as project>
+                                    	<#list works as work>
                                     		<tr>
-                                    			<td>${project_index+1}</td>
+                                    			<td>${work_index+1}</td>
                                     			<td>
                                     				<div class="media">
 													  <div class="media-left">
-													    <a href="${basePath}/project/toReview?id=${project.id}" target="_blank">
-													      <img class="media-object" style="width: 64px; height: 64px;" <#if (project.photos.fileInfos)??>src="${basePath}/${project.photos.fileInfos[0].realPath}"</#if>>
+													    <a href="${basePath}/work/toReview?id=${work.id}" target="_blank">
+													      <img class="media-object" style="width: 64px; height: 64px;" <#if (work.photos.fileInfos)??>src="${basePath}/${work.photos.fileInfos[0].realPath}"</#if>>
 													    </a>
 													  </div>
 													  <div class="media-body">
-													    <h4 class="media-heading"><a href="${basePath}/project/toReview?id=${project.id}" target="_blank">${(project.name)!''}</a></h4>
+													    <h4 class="media-heading"><a href="${basePath}/work/toReview?id=${work.id}" target="_blank">${(work.name)!''}</a></h4>
 													  </div>
 													</div>
                                     			</td>
                                     			<td>
-                                    				<#if project.status == "1"> <span class="badge bg-yellow">未开始</span> </#if>
-                                    				<#if project.status == "2"> <span class="badge bg-light-blue">已开始</span> </#if>
-                                    				<#if project.status == "3"> <span class="badge bg-green">已结束</span> </#if>
+                                    				<#if work.verify == "0"> <span class="badge bg-light-blue">未审核</span> </#if>
+                                    				<#if work.verify == "1"> <span class="badge bg-yellow">提交审核</span> </#if>
+                                    				<#if work.verify == "2"> <span class="badge bg-red">审核不通过</span> </#if>
+                                    				<#if work.verify == "3"> <span class="badge bg-green">审核通过</span> </#if>
                                     			</td>
-                                    			<td>
-                                    				<#if project.verify == "0"> <span class="badge bg-light-blue">未审核</span> </#if>
-                                    				<#if project.verify == "1"> <span class="badge bg-yellow">提交审核</span> </#if>
-                                    				<#if project.verify == "2"> <span class="badge bg-red">审核不通过</span> </#if>
-                                    				<#if project.verify == "3"> <span class="badge bg-green">审核通过</span> </#if>
-                                    			</td>
-                                    			<td>${(project.createUser.realName)!'project.createUser.mobile'}</td>
+                                    			<td>${(work.createUser.realName)!'work.createUser.mobile'}</td>
                                     			<td>
                                     				<div class="tipbtn"> 
-                                    					<a data-href="${basePath}/admin/project/deleteProject?id=${(project.id)!''}" class="btn btn-warning confirmation"><i class="fa fa-close"></i> 删除</a>
+                                    					<a data-href="${basePath}/admin/work/deleteProject?id=${(work.id)!''}" class="btn btn-warning confirmation"><i class="fa fa-close"></i> 删除</a>
                                     				</div>
                                     			</td>
                                     		</tr>
@@ -134,8 +128,8 @@
 			btnCancelLabel:'<i class="icon-remove-sign"></i> 否'
 		});
 		
-		$('#hd').addClass('active');
-		$('#hd_gl').addClass('active');
+		$('#zp').addClass('active');
+		$('#zp_gl').addClass('active');
     });
     </script>
 

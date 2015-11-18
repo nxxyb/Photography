@@ -33,7 +33,6 @@ import com.photography.mapping.ProjectComment;
 import com.photography.mapping.ProjectOrder;
 import com.photography.mapping.ProjectTrip;
 import com.photography.mapping.User;
-import com.photography.service.IProjectOrderService;
 import com.photography.service.IProjectService;
 import com.photography.utils.Constants;
 import com.photography.utils.MessageConstants;
@@ -56,15 +55,8 @@ public class ProjectController extends BaseController {
 	@Autowired
 	private IProjectService projectService;
 	
-	@Autowired
-	private IProjectOrderService projectOrderService;
-	
 	public void setProjectService(IProjectService projectService) {
 		this.projectService = projectService;
-	}
-	
-	public void setProjectOrderService(IProjectOrderService projectOrderService) {
-		this.projectOrderService = projectOrderService;
 	}
 	
 	/**
@@ -176,6 +168,7 @@ public class ProjectController extends BaseController {
         		project.setProjectTrips(addProjectTrips);	
         		
         	}
+        	project.setVerify(Constants.VERIFY_ING);
         	projectService.savePojo(project, user);
         	ra.addFlashAttribute("type", "7");
         	ra.addFlashAttribute(Constants.SUCCESS_MESSAGE, MessageConstants.SAVE_SUCCESS);

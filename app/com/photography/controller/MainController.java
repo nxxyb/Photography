@@ -11,6 +11,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.photography.exception.ServiceException;
 import com.photography.service.IProjectService;
+import com.photography.service.IWorkService;
 
 /**
  * 
@@ -28,16 +29,25 @@ private final static Logger log = Logger.getLogger(MainController.class);
 	@Autowired
 	private IProjectService projectService;
 	
+	@Autowired
+	private IWorkService workService;
+	
 	public void setProjectService(IProjectService projectService) {
 		this.projectService = projectService;
 	}
 	
+	public void setWorkService(IWorkService workService) {
+		this.workService = workService;
+	}
+
 	@RequestMapping("/index")
 	public ModelAndView toIndex(String errorMessage,HttpServletRequest request, RedirectAttributes attr) throws ServiceException {
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("lbProjects", projectService.getIndexProject("1"));
 		mav.addObject("tjProjects", projectService.getIndexProject("2"));
 		mav.addObject("rmProjects", projectService.getIndexProject("3"));
+		mav.addObject("rmWorks", workService.getIndexWorks());
+		
 		mav.setViewName("/index");
 		return mav;
 	}

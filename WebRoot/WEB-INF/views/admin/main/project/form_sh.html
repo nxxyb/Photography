@@ -17,11 +17,11 @@
         <div class="content-wrapper">
       
 	        <section class="content-header">
-	          <h1>添加轮播</h1>
+	          <h1>审核</h1>
 	          <ol class="breadcrumb">
 	            <li><a href="${basePath}/admin/toMain"><i class="fa fa-dashboard"></i> 首页</a></li>
-	            <li><a href="${basePath}/admin/home/tolb"> 轮播</a></li>
-	            <li class="active"> 添加轮播</li>
+	            <li><a href="${basePath}/admin/project/toProjectShList"> 活动审核</a></li>
+	            <li class="active"> 审核</li>
 	          </ol>
 	        </section>
             
@@ -30,19 +30,29 @@
             <div class="row">
             	<div class="col-md-12">
                    <div class="box box-info">
-                        <form id="userForm" role="form-horizontal" action="${basePath}/admin/home/addLb" method="post">
+                        <form id="projectForm" role="form-horizontal" action="${basePath}/admin/project/projectSh" method="post">
                                 <div class="box-body">
-                                	<input type="hidden" name="work.id" value="${(work.id)!''}">
-                                    <input type="hidden" name="type" value="${type}">
-                                    <div class="form-group">
-                                            <label class="control-label">活动名称</label>
-                                            <input class="form-control" name="work.name" value="${(work.name)!''}" disabled>
-                                    </div>
+                                	<input type="hidden" name="id" value="${(project.id)!''}">
                                     
                                     <div class="form-group">
-                                            <label class="control-label">排序</label>
-                                            <input class="form-control" name="sort">
+                                            <label class="control-label">活动名称</label>
+                                            <input class="form-control" name="name" value="${(project.name)!''}" disabled>
                                     </div>
+                                    
+                              		<div class="form-group">
+		                             	<label>
+					                      <input type="radio" name="verify" class="flat-red" value="3" checked /> 审核通过
+					                    </label>
+					                    <label>
+					                      <input type="radio" name="verify" class="flat-red" value="2" /> 审核不通过 
+					                    </label>
+		                          </div>
+		                          
+		                          <div class="form-group">
+		                          		<label class="control-label">审核结果信息</label>
+		                              <textarea class="form-control" rows="6" placeholder="审核结果信息" maxlength="1000" name="verifyMessage">您的信息审核通过</textarea>
+		                          </div>
+                              		
                                     
                                     <div class="box-footer">
                                     	<button type="submit" class="btn btn-info">保存</button>
@@ -72,11 +82,14 @@
     
     <script>
     $(document).ready(function() {
+    	
+    	 $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
+    	        checkboxClass: 'icheckbox_flat-green',
+    	        radioClass: 'iradio_flat-green'
+    	 });
     	 
-    	$('#sy').addClass('active');
-		<#if type="1">$('#home_lb').addClass('active');</#if>
-        <#if type="2">$('#home_tj').addClass('active');</#if>
-        <#if type="3">$('#home_rm').addClass('active');</#if>
+    	 $('#hd').addClass('active');
+		$('#hd_sh').addClass('active');
     });
     
     </script>

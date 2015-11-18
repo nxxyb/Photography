@@ -26,7 +26,7 @@ public class Constants {
 	/**
 	 * 审核状态
 	 */
-	//未提交审核
+	//未审核
 	public final static String VERIFY_NO = "0";
 	//提交审核
 	public final static String VERIFY_ING = "1";
@@ -87,10 +87,10 @@ public class Constants {
 	 * 审核状态
 	 */
 	//未审核
-	public final static String STATUS_WSH = "0";
+	public final static String VERIFY_STATUS_WSH = "0";
 	
-	//未审核
-	public final static String STATUS_YSH = "1";
+	//已审核
+	public final static String VERIFY_STATUS_YSH = "1";
 	
 	/**
 	 * 活动状态
