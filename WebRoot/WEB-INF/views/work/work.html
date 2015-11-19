@@ -19,46 +19,63 @@
             <div class="c-content-box c-size-md">
                 <div class="container">
                     <div class="cbp-panel">
-                        <div id="filters-container" class="cbp-l-filters-dropdown">
-                            <div class="cbp-l-filters-dropdownWrap">
-                                <div class="cbp-l-filters-dropdownHeader">Sort Gallery</div>
-                                <div class="cbp-l-filters-dropdownList">
-                                    <div data-filter="*" class="cbp-filter-item-active cbp-filter-item"> All (
-                                        <div class="cbp-filter-counter"></div> items) </div>
-                                    <div data-filter=".print" class="cbp-filter-item"> Print (
-                                        <div class="cbp-filter-counter"></div> items) </div>
-                                    <div data-filter=".web-design" class="cbp-filter-item"> Web Design (
-                                        <div class="cbp-filter-counter"></div> items) </div>
-                                    <div data-filter=".motion" class="cbp-filter-item"> Motion (
-                                        <div class="cbp-filter-counter"></div> items) </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="grid-container" class="cbp">
+                    
+                    	
+                        <div class="clearfix">
+					        <!--
+					        <div id="js-filters-lightbox-gallery1" class="cbp-l-filters-dropdown cbp-l-filters-dropdown-floated">
+					            <div class="cbp-l-filters-dropdownWrap">
+					                <div class="cbp-l-filters-dropdownHeader">Sort Gallery</div>
+					                <div class="cbp-l-filters-dropdownList">
+					                    <div data-filter="*" class="cbp-filter-item-active cbp-filter-item">All</div>
+					                    <div data-filter=".identity" class="cbp-filter-item">Identity</div>
+					                    <div data-filter=".web-design" class="cbp-filter-item">Web Design</div>
+					                    <div data-filter=".print" class="cbp-filter-item">Print</div>
+					                </div>
+					            </div>
+					        </div>
+					        
+							  
+					        <div id="js-filters-lightbox-gallery2" class="cbp-l-filters-button cbp-l-filters-left">
+					            <div data-filter="*" class="cbp-filter-item-active cbp-filter-item">All</div>
+					            <div data-filter=".graphic" class="cbp-filter-item">Graphic</div>
+					            <div data-filter=".logos" class="cbp-filter-item">Logo</div>
+					            <div data-filter=".motion" class="cbp-filter-item">Motion</div>
+					        </div>
+					        -->
+					        
+					    </div>
+					    
+
+                        
+                        <div id="js-grid-lightbox-gallery" class="cbp">
                         	<#list works as work>
-                        		<div class="cbp-item">
-	                                <a href="${basePath}/work/introduction?id=${work.id}" class="cbp-caption cbp-singlePageInline" data-title="${(work.name)!''}">
-	                                    <div class="cbp-caption-defaultWrap">
-	                                        <img src="${basePath}/${work.photos.fileInfos[0].realPath}" alt=""> </div>
-	                                    <div class="cbp-caption-activeWrap">
-	                                        <div class="cbp-l-caption-alignLeft">
-	                                            <div class="cbp-l-caption-body">
-	                                                <div class="cbp-l-caption-title">${(work.name)!''}</div>
-	                                                <!-- <div class="cbp-l-caption-desc">${(work.des)!''}</div> -->
-	                                            </div>
-	                                        </div>
-	                                    </div>
-	                                </a>
-                            	</div>
-                        	</#list>
+					        <div class="cbp-item">
+					            <a href="${basePath}/work/introduction?id=${work.id}" class="cbp-caption cbp-singlePageInline" data-title="${(work.name)!''}" rel="nofollow">
+					                <div class="cbp-caption-defaultWrap">
+					                    <img src="${basePath}/${work.photos.fileInfos[0].realPath}" alt="">
+					                </div>
+					                <div class="cbp-caption-activeWrap">
+					                    <div class="cbp-l-caption-alignLeft">
+					                        <div class="cbp-l-caption-body">
+					                            <div class="cbp-l-caption-title">${(work.name)!''}</div>
+					                            <!-- <div class="cbp-l-caption-desc">${(work.des)!''}</div> -->
+					                        </div>
+					                    </div>
+					                </div>
+					            </a>
+					        </div>
+					        </#list>
                         </div>
-                        <div id="loadMore-container" class="cbp-l-loadMore-button c-margin-t-60">
-                            <a href="${basePath}/work/loadmore?currentPage=1" class="cbp-l-loadMore-link btn c-btn-square c-btn-border-2x c-btn-dark c-btn-bold c-btn-uppercase">
-                                <span class="cbp-l-loadMore-defaultText">加载更多</span>
-                                <span class="cbp-l-loadMore-loadingText">加载中...</span>
-                                <span class="cbp-l-loadMore-noMoreLoading">没有作品了</span>
-                            </a>
-                        </div>
+                        
+                        <div id="js-loadMore-lightbox-gallery" class="cbp-l-loadMore-button">
+					        <a href="${basePath}/work/loadmore" class="cbp-l-loadMore-link btn c-btn-square c-btn-border-2x c-btn-dark c-btn-bold c-btn-uppercase" rel="nofollow">
+					            <span class="cbp-l-loadMore-defaultText">加载更多</span>
+					            <span class="cbp-l-loadMore-loadingText">加载中...</span>
+					            <span class="cbp-l-loadMore-noMoreLoading">没有作品了</span>
+					        </a>
+					    </div>
+
                     </div>
                 </div>
             </div>
@@ -70,41 +87,40 @@
 <#include "../common/footer.html">
 
 <script>
-	$(document).ready(function() {    
-		App.init(); // init core    
-	});
-	</script>
-<!-- END: THEME SCRIPTS -->
-<script>
 $(document).ready(function(){
 
 	$('#work').addClass('c-active');
 	
-	 // init cubeportfolio
-    $('#grid-container').cubeportfolio({
-        filters: '#filters-container',
-        loadMore: '#loadMore-container',
+	(function($, window, document, undefined) {
+    'use strict';
+
+    // init cubeportfolio
+    $('#js-grid-lightbox-gallery').cubeportfolio({
+        filters: '#js-filters-lightbox-gallery1, #js-filters-lightbox-gallery2',
+        loadMore: '#js-loadMore-lightbox-gallery',
         loadMoreAction: 'click',
-        showPagination:true,
         layoutMode: 'grid',
-        defaultFilter: '*',
-        animationType: 'rotateSides',
-        gapHorizontal: 10,
-        gapVertical: 10,
-        gridAdjustment: 'responsive',
         mediaQueries: [{
+            width: 1500,
+            cols: 3
+        }, {
             width: 1100,
             cols: 3
         }, {
             width: 800,
             cols: 3
         }, {
-            width: 500,
+            width: 480,
             cols: 2
         }, {
             width: 320,
             cols: 1
         }],
+        defaultFilter: '*',
+        animationType: 'rotateSides',
+        gapHorizontal: 10,
+        gapVertical: 10,
+        gridAdjustment: 'responsive',
         caption: 'overlayBottomPush',
         displayType: 'sequentially',
         displayTypeSpeed: 100,
@@ -125,10 +141,9 @@ $(document).ready(function(){
 
             $.ajax({
                     url: url,
-                    type: 'POST',
+                    type: 'GET',
                     dataType: 'html',
-                    cache: false,
-                    timeout: 5000
+                    timeout: 10000
                 })
                 .done(function(result) {
 
@@ -136,10 +151,11 @@ $(document).ready(function(){
 
                 })
                 .fail(function() {
-                    t.updateSinglePageInline("请刷新页面!");
+                    t.updateSinglePageInline('请刷新页面!');
                 });
         },
     });
+})(jQuery, window, document);
   
   });
 </script>

@@ -85,8 +85,14 @@ public class WorkController extends BaseController {
 	 * 加载更多
 	 */
 	@RequestMapping("/loadmore")
-	public ModelAndView loadMore(Pager pager,HttpServletRequest request) {
+	public ModelAndView loadMore(String block,HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
+		Pager pager = new Pager(Integer.parseInt(block)+1,9);
+		Expression exp = null;
+		List<Work> works = workService.getPojoList(Work.class, pager, exp, new Sort("createTime",QueryConstants.DESC),null);
+		mav.addObject("works", works);
+		mav.addObject("pager", pager);
+		mav.addObject("block", block);
 		mav.setViewName("work/work_loadmore");
 		return mav;
 	}

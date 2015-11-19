@@ -234,9 +234,9 @@ public class HibernateDaoImpl implements IHibernateDao {
 			}
 //			int allPage = count/pager.getPageSize();
 			pager.setTotalCount(count+pager.getOffset());
-			if(pager.getCurrentPage()>pager.getTotalPage()) {
-				pager.setCurrentPage(pager.getTotalPage());
-			}
+//			if(pager.getCurrentPage()>pager.getTotalPage()) {
+//				pager.setCurrentPage(pager.getTotalPage());
+//			}
 		}
 	}
 	
@@ -255,9 +255,9 @@ public class HibernateDaoImpl implements IHibernateDao {
 	 */
 	protected void setPagerNumber(Pager pager, Criteria criteria) {
 		if (pager != null) {
-			if (pager.getTotalCount() <= pager.getFromRowIndex()) {
-				pager.setCurrentPage(1);
-			}
+//			if (pager.getTotalCount() <= pager.getFromRowIndex()) {
+//				pager.setCurrentPage(1);
+//			}
 			if(pager.getCurrentPage()==1) {
 				criteria.setFirstResult(pager.getFromRowIndex());
 				criteria.setMaxResults(pager.getPageSize()-pager.getOffset());
