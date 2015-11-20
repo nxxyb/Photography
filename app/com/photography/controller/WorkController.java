@@ -26,6 +26,7 @@ import com.photography.exception.ServiceException;
 import com.photography.mapping.FileGroup;
 import com.photography.mapping.User;
 import com.photography.mapping.Work;
+import com.photography.mapping.WorkCollect;
 import com.photography.mapping.WorkComment;
 import com.photography.service.IWorkService;
 import com.photography.utils.Constants;
@@ -230,6 +231,35 @@ public class WorkController extends BaseController {
 		}
 		
 		return "redirect:toReview?id=" + workId;
+	}
+	
+	/**
+	 * 收藏活动
+	 * @param id
+	 * @return
+	 * @author 徐雁斌
+	 * @throws ServiceException 
+	 */
+	@RequestMapping(value="/addCollect")
+	public String addCollect(String id,HttpServletRequest request,RedirectAttributes attr){
+		try{
+			User user = getSessionUser(request);
+			if(!StringUtils.isEmpty(id)){
+				List<WorkCollect> workCollects = workService.loadPojoByExpression(WorkCollect.class, 
+						Condition.and(Condition.eq("work.id", id), Condition.eq("user.id", user.getId())), null);
+				if(workCollects.isEmpty()){
+					WorkCollect workCollect = new WorkCollect();
+					workCollect.setWork(workService.loadPojo(Work.class, id));
+					workCollect.setUser(user);
+					workService.savePojo(workCollect, user);
+				}
+			}
+			attr.addFlashAttribute(Constants.SUCCESS_MESSAGE, MessageConstants.COLLECT_SUCCESS);
+		}catch(Exception e){
+			log.error("addCollect error",e);
+			handleError(attr, e);
+		}
+		return "redirect:toReview?id=" + id;
 	}
 
 }

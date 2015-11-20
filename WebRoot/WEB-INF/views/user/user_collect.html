@@ -25,24 +25,20 @@
                   <h3 class="c-font-uppercase c-font-bold">我的收藏</h3>
                   <div class="c-line-left"></div>
               </div>
-              <div class="c-shop-wishlist-1">
-                        <div class="c-border-bottom hidden-sm hidden-xs">
-                            <div class="row">
-                                <div class="col-md-3">
-                                    <h3 class="c-font-uppercase c-font-16 c-font-grey-2 c-font-bold">活动</h3>
-                                </div>
-                                <div class="col-md-5">
-                                    <h3 class="c-font-uppercase c-font-16 c-font-grey-2 c-font-bold">标题</h3>
-                                </div>
-                                <div class="col-md-2">
-                                    <h3 class="c-font-uppercase c-font-16 c-font-grey-2 c-font-bold">预定人数</h3>
-                                </div>
-                                <div class="col-md-2">
-                                    <h3 class="c-font-uppercase c-font-16 c-font-grey-2 c-font-bold">价格</h3>
-                                </div>
-                            </div>
-                        </div>
-                        
+              <div class="c-content-tab-1 c-theme c-margin-t-30">
+                   <div class="clearfix">
+                       <ul class="nav nav-tabs c-font-uppercase c-font-bold">
+                       	   <li class="active">
+                               <a href="#tab_1_1_content" data-toggle="tab">活动</a>
+                           </li>
+                           <li>
+                               <a href="#tab_1_2_content" data-toggle="tab">作品 </a>
+                           </li>
+                       </ul>
+                   </div>
+                   
+                   <div class="tab-content c-bordered c-padding-lg">
+                     <div class="tab-pane active" id="tab_1_1_content">
                         <!-- BEGIN: PRODUCT ITEM ROW -->
                         <div id="project_collect"></div>
                          <!-- END: PRODUCT ITEM ROW -->
@@ -57,14 +53,33 @@
 						<script type='text/javascript'>
 				            getByAjax("${basePath}/userinfo/getUserProjectCollect?currentPage=1","project_collect");
 					    </script>
-  
                     </div>
+                    
+                    <div class="tab-pane" id="tab_1_2_content">
+                        <!-- BEGIN: PRODUCT ITEM ROW -->
+                        <div id="work_collect"></div>
+                         <!-- END: PRODUCT ITEM ROW -->
+                        
+                        <!-- BEGIN: PAGER -->
+                        <div class="row c-margin-t-40 pull-right">
+                              <ul id="work_collect_pager" class="c-content-pagination c-square c-theme">
+                              </ul>
+						</div>
+						<!-- END: PAGER -->
+						
+						<script type='text/javascript'>
+				            getByAjax("${basePath}/userinfo/getUserWorkCollect?currentPage=1","work_collect");
+					    </script>
+                    </div>
+                    
+                 </div>
               <!-- END: PAGE CONTENT -->
           </div>
 		
 	</div>
 	<!-- END: PAGE CONTENT -->
 	</div>
+</div>
 </div>
 <!-- END: PAGE CONTAINER -->
 

@@ -186,6 +186,16 @@ CREATE TABLE `work_comment` (
   `last_update_time` datetime comment '最后修改时间'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+/**活动收藏表 */
+DROP TABLE IF EXISTS `work_collect`;
+CREATE TABLE `work_collect` (
+  `id` varchar(36) NOT NULL PRIMARY KEY,
+  `work` varchar(36) comment '作品',
+  `user` varchar(36) comment '用户',
+  `create_time` datetime comment '创建时间',
+  `last_update_time` datetime comment '最后修改时间'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 /**胶卷记录表 */
 DROP TABLE IF EXISTS `user_coupon`;
 CREATE TABLE `user_coupon` (

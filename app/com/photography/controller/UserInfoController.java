@@ -31,6 +31,7 @@ import com.photography.mapping.ProjectCollect;
 import com.photography.mapping.ProjectOrder;
 import com.photography.mapping.User;
 import com.photography.mapping.Work;
+import com.photography.mapping.WorkCollect;
 import com.photography.service.IMailService;
 import com.photography.service.IProjectOrderService;
 import com.photography.service.IProjectService;
@@ -181,7 +182,7 @@ public class UserInfoController extends BaseController {
 		List<ProjectCollect> projectCollects = null;
 		Expression exp =Condition.eq("user.id", user.getId());
 		projectCollects = projectService.getPojoList(ProjectCollect.class, pager, exp, new Sort("createTime",QueryConstants.DESC),user);
-		mv.setViewName("user/user_collect_item");
+		mv.setViewName("user/user_collect_project_item");
 
 		mv.addObject("pager", pager);
 		mv.addObject("projectCollects", projectCollects);
@@ -200,6 +201,45 @@ public class UserInfoController extends BaseController {
 		ProjectCollect projectCollect = projectService.loadPojo(ProjectCollect.class, id);
 		if(projectCollect != null){
 			projectService.deletePojo(projectCollect, getSessionUser(request));
+		}
+		ra.addFlashAttribute("type", "3");
+		return "redirect:toUserInfo";
+	}
+	
+	/**
+	 * 获取收藏活动列表
+	 * @param request
+	 * @return
+	 * @author 徐雁斌
+	 * @throws ServiceException 
+	 */
+	@RequestMapping(value="/getUserWorkCollect")
+	public ModelAndView getUserWorkCollect(Pager pager,HttpServletRequest request) throws ServiceException {
+		ModelAndView mv = new ModelAndView();
+		
+		User user = getSessionUser(request);
+		List<WorkCollect> workCollects = null;
+		Expression exp =Condition.eq("user.id", user.getId());
+		workCollects = projectService.getPojoList(WorkCollect.class, pager, exp, new Sort("createTime",QueryConstants.DESC),user);
+		mv.setViewName("user/user_collect_work_item");
+
+		mv.addObject("pager", pager);
+		mv.addObject("workCollects", workCollects);
+		return mv;
+	}
+	
+	/**
+	 * 用户删除收藏
+	 * @param request
+	 * @return
+	 * @author 徐雁斌
+	 * @throws ServiceException 
+	 */
+	@RequestMapping(value="/deleteUserWorkCollect")
+	public String deleteUserWorkCollect(String id,HttpServletRequest request,RedirectAttributes ra) throws ServiceException {
+		WorkCollect workCollect = projectService.loadPojo(WorkCollect.class, id);
+		if(workCollect != null){
+			projectService.deletePojo(workCollect, getSessionUser(request));
 		}
 		ra.addFlashAttribute("type", "3");
 		return "redirect:toUserInfo";
