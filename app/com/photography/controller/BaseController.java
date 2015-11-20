@@ -165,10 +165,10 @@ public class BaseController {
 	 * @return
 	 */
 	protected boolean checkFiles(MultipartFile[] files,FileGroup fileGroup){
-		boolean fileFlag = true;
+		boolean fileFlag = false;
 		for(MultipartFile file : files){
-			if(file.isEmpty()){
-				fileFlag = false;
+			if(!file.isEmpty()){
+				fileFlag = true;
 				break;
 			}
 		}
