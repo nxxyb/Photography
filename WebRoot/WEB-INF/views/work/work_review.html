@@ -7,7 +7,6 @@
 <head>
 	<#include "../common/title.html">
 	<#include "../common/link.html">
-	<link rel="shortcut icon" href="favicon.ico"/>
 </head>
 <body class="c-layout-header-fixed c-layout-header-mobile-fixed">
 
@@ -21,18 +20,16 @@
         <div class="container">
             
 		<div class="cbp-l-project-title">${(work.name)!''}</div>
-		<div class="cbp-l-project-subtitle" style="font-size: 20px;">
-			<p>
-				分享到：
-                <a href="http://v.t.sina.com.cn/share/share.php?url=http://www.shao-ming.com&title='分享内容'" target="_blank">
-                	<span class="label label-success c-font-slim c-font-uppercase c-font-bold">
-                		<i class="fa fa-weixin"></i> 微信
-                	</span>
-                </a>
-                <a href=""><span class="label label-success c-font-slim c-font-uppercase c-font-bold"><i class="fa fa-qq"></i> QQ</span></a>
-                <a href=""><span class="label label-warning c-font-slim c-font-uppercase c-font-bold"><i class="fa fa-weibo"></i> 微博</span></a>
-                <a href=""><span class="label label-primary c-font-slim c-font-uppercase  c-font-bold"><i class="fa fa-renren"></i> 人人</span></a>
-            </p>
+		<div>
+			<div class="bdsharebuttonbox" style="text-align: center;margin-right: auto;margin-left: auto;">
+				<a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+				<a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
+				<a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a>
+				<a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+				<a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网"></a>
+				<a href="#" class="bds_more" data-cmd="more"></a>
+			</div>
+			<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":["mshare","qzone","tsina","bdysc","weixin","renren","tqq","bdxc","kaixin001","tqf","tieba","douban","bdhome","sqq","ibaidu","duitang","fx","youdao","people","xinhua","mail","isohu","wealink","ty","copy","print"],"bdPic":"","bdStyle":"1","bdSize":"32"},"share":{},"image":{"viewList":["weixin","qzone","tqq","tsina","renren"],"viewText":"分享到：","viewSize":"32"},"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["weixin","qzone","tqq","tsina","renren"]}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
 		</div>
 		
 		

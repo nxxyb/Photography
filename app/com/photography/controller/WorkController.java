@@ -112,6 +112,7 @@ public class WorkController extends BaseController {
 			Work work = (Work) workService.loadPojo(Work.class,id);
 			mav.addObject("work", work);
 		}
+		//mav.addObject("path", request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+request.getContextPath()+"/work/toReview?id=" + id);
 		return mav;
 	}
 	
