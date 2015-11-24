@@ -21,6 +21,36 @@
                     <div class="row">
                         <div class="col-md-9">
                             <div class="c-content-blog-post-card-1-grid">
+                            	<div class="c-margin-t-20 c-margin-b-40">	
+                            		<form id="projectCommentForm" action="${basePath}/project/saveProjectComment" method="post" enctype="multipart/form-data">
+		                                <div class="row c-product-review-input">
+		                                	<div class="col-md-12">
+			                                    <div class="form-group">
+		                                               <textarea name="content" class="form-control  c-square c-theme c-theme-border" placeholder="来，说说你在做什么，想什么" rows="6"></textarea>
+	                                        	</div>
+			                                 </div>
+			                                 <div id="photoDiv" class="form-group col-md-12 c-hide">
+			                                 	<label class="control-label">上传图片<p><small class="c-font-grey-2">最多上传4张图片，支持jpg,gif,png格式</small></p></label>
+			                                 	<input id="photos" name="photoPics" type="file" class="form-control c-square c-theme file-loading input-lg" accept="image/*" multiple>
+												<script type="text/javascript">
+														$("#photos").fileinput({
+														    uploadUrl: "#", // server upload action
+								    						showUpload: false,
+								    						overwriteInitial: true,
+								    						allowedFileExtensions:['jpg', 'gif', 'png'],
+								    						minFileCount: 1,
+								    						maxFileCount: 4
+														});
+												</script>
+			                                 </div>
+			                                 
+			                                 <div class="col-md-12">
+			                                 	<a href="javascript:void(0);" onclick="showPhotoDiv();"><i class="fa fa-picture-o c-font-green-1"></i> 图片</a>
+			                                    <button type="submit" class="pull-right btn c-btn c-btn-square c-theme-btn c-font-bold c-font-uppercase c-font-white">提交</button>
+			                                 </div>
+		                                </div>
+                                	</form>
+								</div>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="c-content-blog-post-card-1 c-option-2 c-bordered">
@@ -271,6 +301,17 @@
                         </div>
                         <div class="col-md-3">
                             <!-- BEGIN: CONTENT/BLOG/BLOG-SIDEBAR-1 -->
+                            
+							<div class="thumbnail">
+						      <img class="img-circle" src="${basePath}/images/example/blog5.jpg" >
+						      <div class="caption">
+						        <h3>Thumbnail label</h3>
+						        <p class="c-bg-grey">
+						        	<a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a>
+						        </p>
+						      </div>
+						    </div>
+                            
                             <form action="#" method="post">
                                 <div class="input-group">
                                     <input type="text" class="form-control c-square c-theme-border" placeholder="Search blog...">
@@ -434,6 +475,10 @@ $(document).ready(function(){
 	$('#firend').addClass('c-active');
 	
   });
+  
+  function showPhotoDiv(){
+  	$("#photoDiv").show();
+  }
 </script>
 
 </body>
