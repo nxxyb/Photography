@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<!--[if IE 9]> <html lang="zh-CN" class="ie9"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="zh-CN">
+<!--<![endif]-->
+<!-- BEGIN HEAD -->
+<head>
+	<#include "../common/title.html">
+	<#include "../common/link.html">
+	<script src="${basePath}/assets/base/js/validate/user_auth.js" type="text/javascript"></script>
+</head>
+<body class="c-layout-header-fixed c-layout-header-mobile-fixed">
+
+	<#include "../common/header.html">
+
+<!-- BEGIN: PAGE CONTAINER -->
+<div class="c-layout-page" >
+	<div class="c-content-box c-size-md c-bg-white">
+	<!-- BEGIN: PAGE CONTENT -->
+	<div class="container">
+		<#include "./common/menu.html">
+		
+		<div class="c-layout-sidebar-content ">
+              <!-- BEGIN: PAGE CONTENT -->
+              <div class="c-content-title-1">
+                  <h3 class="c-font-uppercase c-font-bold">搜索派友</h3>
+                  <div class="c-line-left"></div>
+                   <form action="#" method="post">
+                       <div class="input-group">
+                           <input type="text" class="form-control c-square c-theme-border" placeholder="输入姓名/手机号">
+                           <span class="input-group-btn">
+                               <button class="btn c-theme-btn c-theme-border c-btn-square" type="button">Go!</button>
+                           </span>
+                       </div>
+                   </form>
+              </div>
+              <div class="c-margin-b-20"></div>
+              <div class="row" data-auto-height="true">
+                        <div class="col-md-4 c-margin-b-20">
+                            <div class="c-content-media-1 c-bg-grey" data-height="height">
+                            	<div class="c-content-label">未添加</div>
+                            	<div class="pull-right"><a href="#" class="btn btn-sm c-btn-grey-2 c-btn-uppercase c-btn-bold c-btn-border-2x c-btn-circle">
+                                    <!-- <i class="glyphicon glyphicon-plus"></i> 添加 -->
+                                    <i class="glyphicon glyphicon-trash"></i> 取消 </a></div>
+                            	<div class="c-author">
+                                    <div class="c-portrait" style="background-image: url(${basePath}/images/example/blog5.jpg)"></div>
+                                    <div class="c-name c-font-uppercase">Jack Nilson</div>
+                                </div>
+                                <p>简介</p>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-4 c-margin-b-20">
+                            <div class="c-content-media-1 c-bg-grey" data-height="height">
+                            	<div class="c-content-label">已添加</div>
+                            	<div class="pull-right"><a href="#" class="btn btn-sm c-btn-grey-2 c-btn-uppercase c-btn-bold c-btn-border-2x c-btn-circle">
+                                    <!-- <i class="glyphicon glyphicon-plus"></i> 添加 -->
+                                    <i class="glyphicon glyphicon-trash"></i> 取消 </a></div>
+                            	<div class="c-author">
+                                    <div class="c-portrait" style="background-image: url(${basePath}/images/example/blog5.jpg)"></div>
+                                    <div class="c-name c-font-uppercase">Jack Nilson</div>
+                                </div>
+                                <p>简介</p>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-4 c-margin-b-20">
+                            <div class="c-content-media-1 c-bg-grey" data-height="height">
+                            	<div class="c-content-label">已添加</div>
+                            	<div class="pull-right"><a href="#" class="btn btn-sm c-btn-grey-2 c-btn-uppercase c-btn-bold c-btn-border-2x c-btn-circle">
+                                    <!-- <i class="glyphicon glyphicon-plus"></i> 添加 -->
+                                    <i class="glyphicon glyphicon-trash"></i> 取消 </a></div>
+                            	<div class="c-author">
+                                    <div class="c-portrait" style="background-image: url(${basePath}/images/example/blog5.jpg)"></div>
+                                    <div class="c-name c-font-uppercase">Jack Nilson</div>
+                                </div>
+                                <p>简介</p>
+                            </div>
+                        </div>
+                        
+              </div>
+              
+              <div class="row" data-auto-height="true">
+              	<div class="col-md-4 c-margin-b-20">
+                            <div class="c-content-media-1 c-bg-grey" data-height="height">
+                            	<div class="c-content-label">已添加</div>
+                            	<div class="pull-right"><a href="#" class="btn btn-sm c-btn-grey-2 c-btn-uppercase c-btn-bold c-btn-border-2x c-btn-circle">
+                                    <!-- <i class="glyphicon glyphicon-plus"></i> 添加 -->
+                                    <i class="glyphicon glyphicon-trash"></i> 取消 </a></div>
+                            	<div class="c-author">
+                                    <div class="c-portrait" style="background-image: url(${basePath}/images/example/blog5.jpg)"></div>
+                                    <div class="c-name c-font-uppercase">Jack Nilson</div>
+                                </div>
+                                <p>简介</p>
+                            </div>
+                        </div>
+              </div>
+        </div>
+	</div>
+	<!-- END: PAGE CONTENT -->
+	</div>
+</div>
+<!-- END: PAGE CONTAINER -->
+
+<#include "../common/footer.html">
+
+<script>
+$(document).ready(function(){
+
+	$('#blog_friend_search').addClass('c-active');
+  
+  });
+</script>
+
+</body>
+
+</html>

@@ -5,7 +5,6 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.photography.exception.ServiceException;
 
@@ -33,6 +32,22 @@ public class FriendController extends BaseController {
 		ModelAndView mav = new ModelAndView();
 		
 		mav.setViewName("/friend/blog_review");
+		return mav;
+	}
+	
+	@RequestMapping("/toFriend")
+	public ModelAndView toFriend(HttpServletRequest request) throws ServiceException {
+		ModelAndView mav = new ModelAndView();
+		
+		mav.setViewName("/friend/blog_friend");
+		return mav;
+	}
+	
+	@RequestMapping("/toFriendSearch")
+	public ModelAndView toFriendSearch(HttpServletRequest request) throws ServiceException {
+		ModelAndView mav = new ModelAndView();
+		
+		mav.setViewName("/friend/blog_friend_search");
 		return mav;
 	}
 }
