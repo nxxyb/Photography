@@ -50,4 +50,12 @@ public class FriendController extends BaseController {
 		mav.setViewName("/friend/blog_friend_search");
 		return mav;
 	}
+	
+	@RequestMapping("/toMy")
+	public ModelAndView toMy(HttpServletRequest request) throws ServiceException {
+		ModelAndView mav = new ModelAndView();
+		
+		mav.setViewName("/friend/blog_my");
+		return mav;
+	}
 }
