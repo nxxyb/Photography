@@ -13,7 +13,7 @@
 	<#include "../common/header.html">
 
 <!-- BEGIN: PAGE CONTAINER -->
-<div class="c-layout-page c-bg-grey-1" >
+<div class="c-layout-page" >
 	<!-- BEGIN: PAGE CONTENT -->
             <!-- BEGIN: BLOG LISTING -->
             <div class="c-content-box c-size-md">
@@ -28,11 +28,11 @@
 		                                <div class="row c-product-review-input">
 		                                	<div class="col-md-12">
 			                                    <div class="form-group">
-		                                               <textarea name="content" class="form-control  c-square c-theme c-theme-border" placeholder="来，说说你在做什么，想什么" rows="6"></textarea>
+		                                               <textarea name="content" class="form-control  c-square c-theme c-theme-border" placeholder="鏉ワ紝璇磋浣犲湪鍋氫粈涔堬紝鎯充粈涔� rows="6"></textarea>
 	                                        	</div>
 			                                 </div>
 			                                 <div id="photoDiv" class="form-group col-md-12 c-hide">
-			                                 	<label class="control-label">上传图片<p><small class="c-font-grey-2">最多上传4张图片，支持jpg,gif,png格式</small></p></label>
+			                                 	<label class="control-label">涓婁紶鍥剧墖<p><small class="c-font-grey-2">鏈�涓婁紶4寮犲浘鐗囷紝鏀寔jpg,gif,png鏍煎紡</small></p></label>
 			                                 	<input id="photos" name="photoPics" type="file" class="form-control c-square c-theme file-loading input-lg" accept="image/*" multiple>
 												<script type="text/javascript">
 														$("#photos").fileinput({
@@ -47,8 +47,8 @@
 			                                 </div>
 			                                 
 			                                 <div class="col-md-12">
-			                                 	<a href="javascript:void(0);" onclick="showPhotoDiv();"><i class="fa fa-picture-o c-font-green-1"></i> 图片</a>
-			                                    <button type="submit" class="pull-right btn c-btn c-btn-square c-theme-btn c-font-bold c-font-uppercase c-font-white">提交</button>
+			                                 	<a href="javascript:void(0);" onclick="showPhotoDiv();"><i class="fa fa-picture-o c-font-green-1"></i> 鍥剧墖</a>
+			                                    <button type="submit" class="pull-right btn c-btn c-btn-square c-theme-btn c-font-bold c-font-uppercase c-font-white">鎻愪氦</button>
 			                                 </div>
 		                                </div>
                                 	</form>
@@ -308,50 +308,34 @@
                         <div class="col-md-3">
                             <!-- BEGIN: CONTENT/BLOG/BLOG-SIDEBAR-1 -->
                             
-						    <div class="c-content-person-1 c-option-2">
-                                 <div class="c-caption c-content-overlay">
-                                     <div class="c-overlay-wrapper">
-                                         <div class="c-overlay-content">
-                                             
-                                             <a href="${basePath}/images/example/team10.jpg" data-lightbox="fancybox" data-fancybox-group="gallery-4">
-                                                 <i class="icon-magnifier"></i>
-                                             </a>
-                                         </div>
-                                     </div>
-                                     <img class="c-overlay-object img-responsive" src="${basePath}/images/example/team10.jpg" alt=""> 
-                                 </div>
-                                 <div class="c-body" style="padding: 10px;">
-                                     <div class="c-head">
-                                         <div class="c-name c-font-uppercase c-font-bold">徐雁斌</div>
-                                 	</div>
-                                 	<div class="c-position"> 别以为比我年轻你就能多蹦跶几天，棺材装的是死人不是老人。 </div>
-                                    <p></p>
-							   </div>
-                            </div>
-                            <div class="btn-group btn-group-justified" role="group" aria-label="Justified button group">
-						      <a href="${basePath}/friend/toFriend" class="btn c-theme-btn" role="button">派友 <span class="badge">5</span></a>
-						      <a href="#" class="btn c-theme-btn" role="button">派文 <span class="badge">163</span></a>
+							<div class="thumbnail c-bg-grey-1">
+						      	<img class="img-circle c-margin-t-10" src="${basePath}/images/example/blog5.jpg" height="200px" width="150px">
+						      	<div class="caption c-center">
+						        	<h3><a class="c-theme-font" href="#">寰愰泚鏂�/a></h3>
+						      	</div>
+					        	<div class="btn-group btn-group-justified" role="group" aria-label="Justified button group">
+							      <a href="${basePath}/friend/toFriend" class="btn c-btn-dark-2" role="button">娲惧弸 <span class="badge">5</span></a>
+							      <a href="#" class="btn c-btn-dark-2" role="button">娲惧崟 <span class="badge">163</span></a>
+							    </div>
 						    </div>
                             
-                            <div class="c-margin-t-40">
-	                            <form action="#" method="post">
-	                                <div class="input-group">
-	                                    <input type="text" class="form-control c-square c-theme-border" placeholder="搜索派文">
-	                                    <span class="input-group-btn">
-	                                        <button class="btn c-theme-btn c-theme-border c-btn-square" type="button">搜索</button>
-	                                    </span>
-	                                </div>
-	                            </form>
-                            </div>
+                            <form action="#" method="post">
+                                <div class="input-group">
+                                    <input type="text" class="form-control c-square c-theme-border" placeholder="Search blog...">
+                                    <span class="input-group-btn">
+                                        <button class="btn c-theme-btn c-theme-border c-btn-square" type="button">Go!</button>
+                                    </span>
+                                </div>
+                            </form>
                             
                             <div class="c-content-tab-1 c-theme c-margin-t-30">
                                 <div class="nav-justified">
                                     <ul class="nav nav-tabs nav-justified">
                                         <li class="active">
-                                            <a href="#blog_recent_posts" data-toggle="tab">最新派单</a>
+                                            <a href="#blog_recent_posts" data-toggle="tab">鏈�柊娲惧崟</a>
                                         </li>
                                         <li>
-                                            <a href="#blog_popular_posts" data-toggle="tab">热门派单</a>
+                                            <a href="#blog_popular_posts" data-toggle="tab">鐑棬娲惧崟</a>
                                         </li>
                                     </ul>
                                     <div class="tab-content">
@@ -433,7 +417,7 @@
                             
                             <div class="c-content-ver-nav">
                                 <div class="c-content-title-1 c-theme c-title-md c-margin-t-40">
-                                    <h3 class="c-font-bold c-font-uppercase">派友推荐</h3>
+                                    <h3 class="c-font-bold c-font-uppercase">娲惧弸鎺ㄨ崘</h3>
                                     <div class="c-line-left c-theme-bg"></div>
                                 </div>
                                 

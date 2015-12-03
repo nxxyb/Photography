@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<!--[if IE 9]> <html lang="zh-CN" class="ie9"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="zh-CN">
+<!--<![endif]-->
+<!-- BEGIN HEAD -->
+<head>
+	<#include "../common/title.html">
+	<#include "../common/link.html">
+</head>
+<body class="c-layout-header-fixed c-layout-header-mobile-fixed">
+
+	<#include "../common/header.html">
+
+<!-- BEGIN: PAGE CONTAINER -->
+<div class="c-layout-page" >
+	<!-- BEGIN: PAGE CONTENT -->
+            <!-- BEGIN: BLOG LISTING -->
+            <div class="c-content-box c-size-md c-bg-grey-1">
+                <div class="container">
+                
+                <#include "./common/menu.html">
+		
+				<div class="c-layout-sidebar-content ">
+                	<div class="c-content-title-1">
+	                  <h3 class="c-font-uppercase c-font-bold">基本资料</h3>
+	                  <div class="c-line-left"></div>
+	              	</div>
+	              	
+	              	<div class="row">
+	              		<div class="col-md-4 col-sm-4 col-xs-12 c-margin-b-20">
+	              			<img src="${basePath}/images/example/team10.jpg" class="img-responsive" alt="Responsive image">
+	              		</div>
+	              	</div>
+	              	
+	              	<div class="row">
+                        <div class="col-md-6 col-sm-6 col-xs-12 c-margin-b-20">
+                            <h3 class="c-font-uppercase c-font-bold">徐雁斌 </h3>
+                            <p>别以为比我年轻你就能多蹦跶几天，棺材装的是死人不是老人。</p>
+                            <ul class="list-unstyled">
+                                <li>生日：1980-9-17</li>
+                                <li>QQ: 25213908</li>
+                                <li>邮箱:
+                                    <a href="mailto:jango@themehats.com" class="c-theme-link">jango@themehats.com</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                </div>
+                </div>
+            </div>
+            <!-- END: BLOG LISTING  -->
+            <!-- END: PAGE CONTENT -->
+	
+	
+</div>
+<!-- END: PAGE CONTAINER -->
+
+<#include "../common/footer.html">
+
+<script>
+$(document).ready(function(){
+
+	$('#firend').addClass('c-active');
+	$('#info').addClass('c-active');
+  });
+  
+  function showPhotoDiv(){
+  	$("#photoDiv").show();
+  }
+</script>
+
+</body>
+
+</html>

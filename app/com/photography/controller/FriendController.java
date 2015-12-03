@@ -35,6 +35,16 @@ public class FriendController extends BaseController {
 		return mav;
 	}
 	
+	
+	
+	@RequestMapping("/toInfo")
+	public ModelAndView toInfo(HttpServletRequest request) throws ServiceException {
+		ModelAndView mav = new ModelAndView();
+		
+		mav.setViewName("/friend/info");
+		return mav;
+	}
+	
 	@RequestMapping("/toFriend")
 	public ModelAndView toFriend(HttpServletRequest request) throws ServiceException {
 		ModelAndView mav = new ModelAndView();
