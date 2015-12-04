@@ -208,7 +208,63 @@ CREATE TABLE `user_coupon` (
   `last_update_time` datetime comment '最后修改时间'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+/**派文表*/
+DROP TABLE IF EXISTS `blog`;
+CREATE TABLE `blog` (
+  `id` varchar(36) NOT NULL PRIMARY KEY,
+  `content` varchar(2000) comment '内容',
+  `video` varchar(1000) comment '视频',
+  `photos` varchar(500) comment '图片',
+  `create_user` varchar(36) comment '用户',
+  `create_time` datetime comment '创建时间',
+  `last_update_time` datetime comment '最后修改时间'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+/**派友表*/
+DROP TABLE IF EXISTS `blog_friend`;
+CREATE TABLE `blog_friend` (
+  `id` varchar(36) NOT NULL PRIMARY KEY,
+  `create_user` varchar(36) comment '创建用户',
+  `friend_user` varchar(36) comment '好友用户',
+  `create_time` datetime comment '创建时间',
+  `last_update_time` datetime comment '最后修改时间'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/**派文评论表*/
+DROP TABLE IF EXISTS `blog_comment`;
+CREATE TABLE `blog_comment` (
+  `id` varchar(36) NOT NULL PRIMARY KEY,
+  `blog` varchar(36) comment '派文',
+  `content` varchar(2000) comment '内容',
+  `create_user` varchar(36) comment '创建用户',
+  `create_time` datetime comment '创建时间',
+  `last_update_time` datetime comment '最后修改时间'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/**评论回复表*/
+DROP TABLE IF EXISTS `comment_reploy`;
+CREATE TABLE `comment_reploy` (
+  `id` varchar(36) NOT NULL PRIMARY KEY,
+  `content` varchar(2000) comment '内容',
+  `create_user` varchar(36) comment '创建用户',
+  `project_comment` varchar(36) comment '活动评论',
+  `work_comment` varchar(36) comment '作品评论',
+  `blog_comment` varchar(36) comment '派文评论',
+  `create_time` datetime comment '创建时间',
+  `last_update_time` datetime comment '最后修改时间'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/**点赞表*/
+DROP TABLE IF EXISTS `love`;
+CREATE TABLE `love` (
+  `id` varchar(36) NOT NULL PRIMARY KEY,
+  `create_user` varchar(36) comment '创建用户',
+  `project` varchar(36) comment '活动',
+  `work` varchar(36) comment '作品',
+  `blog` varchar(36) comment '派文',
+  `create_time` datetime comment '创建时间',
+  `last_update_time` datetime comment '最后修改时间'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /** 后台管理 */
 /**首页配置表 */
