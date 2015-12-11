@@ -20,8 +20,7 @@
 	      </div>
 	      </#list>
 	</div>
-	
-	<#if pager.totalPage > pager.currentPage>
+	<#if (pager.totalPage > pager.currentPage)>
 	<div class="cbp-loadMore-block${pager.currentPage}">
 	</div>
 	</#if>

@@ -58,6 +58,7 @@ public class FriendController extends BaseController {
 	@RequestMapping("/index")
 	public ModelAndView toIndex(Pager pager,HttpServletRequest request) throws ServiceException {
 		ModelAndView mav = new ModelAndView();
+		pager.setPageSize(6);
 		Expression exp = null;
 		List<Blog> blogs = blogService.getPojoList(Blog.class, pager, exp, new Sort("createTime",QueryConstants.DESC),null);
 		mav.addObject("blogs", blogs);
