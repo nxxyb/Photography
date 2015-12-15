@@ -23,120 +23,109 @@
                             <div class="c-content-blog-post-1-view">
                                 <div class="c-content-blog-post-1">
                                     <div class="c-media">
-                                        <div class="c-content-media-2-slider" data-slider="owl" data-single-item="true" data-auto-play="4000">
-                                            <div class="owl-carousel owl-theme c-theme owl-single">
-                                                <div class="item">
-                                                    <div class="c-content-media-2" style="background-image: url(${basePath}/images/example/blog1.jpg); min-height: 460px;"> </div>
-                                                </div>
-                                                <div class="item">
-                                                    <div class="c-content-media-2" style="background-image: url(${basePath}/images/example/blog2.jpg); min-height: 460px;"> </div>
-                                                </div>
-                                                <div class="item">
-                                                    <div class="c-content-media-2" style="background-image: url(${basePath}/images/example/blog3.jpg); min-height: 460px;"> </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        <#if (blog.video)?? && blog.video != "">
+                                        	<iframe src="${blog.video}" width="100%"  height="460px" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+                                        <#else>
+                                        	<#if (blog.photos.fileInfos)?? && ((blog.photos.fileInfos)?size > 0)>
+	                                        <div class="c-content-media-2-slider" data-slider="owl" data-single-item="true" data-auto-play="4000">
+	                                            <div class="owl-carousel owl-theme c-theme owl-single">
+	                                                <#list blog.photos.fileInfos as photo>
+	                                                <div class="item">
+	                                                    <div class="c-content-media-2" style="background-image: url(${basePath}/${photo.realPath}); min-height: 460px;"> </div>
+	                                                </div>
+	                                                </#list>
+	                                            </div>
+	                                        </div>
+	                                        </#if>
+                                        </#if>
                                     </div>
-                                    <div class="c-title c-font-bold c-font-uppercase">
-                                        <a href="#">UX Design Conference 2015</a>
-                                    </div>
+                                    
                                     <div class="c-panel c-margin-b-30">
                                         <div class="c-author">
-                                            <a href="#">By
-                                                <span class="c-font-uppercase">Nick Strong</span>
-                                            </a>
-                                        </div>
-                                        <div class="c-date">on
-                                            <span class="c-font-uppercase">20 May 2015, 10:30AM</span>
-                                        </div>
-                                        <ul class="c-tags c-theme-ul-bg">
-                                            <li>ux</li>
-                                            <li>marketing</li>
-                                            <li>events</li>
-                                        </ul>
-                                        <div class="c-comments">
                                             <a href="#">
-                                                <i class="icon-speech"></i> 30 comments</a>
+                                                <span class="c-font-bold c-font-20"> <#if (blog.createUser.realName)??>${blog.createUser.realName}<#else>${(blog.createUser.mobile)!''} </#if></span>
+                                            </a>
+                                            <span class="c-font-uppercase"> ${(blog.createTime?string('yyyy-MM-dd HH:mm'))!''}</span>
+                                        </div>
+                                        <div class="c-comments">
+                                            <i class="fa fa-thumbs-o-up c-font-18"></i> <span class="badge c-bg-green">${(blog.loveNum)!''}</span> 
+                                        				|
+                                            <i class="icon-speech c-font-18"></i> 评论 <span class="badge c-bg-green">${(blog.commentNum)!''}</span>
                                         </div>
                                     </div>
+
+									<div class="bdsharebuttonbox" style="text-align: center;margin-right: auto;margin-left: auto;">
+										<a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+										<a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
+										<a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a>
+										<a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+										<a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网"></a>
+										<a href="#" class="bds_more" data-cmd="more"></a>
+									</div>
+									<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":["mshare","qzone","tsina","bdysc","weixin","renren","tqq","bdxc","kaixin001","tqf","tieba","douban","bdhome","sqq","ibaidu","duitang","fx","youdao","people","xinhua","mail","isohu","wealink","ty","copy","print"],"bdPic":"","bdStyle":"1","bdSize":"32"},"share":{},"image":{"viewList":["weixin","qzone","tqq","tsina","renren"],"viewText":"分享到：","viewSize":"32"},"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["weixin","qzone","tqq","tsina","renren"]}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
                                     <div class="c-desc">
-                                        <p> Lorem ipsum dolor sit amet, coectetuer diam ipsum dolor sit amet nonummy coectetuer diam ipsum dolor sit coectetuer adipiscing elit amipiscing elit sit adipiscing consectetuer ipsum dolor sit amipiscing elit sit
-                                            amet, sit amet, coectetuer adipiscing elit adipiscing consectetuer ipsum dolor sit amet diam nonummy adipiscing elit sit amet, sit ame. </p>
-                                        <p> Lorem ipsum dolor sit amet, coectetuer diam ipsum dolor sit amet nonummy coectetuer diam ipsum dolor sit coectetuer adipiscing elit adipiscing consectetuer ipsum dolor sit amipiscing elit sit amet, sit amet, coectetuer
-                                            adipiscing elit adipiscing consectetuer ipsum dolor sit amet diam nonummy adipiscing elit sit amet, sit ame. </p>
-                                        <p> Lorem ipsum dolor sit amet, coectetuer diam ipsum dolor sit amet nonummy coectetuer diam ipsum dolor sit coectetuer adipiscing elit adipiscing const sit amet, sit amet, coectetuer adipiscing elit adipiscing consectetuer
-                                            ipsum dolor sit amet diam nonummy adipiscing elit sit amet, sit ame. </p>
-                                        <p> Lorem ipsum dolor sit amet, coe coectetuer diam ipsum dolor sit coectetuer adipiscing elit adipiscing consectetuer ipsum dolor sit amipiscing elit sit amet, sit amet, coectetuer adipiscing elit adipiscing consectetuer
-                                            ipsum dolor sit amet diam nonummy adipiscing elit sit amet, sit ame. </p>
+                                        <p> ${(blog.content)!''} </p>
                                     </div>
                                     <div class="c-comments">
                                         <div class="c-content-title-1">
-                                            <h3 class="c-font-uppercase c-font-bold">Comments(30)</h3>
+                                            <h3 class="c-font-uppercase c-font-bold">评论(${(blog.commentNum)!''})</h3>
                                             <div class="c-line-left"></div>
                                         </div>
                                         <div class="c-comment-list">
+                                        	<#list blogComments as blogComment>
                                             <div class="media">
                                                 <div class="media-left">
                                                     <a href="#">
-                                                        <img class="media-object" alt="" src="assets/base/img/content/team/team1.jpg"> </a>
+                                                        <img class="media-object" alt="" src="${(blogComment.createUser.headPic)!'http://placehold.it/200x200'}"> </a>
                                                 </div>
                                                 <div class="media-body">
                                                     <h4 class="media-heading">
-                                                        <a href="#" class="c-font-bold">Sean</a> on
-                                                        <span class="c-date">23 May 2015, 10:40AM</span>
-                                                    </h4> Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. </div>
+                                                        <a href="#" class="c-font-bold"><#if (blogComment.createUser.realName)??>${blogComment.createUser.realName}<#else>${(blogComment.createUser.mobile)!''}</#if> </a> 
+                                                        <span class="c-date"> ${(blogComment.createTime?string('yyyy-MM-dd HH:mm'))!''}</span>
+                                                        <a href="javascript:void(0);" onclick="showReployDiv('${blogComment.id}');" class="c-font-bold c-theme-font"> 回复 </a>
+                                                    </h4> ${(blogComment.content)}
+                                                    
+                                                    <#list blogComment.commentReploys as commentReploy>
+                                                    	<div class="media">
+			                                                <div class="media-left">
+			                                                    <a href="#">
+			                                                        <img class="media-object" alt="" src="${(commentReploy.createUser.headPic)!'http://placehold.it/200x200'}"> </a>
+			                                                </div>
+			                                                <div class="media-body">
+			                                                    <h4 class="media-heading">
+			                                                        <a href="#" class="c-font-bold"><#if (commentReploy.createUser.realName)??>${commentReploy.createUser.realName}<#else>${(commentReploy.createUser.mobile)!''}</#if> </a> 
+			                                                        <span class="c-date"> ${(commentReploy.createTime?string('yyyy-MM-dd HH:mm'))!''}</span>
+			                                                    </h4> ${(commentReploy.content)!''} 
+			                                                </div>
+			                                            </div>
+                                                    </#list>
+                                                    
+                                                    <form id="reploy_form_${(blogComment.id)!''}" action="${basePath}/friend/reployComment" class="c-hide">
+		                                        		<input type="hidden" name="blogComment.id" value="${(blogComment.id)!''}">
+			                                            <div class="form-group">
+			                                                <textarea rows="3" name="content" placeholder="回复 ..." class="form-control c-square"></textarea>
+			                                            </div>
+			                                            <div class="form-group">
+			                                                <button type="submit" class="btn c-theme-btn c-btn-uppercase btn-md c-btn-sbold btn-block c-btn-square">提交</button>
+			                                            </div>
+                                        			</form>
+                                               </div>
+                                               
                                             </div>
-                                            <div class="media">
-                                                <div class="media-left">
-                                                    <a href="#">
-                                                        <img class="media-object" alt="" src="assets/base/img/content/team/team3.jpg"> </a>
-                                                </div>
-                                                <div class="media-body">
-                                                    <h4 class="media-heading">
-                                                        <a href="#" class="c-font-bold">Strong Strong</a> on
-                                                        <span class="c-date">21 May 2015, 11:40AM</span>
-                                                    </h4> Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis.
-                                                    <div class="media">
-                                                        <div class="media-left">
-                                                            <a href="#">
-                                                                <img class="media-object" alt="" src="assets/base/img/content/team/team4.jpg"> </a>
-                                                        </div>
-                                                        <div class="media-body">
-                                                            <h4 class="media-heading">
-                                                                <a href="#" class="c-font-bold">Emma Stone</a> on
-                                                                <span class="c-date">30 May 2015, 9:40PM</span>
-                                                            </h4> Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="media">
-                                                <div class="media-left">
-                                                    <a href="#">
-                                                        <img class="media-object" alt="" src="assets/base/img/content/team/team7.jpg"> </a>
-                                                </div>
-                                                <div class="media-body">
-                                                    <h4 class="media-heading">
-                                                        <a href="#" class="c-font-bold">Nick Nilson</a> on
-                                                        <span class="c-date">30 May 2015, 9:40PM</span>
-                                                    </h4> Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. </div>
-                                            </div>
+                                            </#list>
                                         </div>
+                                        
                                         <div class="c-content-title-1">
-                                            <h3 class="c-font-uppercase c-font-bold">Leave A Comment</h3>
                                             <div class="c-line-left"></div>
                                         </div>
-                                        <form action="#">
+                                        <form action="${basePath}/friend/saveComment">
+                                        	<input type="hidden" name="blog.id" value="${(blog.id)!''}">
                                             <div class="form-group">
-                                                <input type="text" placeholder="Your Name" class="form-control c-square"> </div>
-                                            <div class="form-group">
-                                                <input type="text" placeholder="Your Email" class="form-control c-square"> </div>
-                                            <div class="form-group">
-                                                <input type="text" placeholder="Your Website" class="form-control c-square"> </div>
-                                            <div class="form-group">
-                                                <textarea rows="8" name="message" placeholder="Write comment here ..." class="form-control c-square"></textarea>
+                                                <textarea rows="8" name="content" placeholder="评论 ..." class="form-control c-square"></textarea>
                                             </div>
                                             <div class="form-group">
-                                                <button type="submit" class="btn c-theme-btn c-btn-uppercase btn-md c-btn-sbold btn-block c-btn-square">Submit</button>
+                                                <button type="submit" class="btn c-theme-btn c-btn-uppercase btn-md c-btn-sbold btn-block c-btn-square">提交</button>
                                             </div>
                                         </form>
                                     </div>
@@ -308,6 +297,14 @@ $(document).ready(function(){
 	$('#firend').addClass('c-active');
 	
   });
+  
+  function showReployDiv(blogCommentId){
+	  	if($("#reploy_form_" + blogCommentId).is(":hidden")){
+	  		$("#reploy_form_" + blogCommentId).show();
+	  	}else{
+	  		$("#reploy_form_" + blogCommentId).hide();
+	  	}
+  }
 </script>
 
 </body>

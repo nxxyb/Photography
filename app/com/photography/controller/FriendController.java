@@ -14,12 +14,15 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.photography.dao.exp.Condition;
 import com.photography.dao.exp.Expression;
 import com.photography.dao.query.Pager;
 import com.photography.dao.query.QueryConstants;
 import com.photography.dao.query.Sort;
 import com.photography.exception.ServiceException;
 import com.photography.mapping.Blog;
+import com.photography.mapping.BlogComment;
+import com.photography.mapping.CommentReploy;
 import com.photography.mapping.FileGroup;
 import com.photography.mapping.User;
 import com.photography.service.IBlogService;
@@ -76,6 +79,11 @@ public class FriendController extends BaseController {
 	@RequestMapping("/toReview")
 	public ModelAndView toReview(String id,HttpServletRequest request) throws ServiceException {
 		ModelAndView mav = new ModelAndView();
+		Blog blog = blogService.loadPojo(Blog.class, id);
+		mav.addObject("blog", blog);
+		
+		List<BlogComment> blogComments = blogService.loadPojoByExpression(BlogComment.class, Condition.eq("blog.id", id), new Sort("createTime","DESC"));
+		mav.addObject("blogComments", blogComments);
 		
 		mav.setViewName("/friend/blog_review");
 		return mav;
@@ -175,5 +183,58 @@ public class FriendController extends BaseController {
 			return "redirect:index";
 		}
 		return "redirect:index";
+	}
+	
+	/**
+	 * 评论派文
+	 * @param blogComment
+	 * @param request
+	 * @return
+	 * @author 徐雁斌
+	 */
+	@RequestMapping(value="/saveComment")
+	public String saveComment(BlogComment blogComment, HttpServletRequest request, RedirectAttributes ra) {
+		try{
+			if(!StringUtils.isEmpty(blogComment.getBlog().getId())){
+				Blog blog = blogService.loadPojo(Blog.class,blogComment.getBlog().getId());
+				blogComment.setBlog(blog);
+				blogComment.setCreateUser(getSessionUser(request));
+				blogService.savePojo(blogComment, getSessionUser(request));
+			}
+		}catch(Exception e){
+			log.error("BlogController create",e);
+			handleError(ra, e);
+			return "redirect:toReview?id=" + blogComment.getBlog().getId();
+		}
+		return "redirect:toReview?id=" + blogComment.getBlog().getId();
+	}
+	
+	/**
+	 * 回复评论
+	 * @param commentReploy
+	 * @param request
+	 * @return
+	 * @author 徐雁斌
+	 */
+	@RequestMapping(value="/reployComment")
+	public String reployComment(CommentReploy commentReploy, HttpServletRequest request, RedirectAttributes ra) {
+		BlogComment blogComment = null;
+		try{
+			if(!StringUtils.isEmpty(commentReploy.getBlogComment().getId())){
+				blogComment = blogService.loadPojo(BlogComment.class,commentReploy.getBlogComment().getId());
+				commentReploy.setBlogComment(blogComment);
+				commentReploy.setCreateUser(getSessionUser(request));
+				blogService.savePojo(commentReploy, getSessionUser(request));
+			}
+		}catch(Exception e){
+			log.error("BlogController create",e);
+			handleError(ra, e);
+			if(blogComment == null){
+				return "redirect:index";
+			}else{
+				return "redirect:toReview?id=" + blogComment.getBlog().getId();
+			}
+		}
+		return "redirect:toReview?id=" + blogComment.getBlog().getId();
 	}
 }

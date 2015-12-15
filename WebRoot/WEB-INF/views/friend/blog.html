@@ -61,10 +61,9 @@
                                 	</div>
                                 	</div>
 								</div>
-                                <div class="row">
+                                <div id="grid-container" class="cbp cbp-l-grid-work">
                                     <#list blogs as blog>
-                                    <div class="col-md-6">
-                                        <div class="c-content-blog-post-card-1 c-option-2 c-bordered">
+                                        <div class="c-content-blog-post-card-1 c-option-2 c-bordered cbp-item">
                                             <#if (blog.video)?? && blog.video != "">
                                             <div class="c-media">
                                               	<iframe src="${blog.video}" width="100%" height="300" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
@@ -82,7 +81,7 @@
 	                                                        </a>
 	                                                    </div>
 	                                                </div>
-	                                                <img class="c-overlay-object" height="300px;" src="${basePath}/${blog.photos.fileInfos[0].realPath}" alt="">
+	                                                <img class="c-overlay-object" src="${basePath}/${blog.photos.fileInfos[0].realPath}" alt="">
 	                                            </div>
 	                                            </#if>
 	                                        </#if>
@@ -106,7 +105,6 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
                                     </#list>
                                 </div>
                                 
@@ -324,6 +322,29 @@
 $(document).ready(function(){
 
 	$('#firend').addClass('c-active');
+	
+	// init cubeportfolio
+    $('#grid-container').cubeportfolio({
+        layoutMode: 'grid',
+        defaultFilter: '*',
+        animationType: 'scaleSides',
+        gapHorizontal: 30,
+        gapVertical: 30,
+        gridAdjustment: 'responsive',
+        mediaQueries: [{
+            width: 800,
+            cols: 2
+        }, {
+            width: 500,
+            cols: 2
+        }, {
+            width: 320,
+            cols: 1
+        }],
+        caption: 'zoom',
+        displayType: 'lazyLoading',
+        displayTypeSpeed: 400
+    });
 	
   });
   

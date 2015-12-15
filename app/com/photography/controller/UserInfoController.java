@@ -314,44 +314,47 @@ public class UserInfoController extends BaseController {
 //		return mv;
 //	}
 	
-//	/**
-//	 * 修改头像
-//	 * @param request
-//	 * @param model
-//	 * @return
-//	 * @author 徐雁斌
-//	 */
-//	@RequestMapping(value="/updateHeadPhoto")
-//	@ResponseBody
-//	public String updateHeadPhoto(MultipartFile headFile,HttpServletRequest request, Model model){
-//		User user = (User) request.getSession().getAttribute(Constants.SESSION_USER_KEY);
-//		if(user == null){
-//			return (String) ErrorMessage.get(ErrorCode.SESSION_TIMEOUT);
-//		}
-//		String filePath = request.getSession().getServletContext().getRealPath((String)
-//    			CustomizedPropertyPlaceholderConfigurer.getContextProperty("user.confirm.file"))  + File.separator + user.getEmail();
-//    	
-//    	//数据库存储相对路径
-//    	String relativePath = CustomizedPropertyPlaceholderConfigurer.getContextProperty("user.confirm.file") + user.getEmail();
-//    	File userFile = new File(filePath);
-//    	if(!userFile.exists()){
-//    		userFile.mkdir();
-//    	}
-//    	
-//    	try{
-//			FileUtils.copyInputStreamToFile(headFile.getInputStream(), new File(filePath, headFile.getOriginalFilename()));
-//			
-//			user.setHeadPic(relativePath + "/" + headFile.getOriginalFilename());
-//			userService.savePojo(user, user);
-//    	}catch(Exception e){
-//    		return (String) ErrorMessage.get(ErrorCode.UNKNOWN_ERROR);
-//    	}
-//    	request.getSession().setAttribute(Constants.SESSION_USER_KEY, user);
-//    	return Constants.YES;
-//	}
-	
 	/**
 	 * 修改头像
+	 * @param request
+	 * @param model
+	 * @return
+	 * @author 徐雁斌
+	 */
+	@RequestMapping(value="/updateHeadPhoto")
+	@ResponseBody
+	public String updateHeadPhoto(MultipartFile headFile,HttpServletRequest request, Model model){
+		User user = (User) request.getSession().getAttribute(Constants.SESSION_USER_KEY);
+		if(user == null){
+			return (String) ErrorMessage.get(ErrorCode.SESSION_TIMEOUT);
+		}
+		String filePath = request.getSession().getServletContext().getRealPath((String)
+    			CustomizedPropertyPlaceholderConfigurer.getContextProperty("user.confirm.file"))  + File.separator + user.getMobile();
+    	
+    	//数据库存储相对路径
+    	String relativePath = CustomizedPropertyPlaceholderConfigurer.getContextProperty("user.confirm.file") + user.getMobile();
+    	File userFile = new File(filePath);
+    	if(!userFile.exists()){
+    		userFile.mkdir();
+    	}
+    	
+    	try{
+			FileUtils.copyInputStreamToFile(headFile.getInputStream(), new File(filePath, headFile.getOriginalFilename()));
+			
+			user.setHeadPic(relativePath + "/" + headFile.getOriginalFilename());
+			userService.savePojo(user, user);
+			setSessionUser(request, user);
+    	}catch(Exception e){
+    		String errorMessage = getErrorMessage(e);
+    		return "{'state':0,'message':'" + errorMessage + "','result':''}";
+    		 
+    	}
+    	request.getSession().setAttribute(Constants.SESSION_USER_KEY, user);
+    	return "{'state':200,'message':,'result':'upload/20151215160136.png'}";
+	}
+	
+	/**
+	 * 修改认证信息
 	 * @param request
 	 * @param model
 	 * @return
@@ -365,10 +368,10 @@ public class UserInfoController extends BaseController {
 			return ErrorMessage.get(ErrorCode.SESSION_TIMEOUT);
 		}
 		String filePath = request.getSession().getServletContext().getRealPath((String)
-    			CustomizedPropertyPlaceholderConfigurer.getContextProperty("user.confirm.file"))  + File.separator + user.getEmail();
+    			CustomizedPropertyPlaceholderConfigurer.getContextProperty("user.confirm.file"))  + File.separator + user.getMobile();
     	
     	//数据库存储相对路径
-    	String relativePath = CustomizedPropertyPlaceholderConfigurer.getContextProperty("user.confirm.file") + user.getEmail();
+    	String relativePath = CustomizedPropertyPlaceholderConfigurer.getContextProperty("user.confirm.file") + user.getMobile();
     	File userFile = new File(filePath);
     	if(!userFile.exists()){
     		userFile.mkdir();
