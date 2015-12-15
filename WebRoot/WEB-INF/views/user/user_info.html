@@ -43,7 +43,7 @@
             <div class="modal fade" id="avatar-modal" aria-hidden="true" aria-labelledby="avatar-modal-label" role="dialog" tabindex="-1">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
-                        <form class="avatar-form" action="crop.php" enctype="multipart/form-data" method="post">
+                        <form class="avatar-form" action="${basePath}/userinfo/updateHeadPhoto" enctype="multipart/form-data" method="post">
                             <div class="modal-header">
                                 <button class="close" data-dismiss="modal" type="button">&times;</button>
                                 <h4 class="modal-title" id="avatar-modal-label">更换头像</h4>
@@ -56,7 +56,7 @@
                                         <input class="avatar-src" name="avatar_src" type="hidden"/>
                                         <input class="avatar-data" name="avatar_data" type="hidden"/>
                                         <label for="avatarInput">头像上传</label>
-                                        <input class="avatar-input" id="avatarInput" name="avatar_file" type="file" class="btn c-btn-green"/>
+                                        <input class="avatar-input" id="avatarInput" name="headFile" type="file" class="btn c-btn-green"/>
                                     </div>
 
                                     <!-- Crop and preview -->
