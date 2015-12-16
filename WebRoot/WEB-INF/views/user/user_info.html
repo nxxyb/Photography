@@ -36,7 +36,7 @@
             <!-- Current avatar -->
             <div class="c-font-red">提示：点击头像上传</div>
             <div class="avatar-view" title="修改头像">
-                <img src="${(user.headPic)!'http://placehold.it/220x220'}" alt="Avatar"/>
+                <img src="${basePath}/${(user.headPic)!'http://placehold.it/220x220'}" alt="头像"/>
             </div>
 
             <!-- Cropping modal -->
@@ -150,8 +150,9 @@
                           </div>
                       </div>
                       <div class="row">
-                          <div class="col-md-12">
-                              ${(type11)!''}
+                          <div class="col-md-12 form-group">
+                               <label class="control-label">个性签名</label>
+                               <input type="text" class="form-control c-square c-theme input-lg" name="personSignature" placeholder="个性签名" value="${(user.personSignature)!''}">
                           </div>
                       </div>
                       <div class="row c-margin-t-30">

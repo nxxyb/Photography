@@ -3,11 +3,13 @@ package com.photography.controller;
 import java.io.File;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -38,6 +40,8 @@ import com.photography.service.IProjectService;
 import com.photography.service.IUserService;
 import com.photography.utils.Constants;
 import com.photography.utils.CustomizedPropertyPlaceholderConfigurer;
+import com.photography.utils.DoubleUtil;
+import com.photography.utils.ImageUtils;
 import com.photography.utils.MD5Util;
 import com.photography.utils.MessageConstants;
 
@@ -321,9 +325,10 @@ public class UserInfoController extends BaseController {
 	 * @return
 	 * @author 徐雁斌
 	 */
+	@SuppressWarnings("unchecked")
 	@RequestMapping(value="/updateHeadPhoto")
 	@ResponseBody
-	public String updateHeadPhoto(MultipartFile headFile,HttpServletRequest request, Model model){
+	public String updateHeadPhoto(MultipartFile headFile,String avatar_data,HttpServletRequest request, Model model){
 		User user = (User) request.getSession().getAttribute(Constants.SESSION_USER_KEY);
 		if(user == null){
 			return (String) ErrorMessage.get(ErrorCode.SESSION_TIMEOUT);
@@ -339,18 +344,32 @@ public class UserInfoController extends BaseController {
     	}
     	
     	try{
-			FileUtils.copyInputStreamToFile(headFile.getInputStream(), new File(filePath, headFile.getOriginalFilename()));
+    		File originalFile= new File(filePath, headFile.getOriginalFilename());
+			FileUtils.copyInputStreamToFile(headFile.getInputStream(), originalFile);
 			
-			user.setHeadPic(relativePath + "/" + headFile.getOriginalFilename());
+			Map<String, Object> map = new ObjectMapper().readValue(avatar_data, Map.class);
+			
+			Double x = DoubleUtil.objectToDouble(map.get("x"));
+			Double y = DoubleUtil.objectToDouble(map.get("y"));
+			Double height = DoubleUtil.objectToDouble(map.get("height"));
+			Double width = DoubleUtil.objectToDouble(map.get("width"));
+			
+//			Double rotate = Double.parseDouble(map.get("rotate"));
+			
+			File originalFileCut = new File(filePath, "cut_" + headFile.getOriginalFilename());
+			ImageUtils.cut(originalFile.getPath(), originalFileCut.getPath(), x.intValue(), y.intValue(), width.intValue(), height.intValue());
+			
+			user.setHeadPic(relativePath + "/" + "cut_" + headFile.getOriginalFilename());
 			userService.savePojo(user, user);
 			setSessionUser(request, user);
     	}catch(Exception e){
+    		e.printStackTrace();
     		String errorMessage = getErrorMessage(e);
-    		return "{'state':0,'message':'" + errorMessage + "','result':''}";
+    		return "{\"state\":0,\"message\":\"" + errorMessage + "\",\"result\":\"\"}";
     		 
     	}
     	request.getSession().setAttribute(Constants.SESSION_USER_KEY, user);
-    	return "{'state':200,'message':,'result':'upload/20151215160136.png'}";
+    	return "{\"state\":200,\"message\":\"\",\"result\":\"" + request.getContextPath() + "/" + user.getHeadPic() + "\"}";
 	}
 	
 	/**
@@ -385,7 +404,7 @@ public class UserInfoController extends BaseController {
     	}catch(Exception e){
     		return (String) ErrorMessage.get(ErrorCode.UNKNOWN_ERROR);
     	}
-    	request.getSession().setAttribute(Constants.SESSION_USER_KEY, user);
+    	setSessionUser(request, user);
     	return Constants.YES;
 	}
 	
@@ -407,6 +426,7 @@ public class UserInfoController extends BaseController {
 			userDB.setEmail(user.getEmail());
 			userDB.setQqNumber(user.getQqNumber());
 			userDB.setSex(user.getSex());
+			userDB.setPersonSignature(user.getPersonSignature());
     	
 			userService.savePojo(userDB, userDB);
 			setSessionUser(request, userDB);

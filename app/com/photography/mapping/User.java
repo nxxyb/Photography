@@ -5,6 +5,8 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 
+import org.hibernate.annotations.Formula;
+
 import com.photography.utils.Constants;
 
 /**
@@ -158,6 +160,18 @@ public class User extends BaseMapping{
 	 */
 	@Column(name="coupon_num")
 	private String couponNum = "0";
+	
+	/**
+	 * 派文数量
+	 */
+	@Formula("(select count(*) from blog b where b.create_user = id)")
+	private String blogNum;
+	
+	/**
+	 * 派友数量
+	 */
+	@Formula("(select count(*) from blog_friend bf where bf.create_user = id or bf.friend_user = id)")
+	private String blogFriendNum;
 
 	public String getLoginName() {
 		return loginName;
@@ -341,6 +355,22 @@ public class User extends BaseMapping{
 
 	public void setVerifyTime(Date verifyTime) {
 		this.verifyTime = verifyTime;
+	}
+
+	public String getBlogNum() {
+		return blogNum;
+	}
+
+	public void setBlogNum(String blogNum) {
+		this.blogNum = blogNum;
+	}
+
+	public String getBlogFriendNum() {
+		return blogFriendNum;
+	}
+
+	public void setBlogFriendNum(String blogFriendNum) {
+		this.blogFriendNum = blogFriendNum;
 	}
 
 }

@@ -138,4 +138,8 @@ public class DoubleUtil {
 		
 		return tmpv;
 	}
+	
+	public static Double objectToDouble(Object o){
+		return Double.parseDouble(o.toString());
+	}
 }

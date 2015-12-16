@@ -87,7 +87,7 @@
 	                                        </#if>
                                             <div class="c-body">
                                                 <div class="c-author">
-                                                    <a href="#">
+                                                    <a href="#" data-toggle="popover" data-trigger="hover focus" html="true" data-placement="top" data-content="<img width='600px' src='${basePath}/images/comfirm_example.jpg'>">
                                                         <span class="c-font-bold c-font-20"><#if (blog.createUser.realName)??>${blog.createUser.realName}<#else>${(blog.createUser.mobile)!''} </#if></span>
                                                     </a> 
                                                     <span class="c-font-uppercase"> ${(blog.createTime?string('yyyy-MM-dd HH:mm'))!''}</span>
@@ -139,6 +139,7 @@
                         <div class="col-md-3">
                             <!-- BEGIN: CONTENT/BLOG/BLOG-SIDEBAR-1 -->
                             
+                            <#if (Session.sessionuser)??>
 						    <div class="c-content-person-1 c-option-2">
                                  <div class="c-caption c-content-overlay">
                                      <div class="c-overlay-wrapper">
@@ -149,20 +150,21 @@
                                              </a>
                                          </div>
                                      </div>
-                                     <img class="c-overlay-object img-responsive" src="${basePath}/images/example/team10.jpg" alt=""> 
+                                     <img class="c-overlay-object img-responsive" src="${basePath}/${(Session.sessionuser.headPic)!'http://placehold.it/600x600'}" alt=""> 
                                  </div>
                                  <div class="c-body" style="padding: 10px;">
                                      <div class="c-head">
-                                         <div class="c-name c-font-uppercase c-font-bold">徐雁斌</div>
+                                         <div class="c-name c-font-uppercase c-font-bold">${(Session.sessionuser.realName)!'Session.sessionuser.mobile'}</div>
                                  	</div>
-                                 	<div class="c-position"> 别以为比我年轻你就能多蹦跶几天，棺材装的是死人不是老人。 </div>
+                                 	<div class="c-position"> ${(Session.sessionuser.personSignature)!''} </div>
                                     <p></p>
 							   </div>
                             </div>
                             <div class="btn-group btn-group-justified" role="group" aria-label="Justified button group">
-						      <a href="${basePath}/friend/toFriend" class="btn c-theme-btn" role="button">派友 <span class="badge">5</span></a>
-						      <a href="#" class="btn c-theme-btn" role="button">派文 <span class="badge">163</span></a>
+						      <a href="${basePath}/friend/toFriend" class="btn c-theme-btn" role="button">派友 <span class="badge">${(Session.sessionuser.blogFriendNum)!''}</span></a>
+						      <a href="#" class="btn c-theme-btn" role="button">派文 <span class="badge">${(Session.sessionuser.blogNum)!''}</span></a>
 						    </div>
+						    </#if>
                             
                             <div class="c-margin-t-40">
 	                            <form action="#" method="post">
@@ -322,6 +324,8 @@
 $(document).ready(function(){
 
 	$('#firend').addClass('c-active');
+	
+	$('[data-toggle="popover"]').popover({html: 'true'});
 	
 	// init cubeportfolio
     $('#grid-container').cubeportfolio({
