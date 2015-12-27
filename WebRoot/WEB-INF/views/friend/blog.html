@@ -87,19 +87,19 @@
 	                                        </#if>
                                             <div class="c-body">
                                                 <div class="c-author">
-                                                    <a href="#" data-toggle="popover" data-trigger="hover focus" html="true" data-placement="top" data-content="<img width='600px' src='${basePath}/images/comfirm_example.jpg'>">
-                                                        <span class="c-font-bold c-font-20"><#if (blog.createUser.realName)??>${blog.createUser.realName}<#else>${(blog.createUser.mobile)!''} </#if></span>
+                                                    <a href="javascript:void(0);" data-toggle="popover" user="${(blog.createUser.id)!''}">
+                                                        <span class="c-font-bold c-font-20">${(blog.createUser.displayName)!''} </span>
                                                     </a> 
                                                     <span class="c-font-uppercase"> ${(blog.createTime?string('yyyy-MM-dd HH:mm'))!''}</span>
                                                 </div>                                                
-                                                <p> ${(blog.content)!''} </p>
+                                                <a href="${basePath}/friend/toReview?id=${blog.id}"><p> ${(blog.content)!''} </p></a>
                                                 <div class="c-panel">
                                                     <div class="c-comments">
                                                     	<a href="#icon/thumbs-up">
                                         					<i class="fa fa-thumbs-o-up c-font-18"></i> <span class="badge c-bg-green">${(blog.loveNum)!''}</span>
                                         				</a> 
                                         				|
-                                                        <a href="#">
+                                                        <a href="${basePath}/friend/toReview?id=${blog.id}">
                                                             <i class="icon-speech c-font-18"></i> 评论 <span class="badge c-bg-green">${(blog.commentNum)!''}</span></a>
                                                     </div>
                                                 </div>
@@ -109,30 +109,7 @@
                                 </div>
                                 
                                 <div class="c-pagination">
-                                    <ul class="c-content-pagination c-theme">
-                                        <li class="c-prev">
-                                            <a href="#">
-                                                <i class="fa fa-angle-left"></i>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">1</a>
-                                        </li>
-                                        <li class="c-active">
-                                            <a href="#">2</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">3</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">4</a>
-                                        </li>
-                                        <li class="c-next">
-                                            <a href="#">
-                                                <i class="fa fa-angle-right"></i>
-                                            </a>
-                                        </li>
-                                    </ul>
+                                   <ul id="blog_pager" class="c-content-pagination c-square c-theme"></ul>
                                 </div>
                             </div>
                         </div>
@@ -142,36 +119,30 @@
                             <#if (Session.sessionuser)??>
 						    <div class="c-content-person-1 c-option-2">
                                  <div class="c-caption c-content-overlay">
-                                     <div class="c-overlay-wrapper">
-                                         <div class="c-overlay-content">
-                                             
-                                             <a href="${basePath}/images/example/team10.jpg" data-lightbox="fancybox" data-fancybox-group="gallery-4">
-                                                 <i class="icon-magnifier"></i>
-                                             </a>
-                                         </div>
-                                     </div>
-                                     <img class="c-overlay-object img-responsive" src="${basePath}/${(Session.sessionuser.headPic)!'http://placehold.it/600x600'}" alt=""> 
+                                     <img class="c-overlay-object img-responsive" src="<#if (Session.sessionuser.headPic)??>${basePath}/${(Session.sessionuser.headPic)!''}<#else>http://placehold.it/600x600'</#if>" alt=""> 
                                  </div>
                                  <div class="c-body" style="padding: 10px;">
                                      <div class="c-head">
-                                         <div class="c-name c-font-uppercase c-font-bold">${(Session.sessionuser.realName)!'Session.sessionuser.mobile'}</div>
+                                         <a href="${basePath}/friend/toInfo?userId=${(Session.sessionuser.id)!''}">
+                                         	<div class="c-name c-font-uppercase c-font-bold">${(Session.sessionuser.displayName)!''}</div>
+                                         </a>
                                  	</div>
                                  	<div class="c-position"> ${(Session.sessionuser.personSignature)!''} </div>
                                     <p></p>
 							   </div>
                             </div>
                             <div class="btn-group btn-group-justified" role="group" aria-label="Justified button group">
-						      <a href="${basePath}/friend/toFriend" class="btn c-theme-btn" role="button">派友 <span class="badge">${(Session.sessionuser.blogFriendNum)!''}</span></a>
+						      <a href="${basePath}/friend/toFriend?userId=${(Session.sessionuser.id)!''}" class="btn c-theme-btn" role="button">派友 <span class="badge">${(Session.sessionuser.blogFriendNum)!''}</span></a>
 						      <a href="#" class="btn c-theme-btn" role="button">派文 <span class="badge">${(Session.sessionuser.blogNum)!''}</span></a>
 						    </div>
 						    </#if>
                             
                             <div class="c-margin-t-40">
-	                            <form action="#" method="post">
+	                            <form action="${basePath}/friend/index" method="post">
 	                                <div class="input-group">
-	                                    <input type="text" class="form-control c-square c-theme-border" placeholder="搜索派文">
+	                                    <input id="searchBlog" type="text" name="searchBlog" value="${(searchBlog)!''}" class="form-control c-square c-theme-border" placeholder="搜索派文">
 	                                    <span class="input-group-btn">
-	                                        <button class="btn c-theme-btn c-theme-border c-btn-square" type="button">搜索</button>
+	                                        <button type="submit" class="btn c-theme-btn c-theme-border c-btn-square" type="button">搜索</button>
 	                                    </span>
 	                                </div>
 	                            </form>
@@ -190,74 +161,34 @@
                                     <div class="tab-content">
                                         <div class="tab-pane active" id="blog_recent_posts">
                                             <ul class="c-content-recent-posts-1">
+                                                <#list zxBlogs as zxBlog>
                                                 <li>
                                                     <div class="c-image">
-                                                        <img src="${basePath}/images/example/blog1.jpg" alt="" class="img-responsive"> </div>
+                                                        <img src="<#if (zxBlog.photos.fileInfos[0])??>${basePath}/${zxBlog.photos.fileInfos[0].realPath}<#else>http://placehold.it/400x300'</#if>" alt="" class="img-responsive"> </div>
                                                     <div class="c-post">
-                                                        <a href="" class="c-title"> UX Design Expo 2015... </a>
-                                                        <div class="c-date">27 Jan 2015</div>
+                                                    	<div style="line-height:25px; text-overflow:ellipsis; white-space:nowrap; overflow:hidden;">
+                                                        	<a href="${basePath}/friend/toReview?id=${zxBlog.id}" class="c-title"> ${(zxBlog.content)!''} </a>
+                                                        </div>
+                                                        <div class="c-date">${(zxBlog.createTime?string('yyyy-MM-dd'))!''}</div>
                                                     </div>
                                                 </li>
-                                                <li>
-                                                    <div class="c-image">
-                                                        <img src="${basePath}/images/example/blog2.jpg" alt="" class="img-responsive"> </div>
-                                                    <div class="c-post">
-                                                        <a href="" class="c-title"> UX Design Expo 2015... </a>
-                                                        <div class="c-date">27 Jan 2015</div>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="c-image">
-                                                        <img src="${basePath}/images/example/blog3.jpg" alt="" class="img-responsive"> </div>
-                                                    <div class="c-post">
-                                                        <a href="" class="c-title"> UX Design Expo 2015... </a>
-                                                        <div class="c-date">27 Jan 2015</div>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="c-image">
-                                                        <img src="${basePath}/images/example/blog4.jpg" alt="" class="img-responsive"> </div>
-                                                    <div class="c-post">
-                                                        <a href="" class="c-title"> UX Design Expo 2015... </a>
-                                                        <div class="c-date">27 Jan 2015</div>
-                                                    </div>
-                                                </li>
+                                                </#list>
                                             </ul>
                                         </div>
                                         <div class="tab-pane" id="blog_popular_posts">
                                             <ul class="c-content-recent-posts-1">
+                                                <#list reBlogs as reBlog>
                                                 <li>
                                                     <div class="c-image">
-                                                        <img src="${basePath}/images/example/blog5.jpg" class="img-responsive" alt="" /> </div>
+                                                        <img src="<#if (reBlog.photos.fileInfos[0])??>${basePath}/${reBlog.photos.fileInfos[0].realPath}<#else>http://placehold.it/400x300'</#if>" alt="" class="img-responsive"> </div>
                                                     <div class="c-post">
-                                                        <a href="" class="c-title"> UX Design Expo 2015... </a>
-                                                        <div class="c-date">27 Jan 2015</div>
+                                                    	<div style="line-height:25px; text-overflow:ellipsis; white-space:nowrap; overflow:hidden;">
+                                                        	<a href="${basePath}/friend/toReview?id=${reBlog.id}" class="c-title"> ${(reBlog.content)!''} </a>
+                                                        </div>
+                                                        <div class="c-date">${(reBlog.createTime?string('yyyy-MM-dd'))!''}</div>
                                                     </div>
                                                 </li>
-                                                <li>
-                                                    <div class="c-image">
-                                                        <img src="${basePath}/images/example/blog1.jpg" class="img-responsive" alt="" /> </div>
-                                                    <div class="c-post">
-                                                        <a href="" class="c-title"> UX Design Expo 2015... </a>
-                                                        <div class="c-date">27 Jan 2015</div>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="c-image">
-                                                        <img src="${basePath}/images/example/blog2.jpg" class="img-responsive" alt="" /> </div>
-                                                    <div class="c-post">
-                                                        <a href="" class="c-title"> UX Design Expo 2015... </a>
-                                                        <div class="c-date">27 Jan 2015</div>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="c-image">
-                                                        <img src="${basePath}/images/example/blog3.jpg" class="img-responsive" alt="" /> </div>
-                                                    <div class="c-post">
-                                                        <a href="" class="c-title"> UX Design Expo 2015... </a>
-                                                        <div class="c-date">27 Jan 2015</div>
-                                                    </div>
-                                                </li>
+                                                </#list>
                                             </ul>
                                         </div>
                                     </div>
@@ -271,38 +202,15 @@
                                 </div>
                                 
                               	<ul class="c-content-recent-posts-1">
+                              		<#list recommendFriends as recommendFriend>
                                       <li>
                                           <div class="c-image">
-                                              <img src="${basePath}/images/example/blog5.jpg" class="img-responsive" alt="" /> </div>
+                                              <img src="<#if (recommendFriend.headPic)??> ${basePath}/${(recommendFriend.headPic)!''}<#else>http://placehold.it/400x300</#if>" class="img-responsive" alt="" /> </div>
                                           <div class="c-post">
-                                              <a href="" class="c-title"> UX Design Expo 2015... </a>
-                                              <div class="c-date">27 Jan 2015</div>
+                                              <a href="${basePath}/friend/toInfo?userId=${(recommendFriend.id)!''}" class="c-title"> ${(recommendFriend.displayName)!''} </a>
                                           </div>
                                       </li>
-                                      <li>
-                                          <div class="c-image">
-                                              <img src="${basePath}/images/example/blog1.jpg" class="img-responsive" alt="" /> </div>
-                                          <div class="c-post">
-                                              <a href="" class="c-title"> UX Design Expo 2015... </a>
-                                              <div class="c-date">27 Jan 2015</div>
-                                          </div>
-                                      </li>
-                                      <li>
-                                          <div class="c-image">
-                                              <img src="${basePath}/images/example/blog2.jpg" class="img-responsive" alt="" /> </div>
-                                          <div class="c-post">
-                                              <a href="" class="c-title"> UX Design Expo 2015... </a>
-                                              <div class="c-date">27 Jan 2015</div>
-                                          </div>
-                                      </li>
-                                      <li>
-                                          <div class="c-image">
-                                              <img src="${basePath}/images/example/blog3.jpg" class="img-responsive" alt="" /> </div>
-                                          <div class="c-post">
-                                              <a href="" class="c-title"> UX Design Expo 2015... </a>
-                                              <div class="c-date">27 Jan 2015</div>
-                                          </div>
-                                      </li>
+                                     </#list>
                                   </ul>
                                 
                             </div>
@@ -321,11 +229,31 @@
 <#include "../common/footer.html">
 
 <script>
+
 $(document).ready(function(){
 
 	$('#firend').addClass('c-active');
 	
-	$('[data-toggle="popover"]').popover({html: 'true'});
+	$('[data-toggle="popover"]').popover({
+          trigger:'hover hover', //触发方式
+          placement:'auto',
+          container: 'body',
+          html: true, // 为true的话，data-content里就能放html代码了
+          delay:{ show: 500, hide: 2000 },
+          title:'用户',
+          content: function() {
+          	 var content = '111';
+          	 $.ajax({
+				url : '${basePath}/friend/getPopover?userId=' + $(this).attr("user"),
+				type : "Post",
+				async :false,
+				success : function(data) {
+					content = data;
+				}
+			});
+			 return content;
+		 }
+     });
 	
 	// init cubeportfolio
     $('#grid-container').cubeportfolio({
@@ -349,6 +277,18 @@ $(document).ready(function(){
         displayType: 'lazyLoading',
         displayTypeSpeed: 400
     });
+    
+    var options = {
+            bootstrapMajorVersion:3,
+            currentPage: ${(pager.currentPage)!1},
+            numberOfPages: ${(pager.pageSize)!5},
+            totalPages:${(pager.totalPage)!1},
+            onPageClicked: function (e, originalEvent, type, page) {
+				location.href = "${basePath}/friend/index?searchBlog=" + $("#searchBlog").val() + "&currentPage=" + page;
+            }  
+       }
+ 
+       $('#blog_pager').bootstrapPaginator(options);
 	
   });
   

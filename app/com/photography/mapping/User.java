@@ -4,6 +4,7 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.Formula;
 
@@ -172,6 +173,12 @@ public class User extends BaseMapping{
 	 */
 	@Formula("(select count(*) from blog_friend bf where bf.create_user = id or bf.friend_user = id)")
 	private String blogFriendNum;
+	
+	/**
+	 * 显示名称，如果有真实姓名就显示，否则显示手机号
+	 */
+	@Transient
+	private String displayName;
 
 	public String getLoginName() {
 		return loginName;
@@ -371,6 +378,19 @@ public class User extends BaseMapping{
 
 	public void setBlogFriendNum(String blogFriendNum) {
 		this.blogFriendNum = blogFriendNum;
+	}
+
+	public String getDisplayName() {
+		if(this.realName == null || "".equals(this.realName)){
+			displayName = mobile.substring(0, 3) + "XXXX" + mobile.substring(7, 11);
+			return displayName;
+		}else{
+			return realName;
+		}
+	}
+
+	public void setDisplayName(String displayName) {
+		this.displayName = displayName;
 	}
 
 }

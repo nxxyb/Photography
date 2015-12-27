@@ -30,8 +30,6 @@ import com.photography.dao.query.Pager;
 import com.photography.dao.query.QueryConstants;
 import com.photography.dao.query.Sort;
 import com.photography.dao.query.SortItem;
-import com.photography.mapping.BaseMapping;
-import com.photography.mapping.User;
 
 
 /**
@@ -293,7 +291,9 @@ public class HibernateDaoImpl implements IHibernateDao {
 	}
 
 	public void delete(Object obj) {
-		getHibernateTemplate().delete(obj);
+		if(obj != null){
+			getHibernateTemplate().delete(obj);
+		}
 	}
 
 	public void deletes(Class<?> entityType, String ids) {

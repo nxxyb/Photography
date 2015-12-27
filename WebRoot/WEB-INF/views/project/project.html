@@ -136,8 +136,8 @@
 <!-- BEGIN: PAGINATION -->
 <div class="c-content-box c-overflow-hide">
 <div class="c-margin-t-20"></div>
-<div class="row pull-right">
-	<div class="col-md-12">
+<div class="row">
+	<div class="col-md-12 c-pagination c-center">
 		<ul id="project_pager" class="c-content-pagination c-square c-theme"></ul>
 	</div>
 </div>
@@ -161,8 +161,7 @@ $(document).ready(function(){
 
 	$('#project').addClass('c-active');
 	
-	var options = {  
-            size:"large",
+	var options = {
             bootstrapMajorVersion:3,
             currentPage: ${(pager.currentPage)!1},
             numberOfPages: ${(pager.pageSize)!5},

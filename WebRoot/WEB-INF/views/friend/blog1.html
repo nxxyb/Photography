@@ -74,7 +74,7 @@
                                             </div>
                                             <div class="c-body">
                                                 <div class="c-title c-font-bold c-font-uppercase">
-                                                    <a href="#">Web & Mobile Development</a>
+                                                    <a href="#" data-toggle="popover">Web & Mobile Development</a>
                                                 </div>
                                                 <div class="c-author"> By
                                                     <a href="#">
@@ -447,7 +447,7 @@
                                           </div>
                                       </li>
                                       <li>
-                                          <div class="c-image">
+                                          <div class="c-image" >
                                               <img src="${basePath}/images/example/blog3.jpg" class="img-responsive" alt="" /> </div>
                                           <div class="c-post">
                                               <a href="" class="c-title"> UX Design Expo 2015... </a>
@@ -475,6 +475,14 @@
 $(document).ready(function(){
 
 	$('#firend').addClass('c-active');
+	
+	$('[data-toggle="popover"]').popover({
+          trigger:'hover', //触发方式
+          placement:'top',
+          html: true, // 为true的话，data-content里就能放html代码了
+          delay:{ show: 500, hide: 2000 },
+          content:"<div style='width: 300px;height: 100px;'><img width='300px' height='100px' src='${basePath}/images/comfirm_example.jpg'></div>"//这里可以直接写字符串，也可以 是一个函数，该函数返回一个字符串；
+     });
 	
   });
   

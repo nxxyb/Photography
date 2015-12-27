@@ -28,20 +28,43 @@
 	              	</div>
 	              	
 	              	<div class="row">
-	              		<div class="col-md-4 col-sm-4 col-xs-12 c-margin-b-20">
-	              			<img src="${basePath}/images/example/team10.jpg" class="img-responsive" alt="Responsive image">
-	              		</div>
+	              		<div class="col-md-4 c-margin-b-20">
+                            <div class="c-content-person-1 c-option-2">
+                                 <div class="c-caption c-content-overlay">
+                                     <img class="c-overlay-object img-responsive" src="<#if (user.headPic)??>${basePath}/${(user.headPic)!''}<#else>http://placehold.it/600x600'</#if>" alt=""> 
+                                 </div>
+                                 <div class="c-body" style="padding: 10px;">
+                                   <#if isFriend??>
+                                     <div id="friend_p" class="pull-right">
+                                     	<#if isFriend == "0">
+                                     	<a href="javascript:void(0);" onclick="doFriend('${(user.id)!''}')" class="btn btn-sm c-theme-btn c-btn-uppercase c-btn-bold c-btn-border-2x c-btn-circle">
+                                    		<i class="glyphicon glyphicon-plus"></i> 关注
+                                    	</a>
+                                    	<#else>
+                                    	<a href="javascript:void(0);" onclick="doCancelFriend('${(user.id)!''}')" class="btn btn-sm c-theme-btn c-btn-uppercase c-btn-bold c-btn-border-2x c-btn-circle">
+                                    		<i class="glyphicon glyphicon-trash"></i> 取消
+                                    	</a>
+                                    	</#if>
+                                    </div>
+                                    </#if>
+                                    
+                                     <div class="c-head">
+                                         <div class="c-name c-font-uppercase c-font-bold">${(user.displayName)!''}</div>
+                                 	</div>
+                                 	<div class="c-position"> ${(user.personSignature)!''} </div>
+                                    <p></p>
+							   </div>
+                            </div>
+                        </div>
 	              	</div>
 	              	
 	              	<div class="row">
                         <div class="col-md-6 col-sm-6 col-xs-12 c-margin-b-20">
-                            <h3 class="c-font-uppercase c-font-bold">徐雁斌 </h3>
-                            <p>别以为比我年轻你就能多蹦跶几天，棺材装的是死人不是老人。</p>
                             <ul class="list-unstyled">
-                                <li>生日：1980-9-17</li>
-                                <li>QQ: 25213908</li>
+                                <li>生日：${(user.birthDay?string('yyyy-MM-dd'))!''}</li>
+                                <li>QQ: ${(user.qqNumber)!''}</li>
                                 <li>邮箱:
-                                    <a href="mailto:jango@themehats.com" class="c-theme-link">jango@themehats.com</a>
+                                    <a href="mailto:jango@themehats.com" class="c-theme-link">${(user.email)!''}</a>
                                 </li>
                             </ul>
                         </div>
@@ -66,9 +89,32 @@ $(document).ready(function(){
 	$('#info').addClass('c-active');
   });
   
-  function showPhotoDiv(){
-  	$("#photoDiv").show();
-  }
+  function doFriend(userId){
+  		$.ajax({
+				url : '${basePath}/friend/doFriend?userId=' + userId,
+				type : "Post",
+				async :false,
+				success : function(data) {
+					if(data == '1'){
+						$("#friend_p").html("已关注");
+					}
+				}
+			});
+  	}
+  	
+  	function doCancelFriend(userId){
+  		$.ajax({
+				url : '${basePath}/friend/doCancelFriend?userId=' + userId,
+				type : "Post",
+				async :false,
+				success : function(data) {
+					if(data == '1'){
+						$("#friend_p").html("已取消");
+					}
+				}
+			});
+  	}
+  
 </script>
 
 </body>

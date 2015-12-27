@@ -1,0 +1,39 @@
+<#assign basePath=request.contextPath>
+<div class="media">
+   <div class="media-left media-middle">
+       <a href="#">
+           <img class="media-object" alt="" width="80px" src="<#if (friendUser.headPic)??> ${basePath}/${(friendUser.headPic)!''}<#else>http://placehold.it/80x80</#if>"> </a>
+   </div>
+   <div class="media-body">
+       <h4 class="media-heading">
+           <a href="#" class="c-font-bold">${(friendUser.displayName)!''} </a> 
+           
+       </h4> 
+       	<p>派友 <span class="badge">${(friendUser.blogFriendNum)!''}</span>
+                                 	|
+			派文 <span class="badge">${(friendUser.blogNum)!''}</span>
+		</p>
+		<#if (Session.sessionuser)??>
+			<#if isFriend?? && isFriend == "0">
+				<p id="friend_p"><a href="javascript:void(0);" onclick="doFriend('${(friendUser.id)!''}')" class="btn btn-xs c-theme-btn c-theme-border c-btn-square">关注</a></p>
+			<#else>
+				<p>已关注</p>
+			</#if>
+		</#if>
+     </div>
+</div>
+
+<script>
+	function doFriend(userId){
+  		$.ajax({
+				url : '${basePath}/friend/doFriend?userId=' + userId,
+				type : "Post",
+				async :false,
+				success : function(data) {
+					if(data == '1'){
+						$("#friend_p").html("已关注");
+					}
+				}
+			});
+  	}
+</script>

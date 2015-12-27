@@ -1,5 +1,6 @@
 package com.photography.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -22,6 +24,7 @@ import com.photography.dao.query.Sort;
 import com.photography.exception.ServiceException;
 import com.photography.mapping.Blog;
 import com.photography.mapping.BlogComment;
+import com.photography.mapping.BlogFriend;
 import com.photography.mapping.CommentReploy;
 import com.photography.mapping.FileGroup;
 import com.photography.mapping.User;
@@ -59,12 +62,38 @@ public class FriendController extends BaseController {
 	 * @throws ServiceException
 	 */
 	@RequestMapping("/index")
-	public ModelAndView toIndex(Pager pager,HttpServletRequest request) throws ServiceException {
+	public ModelAndView toIndex(String searchBlog,Pager pager,HttpServletRequest request) throws ServiceException {
 		ModelAndView mav = new ModelAndView();
 		pager.setPageSize(6);
 		Expression exp = null;
+		if(!StringUtils.isEmpty(searchBlog)){
+			exp = Condition.like("content", "%" + searchBlog + "%");
+		}
 		List<Blog> blogs = blogService.getPojoList(Blog.class, pager, exp, new Sort("createTime",QueryConstants.DESC),null);
 		mav.addObject("blogs", blogs);
+		mav.addObject("pager", pager);
+		mav.addObject("searchBlog", searchBlog);
+		
+		//热门派文
+		Sort rmSort = new Sort();
+		rmSort.addSort("loveNum", "DESC");
+		rmSort.addSort("commentNum", "DESC");
+		List<Blog> reBlogs = blogService.getPojoList(Blog.class, new Pager(), null, new Sort("createTime",QueryConstants.DESC),null);
+		mav.addObject("reBlogs", reBlogs);
+		
+		//最新派文
+		List<Blog> zxBlogs = blogService.getPojoList(Blog.class, new Pager(), null, new Sort("createTime",QueryConstants.DESC),null);
+		mav.addObject("zxBlogs", zxBlogs);
+		
+		//派友推荐
+		List<User> recommendFriends = blogService.getRecommendFriends(getSessionUser(request),new Pager());
+		mav.addObject("recommendFriends", recommendFriends);
+		
+		User sessionUser = getSessionUser(request);
+		if(sessionUser != null){
+			setSessionUser(request, blogService.loadPojo(User.class, sessionUser.getId()));
+		}
+		
 		mav.setViewName("/friend/blog");
 		return mav;
 	}
@@ -96,9 +125,23 @@ public class FriendController extends BaseController {
 	 * @throws ServiceException
 	 */
 	@RequestMapping("/toInfo")
-	public ModelAndView toInfo(HttpServletRequest request) throws ServiceException {
+	public ModelAndView toInfo(String userId,HttpServletRequest request) throws ServiceException {
 		ModelAndView mav = new ModelAndView();
-		
+		User user = null;
+		if(!StringUtils.isEmpty(userId)){
+			user = blogService.loadPojo(User.class, userId);
+			mav.addObject("user", user);
+		}
+		User sessionUser = getSessionUser(request);
+		if(sessionUser != null && user != null && !sessionUser.getId().equals(user.getId())){
+			boolean isFriend = blogService.isFriends(user, sessionUser);
+			if(isFriend){
+				mav.addObject("isFriend", Constants.YES);
+			}else{
+				mav.addObject("isFriend", Constants.NO);
+			}
+		}
+		mav.addObject("userId", userId);
 		mav.setViewName("/friend/info");
 		return mav;
 	}
@@ -110,9 +153,18 @@ public class FriendController extends BaseController {
 	 * @throws ServiceException
 	 */
 	@RequestMapping("/toFriend")
-	public ModelAndView toFriend(HttpServletRequest request) throws ServiceException {
+	public ModelAndView toFriend(String userId,Pager pager,HttpServletRequest request) throws ServiceException {
 		ModelAndView mav = new ModelAndView();
-		
+		List<BlogFriend> blogFriends = new ArrayList<BlogFriend>();
+		User currentUser = null;
+		if(!StringUtils.isEmpty(userId)){
+			currentUser = blogService.loadPojo(User.class, userId);
+			blogFriends = blogService.getFriends(currentUser, null, pager, new Sort("createTime","ASC"));
+		}
+		mav.addObject("blogFriends", blogFriends);
+		mav.addObject("currentUser", currentUser);
+		mav.addObject("userId", userId);
+		mav.addObject("pager",pager);
 		mav.setViewName("/friend/blog_friend");
 		return mav;
 	}
@@ -124,10 +176,11 @@ public class FriendController extends BaseController {
 	 * @throws ServiceException
 	 */
 	@RequestMapping("/toFriendSearch")
-	public ModelAndView toFriendSearch(HttpServletRequest request) throws ServiceException {
+	public ModelAndView toFriendSearch(String searchText,String userId,Pager pager,HttpServletRequest request) throws ServiceException {
 		ModelAndView mav = new ModelAndView();
-		
+		List<User> users = blogService.getRecommendFriends(user,pager);
 		mav.setViewName("/friend/blog_friend_search");
+		mav.addObject("userId", userId);
 		return mav;
 	}
 	
@@ -138,10 +191,11 @@ public class FriendController extends BaseController {
 	 * @throws ServiceException
 	 */
 	@RequestMapping("/toMy")
-	public ModelAndView toMy(HttpServletRequest request) throws ServiceException {
+	public ModelAndView toMy(String userId,HttpServletRequest request) throws ServiceException {
 		ModelAndView mav = new ModelAndView();
 		
 		mav.setViewName("/friend/blog_my");
+		mav.addObject("userId", userId);
 		return mav;
 	}
 	
@@ -236,5 +290,119 @@ public class FriendController extends BaseController {
 			}
 		}
 		return "redirect:toReview?id=" + blogComment.getBlog().getId();
+	}
+	
+	/**
+	 * 获取用户信息弹出框
+	 * @param userId
+	 * @param request
+	 * @return
+	 * @author 徐雁斌
+	 */
+	@RequestMapping(value="/getPopover")
+	public ModelAndView getPopover(String userId, HttpServletRequest request) {
+		ModelAndView mav = new ModelAndView();
+		User user = null;
+		String isFriend = Constants.YES;
+		try{
+			if(!StringUtils.isEmpty(userId)){
+				user = blogService.loadPojo(User.class, userId);
+			}
+			mav.addObject("friendUser", user);
+			
+			User sessionUser = getSessionUser(request);
+			if(sessionUser != null && !sessionUser.getId().equals(user.getId())){
+				if(!blogService.isFriends(user, sessionUser)){
+					isFriend = Constants.NO;
+				}
+			}
+			mav.addObject("isFriend", isFriend);
+		}catch(Exception e){
+			log.error("BlogController create",e);
+			return null;
+		}
+		mav.setViewName("/friend/blog_friend_popover");
+		return mav;
+	}
+	
+	/**
+	 * 关注用户
+	 * @param userId
+	 * @param request
+	 * @return
+	 * @author 徐雁斌
+	 */
+	@RequestMapping(value="/doFriend")
+	@ResponseBody
+	public String doFriend(String userId, HttpServletRequest request) {
+		User user = null;
+		try{
+			if(!StringUtils.isEmpty(userId)){
+				user = blogService.loadPojo(User.class, userId);
+			}
+			
+			User sessionUser = getSessionUser(request);
+			if(sessionUser != null && user != null && !sessionUser.getId().equals(user.getId())){
+				BlogFriend bf = new BlogFriend();
+				bf.setCreateUser(sessionUser);
+				bf.setFriendUser(user);
+				blogService.savePojo(bf, sessionUser);
+			}
+		}catch(Exception e){
+			log.error("BlogController create",e);
+			return getErrorMessage(e);
+		}
+		return Constants.YES;
+	}
+	
+	/**
+	 * 关注用户
+	 * @param userId
+	 * @param request
+	 * @return
+	 * @author 徐雁斌
+	 */
+	@RequestMapping(value="/doCancelFriend")
+	@ResponseBody
+	public String doCancelFriend(String userId, HttpServletRequest request) {
+		User user = null;
+		try{
+			if(!StringUtils.isEmpty(userId)){
+				user = blogService.loadPojo(User.class, userId);
+			}
+			
+			User sessionUser = getSessionUser(request);
+			if(sessionUser != null && user != null && !sessionUser.getId().equals(user.getId())){
+				BlogFriend bf = blogService.getFriend(sessionUser, user);
+				blogService.deletePojo(bf, sessionUser);
+			}
+		}catch(Exception e){
+			log.error("BlogController create",e);
+			return getErrorMessage(e);
+		}
+		return Constants.YES;
+	}
+	
+	/**
+	 * 取消关注用户
+	 * @param userId
+	 * @param request
+	 * @return
+	 * @author 徐雁斌
+	 */
+	@RequestMapping(value="/cancelFriend")
+	public String cancelFriend(String userId,String blogFriendId, HttpServletRequest request,RedirectAttributes ra) {
+		try{
+			if(!StringUtils.isEmpty(blogFriendId)){
+				BlogFriend blogFriend = blogService.loadPojo(BlogFriend.class, blogFriendId);
+				blogService.deletePojo(blogFriend, null);
+			}
+			
+		}catch(Exception e){
+			log.error("BlogController create",e);
+			handleError(ra, e);
+			return "redirect:toFriend?userId=" +userId;
+		}
+		return "redirect:toFriend?userId=" +userId;
 	}
 }
