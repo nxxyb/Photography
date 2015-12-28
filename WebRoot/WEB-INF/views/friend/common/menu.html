@@ -17,12 +17,16 @@
             	<li id="info">
                     <a href="${basePath}/friend/toInfo?userId=${(userId)!''}">基本资料</a>
                 </li>
+                <#if (Session.sessionuser)?? && Session.sessionuser.id == userId>
                 <li id="blog_friend">
                     <a href="${basePath}/friend/toFriend?userId=${(userId)!''}">我的派友</a>
                 </li>
+                </#if>
+                <#if (Session.sessionuser)?? && Session.sessionuser.id == userId>
                 <li id="blog_friend_search">
                     <a href="${basePath}/friend/toFriendSearch?userId=${(userId)!''}">搜索派友</a>
                 </li>
+                </#if>
                 <li id="blog_my">
                     <a href="${basePath}/friend/toMy?userId=${(userId)!''}">我的派文</a>
                 </li>

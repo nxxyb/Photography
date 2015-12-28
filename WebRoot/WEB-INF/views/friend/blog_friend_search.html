@@ -25,75 +25,42 @@
               <div class="c-content-title-1">
                   <h3 class="c-font-uppercase c-font-bold">搜索派友</h3>
                   <div class="c-line-left"></div>
-                   <form action="#" method="post">
+                   <form action="${basePath}/friend/toFriendSearch?userId=${(userId)!''}" method="post">
                        <div class="input-group">
-                           <input type="text" class="form-control c-square c-theme-border" placeholder="输入姓名/手机号">
+                           <input type="text" name="searchText" class="form-control c-square c-theme-border" value="${(searchText)!''}" placeholder="输入姓名/手机号">
                            <span class="input-group-btn">
-                               <button class="btn c-theme-btn c-theme-border c-btn-square" type="button">Go!</button>
+                               <button type="submit" class="btn c-theme-btn c-theme-border c-btn-square" type="button">查找</button>
                            </span>
                        </div>
                    </form>
               </div>
-              <div class="c-margin-b-20"></div>
-              <div class="row" data-auto-height="true">
-                        <div class="col-md-4 c-margin-b-20">
-                            <div class="c-content-media-1 c-bg-grey" data-height="height">
-                            	<div class="c-content-label">未添加</div>
-                            	<div class="pull-right"><a href="#" class="btn btn-sm c-btn-grey-2 c-btn-uppercase c-btn-bold c-btn-border-2x c-btn-circle">
-                                    <!-- <i class="glyphicon glyphicon-plus"></i> 添加 -->
-                                    <i class="glyphicon glyphicon-trash"></i> 取消 </a></div>
-                            	<div class="c-author">
-                                    <div class="c-portrait" style="background-image: url(${basePath}/images/example/blog5.jpg)"></div>
-                                    <div class="c-name c-font-uppercase">Jack Nilson</div>
-                                </div>
-                                <p>简介</p>
-                            </div>
-                        </div>
-                        
-                        <div class="col-md-4 c-margin-b-20">
-                            <div class="c-content-media-1 c-bg-grey" data-height="height">
-                            	<div class="c-content-label">已添加</div>
-                            	<div class="pull-right"><a href="#" class="btn btn-sm c-btn-grey-2 c-btn-uppercase c-btn-bold c-btn-border-2x c-btn-circle">
-                                    <!-- <i class="glyphicon glyphicon-plus"></i> 添加 -->
-                                    <i class="glyphicon glyphicon-trash"></i> 取消 </a></div>
-                            	<div class="c-author">
-                                    <div class="c-portrait" style="background-image: url(${basePath}/images/example/blog5.jpg)"></div>
-                                    <div class="c-name c-font-uppercase">Jack Nilson</div>
-                                </div>
-                                <p>简介</p>
-                            </div>
-                        </div>
-                        
-                        <div class="col-md-4 c-margin-b-20">
-                            <div class="c-content-media-1 c-bg-grey" data-height="height">
-                            	<div class="c-content-label">已添加</div>
-                            	<div class="pull-right"><a href="#" class="btn btn-sm c-btn-grey-2 c-btn-uppercase c-btn-bold c-btn-border-2x c-btn-circle">
-                                    <!-- <i class="glyphicon glyphicon-plus"></i> 添加 -->
-                                    <i class="glyphicon glyphicon-trash"></i> 取消 </a></div>
-                            	<div class="c-author">
-                                    <div class="c-portrait" style="background-image: url(${basePath}/images/example/blog5.jpg)"></div>
-                                    <div class="c-name c-font-uppercase">Jack Nilson</div>
-                                </div>
-                                <p>简介</p>
-                            </div>
-                        </div>
-                        
-              </div>
               
               <div class="row" data-auto-height="true">
-              	<div class="col-md-4 c-margin-b-20">
-                            <div class="c-content-media-1 c-bg-grey" data-height="height">
-                            	<div class="c-content-label">已添加</div>
-                            	<div class="pull-right"><a href="#" class="btn btn-sm c-btn-grey-2 c-btn-uppercase c-btn-bold c-btn-border-2x c-btn-circle">
-                                    <!-- <i class="glyphicon glyphicon-plus"></i> 添加 -->
-                                    <i class="glyphicon glyphicon-trash"></i> 取消 </a></div>
-                            	<div class="c-author">
-                                    <div class="c-portrait" style="background-image: url(${basePath}/images/example/blog5.jpg)"></div>
-                                    <div class="c-name c-font-uppercase">Jack Nilson</div>
-                                </div>
-                                <p>简介</p>
+              		<#list users as user>
+                        <div class="col-md-4 c-margin-t-20 c-margin-b-20">
+                            <div class="c-content-person-1 c-option-2">
+                                 <div class="c-caption c-content-overlay">
+                                     <img class="c-overlay-object img-responsive" src="<#if (user.headPic)??>${basePath}/${(user.headPic)!''}<#else>http://placehold.it/600x600'</#if>" alt=""> 
+                                 </div>
+                                 <div class="c-body" style="padding: 10px;">
+                                     <div class="pull-right">
+                                     	<a href="${basePath}/friend/friend?userId=${(userId)!''}&friendUserId=${(user.id)!''}" class="btn btn-sm c-theme-btn c-btn-uppercase c-btn-bold c-btn-border-2x c-btn-circle">
+                                    	<i class="glyphicon glyphicon-plus"></i> 关注 </a>
+                                    </div>
+                                    
+                                     <div class="c-head">
+                                         <div class="c-name c-font-uppercase c-font-bold">${(user.displayName)!''}</div>
+                                 	</div>
+                                 	<div class="c-position"> ${(user.personSignature)!''} </div>
+                                    <p></p>
+							   </div>
                             </div>
                         </div>
+                     </#list>
+              </div>
+              
+              <div class="c-pagination c-center">
+                 <ul id="blog_friend_search_pager" class="c-content-pagination c-square c-theme"></ul>
               </div>
         </div>
 	</div>
@@ -109,7 +76,19 @@ $(document).ready(function(){
 
 	$('#firend').addClass('c-active');
 	$('#blog_friend_search').addClass('c-active');
-  
+	
+	var options = {
+            bootstrapMajorVersion:3,
+            currentPage: ${(pager.currentPage)!1},
+            numberOfPages: ${(pager.pageSize)!5},
+            totalPages:${(pager.totalPage)!1},
+            onPageClicked: function (e, originalEvent, type, page) {
+				location.href = "${basePath}/friend/toFriendSearch?userId=${userId}&currentPage=" + page;
+            }
+       }
+ 
+       $('#blog_friend_search_pager').bootstrapPaginator(options);
+       
   });
 </script>
 

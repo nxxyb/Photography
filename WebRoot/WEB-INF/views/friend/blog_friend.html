@@ -56,7 +56,7 @@
                      </#list>
               </div>
               
-              <div class="c-pagination">
+              <div class="c-pagination c-center">
                  <ul id="blog_friend_pager" class="c-content-pagination c-square c-theme"></ul>
               </div>
         </div>
@@ -80,7 +80,7 @@ $(document).ready(function(){
             numberOfPages: ${(pager.pageSize)!5},
             totalPages:${(pager.totalPage)!1},
             onPageClicked: function (e, originalEvent, type, page) {
-				location.href = "${basePath}/friend/toFriend?currentPage=" + page;
+				location.href = "${basePath}/friend/toFriend?userId=${userId}&currentPage=" + page;
             }  
        }
  

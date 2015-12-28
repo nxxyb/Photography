@@ -24,6 +24,7 @@
                             	<div class="c-margin-b-40">
                                     <div class="panel panel-default">
                                     <div class="panel-body">
+                                    <#if (Session.sessionuser)?? > 
                             		<form id="blogForm" action="${basePath}/friend/create" method="post" enctype="multipart/form-data">
 		                                <div class="row c-product-review-input">
 		                                	<div class="col-md-12">
@@ -58,6 +59,14 @@
 			                                 </div>
 		                                </div>
                                 	</form>
+                                	<#else>
+                                		<div class="c-content-box c-size-lg">
+									          <div class="c-shop-cart-page-1 c-center">
+									              <i class="fa fa-sign-in c-font-dark c-font-50 c-font-thin "></i>
+									              <h2 class="c-font-thin c-center">请登录后发表派文</h2>
+									          </div>
+									     </div>  
+                                	</#if>
                                 	</div>
                                 	</div>
 								</div>
@@ -87,7 +96,7 @@
 	                                        </#if>
                                             <div class="c-body">
                                                 <div class="c-author">
-                                                    <a href="javascript:void(0);" data-toggle="popover" user="${(blog.createUser.id)!''}">
+                                                    <a href="${basePath}/friend/toInfo?userId=${(blog.createUser.id)!''}" data-toggle="popover" user="${(blog.createUser.id)!''}">
                                                         <span class="c-font-bold c-font-20">${(blog.createUser.displayName)!''} </span>
                                                     </a> 
                                                     <span class="c-font-uppercase"> ${(blog.createTime?string('yyyy-MM-dd HH:mm'))!''}</span>
@@ -95,12 +104,12 @@
                                                 <a href="${basePath}/friend/toReview?id=${blog.id}"><p> ${(blog.content)!''} </p></a>
                                                 <div class="c-panel">
                                                     <div class="c-comments">
-                                                    	<a href="#icon/thumbs-up">
-                                        					<i class="fa fa-thumbs-o-up c-font-18"></i> <span class="badge c-bg-green">${(blog.loveNum)!''}</span>
+                                                    	<a href="javascript:void(0);" data-toggle="love" blogId="${(blog.id)!''}">
+                                        					<i class="fa fa-thumbs-o-up c-font-18"></i> <span id="love_${blog.id}" class="badge c-bg-green">${(blog.loveNum)!''}</span>
                                         				</a> 
                                         				|
                                                         <a href="${basePath}/friend/toReview?id=${blog.id}">
-                                                            <i class="icon-speech c-font-18"></i> 评论 <span class="badge c-bg-green">${(blog.commentNum)!''}</span></a>
+                                                            <i class="icon-speech c-font-18"></i> 评论 <span  class="badge c-bg-green">${(blog.commentNum)!''}</span></a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -133,7 +142,7 @@
                             </div>
                             <div class="btn-group btn-group-justified" role="group" aria-label="Justified button group">
 						      <a href="${basePath}/friend/toFriend?userId=${(Session.sessionuser.id)!''}" class="btn c-theme-btn" role="button">派友 <span class="badge">${(Session.sessionuser.blogFriendNum)!''}</span></a>
-						      <a href="#" class="btn c-theme-btn" role="button">派文 <span class="badge">${(Session.sessionuser.blogNum)!''}</span></a>
+						      <a href="${basePath}/friend/toMy?userId=${(Session.sessionuser.id)!''}" class="btn c-theme-btn" role="button">派文 <span class="badge">${(Session.sessionuser.blogNum)!''}</span></a>
 						    </div>
 						    </#if>
                             
@@ -242,7 +251,7 @@ $(document).ready(function(){
           delay:{ show: 500, hide: 2000 },
           title:'用户',
           content: function() {
-          	 var content = '111';
+          	 var content = '';
           	 $.ajax({
 				url : '${basePath}/friend/getPopover?userId=' + $(this).attr("user"),
 				type : "Post",
@@ -253,6 +262,26 @@ $(document).ready(function(){
 			});
 			 return content;
 		 }
+     });
+     
+     $('[data-toggle="love"]').each(function(){
+     	$(this).click(function(){
+     		var blogId = $(this).attr("blogId");
+       		$.ajax({
+				url : '${basePath}/friend/clickLike?blogId=' + blogId,
+				type : "Post",
+				async :false,
+				success : function(data) {
+					if(data == '1'){
+						 var loveCount = parseInt($("#love_" + blogId).text());
+						 $("#love_" + blogId).text(loveCount + 1);
+					}else{
+						$("#error_modal_message").html(data);
+						$("#error_modal").modal('show');
+					}
+				}
+	     	});
+     	});
      });
 	
 	// init cubeportfolio

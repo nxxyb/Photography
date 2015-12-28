@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import com.photography.dao.exp.Condition;
 import com.photography.dao.exp.Expression;
@@ -11,7 +12,6 @@ import com.photography.dao.query.Pager;
 import com.photography.dao.query.Sort;
 import com.photography.mapping.BlogFriend;
 import com.photography.mapping.User;
-import com.photography.utils.Constants;
 
 @Service("blogService")
 public class BlogServiceImpl extends BaseServiceImpl implements IBlogService {
@@ -66,14 +66,24 @@ public class BlogServiceImpl extends BaseServiceImpl implements IBlogService {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<User> getRecommendFriends(User user,Pager pager,String searchText) {
+	public List<User> getRecommendFriends(User user,User sessionUser,Pager pager,String searchText) {
 		
 		if(user != null){
 			List<String> params = new ArrayList<String>();
 			params.add(user.getId());
 			params.add(user.getId());
-			return (List<User>) hibernateDao.find("from user u where u.id not in(select b.friendUser.id from blog_friend b where b.createUser.id = ?) and u.id not in(select b.createUser.id from blog_friend b where b.friendUser.id = ?)",
-							params, pager.getCurrentPage(), pager.getPageSize());
+			params.add(sessionUser.getId());
+			String hql = "from user u where u.id not in(select b.friendUser.id from blog_friend b where b.createUser.id = ?) and u.id not in(select b.createUser.id from blog_friend b where b.friendUser.id = ?) and u.id != ? ";
+			if(!StringUtils.isEmpty(searchText)){
+				hql = hql + " and (u.mobile like ? or u.realName like ?)";
+				params.add("%" + searchText + "%");
+				params.add("%" + searchText + "%");
+			}
+			
+			List<User> users = (List<User>) hibernateDao.find(hql,params, pager.getCurrentPage(), pager.getPageSize());
+			List<Long> counts = (List<Long>) hibernateDao.find("select count(*) " + hql,params);
+			pager.setTotalCount(counts.get(0).intValue() + pager.getOffset());
+			return users;
 		}else{
 			return getPojoList(User.class, pager, null, new Sort("createTime","DESC"), null);
 		}

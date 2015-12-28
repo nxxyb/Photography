@@ -43,6 +43,6 @@ public interface IBlogService extends IBaseService {
 	 * @param user
 	 * @return
 	 */
-	public List<User> getRecommendFriends(User user,Pager pager,String searchText);
+	public List<User> getRecommendFriends(User user,User sessionUser,Pager pager,String searchText);
 
 }

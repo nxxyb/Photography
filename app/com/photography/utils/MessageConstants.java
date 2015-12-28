@@ -19,6 +19,12 @@ public class MessageConstants {
 	
 	public static final String COLLECT_SUCCESS = "收藏成功";
 	
+	public static final String FRIEND_SUCCESS = "关注成功";
+	
+	public static final String CANCEL_FRIEND_SUCCESS = "取消成功";
+	
+	public static final String HAVE_CLICK_LOVE = "您已经点过赞";
+	
 	//胶卷
 	//赚取胶卷
 	public static final String COUPON_REGISTRATION = "用户注册";
