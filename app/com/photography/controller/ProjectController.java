@@ -196,6 +196,9 @@ public class ProjectController extends BaseController {
 			Project project = (Project) projectService.loadPojo(Project.class,id);
 			mav.addObject("project", project);
 			
+			List<Project> rmProjects = projectService.getRelaProject(id, new Pager(1,Constants.PAGER_DEFALUT_SIZE));
+			mav.addObject("rmProjects", rmProjects);
+			
 			mav.addObject("pjNum", projectService.getCountByQuery(ProjectComment.class, Condition.eq("project.id", project.getId())));
 			mav.addObject("ydNum", projectService.getCountByQuery(ProjectOrder.class, Condition.eq("project.id", project.getId()).and(Condition.eq("status", Constants.USER_ORDER_STATUS_YZF))));
 		}

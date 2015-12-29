@@ -2,6 +2,7 @@ package com.photography.service;
 
 import java.util.List;
 
+import com.photography.dao.query.Pager;
 import com.photography.exception.ServiceException;
 import com.photography.mapping.Work;
 
@@ -18,7 +19,7 @@ public interface IWorkService extends IBaseService {
 	 * @return
 	 * @author 徐雁斌
 	 */
-	public List<Work> getRelaWorks(String id) throws ServiceException;
+	public List<Work> getRelaWorks(String id,Pager pager);
 	
 	/**
 	 * 获取首页活动

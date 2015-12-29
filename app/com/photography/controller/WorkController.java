@@ -121,6 +121,8 @@ public class WorkController extends BaseController {
 			Work work = (Work) workService.loadPojo(Work.class,id);
 			mav.addObject("work", work);
 		}
+		List<Work> xgWorks = workService.getRelaWorks(id, new Pager(1,3));
+		mav.addObject("xgWorks", xgWorks);
 		//mav.addObject("path", request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+request.getContextPath()+"/work/toReview?id=" + id);
 		return mav;
 	}

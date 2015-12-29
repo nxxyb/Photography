@@ -3,6 +3,7 @@ package com.photography.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.photography.dao.exp.Condition;
@@ -29,20 +30,20 @@ public class ProjectServiceImpl extends BaseServiceImpl implements IProjectServi
 	 * @see com.photography.service.IProjectService#getRelaProject(java.lang.String)
 	 */
 	@Override
-	public List<Project> getRelaProject(String id) throws ServiceException {
-		Project project = hibernateDao.loadById(Project.class, id);
-		if(project == null){
-			throw new ServiceException(ErrorCode.PROJECT_NOT_EXIST);
-		}
+	public List<Project> getRelaProject(String id,Pager pager) {
+//		Project project = hibernateDao.loadById(Project.class, id);
+//		if(project == null){
+//			throw new ServiceException(ErrorCode.PROJECT_NOT_EXIST);
+//		}
 		
-		Pager pager= new Pager();
-		pager.setPageSize(5);
 		List<Project> projects = hibernateDao.getByQuery(Project.class, pager,null, new Sort());
 		return projects;
 	}
 	
 	@Override
+	@Cacheable(value="indexProjectCache")
 	public List<Project> getIndexProject(String type) throws ServiceException {
+		System.out.println("没用缓存");
 		List<AdminLb> adminLbs = hibernateDao.getByQuery(AdminLb.class, Condition.eq("type", type), new Sort("sort","asc"));
 		List<Project> projects = new ArrayList<Project>();
 		for(AdminLb adminLb : adminLbs){
