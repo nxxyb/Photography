@@ -10,6 +10,8 @@ import com.photography.dao.query.Pager;
 import com.photography.dao.query.Sort;
 import com.photography.exception.ServiceException;
 import com.photography.mapping.AdminLb;
+import com.photography.mapping.BaseMapping;
+import com.photography.mapping.User;
 import com.photography.mapping.Work;
 
 @Service("workService")
@@ -36,6 +38,19 @@ public class WorkServiceImpl extends BaseServiceImpl implements IWorkService {
 			works.add(adminLb.getWork());
 		}
 		return works;
+	}
+	
+	@Override
+	public void deletePojo(BaseMapping pojo, User user) throws ServiceException {
+		//删除预定记录
+//		hibernateDao.executeUpdate("delete work_order where work.id='" + pojo.getId() + "'");
+		
+		//删除收藏
+		hibernateDao.executeUpdate("delete work_collect where work.id='" + pojo.getId() + "'");
+		
+		//删除评论
+		hibernateDao.executeUpdate("delete work_comment where work.id='" + pojo.getId() + "'");
+		super.deletePojo(pojo, user);
 	}
 
 }

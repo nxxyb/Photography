@@ -34,10 +34,12 @@ import com.photography.mapping.ProjectOrder;
 import com.photography.mapping.User;
 import com.photography.mapping.Work;
 import com.photography.mapping.WorkCollect;
+import com.photography.service.IBaseService;
 import com.photography.service.IMailService;
 import com.photography.service.IProjectOrderService;
 import com.photography.service.IProjectService;
 import com.photography.service.IUserService;
+import com.photography.service.IWorkService;
 import com.photography.utils.Constants;
 import com.photography.utils.CustomizedPropertyPlaceholderConfigurer;
 import com.photography.utils.DoubleUtil;
@@ -70,6 +72,12 @@ public class UserInfoController extends BaseController {
 	@Autowired
 	private IProjectService projectService;
 	
+	@Autowired
+	private IWorkService workService;
+	
+	@Autowired
+	private IBaseService baseService;
+	
 	public void setProjectOrderService(IProjectOrderService projectOrderService) {
 		this.projectOrderService = projectOrderService;
 	}
@@ -84,6 +92,14 @@ public class UserInfoController extends BaseController {
 	
 	public void setProjectService(IProjectService projectService) {
 		this.projectService = projectService;
+	}
+
+	public void setWorkService(IWorkService workService) {
+		this.workService = workService;
+	}
+
+	public void setBaseService(IBaseService baseService) {
+		this.baseService = baseService;
 	}
 
 	/**
@@ -185,7 +201,7 @@ public class UserInfoController extends BaseController {
 		User user = getSessionUser(request);
 		List<ProjectCollect> projectCollects = null;
 		Expression exp =Condition.eq("user.id", user.getId());
-		projectCollects = projectService.getPojoList(ProjectCollect.class, pager, exp, new Sort("createTime",QueryConstants.DESC),user);
+		projectCollects = baseService.getPojoList(ProjectCollect.class, pager, exp, new Sort("createTime",QueryConstants.DESC),user);
 		mv.setViewName("user/user_collect_project_item");
 
 		mv.addObject("pager", pager);
@@ -202,9 +218,9 @@ public class UserInfoController extends BaseController {
 	 */
 	@RequestMapping(value="/deleteUserProjectCollect")
 	public String deleteUserProjectCollect(String id,HttpServletRequest request,RedirectAttributes ra) throws ServiceException {
-		ProjectCollect projectCollect = projectService.loadPojo(ProjectCollect.class, id);
+		ProjectCollect projectCollect = baseService.loadPojo(ProjectCollect.class, id);
 		if(projectCollect != null){
-			projectService.deletePojo(projectCollect, getSessionUser(request));
+			baseService.deletePojo(projectCollect, getSessionUser(request));
 		}
 		ra.addFlashAttribute("type", "3");
 		return "redirect:toUserInfo";
@@ -224,7 +240,7 @@ public class UserInfoController extends BaseController {
 		User user = getSessionUser(request);
 		List<WorkCollect> workCollects = null;
 		Expression exp =Condition.eq("user.id", user.getId());
-		workCollects = projectService.getPojoList(WorkCollect.class, pager, exp, new Sort("createTime",QueryConstants.DESC),user);
+		workCollects = baseService.getPojoList(WorkCollect.class, pager, exp, new Sort("createTime",QueryConstants.DESC),user);
 		mv.setViewName("user/user_collect_work_item");
 
 		mv.addObject("pager", pager);
@@ -241,9 +257,9 @@ public class UserInfoController extends BaseController {
 	 */
 	@RequestMapping(value="/deleteUserWorkCollect")
 	public String deleteUserWorkCollect(String id,HttpServletRequest request,RedirectAttributes ra) throws ServiceException {
-		WorkCollect workCollect = projectService.loadPojo(WorkCollect.class, id);
+		WorkCollect workCollect = baseService.loadPojo(WorkCollect.class, id);
 		if(workCollect != null){
-			projectService.deletePojo(workCollect, getSessionUser(request));
+			baseService.deletePojo(workCollect, getSessionUser(request));
 		}
 		ra.addFlashAttribute("type", "3");
 		return "redirect:toUserInfo";
@@ -526,7 +542,7 @@ public class UserInfoController extends BaseController {
 		User user = getSessionUser(request);
 		List<Work> works = null;
 		Expression exp =Condition.eq("createUser.id", user.getId());
-		works = projectService.getPojoList(Work.class, pager, exp, new Sort("createTime",QueryConstants.DESC),user);
+		works = workService.getPojoList(Work.class, pager, exp, new Sort("createTime",QueryConstants.DESC),user);
 		mv.setViewName("user/user_work_item");
 
 		mv.addObject("pager", pager);
@@ -543,9 +559,9 @@ public class UserInfoController extends BaseController {
 	 */
 	@RequestMapping(value="/deleteUserWork")
 	public String deleteUserWork(String id,HttpServletRequest request,RedirectAttributes ra) throws ServiceException {
-		Work work = projectService.loadPojo(Work.class, id);
+		Work work = workService.loadPojo(Work.class, id);
 		if(work != null){
-			projectService.deletePojo(work, getSessionUser(request));
+			workService.deletePojo(work, getSessionUser(request));
 		}
 		ra.addFlashAttribute("type", "8");
 		return "redirect:toUserInfo";

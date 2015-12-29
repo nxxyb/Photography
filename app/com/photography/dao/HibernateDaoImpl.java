@@ -308,6 +308,10 @@ public class HibernateDaoImpl implements IHibernateDao {
 		builder.append(ids + ")");
 		getHibernateTemplate().createQuery(builder.toString()).executeUpdate();
 	}
+	
+	public int executeUpdate(String hql){
+		return getHibernateTemplate().createQuery(hql).executeUpdate();
+	}
 
 	public void flushSession() {
 		getHibernateTemplate().flush();

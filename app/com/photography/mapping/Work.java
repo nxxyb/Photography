@@ -7,6 +7,7 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import org.hibernate.annotations.Formula;
 import org.hibernate.annotations.LazyToOne;
 import org.hibernate.annotations.LazyToOneOption;
 
@@ -48,8 +49,8 @@ public class Work extends BaseMapping {
 	@LazyToOne(LazyToOneOption.PROXY)
 	private User createUser;
 	
-	//已订购人数
-	@Column(name="joined_number")
+	//评论人数
+	@Formula("(select count(*) from work_comment wc where wc.work = id)")
 	private String joinedNumber;
 	
 	//浏览次数

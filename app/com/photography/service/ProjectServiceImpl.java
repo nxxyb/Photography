@@ -11,7 +11,9 @@ import com.photography.dao.query.Sort;
 import com.photography.exception.ErrorCode;
 import com.photography.exception.ServiceException;
 import com.photography.mapping.AdminLb;
+import com.photography.mapping.BaseMapping;
 import com.photography.mapping.Project;
+import com.photography.mapping.User;
 
 /**
  * 
@@ -49,4 +51,17 @@ public class ProjectServiceImpl extends BaseServiceImpl implements IProjectServi
 		return projects;
 	}
 
+	@Override
+	public void deletePojo(BaseMapping pojo, User user) throws ServiceException {
+		//删除预定记录
+		hibernateDao.executeUpdate("delete project_order where project.id='" + pojo.getId() + "'");
+		
+		//删除收藏
+		hibernateDao.executeUpdate("delete project_collect where project.id='" + pojo.getId() + "'");
+		
+		//删除评论
+		hibernateDao.executeUpdate("delete project_comment where project.id='" + pojo.getId() + "'");
+		
+		super.deletePojo(pojo, user);
+	}
 }

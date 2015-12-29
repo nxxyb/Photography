@@ -28,6 +28,7 @@ import com.photography.mapping.User;
 import com.photography.mapping.Work;
 import com.photography.mapping.WorkCollect;
 import com.photography.mapping.WorkComment;
+import com.photography.service.IBaseService;
 import com.photography.service.IWorkService;
 import com.photography.utils.Constants;
 import com.photography.utils.MessageConstants;
@@ -49,11 +50,18 @@ public class WorkController extends BaseController {
 	
 	@Autowired
 	private IWorkService workService;
+	
+	@Autowired
+	private IBaseService baseService;
 
 	public void setWorkService(IWorkService workService) {
 		this.workService = workService;
 	}
 	
+	public void setBaseService(IBaseService baseService) {
+		this.baseService = baseService;
+	}
+
 	/**
 	 * 作品首页
 	 */
@@ -196,7 +204,7 @@ public class WorkController extends BaseController {
 	public ModelAndView getWorkComment(String workId,Pager pager,HttpServletRequest request) throws ServiceException {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("work/work_comment_item");
-		List<WorkComment> workComments = workService.getPojoList(WorkComment.class, pager, Condition.eq("work.id", workId), new Sort("createTime",QueryConstants.DESC),null);
+		List<WorkComment> workComments = baseService.getPojoList(WorkComment.class, pager, Condition.eq("work.id", workId), new Sort("createTime",QueryConstants.DESC),null);
 		mv.addObject("workId", workId);
 		mv.addObject("pager", pager);
 		mv.addObject("workComments", workComments);
@@ -213,16 +221,16 @@ public class WorkController extends BaseController {
 			User user = getSessionUser(request);
 			if(!StringUtils.isEmpty(workComment.getWork().getId())){
 				workId = workComment.getWork().getId();
-				Work work = (Work) workService.loadPojo(Work.class,workId);
+				Work work = (Work) baseService.loadPojo(Work.class,workId);
 				workComment.setWork(work);
 			}
 			
 			workComment.setCreateUser(user);
 			
-			FileGroup photos = saveAndReturnFile(photoPics, request, user, workComment.getPhotos(),WORK_FILE,workService);
+			FileGroup photos = saveAndReturnFile(photoPics, request, user, workComment.getPhotos(),WORK_FILE,baseService);
 			workComment.setPhotos(photos);
 			
-			workService.savePojo(workComment, user);
+			baseService.savePojo(workComment, user);
 			
 			attr.addFlashAttribute(Constants.SUCCESS_MESSAGE, MessageConstants.SAVE_SUCCESS);
 		}catch(Exception e){
@@ -245,13 +253,13 @@ public class WorkController extends BaseController {
 		try{
 			User user = getSessionUser(request);
 			if(!StringUtils.isEmpty(id)){
-				List<WorkCollect> workCollects = workService.loadPojoByExpression(WorkCollect.class, 
+				List<WorkCollect> workCollects = baseService.loadPojoByExpression(WorkCollect.class, 
 						Condition.and(Condition.eq("work.id", id), Condition.eq("user.id", user.getId())), null);
 				if(workCollects.isEmpty()){
 					WorkCollect workCollect = new WorkCollect();
 					workCollect.setWork(workService.loadPojo(Work.class, id));
 					workCollect.setUser(user);
-					workService.savePojo(workCollect, user);
+					baseService.savePojo(workCollect, user);
 				}
 			}
 			attr.addFlashAttribute(Constants.SUCCESS_MESSAGE, MessageConstants.COLLECT_SUCCESS);

@@ -11,6 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
+
+import org.hibernate.annotations.Formula;
 import org.hibernate.annotations.LazyToOne;
 import org.hibernate.annotations.LazyToOneOption;
 
@@ -174,7 +176,7 @@ public class Project extends BaseMapping{
 	private User createUser;
 	
 	//已参加人数
-	@Column(name="joined_number")
+	@Formula("(select count(*) from project_order po where po.project = id and po.status='3')")
 	private String joinedNumber;
 	
 	//浏览次数

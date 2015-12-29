@@ -22,7 +22,7 @@ import com.photography.mapping.User;
  * 
  * @copyright 2015 天大求实电力新技术股份有限公司 版权所有
  */
-@Service
+@Service("baseService")
 public class BaseServiceImpl implements IBaseService {
 	
 	@Autowired

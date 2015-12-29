@@ -5,6 +5,7 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -16,6 +17,7 @@ import com.photography.dao.exp.Condition;
 import com.photography.dao.query.Sort;
 import com.photography.mapping.Project;
 import com.photography.service.IAdminService;
+import com.photography.service.IProjectService;
 import com.photography.utils.Constants;
 
 /**
@@ -31,6 +33,13 @@ public class AdminProjectController extends BaseController {
 
 	@Resource
 	private IAdminService adminService;
+	
+	@Autowired
+	private IProjectService projectService;
+	
+	public void setProjectService(IProjectService projectService) {
+		this.projectService = projectService;
+	}
 
 	public void setAdminService(IAdminService adminService) {
 		this.adminService = adminService;
@@ -120,7 +129,7 @@ public class AdminProjectController extends BaseController {
 			if(!StringUtils.isEmpty(id)){
 				Project project = adminService.loadPojo(Project.class, id);
 				if(project != null){
-					adminService.deletePojo(project, null);
+					projectService.deletePojo(project, null);
 				}
 			}
 		}catch(Exception e){

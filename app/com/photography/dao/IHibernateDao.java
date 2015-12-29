@@ -120,4 +120,6 @@ public interface IHibernateDao {
 	public List<?> find(String hql, List<?> params);
 
 	public List<?> find(String hql, List<?> params, int pageNo, int pageSize);
+	
+	public int executeUpdate(String hql);
 }

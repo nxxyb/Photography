@@ -5,6 +5,7 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -16,6 +17,7 @@ import com.photography.dao.exp.Condition;
 import com.photography.dao.query.Sort;
 import com.photography.mapping.Work;
 import com.photography.service.IAdminService;
+import com.photography.service.IWorkService;
 import com.photography.utils.Constants;
 
 /**
@@ -31,11 +33,18 @@ public class AdminWorkController extends BaseController {
 
 	@Resource
 	private IAdminService adminService;
+	
+	@Autowired
+	private IWorkService workService;
 
 	public void setAdminService(IAdminService adminService) {
 		this.adminService = adminService;
 	}
 	
+	public void setWorkService(IWorkService workService) {
+		this.workService = workService;
+	}
+
 	/**
 	 * 跳转到活动审核列表
 	 * @param request
@@ -120,7 +129,7 @@ public class AdminWorkController extends BaseController {
 			if(!StringUtils.isEmpty(id)){
 				Work work = adminService.loadPojo(Work.class, id);
 				if(work != null){
-					adminService.deletePojo(work, null);
+					workService.deletePojo(work, null);
 				}
 			}
 		}catch(Exception e){

@@ -10,6 +10,8 @@ import com.photography.dao.exp.Condition;
 import com.photography.dao.exp.Expression;
 import com.photography.dao.query.Pager;
 import com.photography.dao.query.Sort;
+import com.photography.exception.ServiceException;
+import com.photography.mapping.BaseMapping;
 import com.photography.mapping.BlogFriend;
 import com.photography.mapping.User;
 
@@ -87,6 +89,17 @@ public class BlogServiceImpl extends BaseServiceImpl implements IBlogService {
 		}else{
 			return getPojoList(User.class, pager, null, new Sort("createTime","DESC"), null);
 		}
+	}
+	
+	@Override
+	public void deletePojo(BaseMapping pojo, User user) throws ServiceException {
+		//点赞记录
+		hibernateDao.executeUpdate("delete love where blog.id='" + pojo.getId() + "'");
+		
+		//删除评论
+		hibernateDao.executeUpdate("delete blog_comment where blog.id='" + pojo.getId() + "'");
+		
+		super.deletePojo(pojo, user);
 	}
 
 }
