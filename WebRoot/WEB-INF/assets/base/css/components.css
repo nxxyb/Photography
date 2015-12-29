@@ -5950,6 +5950,7 @@ h1 {
       font-weight: 400;
       padding: 7px 4px 6px 4px;
       border-radius: 40px;
+      cursor:pointer;
       border: 1px solid #eeeeee; }
     .c-content-pagination > li.c-space > span {
       border-radius: 0;
