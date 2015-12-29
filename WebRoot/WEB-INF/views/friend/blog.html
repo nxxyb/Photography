@@ -96,19 +96,19 @@
 	                                        </#if>
                                             <div class="c-body">
                                                 <div class="c-author">
-                                                    <a href="${basePath}/friend/toInfo?userId=${(blog.createUser.id)!''}" data-toggle="popover" user="${(blog.createUser.id)!''}">
+                                                    <a target="_blank" href="${basePath}/friend/toInfo?userId=${(blog.createUser.id)!''}" data-toggle="popover" user="${(blog.createUser.id)!''}">
                                                         <span class="c-font-bold c-font-20">${(blog.createUser.displayName)!''} </span>
                                                     </a> 
                                                     <span class="c-font-uppercase"> ${(blog.createTime?string('yyyy-MM-dd HH:mm'))!''}</span>
                                                 </div>                                                
-                                                <a href="${basePath}/friend/toReview?id=${blog.id}"><p> ${(blog.content)!''} </p></a>
+                                                <a target="_blank" href="${basePath}/friend/toReview?id=${blog.id}"><p> ${(blog.content)!''} </p></a>
                                                 <div class="c-panel">
                                                     <div class="c-comments">
                                                     	<a href="javascript:void(0);" data-toggle="love" blogId="${(blog.id)!''}">
                                         					<i class="fa fa-thumbs-o-up c-font-18"></i> <span id="love_${blog.id}" class="badge c-bg-green">${(blog.loveNum)!''}</span>
                                         				</a> 
                                         				|
-                                                        <a href="${basePath}/friend/toReview?id=${blog.id}">
+                                                        <a target="_blank" href="${basePath}/friend/toReview?id=${blog.id}">
                                                             <i class="icon-speech c-font-18"></i> 评论 <span  class="badge c-bg-green">${(blog.commentNum)!''}</span></a>
                                                     </div>
                                                 </div>
