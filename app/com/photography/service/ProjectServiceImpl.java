@@ -3,13 +3,16 @@ package com.photography.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.Resource;
+
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
+import com.photography.cache.CacheHandler;
 import com.photography.dao.exp.Condition;
 import com.photography.dao.query.Pager;
 import com.photography.dao.query.Sort;
-import com.photography.exception.ErrorCode;
 import com.photography.exception.ServiceException;
 import com.photography.mapping.AdminLb;
 import com.photography.mapping.BaseMapping;
@@ -25,6 +28,9 @@ import com.photography.mapping.User;
  */
 @Service("projectService")
 public class ProjectServiceImpl extends BaseServiceImpl implements IProjectService {
+	
+	@Resource
+	private CacheHandler cacheHandler;
 
 	/* 
 	 * @see com.photography.service.IProjectService#getRelaProject(java.lang.String)
@@ -51,6 +57,20 @@ public class ProjectServiceImpl extends BaseServiceImpl implements IProjectServi
 		}
 		return projects;
 	}
+	
+	@Override
+	public void savePojo(BaseMapping pojo, User user) throws ServiceException {
+		
+		//更新轮播缓存
+		if(StringUtils.isEmpty(pojo.getId())){
+			List<AdminLb> adminLbs = hibernateDao.getByQuery(AdminLb.class, Condition.eq("project.id", pojo.getId()));
+			if(!adminLbs.isEmpty()){
+				cacheHandler.evictIndexProjectCache();
+			}
+		}
+		
+		super.savePojo(pojo, user);
+	}
 
 	@Override
 	public void deletePojo(BaseMapping pojo, User user) throws ServiceException {
@@ -62,6 +82,13 @@ public class ProjectServiceImpl extends BaseServiceImpl implements IProjectServi
 		
 		//删除评论
 		hibernateDao.executeUpdate("delete project_comment where project.id='" + pojo.getId() + "'");
+		
+		//删除轮播
+		List<AdminLb> adminLbs = hibernateDao.getByQuery(AdminLb.class, Condition.eq("project.id", pojo.getId()));
+		if(!adminLbs.isEmpty()){
+			hibernateDao.delete(adminLbs.get(0));
+			cacheHandler.evictIndexProjectCache();
+		}
 		
 		super.deletePojo(pojo, user);
 	}

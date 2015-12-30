@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.photography.cache.CacheHandler;
 import com.photography.dao.exp.Condition;
 import com.photography.dao.exp.Expression;
 import com.photography.dao.query.Sort;
@@ -34,6 +35,9 @@ public class AdminHomeController extends BaseController {
 	
 	@Resource
 	private IAdminService adminService;
+	
+	@Resource
+	private CacheHandler cacheHandler;
 
 	public void setAdminService(IAdminService adminService) {
 		this.adminService = adminService;
@@ -119,6 +123,12 @@ public class AdminHomeController extends BaseController {
 				if(adminLb != null){
 					adminService.deletePojo(adminLb, null);
 				}
+				
+				if("4".equals(type)){
+					cacheHandler.evictIndexWorkCache();
+				}else{
+					cacheHandler.evictIndexProjectCache();
+				}
 			}
 		}catch(Exception e){
 			handleError(ra, e);
@@ -141,12 +151,14 @@ public class AdminHomeController extends BaseController {
 					Work work = adminService.loadPojo(Work.class, adminLb.getWork().getId());
 					adminLb.setWork(work);
 					adminService.savePojo(adminLb, null);
+					cacheHandler.evictIndexWorkCache();
 				}
 			}else{
 				if(!StringUtils.isEmpty(adminLb.getProject().getId())){
 					Project project = adminService.loadPojo(Project.class, adminLb.getProject().getId());
 					adminLb.setProject(project);
 					adminService.savePojo(adminLb, null);
+					cacheHandler.evictIndexProjectCache();
 				}
 			}
 			

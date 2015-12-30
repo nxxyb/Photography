@@ -3,9 +3,13 @@ package com.photography.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.Resource;
+
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
+import com.photography.cache.CacheHandler;
 import com.photography.dao.exp.Condition;
 import com.photography.dao.query.Pager;
 import com.photography.dao.query.Sort;
@@ -18,6 +22,9 @@ import com.photography.mapping.Work;
 @Service("workService")
 public class WorkServiceImpl extends BaseServiceImpl implements IWorkService {
 
+	@Resource
+	private CacheHandler cacheHandler;
+	
 	@Override
 	public List<Work> getRelaWorks(String id,Pager pager){
 		Work work = hibernateDao.loadById(Work.class, id);
@@ -41,6 +48,19 @@ public class WorkServiceImpl extends BaseServiceImpl implements IWorkService {
 	}
 	
 	@Override
+	public void savePojo(BaseMapping pojo, User user) throws ServiceException {
+		//更新轮播缓存
+		if(StringUtils.isEmpty(pojo.getId())){
+			List<AdminLb> adminLbs = hibernateDao.getByQuery(AdminLb.class, Condition.eq("work.id", pojo.getId()));
+			if(!adminLbs.isEmpty()){
+				cacheHandler.evictIndexWorkCache();
+			}
+		}
+		
+		super.savePojo(pojo, user);
+	}
+	
+	@Override
 	public void deletePojo(BaseMapping pojo, User user) throws ServiceException {
 		//删除预定记录
 //		hibernateDao.executeUpdate("delete work_order where work.id='" + pojo.getId() + "'");
@@ -50,6 +70,14 @@ public class WorkServiceImpl extends BaseServiceImpl implements IWorkService {
 		
 		//删除评论
 		hibernateDao.executeUpdate("delete work_comment where work.id='" + pojo.getId() + "'");
+		
+		//删除轮播
+		List<AdminLb> adminLbs = hibernateDao.getByQuery(AdminLb.class, Condition.eq("work.id", pojo.getId()));
+		if(!adminLbs.isEmpty()){
+			hibernateDao.delete(adminLbs.get(0));
+			cacheHandler.evictIndexWorkCache();
+		}
+		
 		super.deletePojo(pojo, user);
 	}
 
