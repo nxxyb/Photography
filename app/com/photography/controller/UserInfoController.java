@@ -32,6 +32,7 @@ import com.photography.mapping.Project;
 import com.photography.mapping.ProjectCollect;
 import com.photography.mapping.ProjectOrder;
 import com.photography.mapping.User;
+import com.photography.mapping.UserCoupon;
 import com.photography.mapping.Work;
 import com.photography.mapping.WorkCollect;
 import com.photography.service.IBaseService;
@@ -292,6 +293,34 @@ public class UserInfoController extends BaseController {
 		mv.addObject("type",type);
 		mv.addObject("pager", pager);
 		mv.addObject("projectOrders", projectOrders);
+		return mv;
+	}
+	
+	/**
+	 * 获取胶卷列表
+	 * @param type 1 收入   2 支出
+	 * @param request
+	 * @return
+	 * @author 徐雁斌
+	 * @throws ServiceException 
+	 */
+	@RequestMapping(value="/getUserCoupon")
+	public ModelAndView getUserCoupon(String type,Pager pager,HttpServletRequest request) throws ServiceException {
+		ModelAndView mv = new ModelAndView();
+		
+		User user = getSessionUser(request);
+		List<UserCoupon> userCoupons = null;
+		Expression exp = Condition.eq("user.id", user.getId());
+		if("1".equals(type)){
+			exp = exp.and(Condition.eq("inOrExp", Constants.COUPON_CLASS_INCOME));
+		}else if("2".equals(type)){
+			exp = exp.and(Condition.eq("inOrExp", Constants.COUPON_CLASS_SPEND));
+		}
+		userCoupons = projectOrderService.getPojoList(UserCoupon.class, pager, exp, new Sort("createTime",QueryConstants.DESC),user);
+		mv.setViewName("user/user_coupon_item");
+		mv.addObject("type",type);
+		mv.addObject("pager", pager);
+		mv.addObject("userCoupons", userCoupons);
 		return mv;
 	}
 	

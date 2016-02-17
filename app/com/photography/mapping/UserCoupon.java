@@ -27,13 +27,19 @@ public class UserCoupon extends BaseMapping {
 	private String couponNum;
 	
 	/**
-	 * 收入/支出
+	 * 胶卷类型
 	 */
 	@Column(name="type")
 	private String type;
 	
 	/**
-	 * 详细信息
+	 * 收入/支出
+	 */
+	@Column(name="in_or_exp")
+	private String inOrExp;
+	
+	/**
+	 * 信息
 	 */
 	@Column(name="message")
 	private String message;
@@ -62,19 +68,27 @@ public class UserCoupon extends BaseMapping {
 		this.type = type;
 	}
 
-	public String getMessage() {
-		return message;
-	}
-
-	public void setMessage(String message) {
-		this.message = message;
-	}
-
 	public User getUser() {
 		return user;
 	}
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public String getInOrExp() {
+		return inOrExp;
+	}
+
+	public void setInOrExp(String inOrExp) {
+		this.inOrExp = inOrExp;
+	}
+
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
 	}
 }

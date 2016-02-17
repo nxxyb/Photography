@@ -27,7 +27,7 @@
               </div>
               
               <div class="panel panel-default">
-                  <div class="panel-body"> 可用胶卷<span class="badge c-font-20 c-bg-yellow">60</span>个  
+                  <div class="panel-body"> 可用胶卷<span class="badge c-font-20 c-bg-yellow">${(user.couponNum)!'0'}</span>个  
                   	<#include "./common/coupon_help.html">
                   	<a class="c-theme-font pull-right" href="#" onclick="showCouponModel();return false;" > 什么是胶卷<i class="fa fa-question"></i></a>
                   </div>
@@ -47,77 +47,32 @@
                    
                    <div class="tab-content c-bordered c-padding-lg">
                      <div class="tab-pane active" id="tab_1_1_content">
-                        <div class="c-shop-wishlist-1">
-                        <div class="c-border-bottom hidden-sm hidden-xs">
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <h3 class="c-font-uppercase c-font-16 c-font-grey-2 c-font-bold">日期</h3>
-                                </div>
-                                <div class="col-md-2">
-                                    <h3 class="c-font-uppercase c-font-16 c-font-grey-2 c-font-bold">收入/支出</h3>
-                                </div>
-                                <div class="col-md-6">
-                                    <h3 class="c-font-uppercase c-font-16 c-font-grey-2 c-font-bold">详细信息</h3>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- BEGIN: PRODUCT ITEM ROW -->
-                        <div class="c-border-bottom c-row-item">
-                            <div class="row">
-                                <div class="col-md-4 col-sm-12">
-                                   <p class="visible-xs-block c-theme-font c-font-uppercase c-font-bold">日期</p>
-                                   <p class="c-font-sbold c-font-uppercase c-font-18">2015-10-22 10:28</p>
-                                </div>
-                                <div class="col-md-2 col-sm-12">
-                                    <p class="visible-xs-block c-theme-font c-font-uppercase c-font-bold">收入/支出</p>
-                                    <p class="c-font-sbold c-font-uppercase c-font-18">+10</p>
-                                </div>
-                                <div class="col-md-6 col-sm-12">
-                                    <p class="visible-xs-block c-theme-font c-font-uppercase c-font-bold">详细信息</p>
-                                    <p class="c-font-sbold c-font-uppercase c-font-18 c-font-red">登录签到</p>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- END: PRODUCT ITEM ROW -->
                         
-                    </div>
+                        <div id="user_coupon_1"></div>
+                        
+                        <div class="row c-pagination c-center">
+                              <ul id="user_coupon_pager_1" class="c-content-pagination c-square c-theme">
+                              </ul>
+						</div>
+						
+						<script type='text/javascript'>
+				            getByAjax("${basePath}/userinfo/getUserCoupon?type=1&currentPage=1","user_coupon_1");
+					    </script>
+					    
                      </div>
                      <div class="tab-pane" id="tab_1_2_content">
-                         <div class="c-shop-wishlist-1">
-                        <div class="c-border-bottom hidden-sm hidden-xs">
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <h3 class="c-font-uppercase c-font-16 c-font-grey-2 c-font-bold">日期</h3>
-                                </div>
-                                <div class="col-md-2">
-                                    <h3 class="c-font-uppercase c-font-16 c-font-grey-2 c-font-bold">收入/支出</h3>
-                                </div>
-                                <div class="col-md-6">
-                                    <h3 class="c-font-uppercase c-font-16 c-font-grey-2 c-font-bold">详细信息</h3>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- BEGIN: PRODUCT ITEM ROW -->
-                        <div class="c-border-bottom c-row-item">
-                            <div class="row">
-                                <div class="col-md-4 col-sm-12">
-                                   <p class="visible-xs-block c-theme-font c-font-uppercase c-font-bold">日期</p>
-                                   <p class="c-font-sbold c-font-uppercase c-font-18">2015-10-22 10:28</p>
-                                </div>
-                                <div class="col-md-2 col-sm-12">
-                                    <p class="visible-xs-block c-theme-font c-font-uppercase c-font-bold">收入/支出</p>
-                                    <p class="c-font-sbold c-font-uppercase c-font-18">-10</p>
-                                </div>
-                                <div class="col-md-6 col-sm-12">
-                                    <p class="visible-xs-block c-theme-font c-font-uppercase c-font-bold">详细信息</p>
-                                    <p class="c-font-sbold c-font-uppercase c-font-18 c-font-red">预定活动(订单9806025514)</p>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- END: PRODUCT ITEM ROW -->
-                     </div>
+                        <div id="user_coupon_2"></div>
+                        
+                        <div class="row c-pagination c-center">
+                              <ul id="user_coupon_pager_2" class="c-content-pagination c-square c-theme">
+                              </ul>
+						</div>
+						
+						<script type='text/javascript'>
+				            getByAjax("${basePath}/userinfo/getUserCoupon?type=2&currentPage=1","user_coupon_2");
+					    </script>
                      
-                 </div>
+                 	</div>
                  </div>
              </div>
 		

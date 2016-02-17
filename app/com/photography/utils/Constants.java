@@ -129,11 +129,33 @@ public class Constants {
 	public final static int PAGER_PROJECT_ORDER = 4;
 	
 	/**
-	 * 胶卷类型
+	 * 胶卷类别
 	 */
 	//收入
-	public final static String COUPON_TYPE_INCOME = "1";
-	//支出
-	public final static String COUPON_TYPE_SPEND = "2";
+	public final static String COUPON_CLASS_INCOME = "1";
 	
+	//支出
+	public final static String COUPON_CLASS_SPEND = "2";
+	
+	/**
+	 * 胶卷类型
+	 */
+	
+	//用户注册
+	public final static String COUPON_TYPE_GIVE_REGISTRATION = "1";
+	
+	//登录签到
+	public final static String COUPON_TYPE_GIVE_SIGN = "2";
+	
+	//评论
+	public final static String COUPON_TYPE_GIVE_COMMENT = "3";
+	
+	//评论
+	public final static String COUPON_TYPE_GIVE_SHARE = "4";
+	
+	//参加活动
+	public final static String COUPON_TYPE_GIVE_JOINPROJECT = "5";
+	
+	//预定活动
+	public final static String COUPON_TYPE_CONSUME_ORDERPROJECT = "6";
 }

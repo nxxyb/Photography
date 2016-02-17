@@ -27,14 +27,7 @@ public class MessageConstants {
 	
 	//胶卷
 	//赚取胶卷
-	public static final String COUPON_REGISTRATION = "用户注册";
-	public static final String COUPON_SIGN = "登录签到";
-	public static final String COUPON_COMMENT = "评论";
-	public static final String COUPON_SHARE = "分享";
-	public static final String COUPON_JOINPROJECT = "参加活动";
 	
-	//消费胶卷
-	public static final String COUPON_ORDERPROJECT = "预定活动";
 	
 	
 	

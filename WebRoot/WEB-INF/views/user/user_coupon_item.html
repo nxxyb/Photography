@@ -1,0 +1,62 @@
+<#assign basePath=request.contextPath>
+
+<#if userCoupons?? && (userCoupons?size>0)>
+	<div class="c-shop-wishlist-1">
+        <div class="c-border-bottom hidden-sm hidden-xs">
+            <div class="row">
+                <div class="col-md-4">
+                    <h3 class="c-font-uppercase c-font-16 c-font-grey-2 c-font-bold">日期</h3>
+                </div>
+                <div class="col-md-2">
+                    <h3 class="c-font-uppercase c-font-16 c-font-grey-2 c-font-bold">收入/支出</h3>
+                </div>
+                <div class="col-md-6">
+                    <h3 class="c-font-uppercase c-font-16 c-font-grey-2 c-font-bold">详细信息</h3>
+                </div>
+            </div>
+        </div>
+	<#list userCoupons as userCoupon>
+                    
+	   <div class="c-border-bottom c-row-item">
+           <div class="row">
+               <div class="col-md-4 col-sm-12">
+                  <p class="visible-xs-block c-theme-font c-font-uppercase c-font-bold">日期</p>
+                  <p class="c-font-sbold c-font-uppercase c-font-18">2015-10-22 10:28</p>
+               </div>
+               <div class="col-md-2 col-sm-12">
+                   <p class="visible-xs-block c-theme-font c-font-uppercase c-font-bold">收入/支出</p>
+                   <p class="c-font-sbold c-font-uppercase c-font-18">+10</p>
+               </div>
+               <div class="col-md-6 col-sm-12">
+                   <p class="visible-xs-block c-theme-font c-font-uppercase c-font-bold">详细信息</p>
+                   <p class="c-font-sbold c-font-uppercase c-font-18 c-font-red">登录签到</p>
+               </div>
+           </div>
+       </div>
+	</#list>
+	</div>
+	
+	<script type="text/javascript">
+    $(document).ready(function(){
+    	var options${type} = {
+            bootstrapMajorVersion:3,
+            currentPage: ${(pager.currentPage)!1},
+            numberOfPages: ${(pager.pageSize)!5},
+            totalPages:${(pager.totalPage)!1},
+            onPageClicked: function (e, originalEvent, type, page) {
+            	getByAjax("${basePath}/userinfo/getUserCoupon?type=${type}&currentPage=" + page,"user_coupon_${type}");
+            }  
+       }
+ 
+       $('#user_coupon_pager_${type}').bootstrapPaginator(options${type});  
+    });
+</script>
+
+<#else>
+   	<div class="c-content-box c-size-lg">
+          <div class="c-shop-cart-page-1 c-center">
+              <i class="fa fa-frown-o c-font-dark c-font-50 c-font-thin "></i>
+              <h2 class="c-font-thin c-center">您还没有胶卷使用记录</h2>
+          </div>
+     </div>  
+</#if>

@@ -148,6 +148,12 @@ public class Project extends BaseMapping{
 	private String cost;
 	
 	/**
+	 * 允许使用胶卷数量
+	 */
+	@Column(name="enable_coupon_num")
+	private String enableCouponNum;
+	
+	/**
 	 * 最低开办人数
 	 */
 	@Column(name="less_num")
@@ -420,6 +426,14 @@ public class Project extends BaseMapping{
 
 	public void setVerifyMessage(String verifyMessage) {
 		this.verifyMessage = verifyMessage;
+	}
+
+	public String getEnableCouponNum() {
+		return enableCouponNum;
+	}
+
+	public void setEnableCouponNum(String enableCouponNum) {
+		this.enableCouponNum = enableCouponNum;
 	}
 	
 	

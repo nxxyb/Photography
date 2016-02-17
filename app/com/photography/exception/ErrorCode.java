@@ -47,4 +47,10 @@ public class ErrorCode {
 	 * 系统异常：10400-10499
 	 */
 	public static final int CACHE_EXCEPTION = 10400;
+	
+	/*
+	 * 胶卷
+	 * 系统异常：10500-10599
+	 */
+	public static final int COUPON_ADD_EXCEPTION = 10500;
 }

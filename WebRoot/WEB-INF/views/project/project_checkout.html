@@ -83,12 +83,12 @@
 		                                            <label for="coupon_checkbox">
 		                                                <span class="inc"></span>
 		                                                <span class="check"></span>
-		                                                <span class="box"></span> 使用活动券? </label>
+		                                                <span class="box"></span> 使用胶卷? </label>
 		                                        </div>
 		                                        
                                            		<div id="coupon" class="c-coupon">
                                            			<p class="c-shipping-price c-font-bold c-font-20">￥
-                                           				<span id="coupon_num" class="c-shipping-total">200</span>
+                                           				<span id="coupon_num" class="c-shipping-total">${(user.couponNum)!'0'}</span>
                                            			</p>
                                            			<input id="projectOrder_coupon" type="hidden" name="coupon" value="0">
                                            		</div>

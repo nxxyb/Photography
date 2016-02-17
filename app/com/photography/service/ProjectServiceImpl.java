@@ -49,7 +49,6 @@ public class ProjectServiceImpl extends BaseServiceImpl implements IProjectServi
 	@Override
 	@Cacheable(value="indexProjectCache")
 	public List<Project> getIndexProject(String type) throws ServiceException {
-		System.out.println("没用缓存");
 		List<AdminLb> adminLbs = hibernateDao.getByQuery(AdminLb.class, Condition.eq("type", type), new Sort("sort","asc"));
 		List<Project> projects = new ArrayList<Project>();
 		for(AdminLb adminLb : adminLbs){

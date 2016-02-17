@@ -201,8 +201,9 @@ DROP TABLE IF EXISTS `user_coupon`;
 CREATE TABLE `user_coupon` (
   `id` varchar(36) NOT NULL PRIMARY KEY,
   `coupon_num` varchar(36) comment '胶卷数量',
-  `type` varchar(10) comment '胶卷类型  1-收入  2-支出',
-  `message` varchar(2000) comment '详细信息',
+  `type` varchar(10) comment '胶卷类型',
+  `in_or_exp` varchar(10) comment '胶卷类别  1-收入  2-支出',
+  `message` varchar(2000) comment '信息',
   `user` varchar(36) comment '用户',
   `create_time` datetime comment '创建时间',
   `last_update_time` datetime comment '最后修改时间'

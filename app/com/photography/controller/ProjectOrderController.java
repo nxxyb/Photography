@@ -1,34 +1,23 @@
 package com.photography.controller;
 
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.photography.dao.exp.Condition;
-import com.photography.dao.exp.Expression;
-import com.photography.dao.query.Pager;
-import com.photography.dao.query.QueryConstants;
-import com.photography.dao.query.Sort;
 import com.photography.exception.ErrorMessage;
 import com.photography.exception.ServiceException;
-import com.photography.mapping.FileGroup;
 import com.photography.mapping.Project;
-import com.photography.mapping.ProjectComment;
 import com.photography.mapping.ProjectOrder;
 import com.photography.mapping.User;
 import com.photography.mapping.UserCoupon;
 import com.photography.service.IProjectOrderService;
+import com.photography.service.IUserCouponService;
 import com.photography.utils.Constants;
 import com.photography.utils.MessageConstants;
 
@@ -47,11 +36,18 @@ public class ProjectOrderController extends BaseController {
 	
 	@Autowired
 	private IProjectOrderService projectOrderService;
+	
+	@Autowired
+	private IUserCouponService userCouponService;
 
 	public void setProjectOrderService(IProjectOrderService projectOrderService) {
 		this.projectOrderService = projectOrderService;
 	}
 	
+	public void setUserCouponService(IUserCouponService userCouponService) {
+		this.userCouponService = userCouponService;
+	}
+
 	/**
 	 * 预定活动页面
 	 * @param id
@@ -76,6 +72,7 @@ public class ProjectOrderController extends BaseController {
 				projectOrder.setStatus(Constants.USER_ORDER_STATUS_WZF);
 				projectOrderService.savePojo(projectOrder, user);
 			}
+			attr.addFlashAttribute("user", projectOrderService.loadPojo(User.class, user.getId()));
 			attr.addFlashAttribute("projectOrder", projectOrder);
 			
 			return "project/project_checkout";
@@ -114,9 +111,11 @@ public class ProjectOrderController extends BaseController {
 			if(!StringUtils.isEmpty(projectOrder.getCoupon()) && !"0".equals(projectOrder.getCoupon())){
 				UserCoupon userCoupon = new UserCoupon();
 				userCoupon.setCouponNum(projectOrder.getCoupon());
-				userCoupon.setMessage(MessageConstants.COUPON_ORDERPROJECT);
-				userCoupon.setType(Constants.COUPON_TYPE_SPEND);
-				projectOrderService.savePojo(userCoupon, user);
+				userCoupon.setInOrExp(Constants.COUPON_CLASS_SPEND);
+				userCoupon.setType(Constants.COUPON_TYPE_CONSUME_ORDERPROJECT);
+				userCoupon.setUser(user);
+				String userCouponNum = userCouponService.addCoupon(userCoupon, user);
+				user.setCouponNum(userCouponNum);
 			}
 			
 			mav.addObject("projectOrder", projectOrderDB);
