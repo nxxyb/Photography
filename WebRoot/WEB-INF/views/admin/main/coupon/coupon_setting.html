@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	 <#include "../../common/title.html">
+	 <#include "../../common/link.html">
+</head>
+
+<body class="skin-blue sidebar-mini">
+
+    <div id="wrapper">
+		
+		<#include "../../common/header.html">
+		
+		<#include "../../error/error_modal.html">
+            
+        <div class="content-wrapper">
+      
+	        <section class="content-header">
+	          <h1>胶卷设置</h1>
+	          <ol class="breadcrumb">
+	            <li><a href="${basePath}/admin/toMain"><i class="fa fa-dashboard"></i> 首页</a></li>
+	            <li class="active"> 胶卷设置</li>
+	          </ol>
+	        </section>
+            
+             <section class="content">
+            <!-- /.row -->
+            <div class="row">
+            	<div class="col-md-12">
+                   <div class="box box-info">
+                        <form id="userForm" role="form-horizontal" action="${basePath}/admin/userCoupon/saveUserCouponSetting" method="post">
+                                <div class="box-body">
+                                	<#list userCouponSettings as userCouponSetting>
+                                	<input type="hidden" name="userCouponSettings[userCouponSetting_index].id" value="userCouponSetting.id">
+                                    <div class="col-md-4">
+	                                    <div class="form-group">
+	                                            <label class="control-label">类型代码</label>
+	                                            <input class="form-control disabled" name="userCouponSettings[userCouponSetting_index].type" value="${(userCouponSetting.type)!''}">
+	                                    </div>
+                                    </div>
+                                    
+                                    <div class="col-md-4">
+	                                    <div class="form-group">
+	                                            <label class="control-label">奖励胶卷数量</label>
+	                                            <input class="form-control" name="userCouponSettings[userCouponSetting_index].num" value="${(userCouponSetting.num)!''}">
+	                                    </div>
+                                    </div>
+                                    
+                                    <div class="col-md-4">
+	                                    <div class="form-group">
+	                                            <label class="control-label">描述</label>
+	                                            <input class="form-control" name="userCouponSettings[userCouponSetting_index].message" value="${(userCouponSetting.message)!''}">
+	                                    </div>
+                                    </div>
+                                    </#list>
+                                    
+                                    <div class="box-footer">
+                                    	<button type="submit" class="btn btn-info">保存</button>
+                                    	<a href="#" onclick="self.location=document.referrer" class="btn btn-info">返回</a>
+                                    </div>
+                        	</div>
+                        </form>
+                        
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- /.row -->
+          </section>
+            
+        </div>
+        <!-- /#page-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+    
+    <!-- footer start-->
+		<#include "../../common/footer.html">
+	<!-- footer end -->
+    
+    <script>
+    $(document).ready(function() {
+    	
+    	 
+    	 $('#jj').addClass('active');
+    	 $('#jj_sz').addClass('active');
+    });
+    
+    </script>
+
+</body>
+
+</html>

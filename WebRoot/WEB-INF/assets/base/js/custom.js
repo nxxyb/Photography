@@ -11,6 +11,11 @@ function getByAjax(url, id) {
 	});
 }
 
+//显示模态框
+function showModel(id){
+	$("#" + id).modal('show');
+}
+
 // js 加法计算
 // 调用：accAdd(arg1,arg2)
 // 返回值：arg1加arg2的精确结果

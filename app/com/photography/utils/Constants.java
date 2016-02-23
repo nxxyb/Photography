@@ -150,12 +150,12 @@ public class Constants {
 	//评论
 	public final static String COUPON_TYPE_GIVE_COMMENT = "3";
 	
-	//评论
+	//分享
 	public final static String COUPON_TYPE_GIVE_SHARE = "4";
 	
-	//参加活动
-	public final static String COUPON_TYPE_GIVE_JOINPROJECT = "5";
-	
 	//预定活动
-	public final static String COUPON_TYPE_CONSUME_ORDERPROJECT = "6";
+	public final static String COUPON_TYPE_CONSUME_ORDERPROJECT = "5";
+	
+	//参加活动--支付胶卷
+	public final static String COUPON_TYPE_GIVE_JOINPROJECT = "6";
 }

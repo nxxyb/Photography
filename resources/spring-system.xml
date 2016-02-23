@@ -33,6 +33,9 @@
           
           <bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean"
             p:name="indexWorkCache" /> 
+            
+          <bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean"
+            p:name="userCouponSettingCache" /> 
           
         </set> 
       </property> 

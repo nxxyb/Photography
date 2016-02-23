@@ -1,3 +1,4 @@
+<!-- 签到modal -->
 <div class="modal fade c-content-login-form" id="checkin_modal" role="dialog">
 	<div class="modal-dialog ">
 		<div class="modal-content c-square c-bg-green">
@@ -6,30 +7,78 @@
 			</div>
 			<div class="modal-body">
 				
-				<form id="checkinForm" action="${basePath}/user/login" method="post">
 					<input type="hidden" name="userId" value="${(Session.sessionUser.id)!''}">
 					
 						 <div class="c-content-counter-1">
 	                        <div class="c-content-title-1">
-	                            <h3 class="c-center c-font-uppercase c-font-bold c-font-white">签到</h3>
+	                            <h3 class="c-center c-font-uppercase c-font-bold c-font-white">胶卷</h3>
 	                        </div>
 							<div class="row">
 		                        <div class="col-md-12">
-		                            <div class="c-counter c-theme-border c-font-bold c-theme-font" data-counter="counterup">150</div>
-		                            <div class="form-group">
-										<button type="submit" class="btn btn-md c-btn-border-2x c-btn-white c-btn-uppercase c-btn-square c-btn-bold">今日签到</button>
-									</div>
+		                            <div id="userCouponNum" class="c-counter c-theme-border c-font-bold c-theme-font" data-counter="counterup">${(Session.sessionuser.couponNum)!''}</div>
+									<a id="checkIn" href="javascript:void(0)" onclick="checkIn();" class="btn btn-md c-btn-border-2x c-btn-white c-btn-uppercase c-btn-square c-btn-bold">今日签到</a>
 		                        </div>
 		                    </div>
-                                    <div class="c-content-title-1">
-                                        <h4 class="c-font-uppercase c-font-bold c-font-white">签到说明</h4>
-                                        <p class="c-font-white">1.每日签到奖励1胶卷。</p>
-                                        <p class="c-font-white">2.每日只能签到1次。</p>
-                                    </div>
+                            <div class="c-content-title-1">
+                                <h4 class="c-font-uppercase c-font-bold c-font-white">胶卷奖励规则</h4>
+                                <h5 class="c-font-white">1.用户注册，奖励<strong type="1"></strong>胶卷。</h5>
+                                <h5 class="c-font-white">2.每日签到奖励<strong type="2"></strong>胶卷。</h5>
+                                <h5 class="c-font-white">3.发表评论，奖励<strong type="3"></strong>胶卷。</h5>
+                                <h5 class="c-font-white">4.分享活动、作品、派文，奖励<strong type="4"></strong>胶卷。</h5>
+                                <h5 class="c-font-white">5.成功参加活动，奖励<strong type="5"></strong>胶卷。</h5>
+                            </div>
 		                  </div>
-	                  
-				</form>
 			</div>
 		</div>
 	</div>
 </div>
+
+<script>
+	$(document).ready(function (){
+		$.ajax({
+			url : "${basePath}/userCoupon/getCouponSetting",
+			type : "post",
+			datatype:"json",
+			success : function(data) {
+				$.each(data,function(i,couponSetting){
+                     $("strong[type=" + couponSetting.type + "]").html(couponSetting.num);
+                });
+				
+			}
+		});
+		
+		$.ajax({
+			url : "${basePath}/userCoupon/isCheckIn",
+			type : "post",
+			datatype:"json",
+			success : function(data) {
+				alert(data);
+				if(data == "0"){
+					$('#checkIn').removeClass("disabled");
+					$('#checkIn').text("今日签到");
+				}else{
+					$('#checkIn').addClass("disabled");
+					$('#checkIn').text("今日已签到");
+				}
+			}
+		});
+		
+	});
+	function checkIn(){
+		$.ajax({
+			url : "${basePath}/userCoupon/checkIn",
+			type : "Post",
+			success : function(data) {
+				$("#userCouponNum").html(data);
+				
+				$('#checkIn').addClass("disabled");
+				$('#checkIn').text("今日已签到");
+				
+				$("[data-counter='counterup']").counterUp({
+					delay: 10,
+					time: 1000
+				});
+			}
+		});
+	}
+</script>

@@ -1,12 +1,17 @@
 package com.photography.service;
 
+import java.util.List;
+
 import org.apache.log4j.Logger;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
+import com.photography.dao.exp.Condition;
 import com.photography.exception.ErrorCode;
 import com.photography.exception.ServiceException;
 import com.photography.mapping.User;
 import com.photography.mapping.UserCoupon;
+import com.photography.mapping.UserCouponSetting;
 import com.photography.utils.Constants;
 import com.photography.utils.StringUtil;
 
@@ -36,7 +41,7 @@ public class UserCouponServiceImpl extends BaseServiceImpl implements IUserCoupo
 		
 		int userCouponNum = 0;
 		String userCouponNumStr = userCoupon.getUser().getCouponNum();
-		if(StringUtil.isEmpty(userCouponNumStr)){
+		if(!StringUtil.isEmpty(userCouponNumStr)){
 			userCouponNum = Integer.parseInt(userCouponNumStr);
 		}
 		
@@ -58,6 +63,32 @@ public class UserCouponServiceImpl extends BaseServiceImpl implements IUserCoupo
 		savePojo(userCoupon, createUser);
 		
 		return Integer.toString(userCouponNum);
+	}
+	
+	/**
+	 * 根据类型获取胶卷设置
+	 * @param type
+	 * @return
+	 */
+	@Cacheable(value="userCouponSettingCache")
+	public UserCouponSetting getUserCouponSetting(String type){
+		System.out.println("没用缓存");
+		 List<UserCouponSetting> UserCouponSettings =  loadPojoByExpression(UserCouponSetting.class, Condition.eq("type", type), null);
+		 if(UserCouponSettings.isEmpty()){
+			 return null;
+		 }
+		 return UserCouponSettings.get(0);
+	}
+	
+	/**
+	 * 根据类型获取胶卷设置
+	 * @return
+	 */
+	@Cacheable(value="userCouponSettingCache")
+	public List<UserCouponSetting> getAllUserCouponSetting(){
+		System.out.println("没用缓存");
+		 List<UserCouponSetting> UserCouponSettings =  loadPojoByExpression(UserCouponSetting.class, null, null);
+		 return UserCouponSettings;
 	}
 
 }

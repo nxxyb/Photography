@@ -209,6 +209,25 @@ CREATE TABLE `user_coupon` (
   `last_update_time` datetime comment '最后修改时间'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+/**胶卷奖励设置表 */
+DROP TABLE IF EXISTS `user_coupon_setting`;
+CREATE TABLE `user_coupon_setting` (
+  `id` varchar(36) NOT NULL PRIMARY KEY,
+  `type` varchar(10) comment '胶卷类型',
+  `num` varchar(10) comment '奖励个数',
+  `message` varchar(2000) comment '信息',
+  `create_time` datetime comment '创建时间',
+  `last_update_time` datetime comment '最后修改时间'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/** 初始胶卷设置*/
+insert into user_coupon_setting (id,type,num,message) values(UUID(),'1','20','用户注册');
+insert into user_coupon_setting (id,type,num,message) values(UUID(),'2','1','登录签到');
+insert into user_coupon_setting (id,type,num,message) values(UUID(),'3','1','发表评论');
+insert into user_coupon_setting (id,type,num,message) values(UUID(),'4','1','分享');
+insert into user_coupon_setting (id,type,num,message) values(UUID(),'5','1','预定活动');
+
+
 /**派文表*/
 DROP TABLE IF EXISTS `blog`;
 CREATE TABLE `blog` (

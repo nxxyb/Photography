@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -329,8 +330,32 @@ public class DateUtil {
 		return calendar.getTime();
 	}
 	
+	/**
+	 * 得到当前日期开始
+	 */
+	public static Date getDayBegin(){
+		 Calendar c1 = new GregorianCalendar();
+		    c1.set(Calendar.HOUR_OF_DAY, 0);
+		    c1.set(Calendar.MINUTE, 0);
+		    c1.set(Calendar.SECOND, 0);
+		    return c1.getTime();
+		    
+	}
+	
+	/**
+	 * 得到当前日期结束
+	 */
+	public static Date getDayEnd(){
+	    Calendar c2 = new GregorianCalendar();
+	    c2.set(Calendar.HOUR_OF_DAY, 23);
+	    c2.set(Calendar.MINUTE, 59);
+	    c2.set(Calendar.SECOND, 59);
+	    return c2.getTime();
+	}
+	
 	public static void main(String[] args) {
 		Date date = DateUtil.parseDate("2012-03-07");
 		System.out.println(getDateByIncrement(date,-4).toLocaleString());
 	}
+	
 }

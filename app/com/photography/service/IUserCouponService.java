@@ -1,8 +1,11 @@
 package com.photography.service;
 
+import java.util.List;
+
 import com.photography.exception.ServiceException;
 import com.photography.mapping.User;
 import com.photography.mapping.UserCoupon;
+import com.photography.mapping.UserCouponSetting;
 
 /**
  * 
@@ -21,5 +24,18 @@ public interface IUserCouponService extends IBaseService {
 	 * @throws ServiceException
 	 */
 	public String addCoupon(UserCoupon userCoupon,User createUser) throws ServiceException;
+	
+	/**
+	 * 根据类型获取胶卷设置
+	 * @param type
+	 * @return
+	 */
+	public UserCouponSetting getUserCouponSetting(String type);
+	
+	/**
+	 * 获取全部胶卷配置信息
+	 * @return
+	 */
+	public List<UserCouponSetting> getAllUserCouponSetting();
 
 }
