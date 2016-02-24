@@ -18,4 +18,9 @@ public class CacheHandler {
 //		System.out.println("evictIndexWorkCache");
 	}
 	
+	@CacheEvict(value="userCouponSettingCache",allEntries=true)  
+	public void evictUserCouponSettingCache(){
+//		System.out.println("evictIndexWorkCache");
+	}
+	
 }

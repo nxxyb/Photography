@@ -79,7 +79,7 @@
                                             <div class="col-md-9"></div>
                                             <div class="col-md-3">
                                             	 <div class="c-checkbox c-toggle-hide" data-object-selector="c-coupon" data-animation-speed="600">
-		                                            <input type="checkbox" id="coupon_checkbox" class="c-check">
+		                                            <input type="checkbox" id="coupon_checkbox" class="c-check" <#if projectOrderCoupon ?? && projectOrderCoupon.isUseCoupon == "0">disabled</#if>>
 		                                            <label for="coupon_checkbox">
 		                                                <span class="inc"></span>
 		                                                <span class="check"></span>
@@ -88,7 +88,7 @@
 		                                        
                                            		<div id="coupon" class="c-coupon">
                                            			<p class="c-shipping-price c-font-bold c-font-20">￥
-                                           				<span id="coupon_num" class="c-shipping-total">${(user.couponNum)!'0'}</span>
+                                           				<span id="coupon_num" class="c-shipping-total">${(projectOrderCoupon.enableCouponNum)!'0'}</span>
                                            			</p>
                                            			<input id="projectOrder_coupon" type="hidden" name="coupon" value="0">
                                            		</div>
@@ -159,19 +159,24 @@
 	$(document).ready(function() {    
 		$('#project').addClass('c-active');
 		
+		var aaa = "${aaa}";
+		
+		var couponNum = "${projectOrderCoupon.enableCouponNum}";
+		var useCouponCostStr =  "${projectOrderCoupon.useCouponRmb}";
+		
+		var useCouponCost = parseFloat(useCouponCostStr);
+		
 		$("#coupon_checkbox").click(function(){
 			if ($("#coupon").is(':hidden')) {
-				var couponNum = parseFloat($("#coupon_num").text());
 				var totalCost = parseFloat($("#total_cost").text());
-				var total = Subtr(totalCost,couponNum);
+				var total = Subtr(totalCost,useCouponCost);
 				$("#total_cost").text(total);
 				$("#projectOrder_coupon").val(couponNum);
 				$("#projectOrder_actualPrice").val(total);
 				
 			} else {
-				var couponNum = parseFloat($("#coupon_num").text());
 				var totalCost = parseFloat($("#total_cost").text());
-				var total = accAdd(totalCost, couponNum);
+				var total = accAdd(totalCost, useCouponCost);
 				$("#total_cost").text(total);
 				$("#projectOrder_coupon").val("0");
 				$("#projectOrder_actualPrice").val(total);

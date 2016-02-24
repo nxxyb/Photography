@@ -12,6 +12,7 @@ import com.photography.exception.ServiceException;
 import com.photography.mapping.User;
 import com.photography.mapping.UserCoupon;
 import com.photography.mapping.UserCouponSetting;
+import com.photography.mapping.UserCouponSettingRmb;
 import com.photography.utils.Constants;
 import com.photography.utils.StringUtil;
 
@@ -89,6 +90,15 @@ public class UserCouponServiceImpl extends BaseServiceImpl implements IUserCoupo
 		System.out.println("没用缓存");
 		 List<UserCouponSetting> UserCouponSettings =  loadPojoByExpression(UserCouponSetting.class, null, null);
 		 return UserCouponSettings;
+	}
+	
+	/**
+	 * 1胶卷兑换人名币设置
+	 * @return
+	 */
+	public String getUserCouponSettingRmb(){
+		UserCouponSettingRmb userCouponSettingRmb = loadPojoByExpression(UserCouponSettingRmb.class, null, null).get(0);
+		return userCouponSettingRmb.getOneCouponToRmb();
 	}
 
 }

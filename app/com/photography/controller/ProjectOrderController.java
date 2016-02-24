@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.photography.controller.view.ProjectOrderCoupon;
 import com.photography.exception.ErrorMessage;
 import com.photography.exception.ServiceException;
 import com.photography.mapping.Project;
@@ -19,6 +20,7 @@ import com.photography.mapping.UserCoupon;
 import com.photography.service.IProjectOrderService;
 import com.photography.service.IUserCouponService;
 import com.photography.utils.Constants;
+import com.photography.utils.DoubleUtil;
 import com.photography.utils.MessageConstants;
 
 /**
@@ -72,15 +74,97 @@ public class ProjectOrderController extends BaseController {
 				projectOrder.setStatus(Constants.USER_ORDER_STATUS_WZF);
 				projectOrderService.savePojo(projectOrder, user);
 			}
-			attr.addFlashAttribute("user", projectOrderService.loadPojo(User.class, user.getId()));
+			
+			attr.addFlashAttribute("projectOrderCoupon", getEnableUserCoupon(projectOrder));
+			
 			attr.addFlashAttribute("projectOrder", projectOrder);
 			
 			return "project/project_checkout";
 		}catch(Exception e){
-			log.error("ProjectController toProjectCheckout",e);
+			log.error("ProjectOrderController toProjectCheckout",e);
 			handleError(attr, e);
 			String projectId = projectOrder.getProject().getId();
 			return "redirect:/project/toReview?id=" + projectId;
+		}
+	}
+	
+	//根据活计算可以使用的胶卷数量和抵扣钱数
+	private ProjectOrderCoupon getEnableUserCoupon(ProjectOrder projectOrder){
+		ProjectOrderCoupon projectOrderCoupon = new ProjectOrderCoupon();
+		
+		//胶卷
+		if(projectOrder.getProject() != null && !StringUtils.isEmpty(projectOrder.getProject().getEnableCouponNum())){
+			
+			//如果用户胶卷数量为空，则按原始价格处理
+			if(StringUtils.isEmpty(projectOrder.getUser().getCouponNum())){
+				projectOrderCoupon.setEnableCouponNum("0");
+				projectOrderCoupon.setUseCouponRmb("0");
+			}
+			
+			//活动限制使用胶卷数量
+			int limitCouponNum = Integer.parseInt(projectOrder.getProject().getEnableCouponNum());
+			
+			//1胶卷兑换人名币数量
+			double oneCouponRmb = Double.parseDouble(userCouponService.getUserCouponSettingRmb());
+			
+			//用户胶卷数量
+			int userCouponNum = Integer.parseInt(projectOrder.getUser().getCouponNum());
+			
+			//订购数量
+			double num = Double.parseDouble(projectOrder.getNumber());
+			
+			//订购单价
+			double cost = Double.parseDouble(projectOrder.getProject().getCost());
+			
+			//订购总量
+			double totalCost = DoubleUtil.mul(num, cost);
+			
+			//免费活动不使用胶卷
+			if(totalCost == 0){
+				projectOrderCoupon.setIsUseCoupon(Constants.NO);
+				projectOrderCoupon.setEnableCouponNum("0");
+				projectOrderCoupon.setUseCouponRmb("0");
+				return projectOrderCoupon;
+			}
+			
+			//需要胶卷数量
+			int enableCouponNum;
+			
+			//胶卷抵扣的钱数
+			double useCouponRmb = 0;
+			
+			//活动使用胶卷无限制
+			if(limitCouponNum == 0){
+				
+				enableCouponNum =  (int) DoubleUtil.div(totalCost, oneCouponRmb, 0);
+				
+				//如果用户胶卷小于需要胶卷数量，则按用户胶卷计算
+				if(enableCouponNum > userCouponNum){
+					enableCouponNum = userCouponNum;
+				}
+					
+				useCouponRmb = DoubleUtil.mul(enableCouponNum, oneCouponRmb);
+				
+			}else{
+				if(limitCouponNum > userCouponNum){
+					enableCouponNum = userCouponNum;
+				}else{
+					enableCouponNum = limitCouponNum;
+				}
+				
+				useCouponRmb = DoubleUtil.mul(enableCouponNum, oneCouponRmb);
+				
+			}
+			
+			projectOrderCoupon.setIsUseCoupon(Constants.YES);
+			projectOrderCoupon.setEnableCouponNum(Integer.toString(enableCouponNum));
+			projectOrderCoupon.setUseCouponRmb(Double.toString(useCouponRmb));
+			return projectOrderCoupon;
+		}else{
+			projectOrderCoupon.setIsUseCoupon(Constants.NO);
+			projectOrderCoupon.setEnableCouponNum("0");
+			projectOrderCoupon.setUseCouponRmb("0");
+			return projectOrderCoupon;
 		}
 	}
 	

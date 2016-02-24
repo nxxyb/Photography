@@ -25,32 +25,59 @@
 	        </section>
             
              <section class="content">
+             <form id="userForm" role="form-horizontal" action="${basePath}/admin/userCoupon/saveUserCouponSetting" method="post">
+             <!-- /.row -->
+            <div class="row">
+            	<div class="col-md-12">
+                   <div class="box box-info">
+                        
+                                <div class="box-body">
+                                	<input type="hidden" name="userCouponSettingRmb.id" value="${(userCouponSettingRmb.id)!''}">
+                                    <div class="col-md-4">
+	                                    <div class="form-group">
+	                                            <label class="control-label">1胶卷对应人名币的数量</label>
+	                                            <input class="form-control" name="userCouponSettingRmb.oneCouponToRmb" value="${(userCouponSettingRmb.oneCouponToRmb)!''}">
+	                                    </div>
+                                    </div>
+                                    
+                                    <div class="col-md-8">
+                                    </div>
+                        	</div>
+                        
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- /.row -->
+            
             <!-- /.row -->
             <div class="row">
             	<div class="col-md-12">
                    <div class="box box-info">
-                        <form id="userForm" role="form-horizontal" action="${basePath}/admin/userCoupon/saveUserCouponSetting" method="post">
+                        
                                 <div class="box-body">
                                 	<#list userCouponSettings as userCouponSetting>
-                                	<input type="hidden" name="userCouponSettings[userCouponSetting_index].id" value="userCouponSetting.id">
+                                	<input type="hidden" name="userCouponSettings[${userCouponSetting_index}].id" value="${(userCouponSetting.id)!''}">
                                     <div class="col-md-4">
 	                                    <div class="form-group">
 	                                            <label class="control-label">类型代码</label>
-	                                            <input class="form-control disabled" name="userCouponSettings[userCouponSetting_index].type" value="${(userCouponSetting.type)!''}">
+	                                            <input class="form-control" name="userCouponSettings[${userCouponSetting_index}].type" value="${(userCouponSetting.type)!''}" disabled>
 	                                    </div>
                                     </div>
                                     
                                     <div class="col-md-4">
 	                                    <div class="form-group">
 	                                            <label class="control-label">奖励胶卷数量</label>
-	                                            <input class="form-control" name="userCouponSettings[userCouponSetting_index].num" value="${(userCouponSetting.num)!''}">
+	                                            <input class="form-control" name="userCouponSettings[${userCouponSetting_index}].num" value="${(userCouponSetting.num)!''}">
 	                                    </div>
                                     </div>
                                     
                                     <div class="col-md-4">
 	                                    <div class="form-group">
 	                                            <label class="control-label">描述</label>
-	                                            <input class="form-control" name="userCouponSettings[userCouponSetting_index].message" value="${(userCouponSetting.message)!''}">
+	                                            <input class="form-control" name="userCouponSettings[${userCouponSetting_index}].message" value="${(userCouponSetting.message)!''}">
 	                                    </div>
                                     </div>
                                     </#list>
@@ -60,7 +87,7 @@
                                     	<a href="#" onclick="self.location=document.referrer" class="btn btn-info">返回</a>
                                     </div>
                         	</div>
-                        </form>
+                        
                         
                         <!-- /.panel-body -->
                     </div>
@@ -69,6 +96,7 @@
                 <!-- /.col-lg-12 -->
             </div>
             <!-- /.row -->
+            </form>
           </section>
             
         </div>

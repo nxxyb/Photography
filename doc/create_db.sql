@@ -227,6 +227,18 @@ insert into user_coupon_setting (id,type,num,message) values(UUID(),'3','1','发
 insert into user_coupon_setting (id,type,num,message) values(UUID(),'4','1','分享');
 insert into user_coupon_setting (id,type,num,message) values(UUID(),'5','1','预定活动');
 
+/**胶卷对应人民币设置表 */
+DROP TABLE IF EXISTS `user_coupon_setting_rmb`;
+CREATE TABLE `user_coupon_setting_rmb` (
+  `id` varchar(36) NOT NULL PRIMARY KEY,
+  `one_coupon_to_rmb` varchar(10) comment '1胶卷对应人名币的数量',
+  `create_time` datetime comment '创建时间',
+  `last_update_time` datetime comment '最后修改时间'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/** 初始胶卷对应人民币设置*/
+insert into user_coupon_setting_rmb (id,one_coupon_to_rmb) values(UUID(),'1');
+
 
 /**派文表*/
 DROP TABLE IF EXISTS `blog`;
