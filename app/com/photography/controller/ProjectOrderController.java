@@ -11,6 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.photography.controller.view.ProjectOrderCoupon;
+import com.photography.exception.ErrorCode;
 import com.photography.exception.ErrorMessage;
 import com.photography.exception.ServiceException;
 import com.photography.mapping.Project;
@@ -60,7 +61,8 @@ public class ProjectOrderController extends BaseController {
 	 * @throws ServiceException 
 	 */
 	@RequestMapping(value="/toProjectCheckout")
-	public String toProjectCheckout(ProjectOrder projectOrder,HttpServletRequest request,RedirectAttributes attr){
+	public ModelAndView toProjectCheckout(ProjectOrder projectOrder,HttpServletRequest request,RedirectAttributes ra){
+		ModelAndView mav = new ModelAndView();
 		try{
 			User user = getSessionUser(request);
 			if(projectOrder != null && !StringUtils.isEmpty(projectOrder.getId())){
@@ -75,16 +77,21 @@ public class ProjectOrderController extends BaseController {
 				projectOrderService.savePojo(projectOrder, user);
 			}
 			
-			attr.addFlashAttribute("projectOrderCoupon", getEnableUserCoupon(projectOrder));
+			mav.addObject("projectOrder", projectOrder);
+			mav.addObject("projectOrderCoupon", getEnableUserCoupon(projectOrder));
 			
-			attr.addFlashAttribute("projectOrder", projectOrder);
+			mav.setViewName("project/project_checkout");
 			
-			return "project/project_checkout";
+			throw new ServiceException(ErrorCode.PROJECT_NOT_EXIST);
+			
+			
 		}catch(Exception e){
+			mav = new ModelAndView();
 			log.error("ProjectOrderController toProjectCheckout",e);
-			handleError(attr, e);
+			handleError(ra, e);
 			String projectId = projectOrder.getProject().getId();
-			return "redirect:/project/toReview?id=" + projectId;
+			mav.setViewName("redirect:/project/toReview?id=" + projectId);
+			return mav;
 		}
 	}
 	

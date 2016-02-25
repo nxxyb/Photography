@@ -159,10 +159,8 @@
 	$(document).ready(function() {    
 		$('#project').addClass('c-active');
 		
-		var aaa = "${aaa}";
-		
-		var couponNum = "${projectOrderCoupon.enableCouponNum}";
-		var useCouponCostStr =  "${projectOrderCoupon.useCouponRmb}";
+		var couponNum = "${(projectOrderCoupon.enableCouponNum)!'0'}";
+		var useCouponCostStr =  "${(projectOrderCoupon.useCouponRmb)!'0'}";
 		
 		var useCouponCost = parseFloat(useCouponCostStr);
 		
