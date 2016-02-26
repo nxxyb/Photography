@@ -118,6 +118,9 @@ CREATE TABLE `project_order` (
   `original_price` varchar(10) comment '原总价',
   `actual_price` varchar(10) comment '实际支付总价',
   `is_comment` varchar(2) comment '是否评价',
+  `order_number` varchar(100) comment '订单号 （采用支付宝 UtilDate.getOrderNum()生成）',
+  `trade_no` varchar(100) comment '支付宝交易号',
+  `trade_status` varchar(10) comment '交易状态',
   `create_time` datetime comment '创建时间',
   `last_update_time` datetime comment '最后修改时间'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

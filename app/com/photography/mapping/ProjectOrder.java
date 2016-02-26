@@ -69,6 +69,21 @@ public class ProjectOrder extends BaseMapping {
 	 */
 	@Column(name="is_comment")
 	private String isComment = Constants.NO;
+	
+	
+	//支付宝
+	
+	//订单号 （采用支付宝 UtilDate.getOrderNum()生成）
+	@Column(name="order_number")
+	private String orderNumber;
+	
+	//支付宝交易号
+	@Column(name="trade_no")
+	private String tradeNo;
+	
+	//交易状态
+	@Column(name="trade_status")
+	private String tradeStatus;
 
 	public User getUser() {
 		return user;
@@ -140,6 +155,30 @@ public class ProjectOrder extends BaseMapping {
 
 	public void setIsComment(String isComment) {
 		this.isComment = isComment;
+	}
+
+	public String getOrderNumber() {
+		return orderNumber;
+	}
+
+	public void setOrderNumber(String orderNumber) {
+		this.orderNumber = orderNumber;
+	}
+
+	public String getTradeNo() {
+		return tradeNo;
+	}
+
+	public void setTradeNo(String tradeNo) {
+		this.tradeNo = tradeNo;
+	}
+
+	public String getTradeStatus() {
+		return tradeStatus;
+	}
+
+	public void setTradeStatus(String tradeStatus) {
+		this.tradeStatus = tradeStatus;
 	}
 	
 	

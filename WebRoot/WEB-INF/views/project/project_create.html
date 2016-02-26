@@ -18,6 +18,7 @@
 	<form id="projectCreateForm" action="${basePath}/project/create" method="post" enctype="multipart/form-data">
 	<!-- BEGIN: PAGE CONTENT -->
 		<input type="hidden" name="id" value="${(project.id)!''}">
+		<input type="hidden" name="createUser.id" value="${(project.createUser.id)!''}">
 		<input type="hidden" name="status" value="${(project.status)!'0'}">
 		<div class="c-content-box c-size-md">
                 <div class="container">

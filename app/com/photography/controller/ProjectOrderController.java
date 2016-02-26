@@ -1,5 +1,10 @@
 package com.photography.controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
@@ -10,8 +15,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.alipay.config.AlipayConfig;
+import com.alipay.util.AlipaySubmit;
+import com.alipay.util.UtilDate;
 import com.photography.controller.view.ProjectOrderCoupon;
-import com.photography.exception.ErrorCode;
+import com.photography.dao.exp.Condition;
+import com.photography.dao.exp.Expression;
 import com.photography.exception.ErrorMessage;
 import com.photography.exception.ServiceException;
 import com.photography.mapping.Project;
@@ -69,8 +78,24 @@ public class ProjectOrderController extends BaseController {
 				projectOrder = projectOrderService.loadPojo(ProjectOrder.class, projectOrder.getId());
 			}else{
 				if(projectOrder != null && projectOrder.getProject() != null && !StringUtils.isEmpty(projectOrder.getProject().getId())){
-					Project project = projectOrderService.loadPojo(Project.class, projectOrder.getProject().getId());
-					projectOrder.setProject(project);
+					
+					//判断之前是否生成订单
+					List<Expression> exps =  new ArrayList<Expression>(); 
+					exps.add(Condition.eq("project.id", projectOrder.getProject().getId()));
+					exps.add(Condition.eq("user.id", user.getId()));
+					exps.add(Condition.eq("status", Constants.USER_ORDER_STATUS_WZF));
+					List<ProjectOrder> projectOrderDBs = projectOrderService.loadPojoByExpression(ProjectOrder.class, Condition.and(exps), null);
+					if(!projectOrderDBs.isEmpty()){
+						ProjectOrder projectOrderDB = projectOrderDBs.get(0);
+						projectOrderDB.setNumber(projectOrder.getNumber());
+						projectOrder = projectOrderDB;
+					}else{
+						Project project = projectOrderService.loadPojo(Project.class, projectOrder.getProject().getId());
+						projectOrder.setProject(project);
+						
+						//生成订单号
+						projectOrder.setOrderNumber(UtilDate.getOrderNum());
+					}
 				}
 				projectOrder.setUser(user);
 				projectOrder.setStatus(Constants.USER_ORDER_STATUS_WZF);
@@ -82,8 +107,7 @@ public class ProjectOrderController extends BaseController {
 			
 			mav.setViewName("project/project_checkout");
 			
-			throw new ServiceException(ErrorCode.PROJECT_NOT_EXIST);
-			
+			return mav;
 			
 		}catch(Exception e){
 			mav = new ModelAndView();
@@ -184,7 +208,103 @@ public class ProjectOrderController extends BaseController {
 	 * @throws ServiceException 
 	 */
 	@RequestMapping(value="/orderProject",produces = "text/html;charset=UTF-8")
-	public ModelAndView orderProject(ProjectOrder projectOrder,HttpServletRequest request){
+	public ModelAndView orderProject(ProjectOrder projectOrder,HttpServletRequest request,RedirectAttributes ra){
+		
+		ModelAndView mav = new ModelAndView();
+		
+		try{
+			User user = getSessionUser(request);
+			
+			ProjectOrder projectOrderDB = projectOrderService.loadPojo(ProjectOrder.class, projectOrder.getId());
+			projectOrderDB.setCoupon(projectOrder.getCoupon());
+			projectOrderDB.setOriginalPrice(projectOrder.getOriginalPrice());
+			projectOrderDB.setUnitPrice(projectOrder.getUnitPrice());
+			projectOrderDB.setActualPrice(projectOrder.getActualPrice());
+			projectOrderService.savePojo(projectOrderDB, user);
+			
+			//必填，不能修改
+			//服务器异步通知页面路径
+			String notify_url = "http://商户网关地址/create_direct_pay_by_user-JAVA-UTF-8/notify_url.jsp";
+			//需http://格式的完整路径，不能加?id=123这类自定义参数
+	
+			//页面跳转同步通知页面路径
+			String return_url = "http://商户网关地址/create_direct_pay_by_user-JAVA-UTF-8/return_url.jsp";
+			//需http://格式的完整路径，不能加?id=123这类自定义参数，不能写成http://localhost/
+	
+			//商户订单号
+			String out_trade_no = new String(projectOrderDB.getOrderNumber().getBytes("ISO-8859-1"),"UTF-8");
+			//商户网站订单系统中唯一订单号，必填
+	
+			//订单名称
+			String subject = new String(projectOrderDB.getProject().getName().getBytes("ISO-8859-1"),"UTF-8");
+			//必填
+	
+			//付款金额
+			String total_fee = new String(projectOrderDB.getActualPrice().getBytes("ISO-8859-1"),"UTF-8");
+			//必填
+	
+			//订单描述
+	
+			String body = new String(projectOrderDB.getProject().getName().getBytes("ISO-8859-1"),"UTF-8");
+			//商品展示地址
+	//		String show_url = new String(request.getParameter("WIDshow_url").getBytes("ISO-8859-1"),"UTF-8");
+			//需以http://开头的完整路径，例如：http://www.商户网址.com/myorder.html
+	
+			//防钓鱼时间戳
+			String anti_phishing_key = "";
+			//若要使用请调用类文件submit中的query_timestamp函数
+	
+			//客户端的IP地址
+			String exter_invoke_ip = "";
+			//非局域网的外网IP地址，如：221.0.0.1
+			
+			
+			//////////////////////////////////////////////////////////////////////////////////
+			
+			//把请求参数打包成数组
+			Map<String, String> sParaTemp = new HashMap<String, String>();
+			sParaTemp.put("service", "create_direct_pay_by_user");
+	        sParaTemp.put("partner", AlipayConfig.partner);
+	        sParaTemp.put("seller_email", AlipayConfig.seller_email);
+	        sParaTemp.put("_input_charset", AlipayConfig.input_charset);
+			sParaTemp.put("payment_type", AlipayConfig.payment_type);
+			sParaTemp.put("notify_url", notify_url);
+			sParaTemp.put("return_url", return_url);
+			sParaTemp.put("out_trade_no", out_trade_no);
+			sParaTemp.put("subject", subject);
+			sParaTemp.put("total_fee", total_fee);
+			sParaTemp.put("body", body);
+	//		sParaTemp.put("show_url", show_url);
+			sParaTemp.put("anti_phishing_key", anti_phishing_key);
+			sParaTemp.put("exter_invoke_ip", exter_invoke_ip);
+			
+			//建立请求
+			String sHtmlText = AlipaySubmit.buildRequest(sParaTemp,"get","确认");
+			log.debug("orderProject sHtmlText:" + sHtmlText);
+			mav.addObject("sHtmlText",sHtmlText);
+			mav.setViewName("/alipay/alipay");
+		}catch(Exception e){
+			log.error("orderProject error",e);
+			mav = new ModelAndView();
+			log.error("ProjectOrderController orderProject",e);
+			handleError(ra, e);
+			ra.addFlashAttribute("projectOrder", projectOrder);
+			mav.setViewName("redirect:/projectorder/toProjectCheckout");
+		}
+		return mav;
+	}
+	
+	
+	/**
+	 * 支付通知
+	 * @param page
+	 * @param request
+	 * @param model
+	 * @return
+	 * @throws ServiceException 
+	 */
+	@RequestMapping(value="/aliPayNotify",produces = "text/html;charset=UTF-8")
+	public ModelAndView aliPayNotify(ProjectOrder projectOrder,HttpServletRequest request){
 		ModelAndView mav = new ModelAndView();
 		
 		try{
