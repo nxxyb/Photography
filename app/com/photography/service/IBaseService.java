@@ -34,6 +34,13 @@ public interface IBaseService {
 	public <T> List<T> loadPojoByExpression(Class<T> clazz, Expression expression,Sort sort);
 	
 	/**
+	 * 通过表达式获取一个pojo
+	 * @param expression 表达式
+	 * @return pojo
+	 */
+	public <T> T loadOnePojoByExpression(Class<T> clazz, Expression expression,Sort sort);
+	
+	/**
 	 * 保存当前的pojo,需要先判断是否新建，新建的逻辑需要单独处理
 	 * 
 	 * @param pojo

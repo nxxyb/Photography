@@ -53,4 +53,10 @@ public class ErrorCode {
 	 * 系统异常：10500-10599
 	 */
 	public static final int COUPON_ADD_EXCEPTION = 10500;
+	
+	/*
+	 * 支付
+	 * 系统异常：10600-10699 
+	 */
+	public static final int ALIPAY_SAVE_ORDER_EXCEPTION = 10600;
 }

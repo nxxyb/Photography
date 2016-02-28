@@ -116,6 +116,9 @@ public class Constants {
 	//已支付
 	public final static String USER_ORDER_STATUS_YZF = "3";
 	
+	//支付失败
+	public final static String USER_ORDER_STATUS_ZFSB= "4";
+	
 	
 	/**
 	 * 分页

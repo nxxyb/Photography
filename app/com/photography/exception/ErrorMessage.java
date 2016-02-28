@@ -44,10 +44,15 @@ public class ErrorMessage {
 		msg.put(ErrorCode.WORK_NOT_EXIST, "该作品不存在或已经被删除！");
 		msg.put(ErrorCode.WORK_PHOTO_NO_UPLOAD, "请上传作品图片！");
 		
-		/**
+		/*
 		 * 胶卷
 		 */
 		msg.put(ErrorCode.COUPON_ADD_EXCEPTION, "添加胶卷记录失败！");
+		
+		/*
+		 * 支付
+		 */
+		msg.put(ErrorCode.ALIPAY_SAVE_ORDER_EXCEPTION, "保存订单失败！");
 	}
 
 	public static String get(int errorCode){

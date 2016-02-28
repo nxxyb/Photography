@@ -45,6 +45,16 @@ public class BaseServiceImpl implements IBaseService {
 	public <T> List<T> loadPojoByExpression(Class<T> clazz, Expression expression, Sort sort) {
 		return hibernateDao.getByQuery(clazz, expression,sort);
 	}
+	
+	@Override
+	public <T> T loadOnePojoByExpression(Class<T> clazz, Expression expression,Sort sort) {
+		List<T> t = hibernateDao.getByQuery(clazz, expression,sort);
+		if(t!= null && !t.isEmpty()){
+			return t.get(0);
+		}else{
+			return null;
+		}
+	}
 
 	/* 
 	 * @see com.photography.service.IBaseService#savePojo(com.photography.mapping.BaseMapping, com.photography.mapping.User)
