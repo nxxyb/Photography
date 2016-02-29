@@ -1,5 +1,6 @@
 package com.photography.controller;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -95,6 +96,9 @@ public class ProjectOrderController extends BaseController {
 						projectOrder = projectOrderDB;
 					}else{
 						Project project = projectOrderService.loadPojo(Project.class, projectOrder.getProject().getId());
+						if(project == null){
+							throw new ServiceException(ErrorCode.PROJECT_NOT_EXIST);
+						}
 						projectOrder.setProject(project);
 						
 						//生成订单号
@@ -213,7 +217,7 @@ public class ProjectOrderController extends BaseController {
 	 */
 	@RequestMapping(value="/orderProject",produces = "text/html;charset=UTF-8")
 	public ModelAndView orderProject(ProjectOrder projectOrder,HttpServletRequest request,RedirectAttributes ra){
-		
+		log.debug("ProjectOrderControl orderProject");
 		ModelAndView mav = new ModelAndView();
 		
 		try{
@@ -226,30 +230,35 @@ public class ProjectOrderController extends BaseController {
 			projectOrderDB.setActualPrice(projectOrder.getActualPrice());
 			projectOrderService.savePojo(projectOrderDB, user);
 			
+			//如果订单金额为零，则直接转入成功页面
+			if("0.00".equals(projectOrderDB.getActualPrice())){
+				return orderCompleteProject( projectOrder, request);
+			}
+			
 			//必填，不能修改
 			//服务器异步通知页面路径
-			String notify_url = "http://商户网关地址/create_direct_pay_by_user-JAVA-UTF-8/notify_url.jsp";
+			String notify_url = "http://np1827.com/projectorder/aliPayNotify";
 			//需http://格式的完整路径，不能加?id=123这类自定义参数
 	
 			//页面跳转同步通知页面路径
-			String return_url = "http://商户网关地址/create_direct_pay_by_user-JAVA-UTF-8/return_url.jsp";
+			String return_url = "http://np1827.com/projectorder/aliPayReturn";
 			//需http://格式的完整路径，不能加?id=123这类自定义参数，不能写成http://localhost/
 	
 			//商户订单号
-			String out_trade_no = new String(projectOrderDB.getOrderNumber().getBytes("ISO-8859-1"),"UTF-8");
+			String out_trade_no = projectOrderDB.getOrderNumber();
 			//商户网站订单系统中唯一订单号，必填
 	
 			//订单名称
-			String subject = new String(projectOrderDB.getProject().getName().getBytes("ISO-8859-1"),"UTF-8");
+			String subject = projectOrderDB.getProject().getName();
 			//必填
 	
 			//付款金额
-			String total_fee = new String(projectOrderDB.getActualPrice().getBytes("ISO-8859-1"),"UTF-8");
+			String total_fee = projectOrderDB.getActualPrice();
 			//必填
 	
 			//订单描述
 	
-			String body = new String(projectOrderDB.getProject().getName().getBytes("ISO-8859-1"),"UTF-8");
+			String body = projectOrderDB.getProject().getName();
 			//商品展示地址
 	//		String show_url = new String(request.getParameter("WIDshow_url").getBytes("ISO-8859-1"),"UTF-8");
 			//需以http://开头的完整路径，例如：http://www.商户网址.com/myorder.html
@@ -262,7 +271,9 @@ public class ProjectOrderController extends BaseController {
 			String exter_invoke_ip = "";
 			//非局域网的外网IP地址，如：221.0.0.1
 			
-			
+			log.debug("out_trade_no:" + out_trade_no);
+			log.debug("total_fee:" + total_fee);
+			log.debug("subject:" + subject);
 			//////////////////////////////////////////////////////////////////////////////////
 			
 			//把请求参数打包成数组
@@ -310,7 +321,171 @@ public class ProjectOrderController extends BaseController {
 	@RequestMapping(value="/aliPayNotify")
 	@ResponseBody
 	public String aliPayNotify(HttpServletRequest request){
+		log.debug("ProjectOrderControl aliPayNotify");
+		try{
+			Map<String,String> params = new HashMap<String,String>();
+			Map requestParams = request.getParameterMap();
+			for (Iterator iter = requestParams.keySet().iterator(); iter.hasNext();) {
+				String name = (String) iter.next();
+				String[] values = (String[]) requestParams.get(name);
+				String valueStr = "";
+				for (int i = 0; i < values.length; i++) {
+					valueStr = (i == values.length - 1) ? valueStr + values[i]
+							: valueStr + values[i] + ",";
+				}
+				//乱码解决，这段代码在出现乱码时使用。如果mysign和sign不相等也可以使用这段代码转化
+				//valueStr = new String(valueStr.getBytes("ISO-8859-1"), "gbk");
+				log.debug("valueStr:" + valueStr);
+				params.put(name, valueStr);
+			}
+			
+			//获取支付宝的通知返回参数，可参考技术文档中页面跳转同步通知参数列表(以下仅供参考)//
+			
+			//商户订单号
+			String out_trade_no = new String(request.getParameter("out_trade_no").getBytes("ISO-8859-1"),"UTF-8");
+	
+			//支付宝交易号
+			String trade_no = new String(request.getParameter("trade_no").getBytes("ISO-8859-1"),"UTF-8");
+	
+			//交易状态
+			String trade_status = new String(request.getParameter("trade_status").getBytes("ISO-8859-1"),"UTF-8");
+			
+			//交易费用
+			String total_fee = new String(request.getParameter("total_fee").getBytes("ISO-8859-1"),"UTF-8");
+			
+			//收款用户
+			String seller_id = new String(request.getParameter("seller_id").getBytes("ISO-8859-1"),"UTF-8");
+			
+			log.debug("out_trade_no:" + out_trade_no);
+			log.debug("trade_no:" + trade_no);
+			log.debug("trade_status:" + trade_status);
+			log.debug("total_fee:" + total_fee);
+			log.debug("seller_id:" + seller_id);
+	
+			//获取支付宝的通知返回参数，可参考技术文档中页面跳转同步通知参数列表(以上仅供参考)//
+	
+			if(AlipayNotify.verify(params)){//验证成功
+				//////////////////////////////////////////////////////////////////////////////////////////
+				//请在这里加上商户的业务逻辑程序代码
+	
+				//——请根据您的业务逻辑来编写程序（以下代码仅作参考）——
+				
+				if(trade_status.equals("TRADE_FINISHED")){
+					//判断该笔订单是否在商户网站中已经做过处理
+						//如果没有做过处理，根据订单号（out_trade_no）在商户网站的订单系统中查到该笔订单的详细，并执行商户的业务程序
+						//请务必判断请求时的total_fee、seller_id与通知时获取的total_fee、seller_id为一致的
+						//如果有做过处理，不执行商户的业务程序
+						
+					//注意：
+					//退款日期超过可退款期限后（如三个月可退款），支付宝系统发送该交易状态通知
+					
+					handlerOrder(out_trade_no, trade_no,total_fee, seller_id,"TRADE_FINISHED");
+					
+				} else if (trade_status.equals("TRADE_SUCCESS")){
+					//判断该笔订单是否在商户网站中已经做过处理
+						//如果没有做过处理，根据订单号（out_trade_no）在商户网站的订单系统中查到该笔订单的详细，并执行商户的业务程序
+						//请务必判断请求时的total_fee、seller_id与通知时获取的total_fee、seller_id为一致的
+						//如果有做过处理，不执行商户的业务程序
+						
+					//注意：
+					//付款完成后，支付宝系统发送该交易状态通知
+					handlerOrder(out_trade_no, trade_no,total_fee, seller_id,"TRADE_SUCCESS");
+				}
+	
+				//——请根据您的业务逻辑来编写程序（以上代码仅作参考）——
+					
+				return "success";	//请不要修改或删除
+	
+				//////////////////////////////////////////////////////////////////////////////////////////
+			}else{//验证失败
+				handlerOrder(out_trade_no, trade_no,total_fee, seller_id,"TRADE_FAIL");
+				return "fail";
+			}
+		}catch (Exception e){
+			log.error("ProjectOrderController aliPayNotify",e);
+			return "fail";
+		}
 		
+	}
+	
+	/**
+	 * 处理支付消息
+	 * @param out_trade_no 订单号 
+	 * @param total_fee 订单总费用
+	 * @param seller_id 订单收款用户
+	 * @param status
+	 * 				TRADE_FINISHED (表示交易已经成功结束，并不能再对该交易做后续操作);
+	 * 				TRADE_SUCCESS  (表示交易已经成功结束，可以对该交易做后续操作，如：分润、退款等);
+	 *              TRADE_FAIL     失败
+	 * 				
+	 * @throws ServiceException 
+	 */
+	private void handlerOrder(String out_trade_no,String trade_no,String total_fee,String seller_id,String status) throws ServiceException{
+		try{
+			ProjectOrder projectOrderDB = projectOrderService.loadOnePojoByExpression(ProjectOrder.class, Condition.eq("orderNumber", out_trade_no),null);
+			
+			if(projectOrderDB == null){
+				log.error("订单 out_trade_no:" + out_trade_no + " is not existed");
+				throw new ServiceException(ErrorCode.ALIPAY_ORDER_NOTEXISTED_EXCEPTION);
+			}
+			
+			if(Double.parseDouble(total_fee)  != Double.parseDouble(projectOrderDB.getActualPrice()) 
+					|| !seller_id.equals(AlipayConfig.partner)){
+				log.error("订单 total_fee:" + Double.parseDouble(total_fee) + ", actual total fee:" + Double.parseDouble(projectOrderDB.getActualPrice()));
+				log.error("订单 seller_id:" + seller_id + ", actual seller_id:" + AlipayConfig.partner);
+				throw new ServiceException(ErrorCode.ALIPAY_NOTIFY_MESSAGE_EXCEPTION);
+			}
+			
+			if(status.equals("TRADE_SUCCESS")){
+				log.debug("订单 out_trade_no:" + out_trade_no + " 支付成功");
+				projectOrderDB.setStatus(Constants.USER_ORDER_STATUS_YZF);
+				projectOrderDB.setTradeNo(trade_no);
+				projectOrderDB.setTradeStatus("TRADE_SUCCESS");
+					
+				//使用胶卷,则生成胶卷使用记录
+				if(!StringUtils.isEmpty(projectOrderDB.getCoupon()) && !"0".equals(projectOrderDB.getCoupon())){
+						UserCoupon userCoupon = new UserCoupon();
+						userCoupon.setCouponNum(projectOrderDB.getCoupon());
+						userCoupon.setInOrExp(Constants.COUPON_CLASS_SPEND);
+						userCoupon.setType(Constants.COUPON_TYPE_CONSUME_ORDERPROJECT);
+						userCoupon.setUser(projectOrderDB.getUser());
+				}
+					
+				//支付成功，赠送胶卷
+				addUserCoupon(null,projectOrderDB.getUser());
+				
+			}else if(status.equals("TRADE_FINISHED")){
+				log.debug("订单 out_trade_no:" + out_trade_no + " 完成成功");
+				projectOrderDB.setTradeStatus("TRADE_SUCCESS");
+				
+			}else if(status.equals("TRADE_FAIL")){
+				log.debug("订单 out_trade_no:" + out_trade_no + " 失败");
+				projectOrderDB.setStatus(Constants.USER_ORDER_STATUS_ZFSB);
+				projectOrderDB.setTradeStatus("TRADE_FAIL");
+			}
+			projectOrderDB.setStatus(Constants.USER_ORDER_STATUS_YZF);
+			projectOrderService.savePojo(projectOrderDB, projectOrderDB.getUser());
+	
+		}catch(Exception e){
+			log.error("ProjectOrderController OrderSuccess",e);
+			throw new ServiceException(ErrorCode.ALIPAY_SAVE_ORDER_EXCEPTION);
+		}
+	}
+	
+	/**
+	 * 支付宝页面跳转同步通知页面
+	 * @param request
+	 * @return
+	 * @throws UnsupportedEncodingException 
+	 * @throws ServiceException 
+	 */
+	@RequestMapping(value="/aliPayReturn",produces = "text/html;charset=UTF-8")
+	public ModelAndView aliPayReturn(HttpServletRequest request) throws UnsupportedEncodingException{
+		log.debug("ProjectOrderControl aliPayReturn");
+		
+		ModelAndView mav = new ModelAndView();
+		
+		//获取支付宝GET过来反馈信息
 		Map<String,String> params = new HashMap<String,String>();
 		Map requestParams = request.getParameterMap();
 		for (Iterator iter = requestParams.keySet().iterator(); iter.hasNext();) {
@@ -322,13 +497,13 @@ public class ProjectOrderController extends BaseController {
 						: valueStr + values[i] + ",";
 			}
 			//乱码解决，这段代码在出现乱码时使用。如果mysign和sign不相等也可以使用这段代码转化
-			//valueStr = new String(valueStr.getBytes("ISO-8859-1"), "gbk");
+			valueStr = new String(valueStr.getBytes("ISO-8859-1"), "utf-8");
 			params.put(name, valueStr);
 		}
 		
 		//获取支付宝的通知返回参数，可参考技术文档中页面跳转同步通知参数列表(以下仅供参考)//
-		
 		//商户订单号
+
 		String out_trade_no = new String(request.getParameter("out_trade_no").getBytes("ISO-8859-1"),"UTF-8");
 
 		//支付宝交易号
@@ -339,49 +514,63 @@ public class ProjectOrderController extends BaseController {
 		String trade_status = new String(request.getParameter("trade_status").getBytes("ISO-8859-1"),"UTF-8");
 
 		//获取支付宝的通知返回参数，可参考技术文档中页面跳转同步通知参数列表(以上仅供参考)//
-
-		if(AlipayNotify.verify(params)){//验证成功
+		
+		//计算得出通知验证结果
+		boolean verify_result = AlipayNotify.verify(params);
+		
+		log.debug("out_trade_no:" + out_trade_no);
+		log.debug("trade_no:" + trade_no);
+		log.debug("trade_status:" + trade_status);
+		log.debug("verify_result:" + verify_result);
+		
+		ProjectOrder projectOrderDB = projectOrderService.loadOnePojoByExpression(ProjectOrder.class, Condition.eq("orderNumber", out_trade_no),null);
+		
+		if(verify_result){//验证成功
 			//////////////////////////////////////////////////////////////////////////////////////////
 			//请在这里加上商户的业务逻辑程序代码
 
 			//——请根据您的业务逻辑来编写程序（以下代码仅作参考）——
-			
-			if(trade_status.equals("TRADE_FINISHED")){
+			if(trade_status.equals("TRADE_FINISHED") || trade_status.equals("TRADE_SUCCESS")){
 				//判断该笔订单是否在商户网站中已经做过处理
 					//如果没有做过处理，根据订单号（out_trade_no）在商户网站的订单系统中查到该笔订单的详细，并执行商户的业务程序
-					//请务必判断请求时的total_fee、seller_id与通知时获取的total_fee、seller_id为一致的
 					//如果有做过处理，不执行商户的业务程序
-					
-				//注意：
-				//退款日期超过可退款期限后（如三个月可退款），支付宝系统发送该交易状态通知
-			} else if (trade_status.equals("TRADE_SUCCESS")){
-				//判断该笔订单是否在商户网站中已经做过处理
-					//如果没有做过处理，根据订单号（out_trade_no）在商户网站的订单系统中查到该笔订单的详细，并执行商户的业务程序
-					//请务必判断请求时的total_fee、seller_id与通知时获取的total_fee、seller_id为一致的
-					//如果有做过处理，不执行商户的业务程序
-					
-				//注意：
-				//付款完成后，支付宝系统发送该交易状态通知
 			}
-
-			//——请根据您的业务逻辑来编写程序（以上代码仅作参考）——
-				
-			out.println("success");	//请不要修改或删除
+			
+			//自动登录
+			setSessionUser(request, projectOrderDB.getUser());
+			
+			
+			mav.addObject("projectOrder", projectOrderDB);
+			mav.setViewName("project/project_checkout_complete");
 
 			//////////////////////////////////////////////////////////////////////////////////////////
-		}else{//验证失败
-			out.println("fail");
+		}else{
+			mav.addObject("projectOrder", projectOrderDB);
+			mav.setViewName("project/project_checkout_error");
 		}
 		
-		
+		return mav;
+	}
+	
+	/**
+	 * 不需要支付费用的订单，直接跳转到支付成功页面
+	 * @param page
+	 * @param request
+	 * @param model
+	 * @return
+	 * @throws ServiceException 
+	 */
+	private ModelAndView orderCompleteProject(ProjectOrder projectOrder,HttpServletRequest request){
+		ModelAndView mav = new ModelAndView();
 		
 		try{
+			User user = getSessionUser(request);
 			
-			ProjectOrder projectOrderDB = projectOrderService.loadPojoByExpression(ProjectOrder.class, Condition.eq("", value));
-			projectOrderDB.setCoupon(projectOrder.getCoupon());
-			projectOrderDB.setOriginalPrice(projectOrder.getOriginalPrice());
-			projectOrderDB.setUnitPrice(projectOrder.getUnitPrice());
-			projectOrderDB.setActualPrice(projectOrder.getActualPrice());
+			ProjectOrder projectOrderDB = projectOrderService.loadPojo(ProjectOrder.class, projectOrder.getId());
+//			projectOrderDB.setCoupon(projectOrder.getCoupon());
+//			projectOrderDB.setOriginalPrice(projectOrder.getOriginalPrice());
+//			projectOrderDB.setUnitPrice(projectOrder.getUnitPrice());
+//			projectOrderDB.setActualPrice(projectOrder.getActualPrice());
 			projectOrderDB.setStatus(Constants.USER_ORDER_STATUS_YZF);
 			projectOrderService.savePojo(projectOrderDB, user);
 	
@@ -396,6 +585,9 @@ public class ProjectOrderController extends BaseController {
 				user.setCouponNum(userCouponNum);
 			}
 			
+			//支付成功，赠送胶卷
+			addUserCoupon(request,user);
+			
 			mav.addObject("projectOrder", projectOrderDB);
 			mav.setViewName("project/project_checkout_complete");
 		}catch(Exception e){
@@ -406,31 +598,6 @@ public class ProjectOrderController extends BaseController {
 		}
 		
 		return mav;
-	}
-	
-	/**
-	 * 支付成功 订单号
-	 * @param out_trade_no
-	 * @throws ServiceException 
-	 */
-	private void orderSuccess(String out_trade_no) throws ServiceException{
-		try{
-			ProjectOrder projectOrderDB = projectOrderService.loadOnePojoByExpression(ProjectOrder.class, Condition.eq("orderNumber", out_trade_no),null);
-			projectOrderDB.setStatus(Constants.USER_ORDER_STATUS_YZF);
-			projectOrderService.savePojo(projectOrderDB, projectOrderDB.getUser());
-	
-			//使用胶卷,则生成胶卷使用记录
-			if(!StringUtils.isEmpty(projectOrderDB.getCoupon()) && !"0".equals(projectOrderDB.getCoupon())){
-				UserCoupon userCoupon = new UserCoupon();
-				userCoupon.setCouponNum(projectOrderDB.getCoupon());
-				userCoupon.setInOrExp(Constants.COUPON_CLASS_SPEND);
-				userCoupon.setType(Constants.COUPON_TYPE_CONSUME_ORDERPROJECT);
-				userCoupon.setUser(projectOrderDB.getUser());
-			}
-		}catch(Exception e){
-			log.error("ProjectOrderController OrderSuccess",e);
-			throw new ServiceException(ErrorCode.ALIPAY_SAVE_ORDER_EXCEPTION);
-		}
 	}
 	
 	/**
@@ -450,10 +617,32 @@ public class ProjectOrderController extends BaseController {
 			
 			attr.addFlashAttribute(Constants.SUCCESS_MESSAGE, MessageConstants.SAVE_SUCCESS);
 		}catch(Exception e){
-			log.error("ProjectController saveProjectComment",e);
+			log.error("ProjectOrderController cancelProjectOrder",e);
 			attr.addFlashAttribute(Constants.ERROR_MESSAGE, ErrorMessage.getErrorMessage(e)); 
 		}
 		
 		return "redirect:/userinfo/toUserInfo?type=4";
+	}
+	
+	/**
+	 * 预定活动，赠送胶卷
+	 * @param request
+	 * @param user
+	 */
+	private void addUserCoupon(HttpServletRequest request,User user){
+		UserCoupon userCoupon = new UserCoupon();
+		userCoupon.setCouponNum(userCouponService.getUserCouponSetting(Constants.COUPON_TYPE_CONSUME_ORDERPROJECT).getNum());
+		userCoupon.setInOrExp(Constants.COUPON_CLASS_INCOME);
+		userCoupon.setType(Constants.COUPON_TYPE_CONSUME_ORDERPROJECT);
+		userCoupon.setUser(user);
+		try {
+			String userCouponNum = userCouponService.addCoupon(userCoupon, user);
+			user.setCouponNum(userCouponNum);
+			if(request != null){
+				setSessionUser(request, user);
+			}
+		} catch (ServiceException e) {
+			log.error("ProjectOrderController addUserCoupon",e);
+		}
 	}
 }

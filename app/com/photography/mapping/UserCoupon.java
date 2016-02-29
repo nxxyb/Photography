@@ -34,6 +34,7 @@ public class UserCoupon extends BaseMapping {
 	
 	/**
 	 * 收入/支出
+	 * Constants.COUPON_CLASS_*
 	 */
 	@Column(name="in_or_exp")
 	private String inOrExp;

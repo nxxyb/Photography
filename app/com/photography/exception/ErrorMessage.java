@@ -53,6 +53,8 @@ public class ErrorMessage {
 		 * 支付
 		 */
 		msg.put(ErrorCode.ALIPAY_SAVE_ORDER_EXCEPTION, "保存订单失败！");
+		msg.put(ErrorCode.ALIPAY_NOTIFY_MESSAGE_EXCEPTION, "订单通知信息有误！");
+		msg.put(ErrorCode.ALIPAY_ORDER_NOTEXISTED_EXCEPTION, "订单不存在！");
 	}
 
 	public static String get(int errorCode){

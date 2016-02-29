@@ -1,6 +1,7 @@
 package com.photography.controller;
 
 import java.net.URLDecoder;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -78,13 +79,25 @@ public class UserController extends BaseController{
 		try{
 			User user = userService.login(mobile, MD5Util.md5(password));
 			setSessionUser(request, user);
+		
+		
+			if(!StringUtils.isEmpty(redirectURL)){
+				Map<String, String[]> paramMap = (Map<String, String[]>) request.getSession().getAttribute(Constants.SESSION_LOGIN_PARAMETERMAP);
+				if(paramMap != null){
+					attr.addAllAttributes(paramMap);
+				}
+				
+				//清除session记录
+				request.getSession().removeAttribute(Constants.SESSION_LOGIN_REDIRECTURL);
+				request.getSession().removeAttribute(Constants.SESSION_LOGIN_PARAMETERMAP);
+				
+				return "redirect:" + URLDecoder.decode(redirectURL);
+			}
+			
 		}catch(Exception e){
 			handleError(attr, e);
 		}
 		
-		if(!StringUtils.isEmpty(redirectURL)){
-			return "redirect:" + URLDecoder.decode(redirectURL);
-		}
 		return "redirect:/index";
 	}
 	

@@ -54,6 +54,7 @@ public class Constants {
 	public final static String SESSION_USER_KEY = "sessionuser";
 	
 	public final static String SESSION_LOGIN_REDIRECTURL = "sessionLoginRedirectURL";
+	public final static String SESSION_LOGIN_PARAMETERMAP = "sessionLoginParametermap";
 	
 	//template 
 	public final static String ERROR_MESSAGE = "errorMessage";

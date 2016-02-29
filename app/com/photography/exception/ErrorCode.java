@@ -59,4 +59,8 @@ public class ErrorCode {
 	 * 系统异常：10600-10699 
 	 */
 	public static final int ALIPAY_SAVE_ORDER_EXCEPTION = 10600;
+	
+	public static final int ALIPAY_NOTIFY_MESSAGE_EXCEPTION = 10601;
+	
+	public static final int ALIPAY_ORDER_NOTEXISTED_EXCEPTION = 10602;
 }

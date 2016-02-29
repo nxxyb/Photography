@@ -21,15 +21,25 @@
            <div class="row">
                <div class="col-md-4 col-sm-12">
                   <p class="visible-xs-block c-theme-font c-font-uppercase c-font-bold">日期</p>
-                  <p class="c-font-sbold c-font-uppercase c-font-18">2015-10-22 10:28</p>
+                  <p class="c-font-sbold c-font-uppercase c-font-18">${(userCoupon.createTime?string('yyyy-MM-dd HH:mm'))!''}</p>
                </div>
                <div class="col-md-2 col-sm-12">
                    <p class="visible-xs-block c-theme-font c-font-uppercase c-font-bold">收入/支出</p>
-                   <p class="c-font-sbold c-font-uppercase c-font-18">+10</p>
+                   <p class="c-font-sbold c-font-uppercase c-font-18">
+                   	<#if userCoupon.inOrExp?? && userCoupon.inOrExp == "1">+<#else>-</#if>
+                   	${(userCoupon.couponNum)!''}
+                   </p>
                </div>
                <div class="col-md-6 col-sm-12">
                    <p class="visible-xs-block c-theme-font c-font-uppercase c-font-bold">详细信息</p>
-                   <p class="c-font-sbold c-font-uppercase c-font-18 c-font-red">登录签到</p>
+                   <p class="c-font-sbold c-font-uppercase c-font-18 c-font-red">
+                   		 <#if (userCoupon.type)?? && userCoupon.type == "1">用户注册</#if>
+						 <#if (userCoupon.type)?? && userCoupon.type == "2">登录签到</#if>
+						 <#if (userCoupon.type)?? && userCoupon.type == "3">发表评论</#if>
+						 <#if (userCoupon.type)?? && userCoupon.type == "4">资源分享</#if>
+						 <#if (userCoupon.type)?? && userCoupon.type == "5">参加活动</#if>
+						 <#if (userCoupon.type)?? && userCoupon.type == "6">胶卷支付</#if>
+                   </p>
                </div>
            </div>
        </div>
