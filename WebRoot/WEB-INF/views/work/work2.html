@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<!--[if IE 9]> <html lang="zh-CN" class="ie9"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="zh-CN">
+<!--<![endif]-->
+<!-- BEGIN HEAD -->
+<head>
+	<#include "../common/title.html">
+	<#include "../common/link.html">
+	<link rel="stylesheet" type="text/css" href="${basePath}/assets/plugins/masonry/css/normalize.css" />
+	<!--<link rel="stylesheet" type="text/css" href="${basePath}/assets/plugins/masonry/css/demo.css" />
+	-->
+	<link rel="stylesheet" type="text/css" href="${basePath}/assets/plugins/masonry/css/component.css" />
+	<script src="${basePath}/assets/plugins/masonry/js/modernizr.custom.js"></script>
+	<script src="${basePath}/assets/plugins/masonry/js/masonry.pkgd.min.js"></script>
+	<script src="${basePath}/assets/plugins/masonry/js/imagesloaded.pkgd.min.js"></script>
+	<script src="${basePath}/assets/plugins/masonry/js/classie.js"></script>
+	<script src="${basePath}/assets/plugins/masonry/js/colorfinder-1.1.js"></script>
+	<script src="${basePath}/assets/plugins/masonry/js/gridScrollFx.js"></script>
+	<script src="${basePath}/assets/plugins/masonry/js/masonry.pkgd.min.js" type="text/javascript"></script>
+	
+</head>
+<body class="c-layout-header-fixed c-layout-header-mobile-fixed">
+
+	<#include "../common/header.html">
+
+<!-- BEGIN: PAGE CONTAINER -->
+<div class="c-layout-page" >
+	
+	<!-- BEGIN: PAGE CONTENT -->
+            <div class="c-content-box c-size-md">
+                <div class="container">
+                    <div class="cbp-panel">
+                    
+                    	
+                        <div class="clearfix">
+					        <!--
+					        <div id="js-filters-lightbox-gallery1" class="cbp-l-filters-dropdown cbp-l-filters-dropdown-floated">
+					            <div class="cbp-l-filters-dropdownWrap">
+					                <div class="cbp-l-filters-dropdownHeader">Sort Gallery</div>
+					                <div class="cbp-l-filters-dropdownList">
+					                    <div data-filter="*" class="cbp-filter-item-active cbp-filter-item">All</div>
+					                    <div data-filter=".identity" class="cbp-filter-item">Identity</div>
+					                    <div data-filter=".web-design" class="cbp-filter-item">Web Design</div>
+					                    <div data-filter=".print" class="cbp-filter-item">Print</div>
+					                </div>
+					            </div>
+					        </div>
+					        
+							  
+					        <div id="js-filters-lightbox-gallery2" class="cbp-l-filters-button cbp-l-filters-left">
+					            <div data-filter="*" class="cbp-filter-item-active cbp-filter-item">All</div>
+					            <div data-filter=".graphic" class="cbp-filter-item">Graphic</div>
+					            <div data-filter=".logos" class="cbp-filter-item">Logo</div>
+					            <div data-filter=".motion" class="cbp-filter-item">Motion</div>
+					        </div>
+					        -->
+					        
+					    </div><!--
+					    
+
+                        
+                        <div id="js-grid-lightbox-gallery" class="cbp">
+                        	<#list works as work>
+					        <div class="cbp-item">
+					            <a href="${basePath}/work/introduction?id=${work.id}" class="cbp-caption cbp-singlePageInline" data-title="${(work.name)!''}" rel="nofollow">
+					                <div class="cbp-caption-defaultWrap" style="width: 300px;">
+					                    <img src="${basePath}/${work.photos.fileInfos[0].realPath}" alt="">
+					                </div>
+					                <div class="cbp-caption-activeWrap">
+					                    <div class="cbp-l-caption-alignLeft">
+					                        <div class="cbp-l-caption-body">
+					                            <div class="cbp-l-caption-title">${(work.name)!''}</div>
+					                             <div class="cbp-l-caption-desc">${(work.des)!''}</div> 
+					                        </div>
+					                    </div>
+					                </div>
+					            </a>
+					        </div>
+					        </#list>
+                        </div>
+                        
+                        <div id="js-loadMore-lightbox-gallery" class="cbp-l-loadMore-button">
+					        <a href="${basePath}/work/loadmore" class="cbp-l-loadMore-link btn c-btn-square c-btn-border-2x c-btn-dark c-btn-bold c-btn-uppercase" rel="nofollow">
+					            <span class="cbp-l-loadMore-defaultText">加载更多</span>
+					            <span class="cbp-l-loadMore-loadingText">加载中...</span>
+					            <span class="cbp-l-loadMore-noMoreLoading">没有作品了</span>
+					        </a>
+					    </div>
+					    
+					    -->
+					    <section class="grid-wrap">
+							<ul class="grid swipe-right" id="grid">
+								<#list works as work>
+									<li><a href="#"><img src="${basePath}/${work.photos.fileInfos[0].realPath}" ><h3>${(work.name)!''}</h3></a></li>
+								</#list>
+							</ul>
+						</section>
+                    </div>
+                </div>
+            </div>
+            <!-- END: PAGE CONTENT -->
+	
+</div>
+<!-- END: PAGE CONTAINER -->
+
+<#include "../common/footer.html">
+
+<script>
+$(document).ready(function(){
+
+	$('#work').addClass('c-active');
+	
+	new GridScrollFx( document.getElementById( 'grid' ), {
+				viewportFactor : 0.4
+			} );
+  
+  });
+</script>
+
+</body>
+
+</html>
