@@ -3,6 +3,8 @@ package com.photography.dao;
 import java.io.Serializable;
 import java.util.List;
 
+import org.hibernate.Session;
+
 import com.photography.dao.exp.Expression;
 import com.photography.dao.query.Pager;
 import com.photography.dao.query.Sort;
@@ -15,6 +17,8 @@ import com.photography.mapping.User;
  * 
  */
 public interface IHibernateDao {
+	
+	public Session getHibernateTemplate();
 
 	/**
 	 * 根据所传入的id得到完整的对象

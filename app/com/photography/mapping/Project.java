@@ -15,6 +15,10 @@ import javax.persistence.OrderBy;
 import org.hibernate.annotations.Formula;
 import org.hibernate.annotations.LazyToOne;
 import org.hibernate.annotations.LazyToOneOption;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Index;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.Store;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.photography.utils.Constants;
@@ -27,6 +31,7 @@ import com.photography.utils.Constants;
  * @copyright 2015 天大求实电力新技术股份有限公司 版权所有
  */
 @Entity(name="project")
+@Indexed(index="project")
 public class Project extends BaseMapping{
 	
 	private static final long serialVersionUID = -5155878212794168022L;
@@ -35,6 +40,7 @@ public class Project extends BaseMapping{
 	 * 活动名称
 	 */
 	@Column(name="name")
+	@Field(name="name",index=Index.YES,store=Store.YES)
 	private String name;
 	
 	/**
@@ -126,6 +132,7 @@ public class Project extends BaseMapping{
 	 * 活动介绍
 	 */
 	@Column(name="des")
+	@Field(name="des",index=Index.YES,store=Store.YES)
 	private String des;
 	
 	/**

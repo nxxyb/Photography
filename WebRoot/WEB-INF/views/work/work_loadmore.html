@@ -4,20 +4,16 @@
 	<div class="cbp-loadMore-block${block}">
 	    <#list works as work>
 	      <div class="cbp-item">
-	          <a href="${basePath}/work/introduction?id=${work.id}" class="cbp-caption cbp-singlePageInline" data-title="${(work.name)!''}" rel="nofollow">
-	              <div class="cbp-caption-defaultWrap">
-	                  <img src="${basePath}/${work.photos.fileInfos[0].realPath}" alt="">
-	              </div>
-	              <div class="cbp-caption-activeWrap">
-	                  <div class="cbp-l-caption-alignLeft">
-	                      <div class="cbp-l-caption-body">
-	                          <div class="cbp-l-caption-title">${(work.name)!''}</div>
-	                          <!-- <div class="cbp-l-caption-desc">${(work.des)!''}</div> -->
-	                      </div>
-	                  </div>
-	              </div>
-	          </a>
-	      </div>
+                <a href="${basePath}/work/toReview?id=${work.id}" target="_blank">
+                    <div class="cbp-caption">
+                        <div class="cbp-caption-defaultWrap">
+                            <img src="${basePath}/${work.photos.fileInfos[0].realPath}" alt=""> </div>
+                    </div>
+                    <div class="cbp-l-grid-agency-title">${(work.name)!''}</div>
+                    <div class="cbp-l-grid-agency-desc">${(work.des)!''}</div>
+                </a>
+            </div>
+	      
 	      </#list>
 	</div>
 	<#if (pager.totalPage > pager.currentPage)>

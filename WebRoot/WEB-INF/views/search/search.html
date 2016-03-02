@@ -22,35 +22,54 @@
                     
                     	
                         <div class="clearfix">
-					        <!--
-					        <div id="js-filters-lightbox-gallery1" class="cbp-l-filters-dropdown cbp-l-filters-dropdown-floated">
-					            <div class="cbp-l-filters-dropdownWrap">
-					                <div class="cbp-l-filters-dropdownHeader">Sort Gallery</div>
-					                <div class="cbp-l-filters-dropdownList">
-					                    <div data-filter="*" class="cbp-filter-item-active cbp-filter-item">All</div>
-					                    <div data-filter=".identity" class="cbp-filter-item">Identity</div>
-					                    <div data-filter=".web-design" class="cbp-filter-item">Web Design</div>
-					                    <div data-filter=".print" class="cbp-filter-item">Print</div>
-					                </div>
-					            </div>
-					        </div>
-					        
-							  
-					        <div id="js-filters-lightbox-gallery2" class="cbp-l-filters-button cbp-l-filters-left">
-					            <div data-filter="*" class="cbp-filter-item-active cbp-filter-item">All</div>
-					            <div data-filter=".graphic" class="cbp-filter-item">Graphic</div>
-					            <div data-filter=".logos" class="cbp-filter-item">Logo</div>
-					            <div data-filter=".motion" class="cbp-filter-item">Motion</div>
-					        </div>
-					        -->
 					        
 					    </div>
 					    
-
+					    <div class="c-content-title-1">
+                                        <h3 class="c-left c-theme-font">活动</h3>
+                                        <div class="c-line-left c-bg-blue"></div>
+                                </div>
+					    
+                        <div id="grid-container" class="cbp cbp-l-grid-agency">
+                        	<#list projects as project>
+					         <div class="cbp-item" style="border:1px solid #e5e5e5">
+	                            <a href="${basePath}/project/toReview?id=${project.id}" target="_blank">
+	                                <div class="cbp-caption">
+	                                    <div class="cbp-caption-defaultWrap">
+	                                        <img src="${basePath}/${project.photos.fileInfos[0].realPath}" alt=""> </div>
+	                                </div>
+	                                <div class="cbp-l-grid-agency-title">${(project.name)!''}</div>
+	                                <div class="cbp-l-grid-agency-desc">${(project.des)!''}</div>
+	                            </a>
+	                        </div>
+					        </#list>
+                        </div>
                         
+					    <div id="loadMore-container" class="cbp-l-loadMore-button c-margin-t-60">
+                        <a href="${basePath}/work/loadmore" class="cbp-l-loadMore-link btn c-btn-square c-btn-border-2x c-btn-dark c-btn-bold c-btn-uppercase">
+                            <span class="cbp-l-loadMore-defaultText">加载更多</span>
+                            <span class="cbp-l-loadMore-loadingText">加载中...</span>
+                            <span class="cbp-l-loadMore-noMoreLoading">没有作品了</span>
+                        </a>
+                    </div>
+
+                    </div>
+                    
+                    <div class="cbp-panel">
+                    
+                    	
+                        <div class="clearfix">
+					        
+					    </div>
+					    
+					    <div class="c-content-title-1">
+                                        <h3 class="c-left c-theme-font">活动</h3>
+                                        <div class="c-line-left c-bg-blue"></div>
+                                </div>
+					    
                         <div id="grid-container" class="cbp cbp-l-grid-agency">
                         	<#list works as work>
-					         <div class="cbp-item">
+					         <div class="cbp-item" style="border:1px solid #e5e5e5">
 	                            <a href="${basePath}/work/toReview?id=${work.id}" target="_blank">
 	                                <div class="cbp-caption">
 	                                    <div class="cbp-caption-defaultWrap">
@@ -63,7 +82,6 @@
 					        </#list>
                         </div>
                         
-					    
 					    <div id="loadMore-container" class="cbp-l-loadMore-button c-margin-t-60">
                         <a href="${basePath}/work/loadmore" class="cbp-l-loadMore-link btn c-btn-square c-btn-border-2x c-btn-dark c-btn-bold c-btn-uppercase">
                             <span class="cbp-l-loadMore-defaultText">加载更多</span>
@@ -73,6 +91,7 @@
                     </div>
 
                     </div>
+                    
                 </div>
             </div>
             <!-- END: PAGE CONTENT -->
@@ -84,8 +103,6 @@
 
 <script>
 $(document).ready(function(){
-
-	$('#work').addClass('c-active');
 	
 	(function($, window, document, undefined) {
     'use strict';
@@ -109,7 +126,7 @@ $(document).ready(function(){
             cols: 3
         }, {
             width: 800,
-            cols: 3
+            cols: 2
         }, {
             width: 500,
             cols: 2

@@ -1,5 +1,7 @@
 package com.photography.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
@@ -9,7 +11,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.photography.dao.query.Pager;
+import com.photography.dao.query.Sort;
 import com.photography.exception.ServiceException;
+import com.photography.mapping.Project;
+import com.photography.mapping.User;
+import com.photography.service.IIndexSearchService;
 import com.photography.service.IProjectService;
 import com.photography.service.IWorkService;
 
@@ -32,6 +39,9 @@ private final static Logger log = Logger.getLogger(MainController.class);
 	@Autowired
 	private IWorkService workService;
 	
+	@Autowired
+	private IIndexSearchService indexSearchService;
+	
 	public void setProjectService(IProjectService projectService) {
 		this.projectService = projectService;
 	}
@@ -51,6 +61,19 @@ private final static Logger log = Logger.getLogger(MainController.class);
 		mav.setViewName("/index");
 		return mav;
 	}
+	
+	@RequestMapping("/search")
+	public ModelAndView toSearch(String searchString,HttpServletRequest request, RedirectAttributes attr) throws ServiceException {
+		ModelAndView mav = new ModelAndView();
+		User user = getSessionUser(request);
+		List<Project> projects =  indexSearchService.getIndexPojoList(Project.class, new Pager(), new String[]{"name","des"}, searchString, new Sort("createTime","desc"), user);
+		
+		mav.addObject("projects", projects);
+		mav.setViewName("/search/search");
+		return mav;
+	}
+	
+	
 	
 //	private List<Project> getIndexProjects(String type) throws ServiceException{
 //			return  ;

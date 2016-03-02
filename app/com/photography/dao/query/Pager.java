@@ -30,6 +30,10 @@ public class Pager implements Serializable {
 
 	public Pager(){
 	}
+	
+	public Pager(int pageSize){
+		this.pageSize = pageSize;
+	}
 
 	public Pager(int currentPage , int pageSize){
 		this.currentPage = currentPage;

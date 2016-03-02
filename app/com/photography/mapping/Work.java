@@ -10,6 +10,10 @@ import javax.persistence.ManyToOne;
 import org.hibernate.annotations.Formula;
 import org.hibernate.annotations.LazyToOne;
 import org.hibernate.annotations.LazyToOneOption;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Index;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.Store;
 
 import com.photography.utils.Constants;
 
@@ -19,6 +23,7 @@ import com.photography.utils.Constants;
  *
  */
 @Entity(name="work")
+@Indexed(index="work")
 public class Work extends BaseMapping {
 
 	private static final long serialVersionUID = -5432595383513302235L;
@@ -27,12 +32,14 @@ public class Work extends BaseMapping {
 	 * 名称
 	 */
 	@Column(name="name")
+	@Field(name="name",index=Index.YES,store=Store.YES)
 	private String name;
 
 	/**
 	 * 介绍
 	 */
 	@Column(name="des")
+	@Field(name="des",index=Index.YES,store=Store.YES)
 	private String des;
 	
 	/**

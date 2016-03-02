@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.search.annotations.DocumentId;
 
 /**
  * 
@@ -26,6 +27,7 @@ public class BaseMapping implements Serializable{
 	@GeneratedValue(generator = "system-uuid")
 	@GenericGenerator(name = "system-uuid", strategy = "uuid")
     @Column(name="id")
+    @DocumentId
 	protected String id;
 	
 	/**

@@ -67,6 +67,8 @@
 				<prop key="hibernate.cache.provider_class">org.hibernate.cache.EhCacheProvider</prop>
 				<!-- <prop key="hibernate.cache.provider_class">net.sf.ehcache.hibernate.SingletonEhCacheProvider</prop> -->
 				<!-- <prop key="hibernate.cache.provider_configuration_file_resource_path">ehcache.xml</prop> -->
+				<prop key="hibernate.search.default.directory_provider">org.hibernate.search.store.impl.FSDirectoryProvider</prop>  
+       			<prop key="hibernate.search.default.indexBase">c:/indexes</prop>
 				<prop key="format_sql">true</prop>
 				<prop key="hibernate.show_sql">true</prop>
 				<prop key="connection.autocommit">true</prop>

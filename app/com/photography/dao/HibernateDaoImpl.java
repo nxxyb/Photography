@@ -47,7 +47,7 @@ public class HibernateDaoImpl implements IHibernateDao {
 		this.sessionFactory = sessionFactory;
 	}
 	
-	private Session getHibernateTemplate(){
+	public Session getHibernateTemplate(){
 		return sessionFactory.getCurrentSession();
 	}
 
