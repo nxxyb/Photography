@@ -91,7 +91,7 @@
 			<div class="col-md-4 col-sm-6">
 				<div class="c-wrapper c-bg-red" style="height: 550px;">
 					<div class="c-content c-border c-border-padding c-border-padding-right">
-						<p class="c-price c-font-55 c-font-white c-font-thin"><#if (project.cost)?? && project.cost=="0">免费<#else> ￥${(project.cost)!''}</#if></p>
+						<p class="c-price c-font-55 c-font-white c-font-thin"><#if (project.cost)?? && project.cost=="0">免费<#else> ¥${(project.cost)!''}</#if></p>
 						<h3 class="c-title c-font-25 c-font-white c-font-uppercase c-font-bold"><a href="${basePath}/project/toReview?id=${project.id}">${(project.name)!''}</a></h3>
 						<p class="c-description c-font-17 c-font-white">${(project.des)!''}</p>
 						
@@ -110,7 +110,7 @@
 			<div class="col-md-4 col-sm-6">
 				<div class="c-wrapper c-theme-bg" style="height: 550px;">
 					<div class="c-content c-border c-border-padding c-border-padding-left">
-						<p class="c-price c-font-55 c-font-white c-font-thin"><#if (project.cost)?? && project.cost=="0">免费<#else> ￥${(project.cost)!''}</#if></p>
+						<p class="c-price c-font-55 c-font-white c-font-thin"><#if (project.cost)?? && project.cost=="0">免费<#else> ¥${(project.cost)!''}</#if></p>
 						<h3 class="c-title c-font-25 c-font-white c-font-uppercase c-font-bold"><a href="${basePath}/project/toReview?id=${project.id}">${(project.name)!''}</a></h3>
 						<p class="c-description c-font-17 c-font-white">${(project.des)!''}</p>
 						

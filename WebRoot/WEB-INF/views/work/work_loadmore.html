@@ -3,16 +3,21 @@
 <#if works?? && (works?size > 0)>
 	<div class="cbp-loadMore-block${block}">
 	    <#list works as work>
-	      <div class="cbp-item">
-                <a href="${basePath}/work/toReview?id=${work.id}" target="_blank">
-                    <div class="cbp-caption">
-                        <div class="cbp-caption-defaultWrap">
-                            <img src="${basePath}/${work.photos.fileInfos[0].realPath}" alt=""> </div>
-                    </div>
-                    <div class="cbp-l-grid-agency-title">${(work.name)!''}</div>
-                    <div class="cbp-l-grid-agency-desc">${(work.des)!''}</div>
-                </a>
-            </div>
+	      <div class="cbp-item c-shadow">
+                 <a href="${basePath}/work/toReview?id=${work.id}" target="_blank">
+                     <div class="cbp-caption">
+                         <div class="cbp-caption-defaultWrap">
+                             <img src="${basePath}/${work.photos.fileInfos[0].realPath}" alt=""> </div>
+                     </div>
+                     <div style="padding:0px 16px 2px;">
+                      <a href="${basePath}/work/toReview?id=${work.id}" target="_blank" class="cbp-l-grid-blog-title">${(work.name)!''} </a>
+                <div class="cbp-l-grid-blog-date">${(work.createTime?string('yyyy-MM-dd'))!''}</div>
+                <div class="cbp-l-grid-blog-split">|</div>
+                <div class="cbp-l-grid-blog-date">${(work.viewedNumber)!'0'} 浏览</div>
+                <div class="cbp-l-grid-blog-desc">${(work.des)!''}</div>
+               </div>
+                 </a>
+             </div>
 	      
 	      </#list>
 	</div>

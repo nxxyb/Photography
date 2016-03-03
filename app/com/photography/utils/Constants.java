@@ -132,6 +132,12 @@ public class Constants {
 	//用户中心-活动订单每页显示条数
 	public final static int PAGER_PROJECT_ORDER = 4;
 	
+	public final static int PAGER_SIZE_6 = 6;
+	public final static int PAGER_SIZE_7 = 7;
+	public final static int PAGER_SIZE_8 = 8;
+	public final static int PAGER_SIZE_9 = 9;
+	public final static int PAGER_SIZE_10 = 10;
+	
 	/**
 	 * 胶卷类别
 	 */

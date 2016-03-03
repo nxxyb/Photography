@@ -45,19 +45,22 @@
 					        -->
 					        
 					    </div>
-					    
-
                         
-                        <div id="grid-container" class="cbp cbp-l-grid-agency">
+                        <div id="grid-container" class="cbp cbp-l-grid-work">
                         	<#list works as work>
-					         <div class="cbp-item">
+					         <div class="cbp-item c-shadow">
 	                            <a href="${basePath}/work/toReview?id=${work.id}" target="_blank">
 	                                <div class="cbp-caption">
 	                                    <div class="cbp-caption-defaultWrap">
 	                                        <img src="${basePath}/${work.photos.fileInfos[0].realPath}" alt=""> </div>
 	                                </div>
-	                                <div class="cbp-l-grid-agency-title">${(work.name)!''}</div>
-	                                <div class="cbp-l-grid-agency-desc">${(work.des)!''}</div>
+	                                <div style="padding:0px 16px 2px;">
+		                                <a href="${basePath}/work/toReview?id=${work.id}" target="_blank" class="cbp-l-grid-blog-title">${(work.name)!''} </a>
+				                        <div class="cbp-l-grid-blog-date">${(work.createTime?string('yyyy-MM-dd'))!''}</div>
+				                        <div class="cbp-l-grid-blog-split">|</div>
+				                        <div class="cbp-l-grid-blog-date">${(work.viewedNumber)!'0'} 浏览</div>
+				                        <div class="cbp-l-grid-blog-desc">${(work.des)!''}</div>
+			                        </div>
 	                            </a>
 	                        </div>
 					        </#list>
@@ -65,7 +68,7 @@
                         
 					    
 					    <div id="loadMore-container" class="cbp-l-loadMore-button c-margin-t-60">
-                        <a href="${basePath}/work/loadmore" class="cbp-l-loadMore-link btn c-btn-square c-btn-border-2x c-btn-dark c-btn-bold c-btn-uppercase">
+                        <a id="loadMoreA"  href="${basePath}/work/loadmore" class="cbp-l-loadMore-link btn c-btn-square c-btn-border-2x c-btn-dark c-btn-bold c-btn-uppercase">
                             <span class="cbp-l-loadMore-defaultText">加载更多</span>
                             <span class="cbp-l-loadMore-loadingText">加载中...</span>
                             <span class="cbp-l-loadMore-noMoreLoading">没有作品了</span>
@@ -103,13 +106,13 @@ $(document).ready(function(){
         gridAdjustment: 'responsive',
         mediaQueries: [{
             width: 1400,
-            cols: 3
+            cols: 2
         }, {
             width: 1100,
-            cols: 3
+            cols: 2
         }, {
             width: 800,
-            cols: 3
+            cols: 2
         }, {
             width: 500,
             cols: 2
@@ -119,10 +122,14 @@ $(document).ready(function(){
         }],
         caption: 'zoom',
         displayType: 'lazyLoading',
-        displayTypeSpeed: 100,
+        displayTypeSpeed: 100
     });
 
-})(jQuery, window, document)
+})(jQuery, window, document);
+
+$("#loadMoreA").click(function e(){
+	alert($(this).attr("href"));
+});
   
   });
 </script>

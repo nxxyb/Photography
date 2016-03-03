@@ -13,7 +13,7 @@
 	<#include "../common/header.html">
 
 <!-- BEGIN: PAGE CONTAINER -->
-<div class="c-layout-page" >
+<div class="c-layout-page c-bg-grey-1" >
 	
 	<!-- BEGIN: PAGE CONTENT -->
             <div class="c-content-box c-size-md">
@@ -30,22 +30,28 @@
                                         <div class="c-line-left c-bg-blue"></div>
                                 </div>
 					    
-                        <div id="grid-container" class="cbp cbp-l-grid-agency">
+                        <div id="grid-container_project" class="cbp cbp-l-grid-work">
                         	<#list projects as project>
-					         <div class="cbp-item" style="border:1px solid #e5e5e5">
+					         <div class="cbp-item c-shadow">
 	                            <a href="${basePath}/project/toReview?id=${project.id}" target="_blank">
 	                                <div class="cbp-caption">
 	                                    <div class="cbp-caption-defaultWrap">
 	                                        <img src="${basePath}/${project.photos.fileInfos[0].realPath}" alt=""> </div>
 	                                </div>
-	                                <div class="cbp-l-grid-agency-title">${(project.name)!''}</div>
-	                                <div class="cbp-l-grid-agency-desc">${(project.des)!''}</div>
+	                                <div style="padding:0px 16px 2px;">
+		                                <a href="${basePath}/project/toReview?id=${project.id}" target="_blank" class="cbp-l-grid-blog-title">${(project.name)!''} </a>
+				                        <div class="cbp-l-grid-blog-date">${(project.startTime?string('yyyy-MM-dd'))!''}</div>
+				                        <div class="cbp-l-grid-blog-split">|</div>
+				                        <div class="cbp-l-grid-blog-date">${(project.viewedNumber)!'0'} 浏览</div>
+				                        <div class="cbp-l-grid-blog-desc">${(project.des)!''}</div>
+				                        <div class="cbp-l-grid-blog-title c-font-yellow c-font-24 c-font-bold"><#if (project.cost)?? && project.cost=="0">免费<#else> ¥${(project.cost)!''}</#if></div>
+			                        </div>
 	                            </a>
 	                        </div>
 					        </#list>
                         </div>
                         
-					    <div id="loadMore-container" class="cbp-l-loadMore-button c-margin-t-60">
+					    <div id="loadMore-container_project" class="cbp-l-loadMore-button c-margin-t-60">
                         <a href="${basePath}/work/loadmore" class="cbp-l-loadMore-link btn c-btn-square c-btn-border-2x c-btn-dark c-btn-bold c-btn-uppercase">
                             <span class="cbp-l-loadMore-defaultText">加载更多</span>
                             <span class="cbp-l-loadMore-loadingText">加载中...</span>
@@ -55,6 +61,8 @@
 
                     </div>
                     
+                    <div class="c-margin-t-50"></div>
+                    
                     <div class="cbp-panel">
                     
                     	
@@ -63,26 +71,31 @@
 					    </div>
 					    
 					    <div class="c-content-title-1">
-                                        <h3 class="c-left c-theme-font">活动</h3>
+                                        <h3 class="c-left c-theme-font">作品</h3>
                                         <div class="c-line-left c-bg-blue"></div>
                                 </div>
-					    
-                        <div id="grid-container" class="cbp cbp-l-grid-agency">
+                        
+                        <div id="grid-container_work" class="cbp cbp-l-grid-work">
                         	<#list works as work>
-					         <div class="cbp-item" style="border:1px solid #e5e5e5">
+					         <div class="cbp-item c-shadow">
 	                            <a href="${basePath}/work/toReview?id=${work.id}" target="_blank">
 	                                <div class="cbp-caption">
 	                                    <div class="cbp-caption-defaultWrap">
 	                                        <img src="${basePath}/${work.photos.fileInfos[0].realPath}" alt=""> </div>
 	                                </div>
-	                                <div class="cbp-l-grid-agency-title">${(work.name)!''}</div>
-	                                <div class="cbp-l-grid-agency-desc">${(work.des)!''}</div>
+	                                <div style="padding:0px 16px 2px;">
+		                                <a href="${basePath}/work/toReview?id=${work.id}" target="_blank" class="cbp-l-grid-blog-title">${(work.name)!''} </a>
+				                        <div class="cbp-l-grid-blog-date">${(work.createTime?string('yyyy-MM-dd'))!''}</div>
+				                        <div class="cbp-l-grid-blog-split">|</div>
+				                        <div class="cbp-l-grid-blog-date">${(work.viewedNumber)!'0'} 浏览</div>
+				                        <div class="cbp-l-grid-blog-desc">${(work.des)!''}</div>
+			                        </div>
 	                            </a>
 	                        </div>
 					        </#list>
                         </div>
                         
-					    <div id="loadMore-container" class="cbp-l-loadMore-button c-margin-t-60">
+					    <div id="loadMore-container_work" class="cbp-l-loadMore-button c-margin-t-60">
                         <a href="${basePath}/work/loadmore" class="cbp-l-loadMore-link btn c-btn-square c-btn-border-2x c-btn-dark c-btn-bold c-btn-uppercase">
                             <span class="cbp-l-loadMore-defaultText">加载更多</span>
                             <span class="cbp-l-loadMore-loadingText">加载中...</span>
@@ -108,9 +121,9 @@ $(document).ready(function(){
     'use strict';
 
     // init cubeportfolio
-    $('#grid-container').cubeportfolio({
-        filters: '#filters-container',
-        loadMore: '#loadMore-container',
+    $('#grid-container_project').cubeportfolio({
+        filters: '#filters-container_project',
+        loadMore: '#loadMore-container_project',
         loadMoreAction: 'click',
         layoutMode: 'grid',
         defaultFilter: '*',
@@ -120,10 +133,10 @@ $(document).ready(function(){
         gridAdjustment: 'responsive',
         mediaQueries: [{
             width: 1400,
-            cols: 3
+            cols: 2
         }, {
             width: 1100,
-            cols: 3
+            cols: 2
         }, {
             width: 800,
             cols: 2
@@ -136,10 +149,45 @@ $(document).ready(function(){
         }],
         caption: 'zoom',
         displayType: 'lazyLoading',
-        displayTypeSpeed: 100,
+        displayTypeSpeed: 100
     });
+})(jQuery, window, document);
 
-})(jQuery, window, document)
+(function($, window, document, undefined) {
+    'use strict';
+
+    // init cubeportfolio
+    $('#grid-container_work').cubeportfolio({
+        filters: '#filters-container_work',
+        loadMore: '#loadMore-container_work',
+        loadMoreAction: 'click',
+        layoutMode: 'grid',
+        defaultFilter: '*',
+        animationType: 'slideLeft',
+        gapHorizontal: 35,
+        gapVertical: 15,
+        gridAdjustment: 'responsive',
+        mediaQueries: [{
+            width: 1400,
+            cols: 2
+        }, {
+            width: 1100,
+            cols: 2
+        }, {
+            width: 800,
+            cols: 2
+        }, {
+            width: 500,
+            cols: 2
+        }, {
+            width: 320,
+            cols: 1
+        }],
+        caption: 'zoom',
+        displayType: 'lazyLoading',
+        displayTypeSpeed: 100
+    });
+})(jQuery, window, document);
   
   });
 </script>

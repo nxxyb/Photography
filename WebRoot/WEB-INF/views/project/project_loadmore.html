@@ -1,0 +1,30 @@
+<#assign basePath=request.contextPath>
+
+<#if projects?? && (projects?size > 0)>
+	<div class="cbp-loadMore-block${block}">
+	    <#list projects as project>
+	      <div class="cbp-item c-shadow">
+                  <a href="${basePath}/project/toReview?id=${project.id}" target="_blank">
+                      <div class="cbp-caption">
+                          <div class="cbp-caption-defaultWrap">
+                              <img src="${basePath}/${project.photos.fileInfos[0].realPath}" alt=""> </div>
+                      </div>
+                      <div style="padding:0px 16px 2px;">
+                       <a href="${basePath}/project/toReview?id=${project.id}" target="_blank" class="cbp-l-grid-blog-title">${(project.name)!''} </a>
+                 <div class="cbp-l-grid-blog-date">${(project.startTime?string('yyyy-MM-dd'))!''}</div>
+                 <div class="cbp-l-grid-blog-split">|</div>
+                 <div class="cbp-l-grid-blog-date">${(project.viewedNumber)!'0'} 浏览</div>
+                 <div class="cbp-l-grid-blog-desc">${(project.des)!''}</div>
+                 <div class="cbp-l-grid-blog-title c-font-yellow c-font-24 c-font-bold"><#if (project.cost)?? && project.cost=="0">免费<#else> ¥${(project.cost)!''}</#if></div>
+                </div>
+                  </a>
+              </div>
+	      
+	      </#list>
+	</div>
+	<#if (pager.totalPage > pager.currentPage)>
+	<div class="cbp-loadMore-block${pager.currentPage}">
+	</div>
+	</#if>
+</#if>
+

@@ -96,7 +96,7 @@ public class WorkController extends BaseController {
 	@RequestMapping("/loadmore")
 	public ModelAndView loadMore(String block,HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
-		Pager pager = new Pager(Integer.parseInt(block)+1,9);
+		Pager pager = new Pager(Integer.parseInt(block)+1,Constants.PAGER_SIZE_6);
 		Expression exp = null;
 		List<Work> works = workService.getPojoList(Work.class, pager, exp, new Sort("createTime",QueryConstants.DESC),null);
 		mav.addObject("works", works);

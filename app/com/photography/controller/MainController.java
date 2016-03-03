@@ -16,6 +16,7 @@ import com.photography.dao.query.Sort;
 import com.photography.exception.ServiceException;
 import com.photography.mapping.Project;
 import com.photography.mapping.User;
+import com.photography.mapping.Work;
 import com.photography.service.IIndexSearchService;
 import com.photography.service.IProjectService;
 import com.photography.service.IWorkService;
@@ -66,9 +67,13 @@ private final static Logger log = Logger.getLogger(MainController.class);
 	public ModelAndView toSearch(String searchString,HttpServletRequest request, RedirectAttributes attr) throws ServiceException {
 		ModelAndView mav = new ModelAndView();
 		User user = getSessionUser(request);
-		List<Project> projects =  indexSearchService.getIndexPojoList(Project.class, new Pager(), new String[]{"name","des"}, searchString, new Sort("createTime","desc"), user);
 		
+		List<Project> projects =  indexSearchService.getIndexPojoList(Project.class, new Pager(), new String[]{"name","des"}, searchString, new Sort("createTime","desc"), user);
 		mav.addObject("projects", projects);
+		
+		List<Work> works =  indexSearchService.getIndexPojoList(Work.class, new Pager(), new String[]{"name","des"}, searchString, new Sort("createTime","desc"), user);
+		mav.addObject("works", works);
+		
 		mav.setViewName("/search/search");
 		return mav;
 	}
