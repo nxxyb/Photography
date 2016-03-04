@@ -32,7 +32,8 @@
 					    
                         <div id="grid-container_project" class="cbp cbp-l-grid-work">
                         	<#list projects as project>
-					         <div class="cbp-item c-shadow">
+					         <div class="cbp-item">
+					         	<i class="card-flag card-flag-2 0">荐</i>
 	                            <a href="${basePath}/project/toReview?id=${project.id}" target="_blank">
 	                                <div class="cbp-caption">
 	                                    <div class="cbp-caption-defaultWrap">
@@ -52,10 +53,10 @@
                         </div>
                         
 					    <div id="loadMore-container_project" class="cbp-l-loadMore-button c-margin-t-60">
-                        <a href="${basePath}/work/loadmore" class="cbp-l-loadMore-link btn c-btn-square c-btn-border-2x c-btn-dark c-btn-bold c-btn-uppercase">
+                        <a href="${basePath}/searchProjectLoadMore" class="cbp-l-loadMore-link btn c-btn-square c-btn-border-2x c-btn-dark c-btn-bold c-btn-uppercase">
                             <span class="cbp-l-loadMore-defaultText">加载更多</span>
                             <span class="cbp-l-loadMore-loadingText">加载中...</span>
-                            <span class="cbp-l-loadMore-noMoreLoading">没有作品了</span>
+                            <span class="cbp-l-loadMore-noMoreLoading">没有活动了</span>
                         </a>
                     </div>
 
@@ -96,7 +97,7 @@
                         </div>
                         
 					    <div id="loadMore-container_work" class="cbp-l-loadMore-button c-margin-t-60">
-                        <a href="${basePath}/work/loadmore" class="cbp-l-loadMore-link btn c-btn-square c-btn-border-2x c-btn-dark c-btn-bold c-btn-uppercase">
+                        <a href="${basePath}/searchWorkLoadMore" class="cbp-l-loadMore-link btn c-btn-square c-btn-border-2x c-btn-dark c-btn-bold c-btn-uppercase">
                             <span class="cbp-l-loadMore-defaultText">加载更多</span>
                             <span class="cbp-l-loadMore-loadingText">加载中...</span>
                             <span class="cbp-l-loadMore-noMoreLoading">没有作品了</span>
@@ -133,13 +134,13 @@ $(document).ready(function(){
         gridAdjustment: 'responsive',
         mediaQueries: [{
             width: 1400,
-            cols: 2
+            cols: 3
         }, {
             width: 1100,
-            cols: 2
+            cols: 3
         }, {
             width: 800,
-            cols: 2
+            cols: 3
         }, {
             width: 500,
             cols: 2
@@ -169,13 +170,13 @@ $(document).ready(function(){
         gridAdjustment: 'responsive',
         mediaQueries: [{
             width: 1400,
-            cols: 2
+            cols: 3
         }, {
             width: 1100,
-            cols: 2
+            cols: 3
         }, {
             width: 800,
-            cols: 2
+            cols: 3
         }, {
             width: 500,
             cols: 2

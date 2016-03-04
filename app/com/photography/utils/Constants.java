@@ -51,10 +51,17 @@ public class Constants {
 	public final static String USER_TYPE_ADMIN = "1";
 	
 	//session
+	//用户
 	public final static String SESSION_USER_KEY = "sessionuser";
 	
+	//链接跳转url
 	public final static String SESSION_LOGIN_REDIRECTURL = "sessionLoginRedirectURL";
+	
+	//链接跳转url参数
 	public final static String SESSION_LOGIN_PARAMETERMAP = "sessionLoginParametermap";
+	
+	//查询参数
+	public final static String SESSION_SEARCHSTRING = "sessionSearchstring";
 	
 	//template 
 	public final static String ERROR_MESSAGE = "errorMessage";

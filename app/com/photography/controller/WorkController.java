@@ -68,7 +68,7 @@ public class WorkController extends BaseController {
 	@RequestMapping("/index")
 	public ModelAndView toIndex(Pager pager,HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
-		pager.setPageSize(9);
+		pager.setPageSize(Constants.PAGER_SIZE_9);
 		Expression exp = null;
 		List<Work> works = workService.getPojoList(Work.class, pager, exp, new Sort("createTime",QueryConstants.DESC),null);
 		mav.addObject("works", works);

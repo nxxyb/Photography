@@ -33,6 +33,7 @@ import com.photography.mapping.ProjectComment;
 import com.photography.mapping.ProjectOrder;
 import com.photography.mapping.ProjectTrip;
 import com.photography.mapping.User;
+import com.photography.mapping.Work;
 import com.photography.service.IProjectService;
 import com.photography.utils.Constants;
 import com.photography.utils.MessageConstants;
@@ -70,9 +71,26 @@ public class ProjectController extends BaseController {
 			exp = Condition.eq("type", type);
 			mav.addObject("type", type);
 		}
+		pager.setPageSize(Constants.PAGER_SIZE_9);
 		List<Project> projects = projectService.getPojoList(Project.class, pager, exp, new Sort("createTime",QueryConstants.DESC),null);
 		mav.addObject("projects", projects);
 		mav.setViewName("project/project");
+		return mav;
+	}
+	
+	/**
+	 * 加载更多
+	 */
+	@RequestMapping("/loadmore")
+	public ModelAndView loadMore(String block,HttpServletRequest request) {
+		ModelAndView mav = new ModelAndView();
+		Pager pager = new Pager(Integer.parseInt(block)+1,Constants.PAGER_SIZE_6);
+		Expression exp = null;
+		List<Project> projects = projectService.getPojoList(Project.class, pager, exp, new Sort("createTime",QueryConstants.DESC),null);
+		mav.addObject("projects", projects);
+		mav.addObject("pager", pager);
+		mav.addObject("block", block);
+		mav.setViewName("work/work_loadmore");
 		return mav;
 	}
 

@@ -7,9 +7,11 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import org.apache.lucene.analysis.cn.smart.SmartChineseAnalyzer;
 import org.hibernate.annotations.Formula;
 import org.hibernate.annotations.LazyToOne;
 import org.hibernate.annotations.LazyToOneOption;
+import org.hibernate.search.annotations.Analyzer;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Index;
 import org.hibernate.search.annotations.Indexed;
@@ -24,6 +26,7 @@ import com.photography.utils.Constants;
  */
 @Entity(name="work")
 @Indexed(index="work")
+@Analyzer(impl=SmartChineseAnalyzer.class)
 public class Work extends BaseMapping {
 
 	private static final long serialVersionUID = -5432595383513302235L;
@@ -78,6 +81,10 @@ public class Work extends BaseMapping {
 	 //审核结果信息
 	@Column(name="verify_message")
 	private String verifyMessage;
+	
+	//是否热门
+	@Formula("(select count(*) from admin_lb lb where lb.work = id and lb.type='4')")
+	private String isHot;
 
 	public String getName() {
 		return name;
@@ -149,6 +156,14 @@ public class Work extends BaseMapping {
 
 	public void setVerifyMessage(String verifyMessage) {
 		this.verifyMessage = verifyMessage;
+	}
+
+	public String getIsHot() {
+		return isHot;
+	}
+
+	public void setIsHot(String isHot) {
+		this.isHot = isHot;
 	}
 	
 	

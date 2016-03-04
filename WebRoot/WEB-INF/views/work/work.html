@@ -50,6 +50,7 @@
                         	<#list works as work>
 					         <div class="cbp-item c-shadow">
 	                            <a href="${basePath}/work/toReview?id=${work.id}" target="_blank">
+	                            	<#if work.isHot?? && work.isHot="1"><i class="card-flag card-flag-1 0">热</i></#if>
 	                                <div class="cbp-caption">
 	                                    <div class="cbp-caption-defaultWrap">
 	                                        <img src="${basePath}/${work.photos.fileInfos[0].realPath}" alt=""> </div>
@@ -106,13 +107,13 @@ $(document).ready(function(){
         gridAdjustment: 'responsive',
         mediaQueries: [{
             width: 1400,
-            cols: 2
+            cols: 3
         }, {
             width: 1100,
-            cols: 2
+            cols: 3
         }, {
             width: 800,
-            cols: 2
+            cols: 3
         }, {
             width: 500,
             cols: 2
@@ -127,9 +128,6 @@ $(document).ready(function(){
 
 })(jQuery, window, document);
 
-$("#loadMoreA").click(function e(){
-	alert($(this).attr("href"));
-});
   
   });
 </script>

@@ -12,9 +12,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 
+import org.apache.lucene.analysis.cn.smart.SmartChineseAnalyzer;
 import org.hibernate.annotations.Formula;
 import org.hibernate.annotations.LazyToOne;
 import org.hibernate.annotations.LazyToOneOption;
+import org.hibernate.search.annotations.Analyzer;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Index;
 import org.hibernate.search.annotations.Indexed;
@@ -32,6 +34,7 @@ import com.photography.utils.Constants;
  */
 @Entity(name="project")
 @Indexed(index="project")
+@Analyzer(impl=SmartChineseAnalyzer.class)
 public class Project extends BaseMapping{
 	
 	private static final long serialVersionUID = -5155878212794168022L;
@@ -207,6 +210,14 @@ public class Project extends BaseMapping{
 	 //审核结果信息
 	@Column(name="verify_message")
 	private String verifyMessage;
+	
+	//是否推荐
+	@Formula("(select count(*) from admin_lb lb where lb.project = id and (lb.type='1' or lb.type='2'))")
+	private String isReCommend;
+	
+	//是否热门
+	@Formula("(select count(*) from admin_lb lb where lb.project = id and lb.type='3')")
+	private String isHot;
 
 	public String getName() {
 		return name;
@@ -441,6 +452,22 @@ public class Project extends BaseMapping{
 
 	public void setEnableCouponNum(String enableCouponNum) {
 		this.enableCouponNum = enableCouponNum;
+	}
+
+	public String getIsReCommend() {
+		return isReCommend;
+	}
+
+	public void setIsReCommend(String isReCommend) {
+		this.isReCommend = isReCommend;
+	}
+
+	public String getIsHot() {
+		return isHot;
+	}
+
+	public void setIsHot(String isHot) {
+		this.isHot = isHot;
 	}
 	
 	

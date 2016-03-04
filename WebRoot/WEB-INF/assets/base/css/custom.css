@@ -1,0 +1,33 @@
+/*推荐图标 默认红色*/
+.card-flag {
+	display: none;
+	z-index: 1;
+	top: 0;
+	left: -3px;
+	position: absolute;
+	width: 22px;
+	height: 22px;
+	line-height: 18px;
+	font-size: 14px;
+	font-style: normal;
+	color: #fff;
+	text-indent: 4px;
+	font-weight: normal;
+	background: url(../../../images/icon/commend-icons.png) no-repeat 0 0;
+}
+
+.card-flag-1,.card-flag-2 {
+	display: block;
+}
+
+/*蓝色*/
+.card-flag-2 {
+	background-position: 0 -22px;
+}
+
+/*微信*/
+.card-wx {
+	display: block;
+	background: url(../../../images/icon/commend-wechat.png) no-repeat
+		0 0;
+}

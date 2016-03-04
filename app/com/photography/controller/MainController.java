@@ -1,5 +1,6 @@
 package com.photography.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -7,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -20,6 +22,7 @@ import com.photography.mapping.Work;
 import com.photography.service.IIndexSearchService;
 import com.photography.service.IProjectService;
 import com.photography.service.IWorkService;
+import com.photography.utils.Constants;
 
 /**
  * 
@@ -68,13 +71,56 @@ private final static Logger log = Logger.getLogger(MainController.class);
 		ModelAndView mav = new ModelAndView();
 		User user = getSessionUser(request);
 		
-		List<Project> projects =  indexSearchService.getIndexPojoList(Project.class, new Pager(), new String[]{"name","des"}, searchString, new Sort("createTime","desc"), user);
-		mav.addObject("projects", projects);
+		//将查询内容添加到session中
+		request.getSession().setAttribute(Constants.SESSION_SEARCHSTRING, searchString);
 		
-		List<Work> works =  indexSearchService.getIndexPojoList(Work.class, new Pager(), new String[]{"name","des"}, searchString, new Sort("createTime","desc"), user);
-		mav.addObject("works", works);
+		if(!StringUtils.isEmpty(searchString)){
+		
+			List<Project> projects =  indexSearchService.getIndexPojoList(Project.class, new Pager(), new String[]{"name","des"}, searchString, new Sort("createTime","desc"), user);
+			mav.addObject("projects", projects);
+			
+			List<Work> works =  indexSearchService.getIndexPojoList(Work.class, new Pager(Constants.PAGER_SIZE_6), new String[]{"name","des"}, searchString, new Sort("createTime","desc"), user);
+			mav.addObject("works", works);
+		}else{
+			mav.addObject("projects", new ArrayList<Project>());
+			mav.addObject("works", new ArrayList<Work>());
+		}
 		
 		mav.setViewName("/search/search");
+		return mav;
+	}
+	
+	/**
+	 * 搜索作品 加载更多
+	 */
+	@RequestMapping("/searchWorkLoadMore")
+	public ModelAndView searchWorkLoadMore(String block,HttpServletRequest request) {
+		ModelAndView mav = new ModelAndView();
+		User user = getSessionUser(request);
+		String searchString = (String) request.getSession().getAttribute(Constants.SESSION_SEARCHSTRING);
+		Pager pager = new Pager(Integer.parseInt(block)+1,Constants.PAGER_SIZE_6);
+		List<Work> works =  indexSearchService.getIndexPojoList(Work.class, pager, new String[]{"name","des"}, searchString, new Sort("createTime","desc"), user);
+		mav.addObject("works", works);
+		mav.addObject("pager", pager);
+		mav.addObject("block", block);
+		mav.setViewName("work/work_loadmore");
+		return mav;
+	}
+	
+	/**
+	 * 搜索作品 加载更多
+	 */
+	@RequestMapping("/searchProjectLoadMore")
+	public ModelAndView searchProjectLoadMore(String block,HttpServletRequest request) {
+		ModelAndView mav = new ModelAndView();
+		User user = getSessionUser(request);
+		String searchString = (String) request.getSession().getAttribute(Constants.SESSION_SEARCHSTRING);
+		Pager pager = new Pager(Integer.parseInt(block)+1,Constants.PAGER_SIZE_6);
+		List<Project> projects =  indexSearchService.getIndexPojoList(Project.class, pager, new String[]{"name","des"}, searchString, new Sort("createTime","desc"), user);
+		mav.addObject("projects", projects);
+		mav.addObject("pager", pager);
+		mav.addObject("block", block);
+		mav.setViewName("work/work_loadmore");
 		return mav;
 	}
 	
